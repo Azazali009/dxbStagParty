@@ -6,6 +6,7 @@ import {
 import BookingPage from "../../_components/BookingForm";
 import { getActivity } from "../../_lib/data-services";
 import MeteorsDemo from "../../_components/MeteorsDemo";
+
 export default async function Page({ params }) {
   const activity = await getActivity(params.activityId);
 
