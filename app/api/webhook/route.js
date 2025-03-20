@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
-import { updateAttendeeStatus } from "@/lib/attendeeApi"; // Update attendee in DB
+import { stripe } from "../../_lib/stripe";
+import { updateAttendeeStatus } from "../../_lib/attendeeApi"; // Update attendee in DB
 
 export async function POST(req) {
   const payload = await req.text();
