@@ -1,0 +1,318 @@
+"use client";
+import { CurrencyDollarIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
+import { useState } from "react";
+import { addBooking } from "../_lib/data-services";
+import { addAttendees } from "../_lib/attendeeApi";
+import { useRouter } from "next/navigation";
+import LoggedInMessage from "../_components/LoggedInMeesage";
+
+export default function BookingPage({ id, price, activityName, destinations }) {
+  const router = useRouter();
+  const [emails, setEmails] = useState([""]);
+  const [user] = useState(true);
+  const [organizerEmail, setOrganizerEmail] = useState("");
+  const [destination, setDestination] = useState("");
+  const [bookingDate, setBookingDate] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [links, setLinks] = useState([]);
+
+  // add email
+  const addEmail = () => {
+    setEmails([...emails, ""]);
+  };
+
+  // delete email
+  const removeEmail = (index) => {
+    const updatedEmails = emails.filter((_, i) => i !== index);
+    setEmails(updatedEmails);
+  };
+  const updateEmail = (index, value) => {
+    const updatedEmails = [...emails];
+    updatedEmails[index] = value;
+    setEmails(updatedEmails);
+  };
+
+  // ✅ Always include organizer email
+  const allEmails = [...emails, organizerEmail];
+  const splitAmount = Math.round(price / allEmails.length);
+  // const handleBooking = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   if (!emails || !organizerEmail) return;
+  //   const res = await fetch("/api/create-payment-links", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       emails: allEmails,
+  //       totalPrice: price,
+  //       activityName,
+  //     }),
+  //   });
+
+  //   const data = await res.json();
+
+  //   setLoading(false);
+  //   if (data.success) {
+  //     setLinks(data.paymentLinks);
+  //   } else {
+  //     alert("Error generating payment links");
+  //   }
+  // };
+
+  // const handleBooking = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     // ✅ 1. Generate Payment Links from Stripe
+  //     if (!emails || !organizerEmail) return;
+  //     const res = await fetch("/api/create-payment-links", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         emails: allEmails,
+  //         totalPrice: price,
+  //         activityName,
+  //       }),
+  //     });
+  //     const data = await res.json();
+
+  //     if (!data.success) {
+  //       alert("Error generating payment links");
+  //       return;
+  //     }
+
+  //     // ✅ 2. Create Booking Entry
+  //     const booking = await addBooking({
+  //       activityID: id,
+  //       totalPrice: price,
+  //       attendeeEmails: allEmails,
+  //       organizerEmail,
+  //       destination,
+  //       activityName,
+  //     });
+  //     const attendeesData = allEmails.map((email) => ({
+  //       bookingID: booking.id,
+  //       email,
+  //       amountPaid: splitAmount,
+  //       status: "unpaid",
+  //       paymentLink: "www.stripe.com",
+  //       expires_at: new Date(),
+  //     }));
+  //     setLinks(data.paymentLinks);
+  //     await addAttendees(attendeesData);
+  //     alert("booking added successfully ✅");
+  //     router.push(`/bookings/${booking.id}`);
+  //   } catch (error) {
+  //     alert("Error generating payment links");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const handleBooking = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      if (!emails || !organizerEmail) return;
+      // Combine Emails (Organizer + Attendees)
+      const allEmails = [...emails, organizerEmail];
+
+      // ✅ 2. Check for Duplicate Emails
+      const uniqueEmails = new Set(allEmails); // Set stores only unique values
+      if (uniqueEmails.size !== allEmails.length) {
+        alert("❌ Duplicate emails are not allowed!");
+        setLoading(false);
+        return;
+      }
+      // ✅ 1. Generate Payment Links from Stripe
+      const res = await fetch("/api/create-payment-links", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          emails: allEmails,
+          totalPrice: price,
+          activityName,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        alert("Error generating payment links");
+        return;
+      }
+
+      // ✅ 2. Create Booking Entry
+      const booking = await addBooking({
+        activityID: id,
+        totalPrice: price,
+        attendeeEmails: allEmails,
+        organizerEmail,
+        destination,
+        activityName,
+        bookingDate,
+      });
+
+      // ✅ 3. Map Correct Payment Links to Each Attendee
+      const attendeesData = allEmails.map((email) => {
+        const paymentLink =
+          data.paymentLinks.find((link) => link.email === email)?.link || "";
+        return {
+          bookingID: booking.id,
+          email,
+          amountPaid: splitAmount,
+          status: "unpaid",
+          paymentLink, // ✅ Store actual Stripe link
+          expires_at: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // ✅ 12 days expiry
+        };
+      });
+
+      // ✅ 4. Insert Attendees with Payment Links
+      await addAttendees(attendeesData);
+
+      // ✅ 5. Show Links in UI
+      setLinks(data.paymentLinks);
+
+      alert("Booking added successfully ✅");
+      router.push(`/bookings/${booking.id}`);
+    } catch (error) {
+      console.error("❌ Error:", error);
+      alert("Error generating payment links");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!user) return <LoggedInMessage />;
+  return (
+    <div className="w-full space-y-6 px-3 py-8 shadow-xl dark:text-white">
+      <h1 className="text-2xl font-semibold">Stag Activity Booking</h1>
+
+      <p className="text-xl font-medium">Price: ${price}</p>
+      <form
+        onSubmit={handleBooking}
+        className="flex flex-col items-start gap-6"
+      >
+        <label className="flex flex-col gap-2">
+          <span className="text-sm font-medium capitalize text-neutral-800 dark:text-white">
+            Organizer Email:
+          </span>
+          <input
+            type="email"
+            value={organizerEmail}
+            placeholder="organizer@email.com"
+            onChange={(e) => setOrganizerEmail(e.target.value)}
+            className="h-12 rounded-md bg-tertiary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
+            autoComplete="on"
+            required
+          />
+        </label>
+        <label className="flex flex-col gap-2">
+          <span className="text-sm font-medium capitalize text-neutral-800 dark:text-white">
+            Select Date:
+          </span>
+          <input
+            type="date"
+            value={bookingDate}
+            placeholder="yyyy-MM-DD"
+            onChange={(e) => setBookingDate(e.target.value)}
+            className="h-12 rounded-md bg-tertiary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
+            required
+          />
+        </label>
+        <label className="flex flex-col gap-2" htmlFor="destinations">
+          <span className="text-sm font-medium capitalize text-neutral-800 dark:text-white">
+            Destination
+          </span>
+          <select
+            className="h-10 w-44 appearance-auto rounded-md bg-tertiary p-2 text-sm"
+            name="destinations"
+            id="destinations"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+          >
+            <option value="null">Select</option>
+            {destinations.map((dest) => (
+              <option key={dest} value={dest}>
+                {dest}
+              </option>
+            ))}
+          </select>
+        </label>
+        {emails.map((email, index) => (
+          <label key={index} className="flex flex-col gap-2">
+            <span className="text-sm font-medium capitalize text-neutral-800 dark:text-white">
+              Attendee {index + 1} Email:
+            </span>
+            <div className="flex items-center gap-3">
+              <input
+                type="email"
+                placeholder={`Enter Attendee ${index + 1} email`}
+                value={email}
+                onChange={(e) => updateEmail(index, e.target.value)}
+                className="h-10 rounded-md bg-tertiary px-2 text-[14px] placeholder:text-sm focus:outline-blue-600"
+                required
+              />
+              <button
+                onClick={() => removeEmail(index)}
+                type="button"
+                className="flex size-6 items-center justify-center rounded-md bg-gradient-to-b from-red-800 to-red-500 text-sm font-medium capitalize text-red-100 hover:bg-gradient-to-t"
+              >
+                <XMarkIcon width={15} className="stroke-white stroke-2" />
+              </button>
+            </div>
+          </label>
+        ))}
+
+        <div className="flex items-center gap-3">
+          <button
+            className="rounded bg-gradient-to-br from-emerald-800 to-green-500 px-4 py-2.5 font-semibold text-white shadow-shadowOne duration-300 hover:scale-95 hover:bg-gradient-to-tr disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-gray-500 disabled:hover:scale-100"
+            type="submit"
+            disabled={loading || !organizerEmail}
+          >
+            {loading ? "Processing..." : "Send Payment Links"}
+          </button>
+          <button
+            className="inline-block rounded bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 text-sm font-semibold capitalize text-white hover:bg-gradient-to-tr"
+            onClick={addEmail}
+            type="button"
+          >
+            + Add Attendee
+          </button>
+        </div>
+      </form>
+
+      {links.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="bg-gradient-to-b from-green-400 via-green-500 to-green-950 bg-clip-text text-2xl font-semibold text-transparent">
+            Payment Links:
+          </h2>
+          <ul className="w-full space-y-2">
+            {links.map(({ email, link }, i) => (
+              <li
+                key={i}
+                className="flex w-80 flex-col items-start gap-2 overflow-hidden text-ellipsis rounded-md bg-green-100 px-4 py-4 text-green-900"
+              >
+                <p className="text-sm font-medium">{email}</p>
+
+                <Link
+                  href={link}
+                  className="flex items-center gap-2 rounded-md border-2 border-green-900 bg-green-900 px-4 py-1.5 text-sm font-semibold capitalize text-green-50 duration-300 hover:bg-transparent hover:text-green-900"
+                >
+                  <span>pay now</span>
+                  <span>
+                    <CurrencyDollarIcon width={15} />
+                  </span>
+                  {/* <span>${Math.round(price / allEmails.length)}</span> */}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}

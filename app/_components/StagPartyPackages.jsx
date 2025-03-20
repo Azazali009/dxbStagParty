@@ -1,0 +1,28 @@
+import PackagesGrid from "../_components/PackagesGrid";
+export default function StagPartyPackages() {
+  return (
+    <div className="mx-auto flex max-w-6xl flex-col justify-center gap-4 py-24">
+      <h2 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl md:text-5xl">
+        Our expert built stag party packages
+      </h2>
+      <p className="leading-[1.8]">
+        We’ve cracked the code for an epic stag bash, and our all-inclusive stag
+        party packages are the express route to stag do greatness. Listen up,
+        organizing a stag party can be a mess, but we’ve got your back! Our
+        crack team has handcrafted these hassle-free packages, sparing you the
+        headache and endless emails back and forth with suppliers. Discover the
+        ultimate stag activities, nightlife hotspots, top-notch grub, and
+        banging accommodations in prime destinations across Ireland, the UK, and
+        Europe!
+      </p>
+      <p className="leading-[1.8]">
+        And guess what? You’re not confined by our setup – customise your stag
+        party package with extra add-ons, switch things up, or even craft your
+        own package from scratch if you’re feeling bold. Pick your destination
+        below to kick things off or reach out to us for a chat about your stag
+        do plans. Let’s make this last night of freedom a legendary one!
+      </p>
+      <PackagesGrid />
+    </div>
+  );
+}
