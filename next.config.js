@@ -19,6 +19,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "vbmotorworld.com",
       },
+      {
+        protocol: "https",
+        hostname: "www.stag-adventures.com",
+      },
+      {
+        protocol: "https",
+        hostname: "furplecs.com",
+      },
     ],
   },
 };
