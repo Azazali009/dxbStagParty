@@ -17,7 +17,7 @@ export const navbar = [
   {
     id: 4,
     navItem: "Do stag destinations",
-    href: "/do-stag-destinations",
+    href: "/destinations",
   },
   {
     id: 5,

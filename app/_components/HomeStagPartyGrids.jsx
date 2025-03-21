@@ -5,8 +5,8 @@ import Image from "next/image";
 
 export default function HomeStagPartyGrids() {
   return (
-    <div className="mx-auto !mt-20 grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {Array.from({ length: 12 }).map((_, i) => {
+    <div className="mx-auto !mt-20 grid max-w-6xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {Array.from({ length: 8 }).map((_, i) => {
         return (
           <BackgroundGradient
             key={i}

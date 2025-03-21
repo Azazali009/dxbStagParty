@@ -3,6 +3,7 @@ import HomeHeroSection from "./_components/HomeHeroSection";
 import HomeStagPartyGrids from "./_components/HomeStagPartyGrids";
 import Testimonilas from "./_components/Testimonials";
 import HowItWorks from "./_components/HowItWorks";
+import Map from "@/app/_components/Map";
 
 export default function Home() {
   return (
@@ -17,7 +18,7 @@ export default function Home() {
         <ul className="mx-auto grid max-w-5xl grid-cols-4 gap-4">
           <li>
             <Link
-              className="flex justify-center rounded-full border-2 border-tertiary bg-transparent px-6 py-2 text-sm capitalize transition-all duration-500 hover:bg-tertiary"
+              className="flex justify-center rounded-full border-2 border-secondary bg-transparent px-6 py-2 text-sm capitalize transition-all duration-300 hover:bg-secondary"
               href={"/activities"}
             >
               a ready made package
@@ -25,7 +26,7 @@ export default function Home() {
           </li>
           <li>
             <Link
-              className="flex justify-center rounded-full border-2 border-tertiary bg-transparent px-6 py-2 text-sm capitalize transition-all duration-500 hover:bg-tertiary"
+              className="flex justify-center rounded-full border-2 border-secondary bg-transparent px-6 py-2 text-sm capitalize transition-all duration-300 hover:bg-secondary"
               href={"/activities"}
             >
               build your own package
@@ -33,7 +34,7 @@ export default function Home() {
           </li>
           <li>
             <Link
-              className="flex justify-center rounded-full border-2 border-tertiary bg-transparent px-6 py-2 text-sm capitalize transition-all duration-500 hover:bg-tertiary"
+              className="flex justify-center rounded-full border-2 border-secondary bg-transparent px-6 py-2 text-sm capitalize transition-all duration-300 hover:bg-secondary"
               href={"/activities"}
             >
               just an activity
@@ -41,7 +42,7 @@ export default function Home() {
           </li>
           <li>
             <Link
-              className="flex justify-center rounded-full border-2 border-tertiary bg-transparent px-6 py-2 text-sm capitalize transition-all duration-500 hover:bg-tertiary"
+              className="flex justify-center rounded-full border-2 border-secondary bg-transparent px-6 py-2 text-sm capitalize transition-all duration-300 hover:bg-secondary"
               href={"/activities"}
             >
               just accomodation
@@ -51,6 +52,7 @@ export default function Home() {
         <HomeStagPartyGrids />
       </div>
       <HowItWorks />
+      <Map />
       <Testimonilas />
     </div>
   );

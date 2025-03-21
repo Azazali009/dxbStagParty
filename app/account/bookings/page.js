@@ -5,7 +5,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 export default async function Page() {
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-semibold">My bookings</h1>
+      <h1 className="text-2xl font-semibold text-secondary">My bookings</h1>
       <div className="space-y-4">
         {/* 1 */}
         <div className="flex border border-primary">
@@ -20,7 +20,7 @@ export default async function Page() {
                 </p>
 
                 <div className="flex items-center gap-2">
-                  <strong className="text-lg font-semibold text-amber-500">
+                  <strong className="text-lg font-semibold text-secondary">
                     $200
                   </strong>
                   <p>&bull;</p>
@@ -65,7 +65,7 @@ export default async function Page() {
                 </p>
 
                 <div className="flex items-center gap-2">
-                  <strong className="text-lg font-semibold text-amber-500">
+                  <strong className="text-lg font-semibold text-secondary">
                     $200
                   </strong>
                   <p>&bull;</p>
@@ -110,7 +110,7 @@ export default async function Page() {
                 </p>
 
                 <div className="flex items-center gap-2">
-                  <strong className="text-lg font-semibold text-amber-500">
+                  <strong className="text-lg font-semibold text-secondary">
                     $200
                   </strong>
                   <p>&bull;</p>
@@ -155,7 +155,7 @@ export default async function Page() {
                 </p>
 
                 <div className="flex items-center gap-2">
-                  <strong className="text-lg font-semibold text-amber-500">
+                  <strong className="text-lg font-semibold text-secondary">
                     $200
                   </strong>
                   <p>&bull;</p>
@@ -200,7 +200,7 @@ export default async function Page() {
                 </p>
 
                 <div className="flex items-center gap-2">
-                  <strong className="text-lg font-semibold text-amber-500">
+                  <strong className="text-lg font-semibold text-secondary">
                     $200
                   </strong>
                   <p>&bull;</p>

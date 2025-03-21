@@ -10,7 +10,7 @@ import LoggedInMessage from "../_components/LoggedInMeesage";
 export default function BookingPage({ id, price, activityName, destinations }) {
   const router = useRouter();
   const [emails, setEmails] = useState([""]);
-  const [user] = useState(true);
+  const [user] = useState(false);
   const [organizerEmail, setOrganizerEmail] = useState("");
   const [destination, setDestination] = useState("");
   const [bookingDate, setBookingDate] = useState("");

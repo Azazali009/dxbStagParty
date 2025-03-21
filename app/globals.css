@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .azaz {
-  background-image: linear-gradient(to right, #086647, #21bf5d);
-  padding: 10px 24px;
-  border-radius: 6px;
-  font-weight: 700;
-  text-transform: capitalize;
-  width: fit-content;
-} */
 .no-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
@@ -25,4 +17,31 @@
   width: 2px;
   background-color: #424242;
   border-radius: 50px;
+}
+@layer components {
+  .spinner {
+    margin: 3.2rem auto 1.6rem;
+    width: 60px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid #424242;
+    border-right-color: #bf9b30;
+    animation: rotate 1s infinite linear;
+  }
+
+  .spinner-mini {
+    margin: 0;
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid #424242;
+    border-right-color: transparent;
+    animation: rotate 1s infinite linear;
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(1turn);
+    }
+  }
 }

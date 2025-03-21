@@ -29,8 +29,8 @@ export async function POST(req) {
             quantity: 1,
           },
         ],
-        success_url: `http://localhost:3000/user`,
-        cancel_url: `https://yourdomain.com/cancel`,
+        success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success`,
+        cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cancel`,
       });
 
       const paymentLink = session.url;

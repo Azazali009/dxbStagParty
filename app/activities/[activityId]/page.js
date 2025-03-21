@@ -42,7 +42,7 @@ export default async function Page({ params }) {
             </div>
             <div className="mt-8">
               <h2 className="text-2xl font-bold">What&apos;s included?</h2>
-              <ul className="mt-2 list-inside list-disc">
+              <ul className="mt-2 list-inside list-disc space-y-2">
                 <li>Note: 54 km (approx 45 mins) from Athlone Town</li>
                 <li>Transport not included</li>
                 <li>Expert instructor</li>
@@ -52,14 +52,14 @@ export default async function Page({ params }) {
             </div>
             <div className="mt-8">
               <h2 className="text-2xl font-bold">Why Book it?</h2>
-              <p>
+              <p className="font-light leading-[1.7]">
                 Paintball, a stag party classic! Many a stag has been seen
                 running around a field in a tutu avoiding hoards of paintballs
                 coming straight for him. The pain is good practice for marriage,
                 actually so is the tutu, he won&apos;t be wearing the trousers
                 for much longer either!
               </p>
-              <p className="mt-4">
+              <p className="mt-4 font-light leading-[1.7]">
                 The stag party will be fully loaded and with 300 paintballs you
                 can afford to spray the field in the hope of hitting someone or
                 be a sneaky bugger and hide in the trees and snipe, either way
@@ -74,7 +74,7 @@ export default async function Page({ params }) {
           <h4 className="text-sm font-medium">
             from <strong className="text-2xl">${price}</strong> per person
           </h4>
-          <button className="w-full rounded-full bg-gradient-to-r from-indigo-800 via-emerald-500 to-blue-500 px-8 py-3 font-semibold text-white duration-300 hover:scale-90 hover:border-blue-600 hover:bg-gradient-to-l">
+          <button className="w-full rounded-full bg-gradient-to-r from-[#735d1d] via-secondary to-[#735d1d] px-8 py-3 font-semibold text-white duration-300 hover:scale-90 hover:border-blue-600 hover:bg-gradient-to-l">
             Add to cart
           </button>
           <BookingPage

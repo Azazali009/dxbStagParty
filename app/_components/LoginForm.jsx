@@ -2,11 +2,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../_lib/supabase";
+import Button from "./Button";
 
 export default function LoginForm() {
   const router = useRouter();
-  const [email, setEmail] = useState("aizaz.0938@gmail.com"); // Hardcoded for testing
-  const [password, setPassword] = useState("azazkhan");
+  const [email, setEmail] = useState(""); // Hardcoded for testing
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,37 +31,41 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="mx-auto max-w-md rounded-md p-6 text-black shadow-lg">
-      <h2 className="mb-4 text-2xl font-semibold">Login</h2>
-      {error && <p className="text-red-500">{error}</p>}
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="mx-auto max-w-md rounded-md p-6 shadow-shadowOne">
+        <h2 className="mb-4 text-center text-2xl font-semibold">Login</h2>
+        {error && <p className="mb-3 text-red-500">{error}</p>}
 
-      <form onSubmit={handleLogin} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full rounded border p-2"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          name="email"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full rounded border p-2"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          name="password"
-        />
-        <button
-          type="submit"
-          className="w-full rounded bg-blue-600 p-2 text-white"
-          disabled={loading}
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full rounded border border-transparent bg-tertiary px-2 py-3 shadow-shadowOne focus:outline-none focus:ring-1 focus:ring-secondary"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            name="email"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full rounded border border-transparent bg-tertiary px-2 py-3 shadow-shadowOne focus:outline-none focus:ring-1 focus:ring-secondary"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            name="password"
+          />
+          <div className="w-full">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full py-2 text-base font-medium"
+            >
+              {loading ? "Logging in..." : "Login"}
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

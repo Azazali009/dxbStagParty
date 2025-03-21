@@ -36,7 +36,7 @@ export const theme = {
     },
     colors: {
       primary: "#212428",
-      secondary: "#ff013f",
+      secondary: "#BF9B30",
       tertiary: "#424242",
     },
   },
