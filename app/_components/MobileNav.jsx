@@ -40,7 +40,9 @@ export default function MobileNav() {
                 key={cur.id}
                 className={`text-sm ${pathName === cur.href ? "text-secondary" : "text-white"} duration-300 hover:text-secondary`}
               >
-                <Link href={cur.href}>{cur.navItem}</Link>
+                <Link onClick={() => setNavOpen(false)} href={cur.href}>
+                  {cur.navItem}
+                </Link>
               </li>
             ))}
           </ul>
