@@ -1,12 +1,19 @@
 import Image from "next/image";
-import {
-  CheckBadgeIcon,
-  InformationCircleIcon,
-} from "@heroicons/react/24/solid";
-import BookingPage from "../../_components/BookingForm";
-import { getActivity } from "../../_lib/data-services";
-import MeteorsDemo from "../../_components/MeteorsDemo";
 
+import BookingPage from "../../_components/BookingForm";
+import { getActivities, getActivity } from "../../_lib/data-services";
+import MeteorsDemo from "../../_components/MeteorsDemo";
+import CheckBadgeIcon from "@/app/svgIcons/CheckBadgeIcon";
+import InformationCircleIcon from "@/app/svgIcons/InformationCircleIcon";
+
+export async function generateStaticParams() {
+  const activities = await getActivities();
+  const ids = activities.map((curActivity) => ({
+    activityId: String(curActivity.id),
+  }));
+  console.log(ids);
+  return ids;
+}
 export default async function Page({ params }) {
   const activity = await getActivity(params.activityId);
 
@@ -87,14 +94,14 @@ export default async function Page({ params }) {
           <MeteorsDemo>
             <ul className="space-y-4">
               <li className="flex items-center gap-4">
-                <CheckBadgeIcon width={30} height={30} color="#fff" />
+                <CheckBadgeIcon />
                 <p className="text-sm">
                   <strong>It&apos;s FREE!:</strong> Build a cart & submit to
                   check availability for free & with no commitment
                 </p>
               </li>
               <li className="flex items-center gap-4">
-                <InformationCircleIcon width={22} height={22} color="#fff" />
+                <InformationCircleIcon />
                 <p className="text-sm">
                   <strong>*From pricing:</strong> Prices may vary depending on
                   your group size

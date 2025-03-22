@@ -6,22 +6,42 @@ export const navbar = [
   },
   {
     id: 2,
-    navItem: "Do stag activities",
+    navItem: "Activities",
     href: "/activities",
   },
   {
     id: 3,
-    navItem: "Do stag packages",
+    navItem: "Packages",
     href: "/do-stag-packages",
   },
   {
     id: 4,
-    navItem: "Do stag destinations",
+    navItem: "Destinations",
     href: "/destinations",
   },
   {
     id: 5,
-    navItem: "Stag party ideas",
-    href: "/stag-party-ideas",
+    navItem: "Experiences",
+    href: "/experiences",
+  },
+  {
+    id: 6,
+    navItem: "Gallery & Reviews",
+    href: "/gallery-reviews",
+  },
+  {
+    id: 7,
+    navItem: "Blog",
+    href: "/blog",
+  },
+  {
+    id: 8,
+    navItem: "FAQ",
+    href: "/faq",
+  },
+  {
+    id: 9,
+    navItem: "Contact",
+    href: "/Contact",
   },
 ];

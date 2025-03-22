@@ -1,16 +1,15 @@
 "use client";
-import { CurrencyDollarIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
 import { useState } from "react";
 import { addBooking } from "../_lib/data-services";
 import { addAttendees } from "../_lib/attendeeApi";
 import { useRouter } from "next/navigation";
 import LoggedInMessage from "../_components/LoggedInMeesage";
+import XMarkIcon from "../svgIcons/XMarkIcon";
 
 export default function BookingPage({ id, price, activityName, destinations }) {
   const router = useRouter();
   const [emails, setEmails] = useState([""]);
-  const [user] = useState(false);
+  const [user] = useState(true);
   const [organizerEmail, setOrganizerEmail] = useState("");
   const [destination, setDestination] = useState("");
   const [bookingDate, setBookingDate] = useState("");
@@ -261,7 +260,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
                 type="button"
                 className="flex size-6 items-center justify-center rounded-md bg-gradient-to-b from-red-800 to-red-500 text-sm font-medium capitalize text-red-100 hover:bg-gradient-to-t"
               >
-                <XMarkIcon width={15} className="stroke-white stroke-2" />
+                <XMarkIcon />
               </button>
             </div>
           </label>
@@ -285,7 +284,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
         </div>
       </form>
 
-      {links.length > 0 && (
+      {/* {links.length > 0 && (
         <div className="space-y-4">
           <h2 className="bg-gradient-to-b from-green-400 via-green-500 to-green-950 bg-clip-text text-2xl font-semibold text-transparent">
             Payment Links:
@@ -306,13 +305,13 @@ export default function BookingPage({ id, price, activityName, destinations }) {
                   <span>
                     <CurrencyDollarIcon width={15} />
                   </span>
-                  {/* <span>${Math.round(price / allEmails.length)}</span> */}
+                  
                 </Link>
               </li>
             ))}
           </ul>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

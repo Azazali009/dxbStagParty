@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
-import { CalendarDaysIcon, CalendarIcon } from "@heroicons/react/24/solid";
 
 export default function Paintball({ activity }) {
   const { image, name, id, description } = activity;
@@ -39,7 +38,7 @@ export default function Paintball({ activity }) {
             target="__blank"
             className="flex items-center gap-2 rounded-xl bg-black px-4 py-2 text-xs font-bold text-white hover:animate-pulse dark:bg-white dark:text-black"
           >
-            <span>Book now</span> {<CalendarDaysIcon width={20} />}
+            <span>Book now</span> &rarr;
           </CardItem>
         </div>
       </CardBody>
