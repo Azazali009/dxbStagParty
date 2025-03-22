@@ -11,7 +11,6 @@ export async function generateStaticParams() {
   const ids = activities.map((curActivity) => ({
     activityId: String(curActivity.id),
   }));
-  console.log(ids);
   return ids;
 }
 export default async function Page({ params }) {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getBookings } from "../_lib/data-services";
-import { EyeIcon } from "@heroicons/react/24/solid";
+import EyeIcon from "../svgIcons/EyeIcon";
 
 export default async function Page() {
   const bookings = await getBookings();
@@ -41,17 +41,19 @@ export default async function Page() {
               {booking.paymentStatus === "completed" && (
                 <p
                   className={
-                    "max-w-28 rounded-full bg-green-100 px-4 py-1 text-center text-xs font-medium capitalize text-green-900"
+                    "max-w-28 rounded-full bg-green-200 px-4 py-1 text-center text-xs font-medium capitalize text-green-900"
                   }
                 >
                   {booking.paymentStatus}
                 </p>
               )}
-              <Link href={`/bookings/${booking.id}`} title="View Booking">
-                <EyeIcon
-                  width={18}
-                  className="justify-self-center text-blue-500 hover:text-white"
-                />
+
+              <Link
+                className="justify-self-center"
+                href={`/bookings/${booking.id}`}
+                title="View Booking"
+              >
+                <EyeIcon />
               </Link>
             </div>
           );
