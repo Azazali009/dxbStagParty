@@ -7,7 +7,7 @@ export default function Paintball({ activity }) {
   const { image, name, id, description } = activity;
   return (
     <CardContainer className="inter-var">
-      <CardBody className="group/card relative flex h-[500px] flex-col gap-2 rounded-xl border border-black/[0.1] bg-gray-50 p-6 shadow-shadowOne dark:border-neutral-600 dark:bg-transparent dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]">
+      <CardBody className="group/card relative flex h-[500px] flex-col gap-2 rounded-xl border border-black/[0.1] border-neutral-600 bg-gray-50 bg-transparent p-6 shadow-shadowOne hover:shadow-2xl hover:shadow-emerald-500/[0.1]">
         <CardItem
           translateZ="50"
           className="bg-gradient-to-r from-neutral-50 to-neutral-400 bg-clip-text text-xl font-bold text-transparent"
@@ -36,7 +36,7 @@ export default function Paintball({ activity }) {
             as={Link}
             href={`/activities/${id}`}
             target="__blank"
-            className="flex items-center gap-2 rounded-xl bg-black px-4 py-2 text-xs font-bold text-white hover:animate-pulse dark:bg-white dark:text-black"
+            className="flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-bold text-black hover:animate-pulse"
           >
             <span>Book now</span> &rarr;
           </CardItem>

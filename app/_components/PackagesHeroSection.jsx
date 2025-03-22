@@ -9,7 +9,7 @@ export default function PackagesHeroSection() {
   return (
     <BackgroundLines className="flex w-full flex-col items-center justify-center gap-8 border-b border-tertiary/40 py-8">
       <AnimatedHeading>Ready Made Stag Do Packages</AnimatedHeading>
-      <p className="mx-auto max-w-xl text-center text-sm text-neutral-700 md:text-lg dark:text-neutral-400">
+      <p className="mx-auto max-w-xl text-center text-sm text-neutral-400 md:text-lg">
         Book an epic Stag Party Package, including the top Stag Party
         activities, accommodation, nightlife & ideas to suit all groups & every
         budget.

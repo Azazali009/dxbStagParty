@@ -14,9 +14,9 @@ export default function PackagesGrid() {
           return (
             <BackgroundGradient
               key={pack.id}
-              className="h-full rounded-[22px] bg-white p-4 sm:p-10 dark:bg-zinc-900"
+              className="h-full rounded-[22px] bg-zinc-900 p-4 sm:p-10"
             >
-              <h3 className="mb-2 mt-4 text-base text-black sm:text-lg dark:text-neutral-200">
+              <h3 className="mb-2 mt-4 text-base text-neutral-200 sm:text-lg">
                 {pack.name}
               </h3>
 
@@ -25,7 +25,7 @@ export default function PackagesGrid() {
               </p>
               <Link
                 href={"#"}
-                className="absolute bottom-4 mt-4 flex items-center space-x-1 rounded-full bg-black py-1 pl-4 pr-1 text-xs font-bold text-white dark:bg-zinc-800"
+                className="absolute bottom-4 mt-4 flex items-center space-x-1 rounded-full bg-zinc-800 py-1 pl-4 pr-1 text-xs font-bold"
               >
                 <span>Buy now </span>
                 <span className="rounded-full bg-zinc-700 px-2 py-0 text-[0.6rem] text-white">

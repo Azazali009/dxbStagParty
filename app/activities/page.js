@@ -8,10 +8,10 @@ export default async function Paintball() {
   const Activities = await getActivities();
 
   return (
-    <div className="space-y-20 overflow-x-hidden p-6 antialiased">
+    <div className="space-y-20 p-6 antialiased">
       <SpotlightNew />
       <AnimatedHeading> Epic Stag Do Activities</AnimatedHeading>
-      {/* <Spotlight className="-top-40 left-0 md:-top-0 md:left-60" fill="white" /> */}
+
       {!Activities.length ? (
         <Empty name={"Activities"} />
       ) : (
