@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export default function AccountSidebar() {
   const pathname = usePathname();
   return (
-    <div className="sticky top-10 flex flex-col">
+    <div className="sticky top-10 flex flex-col border-r border-primary pr-4">
       <ul className="flex h-screen flex-col gap-2">
         {accountNavigations.map((link) => {
           return (

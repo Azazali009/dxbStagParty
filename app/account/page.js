@@ -27,7 +27,8 @@ export default function Page() {
   if (loading) return <p>Loading...</p>;
 
   return user ? (
-    <div>
+    <div className="space-y-4">
+      <h1>Welcome, Hilal</h1>
       <h2>✅ Logged in as: {user.email}</h2>
       <button
         className="mt-4 rounded bg-red-600 p-2 text-white"

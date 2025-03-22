@@ -1,22 +1,20 @@
-import {
-  CalendarDaysIcon,
-  HomeIcon,
-  UserIcon,
-} from "@heroicons/react/24/solid";
+import HomeIcon from "../svgIcons/HomeIcon";
+import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
+import UserIcon from "../svgIcons/UserIcon";
 export const accountNavigations = [
   {
     name: "Home",
     href: "/account",
-    icon: <HomeIcon className="h-5 w-5 text-indigo-600" />,
+    icon: <HomeIcon />,
   },
   {
     name: "Bookings",
     href: "/account/bookings",
-    icon: <CalendarDaysIcon className="h-5 w-5 text-indigo-600" />,
+    icon: <CalenderDaysIcon />,
   },
   {
     name: "profile",
     href: "/account/profile",
-    icon: <UserIcon className="h-5 w-5 text-indigo-600" />,
+    icon: <UserIcon />,
   },
 ];
