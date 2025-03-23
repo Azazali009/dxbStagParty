@@ -10,7 +10,7 @@ export default function HomeStagPartyGrids() {
         return (
           <BackgroundGradient
             key={i}
-            className="overflow-hidden rounded-[22px]"
+            className="overflow-hidden rounded-[22px] bg-zinc-900"
           >
             <Image
               src={`/paintball.jpg`}
@@ -20,7 +20,7 @@ export default function HomeStagPartyGrids() {
               className="object-cover"
             />
             <div className="p-4">
-              <h3 className="mb-2 mt-4 text-base capitalize text-white sm:text-lg dark:text-neutral-200">
+              <h3 className="mb-2 mt-4 text-base capitalize text-neutral-300 sm:text-lg">
                 stag party package
               </h3>
             </div>

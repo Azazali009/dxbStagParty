@@ -10,9 +10,9 @@ export default function HomeHeroSection() {
       <p className="text-lg text-neutral-400">
         Book an unforgettable Stag Do in Dubai!
       </p>
-      <div className="relative z-20 flex items-center gap-8">
-        <Button>choose your destinations</Button>
-        <Button>Search by dates</Button>
+      <div className="relative z-20 flex items-center gap-4">
+        <Button>book now</Button>
+        <Button>contact us</Button>
       </div>
     </div>
   );

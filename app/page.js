@@ -3,7 +3,7 @@ import HomeHeroSection from "./_components/HomeHeroSection";
 import HomeStagPartyGrids from "./_components/HomeStagPartyGrids";
 import Testimonilas from "./_components/Testimonials";
 import HowItWorks from "./_components/HowItWorks";
-import Map from "@/app/_components/Map";
+// import Map from "@/app/_components/Map";
 
 export default function Home() {
   return (
@@ -52,7 +52,7 @@ export default function Home() {
         <HomeStagPartyGrids />
       </div>
       <HowItWorks />
-      <Map />
+      {/* <Map /> */}
       <Testimonilas />
     </div>
   );
