@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 import BookingPage from "../../_components/BookingForm";
 import { getActivities, getActivity } from "../../_lib/data-services";
 import MeteorsDemo from "../../_components/MeteorsDemo";
@@ -13,17 +12,17 @@ export async function generateStaticParams() {
   }));
   return ids;
 }
+
 export default async function Page({ params }) {
   const activity = await getActivity(params.activityId);
-
-  const { id, name, price, image, duration, minAge, destinations } = activity;
+  const { id, name, price, image, duration, minAge } = activity;
 
   return (
     <div className="space-y-6 px-6 py-8 text-white">
       <h1 className="text-3xl font-bold">{name}</h1>
       <div className="relative grid h-full grid-cols-[2fr_1.1fr] items-start gap-8">
         {/* Left Container */}
-        <div className="sticky top-12 rounded-md border border-neutral-200 px-4 py-6 dark:border-neutral-700">
+        <div className="sticky top-12 rounded-md border border-tertiary px-4 py-6">
           <Image
             className="rounded-md"
             src={image}
@@ -76,20 +75,15 @@ export default async function Page({ params }) {
         </div>
 
         {/* Right Container */}
-        <div className="flex flex-col items-start gap-6 rounded-md border border-neutral-200 px-4 py-6 dark:border-neutral-700">
+        <div className="flex flex-col items-start gap-6 rounded-md border border-tertiary px-4 py-6">
           <h4 className="text-sm font-medium">
             from <strong className="text-2xl">${price}</strong> per person
           </h4>
           <button className="w-full rounded-full bg-gradient-to-r from-[#735d1d] via-secondary to-[#735d1d] px-8 py-3 font-semibold text-white duration-300 hover:scale-90 hover:border-blue-600 hover:bg-gradient-to-l">
             Add to cart
           </button>
-          <BookingPage
-            id={id}
-            price={price}
-            activityName={name}
-            destinations={destinations}
-          />
 
+          <BookingPage id={id} price={price} activityName={name} />
           <MeteorsDemo>
             <ul className="space-y-4">
               <li className="flex items-center gap-4">

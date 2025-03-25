@@ -2,6 +2,8 @@ import React from "react";
 import PaymentTimer from "./PaymentTimer";
 
 export default function AttendeeDetail({ attendee }) {
+  if (!attendee.length)
+    return <p className="text-center text-red-500">No attendess found</p>;
   return (
     <>
       <h2 className="!mt-12 text-xl font-semibold">All Attendee&apos;s</h2>

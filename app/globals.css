@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.tab-design {
+  transition-timing-function: linear !important;
+  mask-image:
+    radial-gradient(circle at left, transparent 0%, white 20%),
+    radial-gradient(circle at right, transparent 0%, white 20%);
+  -webkit-mask-image:
+    radial-gradient(circle at left, transparent 0%, white 20%),
+    radial-gradient(circle at right, transparent 0%, white 20%);
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
 .no-scrollbar::-webkit-scrollbar {
   width: 4px;
 }

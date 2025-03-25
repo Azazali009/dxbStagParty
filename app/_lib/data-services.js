@@ -57,6 +57,17 @@ export async function getBooking(id) {
   }
   return booking[0];
 }
+export async function getBookingByOrganizer(organizerEmail) {
+  let { data: booking, error } = await supabase
+    .from("booking")
+    .select("*")
+    .eq("organizerEmail", organizerEmail);
+  if (error) {
+    console.log(error);
+    throw new Error("Error while getting booking by organizer.");
+  }
+  return booking[0];
+}
 
 export async function getUser() {
   const { data } = await supabase.auth.getUser();

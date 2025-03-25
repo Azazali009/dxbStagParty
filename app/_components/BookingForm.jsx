@@ -6,12 +6,11 @@ import { useRouter } from "next/navigation";
 import LoggedInMessage from "../_components/LoggedInMeesage";
 import XMarkIcon from "../svgIcons/XMarkIcon";
 
-export default function BookingPage({ id, price, activityName, destinations }) {
+export default function BookingPage({ id, price, activityName }) {
   const router = useRouter();
   const [emails, setEmails] = useState([""]);
   const [user] = useState(true);
   const [organizerEmail, setOrganizerEmail] = useState("");
-  const [destination, setDestination] = useState("");
   const [bookingDate, setBookingDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState([]);
@@ -35,37 +34,24 @@ export default function BookingPage({ id, price, activityName, destinations }) {
   // ✅ Always include organizer email
   const allEmails = [...emails, organizerEmail];
   const splitAmount = Math.round(price / allEmails.length);
-  // const handleBooking = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   if (!emails || !organizerEmail) return;
-  //   const res = await fetch("/api/create-payment-links", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       emails: allEmails,
-  //       totalPrice: price,
-  //       activityName,
-  //     }),
-  //   });
-
-  //   const data = await res.json();
-
-  //   setLoading(false);
-  //   if (data.success) {
-  //     setLinks(data.paymentLinks);
-  //   } else {
-  //     alert("Error generating payment links");
-  //   }
-  // };
 
   // const handleBooking = async (e) => {
   //   e.preventDefault();
   //   setLoading(true);
 
   //   try {
-  //     // ✅ 1. Generate Payment Links from Stripe
   //     if (!emails || !organizerEmail) return;
+  //     // Combine Emails (Organizer + Attendees)
+  //     const allEmails = [...emails, organizerEmail];
+
+  //     // ✅ 2. Check for Duplicate Emails
+  //     const uniqueEmails = new Set(allEmails); // Set stores only unique values
+  //     if (uniqueEmails.size !== allEmails.length) {
+  //       alert("❌ Duplicate emails are not allowed!");
+  //       setLoading(false);
+  //       return;
+  //     }
+  //     // ✅ 1. Generate Payment Links from Stripe
   //     const res = await fetch("/api/create-payment-links", {
   //       method: "POST",
   //       headers: { "Content-Type": "application/json" },
@@ -75,6 +61,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
   //         activityName,
   //       }),
   //     });
+
   //     const data = await res.json();
 
   //     if (!data.success) {
@@ -90,96 +77,96 @@ export default function BookingPage({ id, price, activityName, destinations }) {
   //       organizerEmail,
   //       destination,
   //       activityName,
+  //       bookingDate,
   //     });
-  //     const attendeesData = allEmails.map((email) => ({
-  //       bookingID: booking.id,
-  //       email,
-  //       amountPaid: splitAmount,
-  //       status: "unpaid",
-  //       paymentLink: "www.stripe.com",
-  //       expires_at: new Date(),
-  //     }));
-  //     setLinks(data.paymentLinks);
+
+  //     // ✅ 3. Map Correct Payment Links to Each Attendee
+  //     const attendeesData = allEmails.map((email) => {
+  //       const paymentLink =
+  //         data.paymentLinks.find((link) => link.email === email)?.link || "";
+  //       return {
+  //         bookingID: booking.id,
+  //         email,
+  //         amountPaid: splitAmount,
+  //         status: "unpaid",
+  //         paymentLink, // ✅ Store actual Stripe link
+  //         expires_at: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // ✅ 12 days expiry
+  //       };
+  //     });
+
+  //     // ✅ 4. Insert Attendees with Payment Links
   //     await addAttendees(attendeesData);
-  //     alert("booking added successfully ✅");
+
+  //     // ✅ 5. Show Links in UI
+  //     setLinks(data.paymentLinks);
+
+  //     alert("Booking added successfully ✅");
   //     router.push(`/bookings/${booking.id}`);
   //   } catch (error) {
+  //     console.error("❌ Error:", error);
   //     alert("Error generating payment links");
   //   } finally {
   //     setLoading(false);
   //   }
   // };
-
   const handleBooking = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       if (!emails || !organizerEmail) return;
-      // Combine Emails (Organizer + Attendees)
+
+      // Combine Organizer Email + Attendees
       const allEmails = [...emails, organizerEmail];
 
-      // ✅ 2. Check for Duplicate Emails
-      const uniqueEmails = new Set(allEmails); // Set stores only unique values
+      // ✅ Check for Duplicate Emails
+      const uniqueEmails = new Set(allEmails);
       if (uniqueEmails.size !== allEmails.length) {
         alert("❌ Duplicate emails are not allowed!");
         setLoading(false);
         return;
       }
-      // ✅ 1. Generate Payment Links from Stripe
-      const res = await fetch("/api/create-payment-links", {
+
+      // ✅ Save Booking Data to LocalStorage (Before Payment)
+      localStorage.setItem(
+        "bookingData",
+        JSON.stringify({
+          activityID: id,
+          totalPrice: price,
+          attendeeEmails: allEmails,
+          organizerEmail,
+          activityName,
+          bookingDate,
+        }),
+      );
+
+      // ✅ Calculate Organizer's 15% Payment
+      const organizerAmount = Math.round(price * 0.15);
+
+      // ✅ Request Organizer Payment Link
+      const organizerPaymentRes = await fetch("/api/create-organizer-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          emails: allEmails,
-          totalPrice: price,
+          email: organizerEmail,
+          amount: organizerAmount,
           activityName,
         }),
       });
 
-      const data = await res.json();
+      const organizerPaymentData = await organizerPaymentRes.json();
 
-      if (!data.success) {
-        alert("Error generating payment links");
+      if (!organizerPaymentData.success) {
+        alert("Error generating organizer payment link.");
+        setLoading(false);
         return;
       }
 
-      // ✅ 2. Create Booking Entry
-      const booking = await addBooking({
-        activityID: id,
-        totalPrice: price,
-        attendeeEmails: allEmails,
-        organizerEmail,
-        destination,
-        activityName,
-        bookingDate,
-      });
-
-      // ✅ 3. Map Correct Payment Links to Each Attendee
-      const attendeesData = allEmails.map((email) => {
-        const paymentLink =
-          data.paymentLinks.find((link) => link.email === email)?.link || "";
-        return {
-          bookingID: booking.id,
-          email,
-          amountPaid: splitAmount,
-          status: "unpaid",
-          paymentLink, // ✅ Store actual Stripe link
-          expires_at: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // ✅ 12 days expiry
-        };
-      });
-
-      // ✅ 4. Insert Attendees with Payment Links
-      await addAttendees(attendeesData);
-
-      // ✅ 5. Show Links in UI
-      setLinks(data.paymentLinks);
-
-      alert("Booking added successfully ✅");
-      router.push(`/bookings/${booking.id}`);
+      // ✅ Redirect Organizer to Stripe Checkout for Payment
+      window.location.href = organizerPaymentData.paymentLink;
     } catch (error) {
       console.error("❌ Error:", error);
-      alert("Error generating payment links");
+      alert("Error processing payment.");
     } finally {
       setLoading(false);
     }
@@ -187,7 +174,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
 
   if (!user) return <LoggedInMessage />;
   return (
-    <div className="w-full space-y-6 px-3 py-8 shadow-xl dark:text-white">
+    <div className="w-full space-y-6 px-3 py-8 text-neutral-200 shadow-xl">
       <h1 className="text-2xl font-semibold">Stag Activity Booking</h1>
 
       <p className="text-xl font-medium">Price: ${price}</p>
@@ -196,7 +183,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
         className="flex flex-col items-start gap-6"
       >
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-medium capitalize text-neutral-800 dark:text-white">
+          <span className="text-sm font-medium capitalize">
             Organizer Email:
           </span>
           <input
@@ -210,9 +197,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
           />
         </label>
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-medium capitalize text-neutral-800 dark:text-white">
-            Select Date:
-          </span>
+          <span className="text-sm font-medium capitalize">Select Date:</span>
           <input
             type="date"
             value={bookingDate}
@@ -222,28 +207,10 @@ export default function BookingPage({ id, price, activityName, destinations }) {
             required
           />
         </label>
-        <label className="flex flex-col gap-2" htmlFor="destinations">
-          <span className="text-sm font-medium capitalize text-neutral-800 dark:text-white">
-            Destination
-          </span>
-          <select
-            className="h-10 w-44 appearance-auto rounded-md bg-tertiary p-2 text-sm"
-            name="destinations"
-            id="destinations"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-          >
-            <option value="null">Select</option>
-            {destinations.map((dest) => (
-              <option key={dest} value={dest}>
-                {dest}
-              </option>
-            ))}
-          </select>
-        </label>
+
         {emails.map((email, index) => (
           <label key={index} className="flex flex-col gap-2">
-            <span className="text-sm font-medium capitalize text-neutral-800 dark:text-white">
+            <span className="text-sm font-medium capitalize">
               Attendee {index + 1} Email:
             </span>
             <div className="flex items-center gap-3">

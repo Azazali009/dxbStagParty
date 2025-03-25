@@ -12,7 +12,7 @@ export const navbar = [
   {
     id: 3,
     navItem: "Packages",
-    href: "/do-stag-packages",
+    href: "/packages",
   },
   {
     id: 4,
