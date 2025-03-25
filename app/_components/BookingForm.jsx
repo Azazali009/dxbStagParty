@@ -233,16 +233,16 @@ export default function BookingPage({ id, price, activityName }) {
           </label>
         ))}
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col items-start gap-3">
           <button
             className="rounded bg-gradient-to-br from-emerald-800 to-green-500 px-4 py-2.5 font-semibold text-white shadow-shadowOne duration-300 hover:scale-95 hover:bg-gradient-to-tr disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-gray-500 disabled:hover:scale-100"
             type="submit"
             disabled={loading || !organizerEmail}
           >
-            {loading ? "Processing..." : "Send Payment Links"}
+            {loading ? "Processing..." : "Pay 15% to Confirm Booking"}
           </button>
           <button
-            className="inline-block rounded bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 text-sm font-semibold capitalize text-white hover:bg-gradient-to-tr"
+            className="-order-1 inline-block rounded bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 text-sm font-semibold capitalize text-white hover:bg-gradient-to-tr"
             onClick={addEmail}
             type="button"
           >
