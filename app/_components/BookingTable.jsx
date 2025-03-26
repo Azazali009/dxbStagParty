@@ -17,7 +17,7 @@ export default function BookingTable({ booking, attendee }) {
           <p className="line-clamp-1"> {booking?.activityName}</p>
           <p> {booking.totalPrice}</p>
           <p> {attendee.length}</p>
-          <p> {booking.destination}</p>
+          <p>Dubai</p>
           <p className="line-clamp-1 text-wrap"> {booking.organizerEmail}</p>
         </div>
       </div>

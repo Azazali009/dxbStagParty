@@ -17,7 +17,7 @@ export async function getAttendees(id) {
     .eq("bookingID", id);
   if (error) {
     console.log(error);
-    throw new Error("Error while getting. Please try again later!");
+    throw new Error("Error while getting attendees. Please try again later!");
   }
   return data;
 }
@@ -91,4 +91,51 @@ export async function updateAttendeeStatus(email) {
 
   // 🔄 Step 4: Check if All Attendees Have Paid
   await checkAndUpdateBookingStatus(bookingID);
+}
+
+// ✅ Function to Extend Expiry Date by 24 Hours
+export async function extendAttendeeExpiry(attendeeID) {
+  if (!attendeeID) {
+    throw new Error("Missing attendee ID");
+  }
+
+  // ✅ Fetch current expiry date
+  const { data: attendee, error } = await supabase
+    .from("attendee")
+    .select("expires_at,has_extended")
+    .eq("id", attendeeID)
+    .single();
+
+  if (error || !attendee) {
+    throw new Error("Attendee not found");
+  }
+
+  // ✅ If attendee has already extended, prevent further extension
+  if (attendee.has_extended) {
+    throw new Error("You have already extended your payment link once!");
+  }
+
+  const currentExpiry = new Date(attendee.expires_at);
+  const now = new Date();
+
+  // ✅ Ensure the current expiry has not passed
+  if (currentExpiry < now) {
+    throw new Error("Payment link has already expired!");
+  }
+
+  // ✅ Extend expiry by 24 hours
+  const newExpiry = new Date(currentExpiry.getTime() + 24 * 60 * 60 * 1000);
+
+  // ✅ Update expiry date in Supabase
+  const { error: updateError } = await supabase
+    .from("attendee")
+    .update({ expires_at: newExpiry, has_extended: true })
+    .eq("id", attendeeID);
+
+  if (updateError) {
+    console.error("Error:", updateError);
+    throw new Error("Failed to update expiry");
+  }
+
+  return newExpiry;
 }

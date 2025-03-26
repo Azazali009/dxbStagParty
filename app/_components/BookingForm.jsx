@@ -127,6 +127,8 @@ export default function BookingPage({ id, price, activityName }) {
         return;
       }
 
+      // ✅ Calculate Organizer's 15% Payment
+      const organizerAmount = Math.round(price * 0.15);
       // ✅ Save Booking Data to LocalStorage (Before Payment)
       localStorage.setItem(
         "bookingData",
@@ -137,11 +139,9 @@ export default function BookingPage({ id, price, activityName }) {
           organizerEmail,
           activityName,
           bookingDate,
+          paidAmount: organizerAmount,
         }),
       );
-
-      // ✅ Calculate Organizer's 15% Payment
-      const organizerAmount = Math.round(price * 0.15);
 
       // ✅ Request Organizer Payment Link
       const organizerPaymentRes = await fetch("/api/create-organizer-payment", {

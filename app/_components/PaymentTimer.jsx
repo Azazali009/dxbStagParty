@@ -47,7 +47,7 @@ export default function PaymentTimer({ expiresAt }) {
   }
 
   return (
-    <p className="text-sm font-semibold text-green-500">
+    <p className="text-xl font-semibold text-secondary">
       Payment link expires in:{" "}
       <span className="font-semibold">
         {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}

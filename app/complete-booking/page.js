@@ -64,6 +64,7 @@ export default function CompleteBooking() {
         await addAttendees(attendeesData);
         alert("✅ Booking complete! Attendees will receive payment links.");
         router.push(`/bookings/${booking.id}`); // Redirect to bookings page
+        localStorage.removeItem("bookingData");
       } catch (error) {
         alert("❌ Unexpected error.");
       } finally {

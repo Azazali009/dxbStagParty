@@ -4,6 +4,7 @@ import PaymentProgressBar from "../../_components/PaymentProgressBar";
 import BookingTable from "../../_components/BookingTable";
 import AttendeeDetail from "../../_components/AttendeeDetail";
 
+export const revalidate = 0;
 export async function generateStaticParams() {
   const bookings = await getBookings();
   const ids = bookings.map((curBooking) => ({
