@@ -4,8 +4,8 @@ import { getActivities, getActivity } from "../../_lib/data-services";
 import MeteorsDemo from "../../_components/MeteorsDemo";
 import CheckBadgeIcon from "@/app/svgIcons/CheckBadgeIcon";
 import InformationCircleIcon from "@/app/svgIcons/InformationCircleIcon";
-import SinglePageBookingSection from "@/app/_components/SinglePageBookingSection";
-import SinglePageBookingDetails from "@/app/_components/SinglePageBookingDetails";
+import SinglePageBookingSection from "../../_components/SinglePageBookingSection";
+import SinglePageBookingDetails from "../../_components/SinglePageBookingDetails";
 import Empty from "@/app/_components/Empty";
 export async function generateStaticParams() {
   const activities = await getActivities();
