@@ -2,7 +2,7 @@ import { getActivities, getActivity } from "../../_lib/data-services";
 
 import SinglePageBookingSection from "../../_components/SinglePageBookingSection";
 import SinglePageBookingDetails from "../../_components/SinglePageBookingDetails";
-import Empty from "@/app/_components/Empty";
+import Empty from "../../_components/Empty";
 export async function generateStaticParams() {
   const activities = await getActivities();
   const ids = activities.map((curActivity) => ({
