@@ -7,7 +7,7 @@ export default function AnimatedHeading({ children, className }) {
   return (
     <motion.h1
       className={cn(
-        "bg-opacity-50 bg-gradient-to-b from-secondary via-[#c5a545] to-[#392e0e] bg-clip-text text-center text-4xl font-bold !leading-[1.2] text-transparent md:text-7xl",
+        "bg-opacity-50 bg-gradient-to-b from-secondary via-[#c5a545] to-[#392e0e] bg-clip-text text-center text-3xl font-bold !leading-[1.2] text-transparent sm:text-5xl md:text-7xl",
         className,
       )}
       initial={{ opacity: 0.0, y: 40 }}

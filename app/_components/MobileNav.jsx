@@ -1,15 +1,17 @@
 "use client";
 import Humburger from "../svgIcons/Humburger";
 import XMarkIcon from "../svgIcons/XMarkIcon";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { navbar } from "./navbarData";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { set } from "date-fns";
 
 export default function MobileNav() {
+  const ref = useRef();
   const pathName = usePathname();
   const [navOpen, setNavOpen] = useState(false);
-
+  const handleCloseMenu = () => setNavOpen(false);
   useEffect(() => {
     const html = document.querySelector("html");
     if (navOpen) {
@@ -26,10 +28,16 @@ export default function MobileNav() {
 
       <div
         className={`fixed left-0 top-0 min-h-screen w-full bg-black/80 backdrop-blur-sm ${navOpen ? "pointer-events-auto visible translate-x-0 opacity-100" : "pointer-events-none invisible -translate-x-[100%] opacity-0"} transition-all duration-700`}
+        ref={ref}
+        onClick={(e) => {
+          if (e.target === ref.current) {
+            setNavOpen(false);
+          }
+        }}
       >
         <div className={`fixed left-0 top-0 min-h-screen w-[50%] bg-primary`}>
           <button
-            className="absolute right-0 top-4 flex aspect-square w-8 translate-x-1/2 items-center justify-center rounded-full bg-primary shadow-shadowOne transition-all duration-300 hover:shadow-none"
+            className="absolute right-0 top-4 flex aspect-square w-8 translate-x-[100%] items-center justify-center rounded-full bg-primary shadow-xl transition-all duration-300 hover:shadow-none"
             onClick={() => setNavOpen(false)}
           >
             <XMarkIcon />

@@ -14,7 +14,7 @@ export default function PackagesHeroSection() {
         activities, accommodation, nightlife & ideas to suit all groups & every
         budget.
       </p>
-      <div className="relative z-20 flex items-center gap-8">
+      <div className="relative z-20 flex flex-wrap items-center justify-center gap-2 sm:gap-8">
         <Button>choose your destinations</Button>
         <Button>Search by dates</Button>
       </div>

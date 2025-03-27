@@ -1,6 +1,7 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
+import TosterComp from "@/app/_components/Toaster";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
         className={`${poppins.className} overflow-x-hidden bg-primary text-white antialiased`}
       >
         <Header />
+        <TosterComp />
         <main className="p-4">{children}</main>
       </body>
     </html>

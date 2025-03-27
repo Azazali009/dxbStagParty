@@ -11,14 +11,15 @@ export default function BookingTable({ booking, attendee }) {
           {booking.paymentStatus}
         </span>
       </h1>
-      <div className="mx-auto max-w-4xl text-[14px]">
+      <div className="mx-auto max-w-6xl text-[14px]">
         <BookingTableHeader />
-        <div className="grid grid-cols-5 justify-items-center rounded-b-md border border-[#424242] bg-transparent px-2 py-2">
+        <div className="grid grid-cols-7 justify-items-center rounded-b-md border border-[#424242] bg-transparent px-2 py-2">
           <p className="line-clamp-1"> {booking?.activityName}</p>
           <p> {booking.totalPrice}</p>
+          <p> {booking?.paidAmount ?? "0"}</p>
           <p> {attendee.length}</p>
           <p>Dubai</p>
-          <p className="line-clamp-1 text-wrap"> {booking.organizerEmail}</p>
+          <p className="col-span-2 text-balance"> {booking.organizerEmail}</p>
         </div>
       </div>
     </div>

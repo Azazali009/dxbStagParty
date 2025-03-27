@@ -5,6 +5,7 @@ import { addAttendees } from "../_lib/attendeeApi";
 import { useRouter } from "next/navigation";
 import LoggedInMessage from "../_components/LoggedInMeesage";
 import XMarkIcon from "../svgIcons/XMarkIcon";
+import toast from "react-hot-toast";
 
 export default function BookingPage({ id, price, activityName }) {
   const router = useRouter();
@@ -13,7 +14,7 @@ export default function BookingPage({ id, price, activityName }) {
   const [organizerEmail, setOrganizerEmail] = useState("");
   const [bookingDate, setBookingDate] = useState("");
   const [loading, setLoading] = useState(false);
-  const [links, setLinks] = useState([]);
+  // const [links, setLinks] = useState([]);
 
   // add email
   const addEmail = () => {
@@ -110,6 +111,7 @@ export default function BookingPage({ id, price, activityName }) {
   //   }
   // };
   const handleBooking = async (e) => {
+    const toastId = toast.loading("Processing...");
     e.preventDefault();
     setLoading(true);
 
@@ -122,7 +124,7 @@ export default function BookingPage({ id, price, activityName }) {
       // ✅ Check for Duplicate Emails
       const uniqueEmails = new Set(allEmails);
       if (uniqueEmails.size !== allEmails.length) {
-        alert("❌ Duplicate emails are not allowed!");
+        toast.error("Duplicate emails are not allowed!");
         setLoading(false);
         return;
       }
@@ -157,7 +159,9 @@ export default function BookingPage({ id, price, activityName }) {
       const organizerPaymentData = await organizerPaymentRes.json();
 
       if (!organizerPaymentData.success) {
-        alert("Error generating organizer payment link.");
+        toast.error("Error generating organizer payment link.", {
+          id: toastId,
+        });
         setLoading(false);
         return;
       }
@@ -166,7 +170,7 @@ export default function BookingPage({ id, price, activityName }) {
       window.location.href = organizerPaymentData.paymentLink;
     } catch (error) {
       console.error("❌ Error:", error);
-      alert("Error processing payment.");
+      toast.error("Error processing payment.", { id: toastId });
     } finally {
       setLoading(false);
     }
@@ -174,10 +178,12 @@ export default function BookingPage({ id, price, activityName }) {
 
   if (!user) return <LoggedInMessage />;
   return (
-    <div className="w-full space-y-6 px-3 py-8 text-neutral-200 shadow-xl">
-      <h1 className="text-2xl font-semibold">Stag Activity Booking</h1>
+    <div className="mb-8 w-full space-y-6 px-3 py-8 text-neutral-200 shadow-xl">
+      <h1 className="text-xl font-semibold sm:text-2xl">
+        Stag Activity Booking
+      </h1>
 
-      <p className="text-xl font-medium">Price: ${price}</p>
+      <p className="text-base font-medium sm:text-xl">Price: ${price}</p>
       <form
         onSubmit={handleBooking}
         className="flex flex-col items-start gap-6"
@@ -208,30 +214,31 @@ export default function BookingPage({ id, price, activityName }) {
           />
         </label>
 
-        {emails.map((email, index) => (
-          <label key={index} className="flex flex-col gap-2">
-            <span className="text-sm font-medium capitalize">
-              Attendee {index + 1} Email:
-            </span>
-            <div className="flex items-center gap-3">
-              <input
-                type="email"
-                placeholder={`Enter Attendee ${index + 1} email`}
-                value={email}
-                onChange={(e) => updateEmail(index, e.target.value)}
-                className="h-10 rounded-md bg-tertiary px-2 text-[14px] placeholder:text-sm focus:outline-blue-600"
-                required
-              />
-              <button
-                onClick={() => removeEmail(index)}
-                type="button"
-                className="flex size-6 items-center justify-center rounded-md bg-gradient-to-b from-red-800 to-red-500 text-sm font-medium capitalize text-red-100 hover:bg-gradient-to-t"
-              >
-                <XMarkIcon />
-              </button>
-            </div>
-          </label>
-        ))}
+        {emails.length > 0 &&
+          emails.map((email, index) => (
+            <label key={index} className="flex flex-col gap-2">
+              <span className="text-sm font-medium capitalize">
+                Attendee {index + 1} Email:
+              </span>
+              <div className="flex items-center gap-3">
+                <input
+                  type="email"
+                  placeholder={`Enter Attendee ${index + 1} email`}
+                  value={email}
+                  onChange={(e) => updateEmail(index, e.target.value)}
+                  className="h-10 rounded-md bg-tertiary px-2 text-[14px] placeholder:text-sm focus:outline-blue-600"
+                  required
+                />
+                <button
+                  onClick={() => removeEmail(index)}
+                  type="button"
+                  className="flex size-6 items-center justify-center rounded-md bg-gradient-to-b from-red-800 to-red-500 text-sm font-medium capitalize text-red-100 hover:bg-gradient-to-t"
+                >
+                  <XMarkIcon />
+                </button>
+              </div>
+            </label>
+          ))}
 
         <div className="flex flex-col items-start gap-3">
           <button

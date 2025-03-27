@@ -8,12 +8,14 @@ export default function PackageAddons() {
   const totalPrice = Number(transporattion) + Number(accessories);
   return (
     <div className="mt-8 flex flex-col items-center gap-4 pb-20">
-      <h3 className="text-3xl font-semibold text-neutral-200">
+      <h3 className="font-semibold text-neutral-200 sm:text-3xl">
         Package Add Ons:
       </h3>
-      <h3 className="text-lg text-neutral-200">Your package can include</h3>
+      <h3 className="text-sm text-neutral-200 sm:text-lg">
+        Your package can include
+      </h3>
       <p>&darr;</p>
-      <div className="mt-6 flex items-center gap-8">
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-8">
         <div className="flex flex-col gap-2">
           <label
             className="text-sm font-medium text-neutral-300"

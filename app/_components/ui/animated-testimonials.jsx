@@ -30,13 +30,13 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
     return Math.floor(Math.random() * 21) - 10;
   };
   return (
-    <div className="max-w-sm px-4 py-20 font-sans antialiased md:max-w-5xl md:px-8 lg:px-12">
-      <h3 className="mb-10 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-4xl font-bold text-transparent">
+    <div className="mx-auto max-w-sm px-4 py-20 font-sans antialiased sm:mx-0 md:max-w-5xl md:px-8 lg:px-12">
+      <h3 className="mb-10 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-2xl font-bold text-transparent sm:text-4xl">
         What our client says
       </h3>
       <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">
         <div>
-          <div className="relative h-80 w-full">
+          <div className="relative min-h-80 w-full">
             <AnimatePresence>
               {testimonials.map((testimonial, index) => (
                 <motion.div
@@ -108,7 +108,7 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
             <p className="text-sm text-gray-500 dark:text-neutral-500">
               {testimonials[active].designation}
             </p>
-            <motion.p className="mt-8 text-lg text-gray-500 dark:text-neutral-300">
+            <motion.p className="mt-8 text-sm text-gray-500 sm:text-lg dark:text-neutral-300">
               {testimonials[active].quote.split(" ").map((word, index) => (
                 <motion.span
                   key={index}

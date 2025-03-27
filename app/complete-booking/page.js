@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { addBooking } from "../_lib/data-services";
 import { addAttendees } from "../_lib/attendeeApi";
+import toast from "react-hot-toast";
 
 export default function CompleteBooking() {
   const router = useRouter();
@@ -10,12 +11,15 @@ export default function CompleteBooking() {
 
   useEffect(() => {
     const processBooking = async () => {
+      const toastId = toast.loading("Processing...");
       try {
         // ✅ Retrieve Booking Data from LocalStorage
         const bookingData = JSON.parse(localStorage.getItem("bookingData"));
 
         if (!bookingData) {
-          alert("❌ Missing booking details.");
+          toast.error("Missing booking details. Unable to complete booking.", {
+            id: toastId,
+          });
           router.push("/");
           return;
         }
@@ -39,7 +43,9 @@ export default function CompleteBooking() {
         const data = await res.json();
 
         if (!data.success) {
-          alert("❌ Error generating attendee payment links.");
+          toast.error("Error generating attendee payment links.", {
+            id: toastId,
+          });
           router.push("/");
           return;
         }
@@ -62,11 +68,14 @@ export default function CompleteBooking() {
           };
         });
         await addAttendees(attendeesData);
-        alert("✅ Booking complete! Attendees will receive payment links.");
+        toast.success(
+          "Booking complete! Attendees will receive payment links.",
+          { id: toastId },
+        );
         router.push(`/bookings/${booking.id}`); // Redirect to bookings page
         localStorage.removeItem("bookingData");
       } catch (error) {
-        alert("❌ Unexpected error.");
+        toast.error("Unexpected error.", { id: toastId });
       } finally {
         setLoading(false);
       }

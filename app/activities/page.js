@@ -1,26 +1,21 @@
-import ActivityCard from "../_components/ActivityCard";
-import { getActivities } from "../_lib/data-services";
+import Activities from "@/app/_components/Activities";
 import { Spotlight as SpotlightNew } from "../_components/ui/spotlight-new";
-import Empty from "../_components/Empty";
+import Spinner from "@/app/_components/Spinner";
 import AnimatedHeading from "../_components/AnimatedHeading";
+import { Suspense } from "react";
 
-export default async function Paintball() {
-  const Activities = await getActivities();
-
+export default async function Page() {
   return (
-    <div className="space-y-20 p-6 antialiased">
-      <SpotlightNew />
-      <AnimatedHeading> Epic Stag Do Activities</AnimatedHeading>
+    <div className="space-y-20 px-2 py-10 antialiased sm:p-6">
+      {/* <SpotlightNew /> */}
+      <AnimatedHeading className={"text-nowrap text-xl sm:text-wrap"}>
+        {" "}
+        Epic Stag Do Activities
+      </AnimatedHeading>
 
-      {!Activities.length ? (
-        <Empty name={"Activities"} />
-      ) : (
-        <div className="mx-auto grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {Activities.map((activity) => (
-            <ActivityCard key={activity.id} activity={activity} />
-          ))}
-        </div>
-      )}
+      <Suspense fallback={<Spinner />}>
+        <Activities />
+      </Suspense>
     </div>
   );
 }

@@ -46,7 +46,7 @@ export default function ColourfulText({ text }) {
         duration: 0.5,
         delay: index * 0.05,
       }}
-      className="inline-block whitespace-pre text-center text-5xl font-semibold tracking-tight"
+      className="inline-block whitespace-pre text-center text-3xl font-semibold tracking-tight sm:text-5xl"
     >
       {char}
     </motion.span>

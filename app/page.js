@@ -1,8 +1,9 @@
-import Link from "next/link";
 import HomeHeroSection from "./_components/HomeHeroSection";
-import HomeStagPartyGrids from "./_components/HomeStagPartyGrids";
+// import HomeStagPartyGrids from "./_components/HomeStagPartyGrids";
 import Testimonilas from "./_components/Testimonials";
 import HowItWorks from "./_components/HowItWorks";
+import StagPartyPackages from "@/app/_components/StagPartyPackages";
+import Activities from "@/app/_components/Activities";
 // import Map from "@/app/_components/Map";
 
 export default function Home() {
@@ -11,7 +12,14 @@ export default function Home() {
       <HomeHeroSection />
       {/* divider */}
       <div className="h-[0.06px] w-full bg-tertiary/40"></div>
-      <div className="space-y-9 py-16">
+      <div className="space-y-12 py-10 sm:py-20">
+        <h2 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-center text-2xl font-bold text-transparent sm:text-3xl md:text-5xl">
+          Explore our activities
+        </h2>
+        <Activities />
+      </div>
+      <StagPartyPackages />
+      {/* <div className="space-y-9 py-16">
         <h2 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-center text-5xl font-bold text-transparent">
           What would you like to book?
         </h2>
@@ -50,7 +58,7 @@ export default function Home() {
           </li>
         </ul>
         <HomeStagPartyGrids />
-      </div>
+      </div> */}
       <HowItWorks />
       {/* <Map /> */}
       <Testimonilas />

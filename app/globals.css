@@ -12,6 +12,9 @@
     radial-gradient(circle at right, transparent 0%, white 20%);
   -webkit-mask-composite: destination-in;
   mask-composite: intersect;
+
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
@@ -58,4 +61,14 @@
       transform: rotate(1turn);
     }
   }
+}
+
+.no-visible-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.no-visible-scrollbar::-webkit-scrollbar {
+  display: none;
 }
