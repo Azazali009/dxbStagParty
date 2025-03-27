@@ -1,9 +1,5 @@
-import Image from "next/image";
-import BookingPage from "../../_components/BookingForm";
 import { getActivities, getActivity } from "../../_lib/data-services";
-import MeteorsDemo from "../../_components/MeteorsDemo";
-import CheckBadgeIcon from "@/app/svgIcons/CheckBadgeIcon";
-import InformationCircleIcon from "@/app/svgIcons/InformationCircleIcon";
+
 import SinglePageBookingSection from "../../_components/SinglePageBookingSection";
 import SinglePageBookingDetails from "../../_components/SinglePageBookingDetails";
 import Empty from "@/app/_components/Empty";
