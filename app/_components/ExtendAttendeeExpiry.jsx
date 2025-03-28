@@ -5,7 +5,11 @@ import { extendAttendeeExpiry } from "../_lib/attendeeApi";
 import Button from "./Button";
 import { useRouter } from "next/navigation";
 
-export default function ExtendAttendeeExpiry({ id, hasExtended }) {
+export default function ExtendAttendeeExpiry({
+  id,
+  hasExtended,
+  attendeePayemntStatus,
+}) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -25,7 +29,7 @@ export default function ExtendAttendeeExpiry({ id, hasExtended }) {
     }
   };
 
-  return !hasExtended ? (
+  return !hasExtended && attendeePayemntStatus === "unpaid" ? (
     <Button variation="gold" onClick={handleExtendExpiry} disabled={loading}>
       {loading ? "Processing..." : "Extend Expiry by 24h"}
     </Button>

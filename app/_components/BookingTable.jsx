@@ -2,7 +2,7 @@ import BookingTableHeader from "./BookingTableHeader";
 
 export default function BookingTable({ booking, attendee }) {
   return (
-    <div className="">
+    <div className="!my-20">
       <h1 className="mb-4 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-3xl font-bold capitalize text-transparent">
         Payment:{" "}
         <span
@@ -11,7 +11,7 @@ export default function BookingTable({ booking, attendee }) {
           {booking.paymentStatus}
         </span>
       </h1>
-      <div className="mx-auto max-w-6xl text-[14px]">
+      <div className="hidden max-w-full text-[14px] md:block">
         <BookingTableHeader />
         <div className="grid grid-cols-7 justify-items-center rounded-b-md border border-[#424242] bg-transparent px-2 py-2">
           <p className="line-clamp-1"> {booking?.activityName}</p>

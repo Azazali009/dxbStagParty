@@ -21,7 +21,7 @@ export default async function page({ params }) {
   // await updateAttendeeStatus("aizaz.0938@gmail.com");
 
   return (
-    <div className="space-y-8 py-8">
+    <div className="space-y-14 py-8">
       <PaymentProgressBar attendee={attendee} />
       <BookingTable booking={booking} attendee={attendee} />
 

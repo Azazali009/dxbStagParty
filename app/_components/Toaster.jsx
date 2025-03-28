@@ -9,17 +9,23 @@ export default function ToasterComp() {
       toastOptions={{
         success: {
           duration: 3000,
+          style: {
+            background: "#8E721D",
+            color: "white",
+          },
         },
         error: {
           duration: 5000,
         },
         style: {
-          fontSize: "14px",
+          fontSize: "15px",
           maxWidth: "500px",
           padding: "10px 24px",
           fontWeight: "500",
           background: "white",
           color: "rgb(33, 21, 21)",
+          fontFamily: "Poppins, sans-serif",
+          boxShadow: "0 0 10px rgba(0, 0, 0,0.2)",
         },
       }}
     />

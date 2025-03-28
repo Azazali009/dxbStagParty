@@ -6,9 +6,9 @@ export default function AttendeeDetail({ attendee }) {
   if (!attendee.length)
     return <p className="text-center text-red-500">No attendess found</p>;
   return (
-    <>
+    <div className="space-y-4">
       <h2 className="!mt-12 text-xl font-semibold">All Attendee&apos;s</h2>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
         {attendee.map(
           (attendee) => (
             // attendee.email !== booking.organizerEmail && (
@@ -16,16 +16,16 @@ export default function AttendeeDetail({ attendee }) {
               key={attendee.id}
               className={`space-y-4 bg-transparent shadow-shadowOne ${attendee.status === "unpaid" ? "text-white" : "text-green-500"} rounded-lg px-6 py-10 shadow-lg`}
             >
-              <h1 className="flex items-center gap-2 text-3xl font-bold">
+              <h1 className="flex items-center gap-2 text-xl font-bold md:text-2xl">
                 <span>Attendee:</span>
-                <span className="text-xl font-normal">
+                <span className="text-lg font-normal sm:text-xl">
                   {attendee?.email?.split("@")[0]}
                 </span>
               </h1>
-              <div className="space-x-2 text-xl tracking-wide">
+              <div className="space-x-2 text-base tracking-wide md:text-xl">
                 <span className="font-bold">Attendee Payment:</span>
                 <span
-                  className={`font-semibold capitalize ${attendee.status === "unpaid" ? "text-red-500" : "text-secondary"}`}
+                  className={`font-semibold capitalize ${attendee.status === "unpaid" ? "text-red-500" : "text-green-500"}`}
                 >
                   {attendee.status} {attendee.status === "unpaid" ? "❌" : "✅"}
                 </span>
@@ -37,6 +37,7 @@ export default function AttendeeDetail({ attendee }) {
 
               <ExtendAttendeeExpiry
                 id={attendee.id}
+                attendeePayemntStatus={attendee.status}
                 hasExtended={attendee.has_extended}
               />
             </div>
@@ -44,6 +45,6 @@ export default function AttendeeDetail({ attendee }) {
           // ),
         )}
       </div>
-    </>
+    </div>
   );
 }
