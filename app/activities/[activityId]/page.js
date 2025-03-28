@@ -1,7 +1,7 @@
 import { getActivities, getActivity } from "../../_lib/data-services";
 
-import SinglePageBookingSection from "../../_components/SinglePageBookingSection";
-import SinglePageBookingDetails from "../../_components/SinglePageBookingDetails";
+import SinglePageBookingSection from "../../_components/SInglePageBookingSection.jsx";
+import SinglePageBookingDetails from "../../_components/SinglePageBookingDetails.jsx";
 import Empty from "../../_components/Empty";
 export async function generateStaticParams() {
   const activities = await getActivities();

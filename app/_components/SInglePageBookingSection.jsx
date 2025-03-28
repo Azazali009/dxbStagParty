@@ -1,4 +1,3 @@
-import React from "react";
 import BookingPage from "./BookingForm";
 import MeteorsDemo from "./MeteorsDemo";
 import CheckBadgeIcon from "../svgIcons/CheckBadgeIcon";
