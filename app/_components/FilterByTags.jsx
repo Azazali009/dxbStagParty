@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-
-export default function Tabs({ tabs, filter, setFilter }) {
+export default function FilterByTags({ tabs, filter, setFilter }) {
   return (
-    <ul className="scrollbar-hide tab-design mx-auto hidden w-full max-w-5xl snap-x snap-mandatory justify-start gap-4 !overflow-x-auto px-4 lg:flex">
+    <ul className="flex flex-col gap-4">
+      <h2 className="text-lg font-semibold capitalize">
+        Filter by tags &darr;
+      </h2>
       {tabs.map((tab) => (
         <li key={tab} className="snap-start">
           <button
@@ -12,7 +12,7 @@ export default function Tabs({ tabs, filter, setFilter }) {
               filter === tab ? "bg-secondary" : "bg-transparent"
             } hover:bg-secondary`}
           >
-            {tab.split("-").join(" ")}
+            {tab}
           </button>
         </li>
       ))}

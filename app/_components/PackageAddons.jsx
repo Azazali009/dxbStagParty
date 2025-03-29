@@ -2,17 +2,17 @@
 import React, { useState } from "react";
 import Button from "./Button";
 
-export default function PackageAddons() {
+export default function PackageAddons({ addons, price }) {
   const [transporattion, setTransportation] = useState(0);
   const [accessories, setAccessories] = useState(0);
-  const totalPrice = Number(transporattion) + Number(accessories);
+  const totalPrice = Number(transporattion) + Number(accessories) + price;
   return (
     <div className="mt-8 flex flex-col items-center gap-4 pb-20">
       <h3 className="font-semibold text-neutral-200 sm:text-3xl">
         Package Add Ons:
       </h3>
       <h3 className="text-sm text-neutral-200 sm:text-lg">
-        Your package can include
+        {addons.join(", ")}
       </h3>
       <p>&darr;</p>
       <div className="mt-6 flex flex-wrap items-center justify-center gap-8">
@@ -59,7 +59,12 @@ export default function PackageAddons() {
       <div className="mt-8">
         <Button variation="gold" className={"flex items-center gap-2"}>
           <span>Book Now</span>
-          {totalPrice > 0 && <span className="text-lg">${totalPrice}</span>}
+          {totalPrice > 0 && (
+            <span className="space-x-2 text-lg">
+              {" "}
+              <span>AED</span> {totalPrice}
+            </span>
+          )}
         </Button>
       </div>
     </div>

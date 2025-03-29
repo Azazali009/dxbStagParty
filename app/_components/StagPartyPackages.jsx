@@ -1,6 +1,29 @@
+import { Suspense } from "react";
 import PackagesGrid from "../_components/PackagesGrid";
 import TextExpander from "../_components/TextExpander";
-export default function StagPartyPackages() {
+import { getPackages } from "@/app/_lib/packagesApi";
+import Spinner from "./Spinner";
+
+export default async function StagPartyPackages({ filter }) {
+  const packages = await getPackages();
+  let filteredPackages;
+  if (filter === "all" || !filter) filteredPackages = packages;
+  if (filter === "small")
+    filteredPackages = packages.filter((pack) => {
+      const [min, max] = pack.group_size.split("-").map(Number);
+      return min <= 4;
+    });
+  if (filter === "medium")
+    filteredPackages = packages.filter((pack) => {
+      const [min, max] = pack.group_size.split("-").map(Number);
+      return min <= 5 && max >= 7;
+    });
+  if (filter === "large")
+    filteredPackages = packages.filter((pack) => {
+      const [min, max] = pack.group_size.split("-").map(Number);
+      return min >= 8;
+    });
+
   return (
     <div className="mx-auto flex max-w-6xl flex-col justify-center gap-4 py-24">
       <h2 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl md:text-5xl">
@@ -23,7 +46,9 @@ export default function StagPartyPackages() {
           freedom a legendary one!
         </TextExpander>
       </div>
-      <PackagesGrid />
+      <Suspense fallback={<Spinner />}>
+        <PackagesGrid packages={filteredPackages} filter={filter} />
+      </Suspense>
     </div>
   );
 }
