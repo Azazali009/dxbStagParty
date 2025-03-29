@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import FilterTabs from "./FilterTabs";
 import PackageCard from "./PackageCard";
-
 import Empty from "./Empty";
 
 export default function PackagesGrid({ packages }) {
