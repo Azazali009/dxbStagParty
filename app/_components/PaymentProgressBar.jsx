@@ -1,8 +1,6 @@
 export default function PaymentProgressBar({ attendee }) {
   const paidAttendees = attendee.filter((cur) => cur.status === "paid")?.length;
-  const unPaidAttendees = attendee.filter(
-    (cur) => cur.status === "unpaid",
-  )?.length;
+
   const paidPaymentPercentage = Number(
     Math.round((paidAttendees * 100) / attendee.length),
   );
@@ -11,7 +9,7 @@ export default function PaymentProgressBar({ attendee }) {
       <div className="font-semibold">
         Total Paid: {paidAttendees}/{attendee.length}
       </div>
-      <div className="bg-tertiary relative h-6 w-full rounded-full shadow-shadowOne">
+      <div className="relative h-6 w-full rounded-full bg-tertiary shadow-shadowOne">
         <div
           className={`absolute left-0 top-0 h-full rounded-full px-2 text-right font-semibold text-white`}
           style={{

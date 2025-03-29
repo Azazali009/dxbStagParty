@@ -1,64 +1,32 @@
-import Link from "next/link";
 import { getBookings } from "../_lib/data-services";
-import EyeIcon from "../svgIcons/EyeIcon";
 
-export default async function Page() {
+import BookingFilter from "@/app/_components/BookingFilter";
+import DisplayBookingTable from "@/app/_components/DisplayBookingTable";
+
+export default async function Page({ searchParams }) {
   const bookings = await getBookings();
-
+  let filteredBookings;
+  if (searchParams.paymentStatus === "all" || !searchParams.paymentStatus)
+    filteredBookings = bookings;
+  if (searchParams.paymentStatus === "confirmed")
+    filteredBookings = bookings.filter(
+      (booking) => booking.paymentStatus === "confirmed",
+    );
+  if (searchParams.paymentStatus === "pending")
+    filteredBookings = bookings.filter(
+      (booking) => booking.paymentStatus === "pending",
+    );
+  if (searchParams.paymentStatus === "cancelled")
+    filteredBookings = bookings.filter(
+      (booking) => booking.paymentStatus === "cancelled",
+    );
   return (
-    <div className="mx-auto max-w-5xl text-sm">
+    <div className="mx-auto flex max-w-5xl flex-col gap-4 text-sm">
       <h1 className="mb-6 text-2xl font-semibold capitalize">
         all booking {bookings.length}
       </h1>
-
-      <div className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] items-center rounded-t-md border border-[#424242] bg-[#383838] px-4 py-3 font-semibold">
-        <p>Booking ID</p>
-        <p>Booking Price</p>
-        <p>Owner</p>
-        <p>Payment</p>
-        <p className="justify-self-center">Action</p>
-      </div>
-
-      <div className="no-scrollbar h-[350px] overflow-y-scroll">
-        {bookings.map((booking) => {
-          return (
-            <div
-              className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] items-center justify-center border border-[#424242] bg-transparent px-4 py-3 font-light last:rounded-b-md"
-              key={booking.id}
-            >
-              <p>{booking.id}</p>
-              <p>$ {booking.totalPrice} </p>
-              <p> {booking.organizerEmail} </p>
-              {booking.paymentStatus === "pending" && (
-                <p
-                  className={
-                    "max-w-28 rounded-full bg-tertiary py-1 text-center text-xs font-medium capitalize"
-                  }
-                >
-                  {booking.paymentStatus}
-                </p>
-              )}
-              {booking.paymentStatus === "completed" && (
-                <p
-                  className={
-                    "max-w-28 rounded-full bg-green-200 px-4 py-1 text-center text-xs font-medium capitalize text-green-900"
-                  }
-                >
-                  {booking.paymentStatus}
-                </p>
-              )}
-
-              <Link
-                className="justify-self-center"
-                href={`/bookings/${booking.id}`}
-                title="View Booking"
-              >
-                <EyeIcon />
-              </Link>
-            </div>
-          );
-        })}
-      </div>
+      <BookingFilter />
+      <DisplayBookingTable bookings={filteredBookings} />
     </div>
   );
 }
