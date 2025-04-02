@@ -2,6 +2,7 @@ import ActivityCard from "../_components/ActivityCard";
 import Empty from "../_components/Empty";
 import { getActivities } from "../_lib/data-services";
 
+export const revalidate = 0;
 export default async function Activities() {
   const Activities = await getActivities();
   if (!Activities.length) return <Empty name={"Activities"} />;

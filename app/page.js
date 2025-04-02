@@ -4,9 +4,11 @@ import Testimonilas from "./_components/Testimonials";
 import HowItWorks from "./_components/HowItWorks";
 import HomePackages from "@/app/_components/HomePackages";
 import Activities from "@/app/_components/Activities";
+import HomeActivities from "@/app/_components/HomeActivities";
 import { getPackages } from "./_lib/packagesApi";
 // import Map from "@/app/_components/Map";
 
+export const revalidate = 0;
 export default async function Home() {
   const packages = await getPackages();
   return (
@@ -18,7 +20,7 @@ export default async function Home() {
         <h2 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-center text-2xl font-bold text-transparent sm:text-3xl md:text-5xl">
           Explore our activities
         </h2>
-        <Activities />
+        <HomeActivities />
       </div>
 
       <HomePackages packages={packages} />
