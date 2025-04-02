@@ -9,7 +9,7 @@ import topRatedIcon from "@/public/images/top.png";
 
 export default function HomeHeroSection() {
   return (
-    <div className="flex flex-col items-center justify-center gap-10 bg-[url('/home-her-bg.webp')] bg-cover pb-10 pt-32 sm:min-h-screen">
+    <section className="flex flex-col items-center justify-center gap-10 bg-[url('/home-her-bg.webp')] bg-cover pb-10 pt-32 sm:min-h-screen">
       {/* <Spotlight
         className="left-0 top-0 sm:-top-40 md:-top-0 md:left-60"
         fill="white"
@@ -83,6 +83,6 @@ export default function HomeHeroSection() {
           <p>top rated services</p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

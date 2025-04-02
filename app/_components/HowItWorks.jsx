@@ -5,7 +5,7 @@ import image2 from "@/public/how_it_works2.webp";
 import image3 from "@/public/how_it_works3.webp";
 export default function HowItWorks() {
   return (
-    <div className="mx-auto max-w-[95%] py-10 sm:py-20">
+    <section className="mx-auto max-w-[95%] py-10 sm:py-20">
       <h2 className="mb-10 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-center text-2xl font-bold text-transparent sm:text-4xl">
         How it works
       </h2>
@@ -72,6 +72,6 @@ export default function HowItWorks() {
           </div>
         </MeteorsDemo>
       </div>
-    </div>
+    </section>
   );
 }

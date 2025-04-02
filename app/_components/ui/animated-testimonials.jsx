@@ -30,7 +30,7 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
     return Math.floor(Math.random() * 21) - 10;
   };
   return (
-    <div className="mx-auto max-w-sm px-4 py-20 font-sans antialiased sm:mx-0 md:max-w-5xl md:px-8 lg:px-12">
+    <section className="mx-auto max-w-sm px-4 py-20 font-sans antialiased sm:mx-0 md:max-w-5xl md:px-8 lg:px-12">
       <h3 className="mb-10 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-2xl font-bold text-transparent sm:text-4xl">
         What our client says
       </h3>
@@ -150,6 +150,6 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
