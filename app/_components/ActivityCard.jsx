@@ -51,7 +51,7 @@ export default function Paintball({ activity }) {
         width={500}
         height={500}
         alt={name}
-        className="h-[250px] object-cover"
+        className="h-[300px]"
       />
 
       <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center">
