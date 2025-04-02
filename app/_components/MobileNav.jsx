@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { navbar } from "./navbarData";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { set } from "date-fns";
 
 export default function MobileNav() {
   const ref = useRef();

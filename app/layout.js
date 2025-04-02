@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
       >
         <Header />
         <TosterComp />
-        <main className="p-4">{children}</main>
+        <main className="">{children}</main>
       </body>
     </html>
   );

@@ -16,14 +16,13 @@ export default function PackageCard({ pack }) {
       <Image src={pack?.image} alt={pack?.name} width={500} height={500} />
       {/* blurb */}
       <div className="space-x-2 text-sm text-neutral-600 dark:text-neutral-400">
-        <strong className="text-secondary">Blurb:</strong>{" "}
         <span>{pack?.blurb}</span>
       </div>
       {/* tags */}
-      <div className="space-x-2 text-sm text-neutral-600 dark:text-neutral-400">
+      {/* <div className="space-x-2 text-sm text-neutral-600 dark:text-neutral-400">
         <strong className="text-secondary">Tags:</strong>{" "}
         <span>{pack?.tags?.join(", ")}</span>
-      </div>
+      </div> */}
       {/* group size */}
       <div className="space-x-2 text-sm text-neutral-600 dark:text-neutral-400">
         <strong className="text-secondary">Group Size:</strong>{" "}
