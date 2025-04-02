@@ -20,7 +20,7 @@ export default function MobileNav() {
     }
   }, [navOpen]);
   return (
-    <div className="block lg:hidden">
+    <div className="">
       <button onClick={() => setNavOpen((show) => !show)}>
         {navOpen ? <XMarkIcon /> : <Humburger />}
       </button>

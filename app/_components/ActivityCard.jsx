@@ -5,7 +5,8 @@ import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import Button from "./Button";
 
 export default function Paintball({ activity }) {
-  const { image, name, id, description, duration, price } = activity;
+  const { image, name, id, description, duration, price, group_size } =
+    activity;
   return (
     // <CardContainer className="inter-var">
     //   <CardBody className="group/card relative flex flex-col gap-2 rounded-xl border border-black/[0.1] border-neutral-600 bg-gray-50 bg-transparent p-6 shadow-shadowOne duration-500 hover:shadow-2xl hover:shadow-secondary/30 sm:min-h-[500px]">
@@ -53,9 +54,14 @@ export default function Paintball({ activity }) {
         className="h-[250px] object-cover"
       />
 
-      <div className="border-b border-tertiary pb-4 text-center">
+      <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center">
         {" "}
-        <strong>Duration:</strong> <span>{duration}</span>{" "}
+        <p>
+          <strong>Duration:</strong> <span>{duration}</span>{" "}
+        </p>
+        <p>
+          <strong>Guest upto:</strong> <span>{group_size}</span>{" "}
+        </p>
       </div>
 
       <div className="flex items-center justify-between">
