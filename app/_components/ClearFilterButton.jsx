@@ -10,7 +10,7 @@ export default function ClearFilterButton() {
   function handleClear() {
     const params = new URLSearchParams(searchParams);
     params.delete("search");
-    router.replace(`${params}`, { scroll: false });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
   return (
     <button

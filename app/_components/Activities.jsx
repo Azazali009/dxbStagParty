@@ -4,7 +4,7 @@ import { getActivities } from "../_lib/data-services";
 
 export const revalidate = 0;
 
-export default async function Activities({ searchQuery }) {
+export default async function Activities({ searchQuery, groupSize }) {
   const Activities = await getActivities();
   let searchedActivities;
   searchedActivities =
@@ -18,10 +18,20 @@ export default async function Activities({ searchQuery }) {
                 tag.toLowerCase().includes(searchQuery.toLowerCase()),
               )),
         );
-  if (!searchedActivities?.length) return <Empty name={"Activities"} />;
+
+  let filteredActivities = searchedActivities.filter((activity) => {
+    if (!groupSize) return true; // Agar filter apply nahi kiya to sab dikhao
+
+    // Group size ko split karke min-max extract kar rahe hain
+    const [min, max] = activity.group_size.split("-").map(Number);
+
+    return groupSize >= min && groupSize <= max;
+  });
+
+  if (!filteredActivities?.length) return <Empty name={"Activities"} />;
   return (
     <div className="mx-auto grid grid-cols-1 items-center gap-x-8 gap-y-4 p-4 md:grid-cols-2 lg:grid-cols-3">
-      {searchedActivities?.map((activity) => (
+      {filteredActivities?.map((activity) => (
         <ActivityCard key={activity.id} activity={activity} />
       ))}
     </div>
