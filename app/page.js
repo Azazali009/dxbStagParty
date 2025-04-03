@@ -3,7 +3,7 @@ import HomeHeroSection from "./_components/HomeHeroSection";
 import Testimonilas from "./_components/Testimonials";
 import HowItWorks from "./_components/HowItWorks";
 import HomePackages from "@/app/_components/HomePackages";
-import Activities from "@/app/_components/Activities";
+import WhyChooseUs from "@/app/_components/WhyChooseUs";
 import HomeActivities from "@/app/_components/HomeActivities";
 import { getPackages } from "./_lib/packagesApi";
 // import Map from "@/app/_components/Map";
@@ -17,6 +17,7 @@ export default async function Home() {
       <HomeActivities />
       <HomePackages packages={packages} />
       <HowItWorks />
+      <WhyChooseUs />
       <Testimonilas />
     </div>
   );

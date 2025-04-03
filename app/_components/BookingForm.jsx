@@ -1,27 +1,30 @@
 "use client";
-import { useState } from "react";
-import { addBooking } from "../_lib/data-services";
-import { addAttendees } from "../_lib/attendeeApi";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import LoggedInMessage from "../_components/LoggedInMeesage";
+import SelectActivities from "../_components/SelectActivities";
+import SelectPackages from "../_components/SelectPackages";
 import XMarkIcon from "../svgIcons/XMarkIcon";
 import toast from "react-hot-toast";
+import FormRow from "./FormRow";
+import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
 
-export default function BookingPage({ id, price, activityName }) {
-  const router = useRouter();
+export default function BookingPage({ id, price, activityName, destinations }) {
   const [emails, setEmails] = useState([""]);
   const [user] = useState(true);
   const [organizerEmail, setOrganizerEmail] = useState("");
   const [bookingDate, setBookingDate] = useState("");
   const [loading, setLoading] = useState(false);
+  const [activityPrice, setActivityPrice] = useState(0);
+  const [packagePrice, setPackagePrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(price);
+  const [minDate, setMinDate] = useState("");
   // const [links, setLinks] = useState([]);
-
-  // add email
+  // add email function
   const addEmail = () => {
     setEmails([...emails, ""]);
   };
 
-  // delete email
+  // delete email function
   const removeEmail = (index) => {
     const updatedEmails = emails.filter((_, i) => i !== index);
     setEmails(updatedEmails);
@@ -35,6 +38,19 @@ export default function BookingPage({ id, price, activityName }) {
   // ✅ Always include organizer email
   const allEmails = [...emails, organizerEmail];
   const splitAmount = Math.round(price / allEmails.length);
+
+  // effect to disbale previous dates
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+    setMinDate(today);
+  }, []);
+  // effect for adding all prices
+  useEffect(() => {
+    let totalPrice =
+      parseInt(price) + parseInt(activityPrice) + parseInt(packagePrice);
+
+    setTotalPrice(totalPrice);
+  }, [price, activityPrice, packagePrice]);
 
   // const handleBooking = async (e) => {
   //   e.preventDefault();
@@ -116,7 +132,7 @@ export default function BookingPage({ id, price, activityName }) {
     setLoading(true);
 
     try {
-      if (!emails || !organizerEmail) return;
+      if (!emails || !organizerEmail || !bookingDate) return;
 
       // Combine Organizer Email + Attendees
       const allEmails = [...emails, organizerEmail];
@@ -136,12 +152,13 @@ export default function BookingPage({ id, price, activityName }) {
         "bookingData",
         JSON.stringify({
           activityID: id,
-          totalPrice: price,
+          totalPrice,
           attendeeEmails: allEmails,
           organizerEmail,
           activityName,
           bookingDate,
           paidAmount: organizerAmount,
+          destinations,
         }),
       );
 
@@ -177,21 +194,25 @@ export default function BookingPage({ id, price, activityName }) {
   };
 
   if (!user) return <LoggedInMessage />;
+
   return (
-    <div className="mb-8 w-full space-y-6 px-3 py-8 text-neutral-200 shadow-xl">
-      <h1 className="text-xl font-semibold sm:text-2xl">
-        Stag Activity Booking
+    <div className="mb-8 w-full px-3 py-8 text-neutral-200 shadow-xl">
+      <h1 className="mb-8 text-center text-base font-bold text-secondary md:text-3xl dark:text-neutral-100">
+        Level up your party with{" "}
+        <span className="rounded-md border border-gray-200 bg-gray-100 px-1 py-0.5 dark:border-neutral-700 dark:bg-secondary">
+          DXB Stag
+        </span>{" "}
+        Activities
       </h1>
 
-      <p className="text-base font-medium sm:text-xl">Price: ${price}</p>
+      {/* <p className="text-base font-medium text-white sm:text-xl">
+        Price: ${price}
+      </p> */}
       <form
         onSubmit={handleBooking}
-        className="flex flex-col items-start gap-6"
+        className="mt-20 grid grid-cols-1 gap-x-10 gap-y-4 md:grid-cols-2"
       >
-        <label className="flex flex-col gap-2">
-          <span className="text-sm font-medium capitalize">
-            Organizer Email:
-          </span>
+        <FormRow label={"Organizer Email:"}>
           <input
             type="email"
             value={organizerEmail}
@@ -201,52 +222,42 @@ export default function BookingPage({ id, price, activityName }) {
             autoComplete="on"
             required
           />
-        </label>
-        <label className="flex flex-col gap-2">
-          <span className="text-sm font-medium capitalize">Select Date:</span>
+        </FormRow>
+
+        <FormRow label={"Select Date:"}>
           <input
             type="date"
+            min={minDate}
             value={bookingDate}
             placeholder="yyyy-MM-DD"
             onChange={(e) => setBookingDate(e.target.value)}
             className="h-12 rounded-md bg-tertiary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
             required
           />
-        </label>
+        </FormRow>
 
-        {emails.length > 0 &&
-          emails.map((email, index) => (
-            <label key={index} className="flex flex-col gap-2">
-              <span className="text-sm font-medium capitalize">
-                Attendee {index + 1} Email:
-              </span>
-              <div className="flex items-center gap-3">
-                <input
-                  type="email"
-                  placeholder={`Enter Attendee ${index + 1} email`}
-                  value={email}
-                  onChange={(e) => updateEmail(index, e.target.value)}
-                  className="h-10 rounded-md bg-tertiary px-2 text-[14px] placeholder:text-sm focus:outline-blue-600"
-                  required
-                />
-                <button
-                  onClick={() => removeEmail(index)}
-                  type="button"
-                  className="flex size-6 items-center justify-center rounded-md bg-gradient-to-b from-red-800 to-red-500 text-sm font-medium capitalize text-red-100 hover:bg-gradient-to-t"
-                >
-                  <XMarkIcon />
-                </button>
-              </div>
-            </label>
-          ))}
+        <AttendeeEmailInputFields
+          emails={emails}
+          updateEmail={updateEmail}
+          removeEmail={removeEmail}
+        />
 
-        <div className="flex flex-col items-start gap-3">
+        <SelectActivities
+          activityPrice={activityPrice}
+          setActivityPrice={setActivityPrice}
+        />
+        <SelectPackages
+          packagePrice={packagePrice}
+          setPackagePrice={setPackagePrice}
+        />
+        <div className="flex items-start gap-3 [grid-column:1/-1]">
           <button
-            className="rounded bg-gradient-to-br from-emerald-800 to-green-500 px-4 py-2.5 font-semibold text-white shadow-shadowOne duration-300 hover:scale-95 hover:bg-gradient-to-tr disabled:cursor-not-allowed disabled:from-gray-500 disabled:to-gray-500 disabled:hover:scale-100"
+            className="rounded bg-gradient-to-br from-emerald-800 to-green-500 px-4 py-2.5 font-semibold text-white duration-300 hover:scale-95 hover:bg-gradient-to-tr disabled:cursor-not-allowed disabled:from-neutral-700 disabled:to-neutral-700 disabled:opacity-50 disabled:hover:scale-100"
             type="submit"
-            disabled={loading || !organizerEmail}
+            disabled={loading || !organizerEmail || !bookingDate}
           >
-            {loading ? "Processing..." : "Pay 15% to Confirm Booking"}
+            {loading ? "Processing..." : "Pay 15% to Confirm Booking"}{" "}
+            {totalPrice}
           </button>
           <button
             className="-order-1 inline-block rounded bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 text-sm font-semibold capitalize text-white hover:bg-gradient-to-tr"

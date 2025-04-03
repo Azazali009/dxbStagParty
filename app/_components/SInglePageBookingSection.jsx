@@ -1,25 +1,45 @@
+"use client";
 import BookingPage from "./BookingForm";
 import MeteorsDemo from "./MeteorsDemo";
+import ModalWindow from "./ModalWindow";
 import CheckBadgeIcon from "../svgIcons/CheckBadgeIcon";
 import InformationCircleIcon from "../svgIcons/InformationCircleIcon";
+import { useState } from "react";
+import Button from "./Button";
 
 export default function SinglePageBookingSection({
   activityId,
   price,
   activityName,
+  destinations,
 }) {
+  const [openModal, setOpenModal] = useState(false);
+  const onClose = () => setOpenModal(false);
+  const open = () => setOpenModal(true);
   return (
     <div className="flex flex-col items-start gap-6 rounded-md border border-tertiary px-4 py-6">
       <h4 className="text-sm font-medium">
         from <strong className="text-2xl">${price}</strong> per person
       </h4>
-      <div>
+      {/* <div>
         <button className="w-full rounded-full bg-gradient-to-r from-[#735d1d] via-secondary to-[#735d1d] px-8 py-3 font-semibold text-white duration-300 hover:scale-90 hover:border-blue-600 hover:bg-gradient-to-l">
           Add to cart
         </button>
-      </div>
-
-      <BookingPage id={activityId} price={price} activityName={activityName} />
+      </div> */}
+      {openModal ? (
+        <ModalWindow onClose={onClose} ribbontext={price}>
+          <BookingPage
+            id={activityId}
+            price={price}
+            activityName={activityName}
+            destinations={destinations}
+          />
+        </ModalWindow>
+      ) : (
+        <Button variation="gold" onClick={open}>
+          Book Now
+        </Button>
+      )}
       <MeteorsDemo>
         <ul className="space-y-4">
           <li className="flex items-center gap-4">

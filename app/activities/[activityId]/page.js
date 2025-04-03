@@ -13,7 +13,7 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }) {
   const activity = await getActivity(params.activityId);
-  const { id, name, price, image, duration, minAge } = activity;
+  const { id, name, price, image, duration, minAge, destinations } = activity;
   if (!activity) return <Empty name={"Activity"} />;
   return (
     <div className="space-y-6 px-2 py-8 text-white sm:px-6">
@@ -30,6 +30,7 @@ export default async function Page({ params }) {
           activityId={id}
           price={price}
           activityName={name}
+          destinations={destinations}
         />
       </div>
     </div>

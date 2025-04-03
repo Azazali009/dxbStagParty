@@ -3,19 +3,28 @@ import { Spotlight as SpotlightNew } from "../_components/ui/spotlight-new";
 import Spinner from "@/app/_components/Spinner";
 import AnimatedHeading from "../_components/AnimatedHeading";
 import { Suspense } from "react";
+import SearchBar from "../_components/SearchBar";
+import ClearFilterButton from "../_components/ClearFilterButton";
 
 export const revalidate = 0;
-export default async function Page() {
+export default async function Page({ searchParams }) {
+  const searchQuery = searchParams?.search ?? "all";
   return (
     <div className="min-h-screen space-y-20 px-2 antialiased sm:p-6">
       {/* <SpotlightNew /> */}
-      <AnimatedHeading className={"text-nowrap py-16 text-xl sm:text-wrap"}>
-        {" "}
-        Epic Stag Do Activities
-      </AnimatedHeading>
+      <div className="space-y-4">
+        <AnimatedHeading className={"text-nowrap pt-16 text-xl sm:text-wrap"}>
+          {" "}
+          Epic Stag Do Activities
+        </AnimatedHeading>
+        <p className="text-center text-neutral-500">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas, ad!
+        </p>
+      </div>
+      <SearchBar searchQuery={searchQuery} />
 
       <Suspense fallback={<Spinner />}>
-        <Activities />
+        <Activities searchQuery={searchQuery} />
       </Suspense>
     </div>
   );

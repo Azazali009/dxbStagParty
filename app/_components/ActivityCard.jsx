@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
-import Button from "./Button";
 
 export default function Paintball({ activity }) {
   const { image, name, id, description, duration, price, group_size } =
     activity;
+
   return (
     // <CardContainer className="inter-var">
     //   <CardBody className="group/card relative flex flex-col gap-2 rounded-xl border border-black/[0.1] border-neutral-600 bg-gray-50 bg-transparent p-6 shadow-shadowOne duration-500 hover:shadow-2xl hover:shadow-secondary/30 sm:min-h-[500px]">
@@ -46,15 +45,14 @@ export default function Paintball({ activity }) {
     //   </CardBody>
     // </CardContainer>
     <div className="space-y-6 rounded-md p-4 shadow-shadowOne">
-      <Image
-        src={image}
-        width={500}
-        height={500}
-        alt={name}
-        className="h-[300px]"
-      />
+      <div className="relative h-52 bg-tertiary object-cover">
+        <Image src={image} fill alt={name} className="h-full" />
+      </div>
 
-      <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center">
+      <div className="border-b border-tertiary pb-4">
+        <p>{name}</p>
+      </div>
+      <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center text-sm">
         {" "}
         <p>
           <strong>Duration:</strong> <span>{duration}</span>{" "}

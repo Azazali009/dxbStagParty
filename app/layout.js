@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
 import TosterComp from "@/app/_components/Toaster";
+import PendingBookingDataNotification from "@/app/_components/PendingBookingDataNotification";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       >
         <Header />
         <TosterComp />
+        <PendingBookingDataNotification />
         <main className="">{children}</main>
       </body>
     </html>

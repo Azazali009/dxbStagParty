@@ -18,7 +18,7 @@ export default function BookingTable({ booking, attendee }) {
           <p> {booking.totalPrice}</p>
           <p> {booking?.paidAmount ?? "0"}</p>
           <p> {attendee.length}</p>
-          <p>Dubai</p>
+          <p>{booking.destinations}</p>
           <p className="col-span-2 text-balance"> {booking.organizerEmail}</p>
         </div>
       </div>

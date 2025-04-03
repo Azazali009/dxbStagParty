@@ -14,8 +14,12 @@ export default function HomeHeroSection() {
         className="left-0 top-0 sm:-top-40 md:-top-0 md:left-60"
         fill="white"
       /> */}
-      <AnimatedHeading className={"text-white md:text-8xl"}>
-        STAG PARTY DUBAI
+      <AnimatedHeading className={"text-white"}>
+        Stag Parties in{" "}
+        <span className="rounded-md bg-secondary/80 px-1 underline decoration-secondary decoration-[6px] underline-offset-[30px] backdrop-blur-md">
+          Dubai
+        </span>{" "}
+        – The Ultimate Bachelor Experience!
       </AnimatedHeading>
       <p className="text-balance text-center text-sm text-neutral-200 sm:w-[70%] sm:text-base">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum
