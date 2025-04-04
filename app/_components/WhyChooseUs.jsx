@@ -9,7 +9,7 @@ import secureIcon from "@/public/images/secure.png";
 export default function WhyChooseUs() {
   return (
     <div className="mx-auto w-[95%] py-20">
-      <h2 className="mb-10 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-center text-2xl font-bold text-transparent sm:text-4xl">
+      <h2 className="mb-10 bg-gradient-to-b from-neutral-500 to-neutral-700 bg-clip-text text-center text-2xl font-bold text-transparent sm:text-4xl">
         Why Book With Us
       </h2>
       <div className="my-20 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">

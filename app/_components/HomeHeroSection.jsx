@@ -1,7 +1,5 @@
 import Image from "next/image";
 import AnimatedHeading from "./AnimatedHeading";
-import Button from "./Button";
-import { Spotlight } from "./ui/Spotlight";
 import packageIcon from "@/public/images/packages.png";
 import adventureIcon from "@/public/images/adventure.png";
 import planningIcon from "@/public/images/planning.png";
@@ -10,10 +8,6 @@ import topRatedIcon from "@/public/images/top.png";
 export default function HomeHeroSection() {
   return (
     <section className="flex flex-col items-center justify-center gap-10 bg-[url('/home-her-bg.webp')] bg-cover pb-10 pt-32 sm:min-h-screen">
-      {/* <Spotlight
-        className="left-0 top-0 sm:-top-40 md:-top-0 md:left-60"
-        fill="white"
-      /> */}
       <AnimatedHeading className={"text-white"}>
         Stag Parties in{" "}
         <span className="rounded-md bg-secondary/80 px-1 underline decoration-secondary decoration-[6px] underline-offset-[30px] backdrop-blur-md">
@@ -26,10 +20,7 @@ export default function HomeHeroSection() {
         quasi, dolorum nobis impedit veritatis ipsam enim earum iusto laboriosam
         officiis, mollitia numquam temporibus?
       </p>
-      {/* <div className="relative z-20 flex items-center gap-4">
-        <Button>book now</Button>
-        <Button>contact us</Button>
-      </div> */}
+
       <div className="flex gap-8 rounded-full bg-gradient-to-r from-secondary to-[#997c26] px-12 py-3 text-neutral-800">
         <button className="font-medium duration-300 hover:text-white">
           Activities
@@ -42,8 +33,8 @@ export default function HomeHeroSection() {
         </button>
       </div>
       {/* divider */}
-      <div className="my-20 h-[0.06px] w-[95%] bg-neutral-600"></div>
-      <div className="grid grid-cols-4 gap-20">
+      <div className="h-[0.06px] w-[95%] bg-neutral-600"></div>
+      <div className="grid grid-cols-4 gap-20 text-white">
         <div className="flex items-center gap-2">
           <Image
             src={packageIcon}

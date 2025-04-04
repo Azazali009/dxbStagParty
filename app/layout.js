@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <body
-        className={`${poppins.className} overflow-x-hidden bg-primary text-white antialiased`}
+        className={`${poppins.className} overflow-x-hidden bg-gray-100 text-neutral-700 antialiased`}
       >
         <Header />
         <TosterComp />

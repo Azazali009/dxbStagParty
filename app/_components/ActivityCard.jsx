@@ -44,15 +44,15 @@ export default function Paintball({ activity }) {
     //     </div>
     //   </CardBody>
     // </CardContainer>
-    <div className="space-y-6 rounded-md p-4 shadow-shadowOne">
-      <div className="relative h-52 bg-tertiary object-cover">
+    <div className="space-y-6 rounded-md bg-white p-4 text-neutral-700 shadow-lg">
+      <div className="relative h-52 object-cover">
         <Image src={image} fill alt={name} className="h-full" />
       </div>
 
-      <div className="border-b border-tertiary pb-4">
-        <p>{name}</p>
+      <div className="border-b border-tertiary pb-4 font-bold">
+        <h3>{name}</h3>
       </div>
-      <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center text-sm">
+      <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center">
         {" "}
         <p>
           <strong>Duration:</strong> <span>{duration}</span>{" "}
@@ -63,10 +63,10 @@ export default function Paintball({ activity }) {
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-xl font-semibold text-secondary">AED {price}</p>
+        <p className="text-xl font-bold text-secondary">AED {price}</p>
         <div>
           <Link
-            className="block w-full rounded-full bg-gradient-to-r from-secondary via-[#735d1d] to-secondary px-4 py-3 text-xs font-semibold capitalize text-white duration-300 hover:scale-95 hover:bg-gradient-to-br sm:px-8 sm:text-base"
+            className="block w-full rounded-full bg-gradient-to-r from-secondary to-[#604e18] px-4 py-3 text-xs font-semibold capitalize text-white duration-300 hover:scale-95 hover:bg-gradient-to-l sm:px-8 sm:text-base"
             href={`/activities/${id}`}
             variation="gold"
           >

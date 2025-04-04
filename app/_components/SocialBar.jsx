@@ -1,33 +1,28 @@
+import AuthNav from "@/app/_components/AuthNav";
 import Image from "next/image";
 import Link from "next/link";
-import whatsappIcon from "@/public/images/whatsapp.png";
-import phoneIcon from "@/public/images/phone.png";
-import AuthNav from "@/app/_components/AuthNav";
+import instaIcon from "@/public/images/insta.png";
+import fbIcon from "@/public/images/fb.png";
 export default function SocialBar() {
   return (
-    <div className="flex items-center justify-end gap-8 px-8 py-2">
-      <Link
-        href={"https://wa.me/+92311123455"}
-        className="flex items-center gap-1 bg-white px-6 py-1.5 text-sm font-semibold capitalize text-neutral-600 duration-300 hover:bg-gray-300"
-      >
+    <div className="flex items-center justify-end gap-4 px-8 py-2">
+      <Link href={"/"}>
         <Image
-          src={whatsappIcon}
-          alt="whatsapp chat"
+          src={instaIcon}
           width={100}
           height={100}
-          className="w-8"
+          alt="instagram"
+          className="w-8 hover:opacity-70"
         />
-        whatsapp <span className="text-green-500">chat to us</span>
       </Link>
-      <Link href={"#"} className="flex items-center gap-2">
+      <Link href={"/"}>
         <Image
-          src={phoneIcon}
+          src={fbIcon}
           width={100}
           height={100}
-          alt="phone"
-          className="w-6"
+          alt="facebook"
+          className="w-6 hover:opacity-70"
         />
-        Contact
       </Link>
       <AuthNav />
     </div>

@@ -21,7 +21,7 @@ export default function SearchBar() {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex max-w-lg items-center rounded-full bg-tertiary/50 px-4"
+      className="flex h-12 max-w-lg items-center rounded-full bg-white px-4 shadow-lg"
     >
       <input
         value={search}
@@ -31,7 +31,7 @@ export default function SearchBar() {
         placeholder=" Glam, Beauty, Instagrammable, Photo, Luxury"
       />
 
-      <button className="flex size-8 items-center justify-center rounded-full bg-primary p-2 shadow-xl outline-none duration-300 hover:scale-90 hover:shadow-none focus:border-none focus:outline-secondary">
+      <button className="flex size-8 items-center justify-center rounded-full bg-gray-200 p-2 shadow-xl outline-none duration-300 hover:scale-90 hover:shadow-none focus:border-none focus:outline-secondary">
         <Image src={searchIcon} width={100} height={100} alt="search" />
       </button>
     </form>

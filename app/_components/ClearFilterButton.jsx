@@ -10,6 +10,7 @@ export default function ClearFilterButton() {
   function handleClear() {
     const params = new URLSearchParams(searchParams);
     params.delete("search");
+    params.delete("groupSize");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
   return (

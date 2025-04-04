@@ -1,3 +1,3 @@
 export default function Logo() {
-  return <div>Logo</div>;
+  return <div className="text-2xl font-bold">Logo</div>;
 }

@@ -4,13 +4,16 @@ import { getActivities } from "../_lib/data-services";
 
 export const revalidate = 0;
 
-export default async function Activities({ searchQuery, groupSize }) {
-  const Activities = await getActivities();
+export default function Activities({
+  searchQuery,
+  groupSize,
+  ActivitiesArray,
+}) {
   let searchedActivities;
   searchedActivities =
     searchQuery === "all" || !searchQuery
-      ? Activities
-      : Activities.filter(
+      ? ActivitiesArray
+      : ActivitiesArray.filter(
           (activity) =>
             activity.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             (Array.isArray(activity.tags) &&
@@ -20,11 +23,8 @@ export default async function Activities({ searchQuery, groupSize }) {
         );
 
   let filteredActivities = searchedActivities.filter((activity) => {
-    if (!groupSize) return true; // Agar filter apply nahi kiya to sab dikhao
-
-    // Group size ko split karke min-max extract kar rahe hain
+    if (!groupSize) return true;
     const [min, max] = activity.group_size.split("-").map(Number);
-
     return groupSize >= min && groupSize <= max;
   });
 

@@ -31,7 +31,7 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
   };
   return (
     <section className="mx-auto max-w-sm px-4 py-20 font-sans antialiased sm:mx-0 md:max-w-5xl md:px-8 lg:px-12">
-      <h3 className="mb-10 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-2xl font-bold text-transparent sm:text-4xl">
+      <h3 className="mb-10 bg-gradient-to-b from-neutral-500 to-neutral-700 bg-clip-text text-2xl font-bold text-transparent sm:text-4xl">
         What our client says
       </h3>
       <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">
@@ -102,13 +102,11 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
               ease: "easeInOut",
             }}
           >
-            <h3 className="text-2xl font-bold text-white">
-              {testimonials[active].name}
-            </h3>
-            <p className="text-sm text-gray-500 dark:text-neutral-500">
+            <h3 className="text-2xl font-bold">{testimonials[active].name}</h3>
+            <p className="text-sm text-neutral-500">
               {testimonials[active].designation}
             </p>
-            <motion.p className="mt-8 text-sm text-gray-500 sm:text-lg dark:text-neutral-300">
+            <motion.p className="mt-8 text-sm sm:text-lg">
               {testimonials[active].quote.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
@@ -137,13 +135,13 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
           <div className="flex gap-4 pt-12 md:pt-0">
             <button
               onClick={handlePrev}
-              className="group/button flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 shadow-shadowOne dark:bg-tertiary"
+              className="group/button flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 shadow-lg"
             >
               <IconArrowLeft className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:rotate-12 dark:text-neutral-400" />
             </button>
             <button
               onClick={handleNext}
-              className="group/button flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 shadow-shadowOne dark:bg-tertiary"
+              className="group/button flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 shadow-lg"
             >
               <IconArrowRight className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:-rotate-12 dark:text-neutral-400" />
             </button>
