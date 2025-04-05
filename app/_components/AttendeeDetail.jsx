@@ -14,7 +14,7 @@ export default function AttendeeDetail({ attendee }) {
             // attendee.email !== booking.organizerEmail && (
             <div
               key={attendee.id}
-              className={`space-y-4 bg-transparent shadow-shadowOne ${attendee.status === "unpaid" ? "text-white" : "text-green-500"} rounded-lg px-6 py-10 shadow-lg`}
+              className={`space-y-4 bg-white shadow-lg ${attendee.status === "unpaid" ? "text-primary" : "text-green-500"} rounded-lg px-6 py-10 shadow-lg`}
             >
               <h1 className="flex items-center gap-2 text-xl font-bold md:text-2xl">
                 <span>Attendee:</span>

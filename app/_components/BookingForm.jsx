@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import LoggedInMessage from "../_components/LoggedInMeesage";
 import SelectActivities from "../_components/SelectActivities";
 import SelectPackages from "../_components/SelectPackages";
-import XMarkIcon from "../svgIcons/XMarkIcon";
 import toast from "react-hot-toast";
 import FormRow from "./FormRow";
 import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
@@ -14,8 +13,8 @@ export default function BookingPage({ id, price, activityName, destinations }) {
   const [organizerEmail, setOrganizerEmail] = useState("");
   const [bookingDate, setBookingDate] = useState("");
   const [loading, setLoading] = useState(false);
-  const [activityPrices, setActivityPrices] = useState([]);
-  const [packagePrice, setPackagePrice] = useState(0);
+  const [selectedActivities, setSelectedActivities] = useState([]);
+  const [selectedPackages, setSelectedPackages] = useState([]);
   const [totalPrice, setTotalPrice] = useState(price);
   const [minDate, setMinDate] = useState("");
   // const [links, setLinks] = useState([]);
@@ -37,7 +36,6 @@ export default function BookingPage({ id, price, activityName, destinations }) {
 
   // ✅ Always include organizer email
   const allEmails = [...emails, organizerEmail];
-  const splitAmount = Math.round(price / allEmails.length);
 
   // effect to disbale previous dates
   useEffect(() => {
@@ -46,16 +44,19 @@ export default function BookingPage({ id, price, activityName, destinations }) {
   }, []);
   // effect for adding all prices
   useEffect(() => {
-    const getSelectedActivityPrices = activityPrices.reduce((acc, curr) => {
-      return acc + parseInt(curr.value);
+    const getSelectedActivities = selectedActivities.reduce((acc, curr) => {
+      return acc + parseInt(curr.price);
+    }, 0);
+    const getSelectedPackages = selectedPackages.reduce((acc, curr) => {
+      return acc + parseInt(curr.price);
     }, 0);
     let totalPrice =
       parseInt(price) +
-      parseInt(getSelectedActivityPrices) +
-      parseInt(packagePrice);
+      parseInt(getSelectedActivities) +
+      parseInt(getSelectedPackages);
 
     setTotalPrice(totalPrice);
-  }, [price, activityPrices, packagePrice]);
+  }, [price, selectedActivities, selectedPackages]);
 
   // const handleBooking = async (e) => {
   //   e.preventDefault();
@@ -156,7 +157,21 @@ export default function BookingPage({ id, price, activityName, destinations }) {
       localStorage.setItem(
         "bookingData",
         JSON.stringify({
-          activityID: id,
+          // activityID: id,
+          activities: [
+            {
+              name: activityName,
+              price: price, // make sure you have this value in scope
+            },
+            ...selectedActivities.map((act) => ({
+              name: act.label,
+              price: act.price,
+            })),
+          ],
+          packages: selectedPackages.map((pkg) => ({
+            name: pkg.label,
+            price: pkg.price,
+          })),
           totalPrice,
           attendeeEmails: allEmails,
           organizerEmail,
@@ -245,12 +260,12 @@ export default function BookingPage({ id, price, activityName, destinations }) {
         />
 
         <SelectActivities
-          activityPrices={activityPrices}
-          setActivityPrices={setActivityPrices}
+          selectedActivities={selectedActivities}
+          setSelectedActivities={setSelectedActivities}
         />
         <SelectPackages
-          packagePrice={packagePrice}
-          setPackagePrice={setPackagePrice}
+          selectedPackages={selectedPackages}
+          setSelectedPackages={setSelectedPackages}
         />
         <div className="flex items-start gap-3 [grid-column:1/-1]">
           <button

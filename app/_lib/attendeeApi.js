@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 export async function addAttendees(attendeeData) {
-  const { data, error } = await supabase
+  const { data: curAttendees, error } = await supabase
     .from("attendee")
     .insert(attendeeData)
     .select();
@@ -8,7 +8,7 @@ export async function addAttendees(attendeeData) {
     console.log(error);
     throw new Error("Error while adding attendees");
   }
-  return data;
+  return { curAttendees, error };
 }
 export async function getAttendees(id) {
   const { data, error } = await supabase

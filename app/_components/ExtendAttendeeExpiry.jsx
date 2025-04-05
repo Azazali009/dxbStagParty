@@ -4,6 +4,7 @@ import { useState } from "react";
 import { extendAttendeeExpiry } from "../_lib/attendeeApi";
 import Button from "./Button";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function ExtendAttendeeExpiry({
   id,
@@ -14,16 +15,22 @@ export default function ExtendAttendeeExpiry({
   const router = useRouter();
 
   const handleExtendExpiry = async () => {
+    const toastId = toast.loading("Processing...");
     setLoading(true);
     if (hasExtended)
-      return alert("❌ You have already extended your payment link once!");
+      return toast.error("You have already extended your payment link once!", {
+        id: toastId,
+      });
     try {
       await extendAttendeeExpiry(id);
-      alert("✅ Expiry extended by 24 hours!");
+      toast.success("Expiry extended by 24 hours!", { id: toastId });
       router.refresh();
     } catch (error) {
       //   alert("❌ Unexpected error.");
-      alert(error);
+      console.log(error);
+      toast.error("There is an unexpected error while extending expiry", {
+        id: toastId,
+      });
     } finally {
       setLoading(false);
     }

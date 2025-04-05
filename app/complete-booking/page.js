@@ -26,9 +26,6 @@ export default function CompleteBooking() {
 
         const { attendeeEmails, totalPrice } = bookingData;
 
-        // ✅ Insert Booking into Database
-        const booking = await addBooking(bookingData);
-
         // ✅ Generate Attendee Payment Links
         const res = await fetch("/api/create-payment-links", {
           method: "POST",
@@ -55,11 +52,19 @@ export default function CompleteBooking() {
           (totalPrice * 0.85) / attendeeEmails.length,
         );
 
+        const { CurBooking, error } = await addBooking(bookingData);
+        if (error) {
+          toast.error("Unexpected error while adding booking.", {
+            id: toastId,
+          });
+          router.push("/");
+          return;
+        }
         const attendeesData = attendeeEmails.map((email) => {
           const paymentLink =
             data.paymentLinks.find((link) => link.email === email)?.link || "";
           return {
-            bookingID: booking.id,
+            bookingID: CurBooking.id,
             email,
             amountPaid: splitAmount,
             status: "unpaid",
@@ -67,14 +72,23 @@ export default function CompleteBooking() {
             expires_at: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // ✅ 12 days expiry
           };
         });
-        await addAttendees(attendeesData);
+        // ✅ Add Attendees to Database
+        const { error: attendeeErrors } = await addAttendees(attendeesData);
+        if (attendeeErrors) {
+          toast.error("Unexpected error while adding attendees.", {
+            id: toastId,
+          });
+          router.push("/");
+          return;
+        }
         toast.success(
           "Booking complete! Attendees will receive payment links through emails 📩.",
           { id: toastId },
         );
-        router.push(`/bookings/${booking.id}`); // Redirect to bookings page
+        router.push(`/bookings/${CurBooking.id}`); // Redirect to bookings page
         localStorage.removeItem("bookingData");
       } catch (error) {
+        console.log(error);
         toast.error("Unexpected error.", { id: toastId });
       } finally {
         setLoading(false);

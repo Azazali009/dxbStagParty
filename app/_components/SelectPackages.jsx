@@ -1,21 +1,35 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import FormRow from "../_components/FormRow";
 import { getPackages } from "../_lib/packagesApi";
+import { MultiSelect } from "react-multi-select-component";
+import FormRow from "./FormRow";
 
-export default function SelectPackages({ setPackagePrice, packagePrice }) {
+export default function SelectPackages({
+  setSelectedPackages,
+  selectedPackages,
+}) {
   const [loading, setLoading] = useState(false);
-  const [packages, setPackages] = useState(null);
+  const [packages, setPackages] = useState([]);
 
-  // effect to fetch packages for selection
+  // Effect to fetch activities
   useEffect(() => {
     async function fetchPackages() {
       setLoading(true);
-      const packages = await getPackages();
-      setPackages(packages);
+      const fetchedPackages = await getPackages();
+      setPackages(
+        fetchedPackages.map((act) => ({
+          label: act.name,
+          value: act.id,
+          price: act.price_band,
+        })),
+      );
       setLoading(false);
     }
     fetchPackages();
   }, []);
+
+  // Show loading placeholder
   if (loading)
     return (
       <div className="h-20 w-full space-y-2">
@@ -23,21 +37,18 @@ export default function SelectPackages({ setPackagePrice, packagePrice }) {
         <div className="h-12 w-full animate-pulse rounded-md bg-tertiary"></div>
       </div>
     );
+
   return (
-    <FormRow label={"Add packages"}>
-      <select
-        id="packages"
-        value={packagePrice}
-        onChange={(e) => setPackagePrice(e.target.value)}
-        className="h-12 rounded-md bg-primary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
-      >
-        <option value={0}>select packages</option>
-        {packages?.map((pack) => (
-          <option value={pack.price_band} key={pack.id}>
-            {pack.name}
-          </option>
-        ))}
-      </select>
+    <FormRow label={"Select Packages:"}>
+      <MultiSelect
+        options={packages}
+        value={selectedPackages} // Keep it controlled
+        onChange={(selected) => {
+          setSelectedPackages([...selected]); // Ensure state update happens outside of render
+        }}
+        labelledBy="Select Packages"
+        className="custom-multi-select"
+      />
     </FormRow>
   );
 }

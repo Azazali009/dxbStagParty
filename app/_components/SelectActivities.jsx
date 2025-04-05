@@ -6,29 +6,30 @@ import { MultiSelect } from "react-multi-select-component";
 import FormRow from "./FormRow";
 
 export default function SelectActivities({
-  setActivityPrices,
-  activityPrices,
+  setSelectedActivities,
+  selectedActivities,
 }) {
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState([]);
 
+  // Effect to fetch activities
   useEffect(() => {
     async function fetchActivities() {
       setLoading(true);
       const fetchedActivities = await getActivities();
-
-      const formatted = fetchedActivities.map((act) => ({
-        label: act.name,
-        value: String(act.price), // value ko string mein convert karna zaroori hai
-      }));
-
-      setActivities(formatted);
+      setActivities(
+        fetchedActivities.map((act) => ({
+          label: act.name,
+          value: act.id,
+          price: act.price,
+        })),
+      );
       setLoading(false);
     }
-
     fetchActivities();
   }, []);
 
+  // Show loading placeholder
   if (loading)
     return (
       <div className="h-20 w-full space-y-2">
@@ -38,18 +39,12 @@ export default function SelectActivities({
     );
 
   return (
-    <FormRow label="Select Activities:">
+    <FormRow label={"Select Activities:"}>
       <MultiSelect
         options={activities}
-        value={activityPrices}
+        value={selectedActivities} // Keep it controlled
         onChange={(selected) => {
-          // Make sure selected value format is same as in options
-          setActivityPrices(
-            selected.map((item) => ({
-              label: item.label,
-              value: String(item.value),
-            })),
-          );
+          setSelectedActivities([...selected]); // Ensure state update happens outside of render
         }}
         labelledBy="Select Activities"
         className="custom-multi-select"

@@ -22,7 +22,7 @@ export async function getActivity(id) {
   return data[0];
 }
 export async function addBooking(booking) {
-  const { data, error } = await supabase
+  const { data: CurBooking, error } = await supabase
     .from("booking")
     .insert([booking])
     .select()
@@ -32,7 +32,7 @@ export async function addBooking(booking) {
     console.log(error);
     throw new Error("Error while booking activity. Please try again.🤔");
   }
-  return data;
+  return { CurBooking, error };
 }
 
 export async function getBookings() {
