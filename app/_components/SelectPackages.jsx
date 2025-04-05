@@ -29,7 +29,7 @@ export default function SelectPackages({ setPackagePrice, packagePrice }) {
         id="packages"
         value={packagePrice}
         onChange={(e) => setPackagePrice(e.target.value)}
-        className="h-12 rounded-md bg-tertiary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
+        className="h-12 rounded-md bg-primary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
       >
         <option value={0}>select packages</option>
         {packages?.map((pack) => (

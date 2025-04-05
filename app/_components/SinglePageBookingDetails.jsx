@@ -39,14 +39,14 @@ export default function SinglePageBookingDetails({ image, duration, minAge }) {
         </div>
         <div className="mt-8 space-y-2">
           <h2 className="text-xl font-bold sm:text-2xl">Why Book it?</h2>
-          <p className="text-sm font-light leading-[1.7] sm:text-base">
+          <p className="text-sm leading-[1.7] sm:text-base">
             Paintball, a stag party classic! Many a stag has been seen running
             around a field in a tutu avoiding hoards of paintballs coming
             straight for him. The pain is good practice for marriage, actually
             so is the tutu, he won&apos;t be wearing the trousers for much
             longer either!
           </p>
-          <p className="mt-4 text-sm font-light leading-[1.7] sm:text-base">
+          <p className="mt-4 text-sm leading-[1.7] sm:text-base">
             The stag party will be fully loaded and with 300 paintballs you can
             afford to spray the field in the hope of hitting someone or be a
             sneaky bugger and hide in the trees and snipe, either way your stag

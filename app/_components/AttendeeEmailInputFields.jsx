@@ -17,7 +17,7 @@ export default function AttendeeEmailInputFields({
             placeholder={`Enter Attendee ${index + 1} email`}
             value={email}
             onChange={(e) => updateEmail(index, e.target.value)}
-            className="h-12 flex-1 rounded-md bg-tertiary px-2 text-[14px] placeholder:text-sm focus:outline-blue-600"
+            className="h-12 flex-1 rounded-md bg-primary px-2 text-[14px] placeholder:text-sm focus:outline-blue-600"
             required
           />
           <button

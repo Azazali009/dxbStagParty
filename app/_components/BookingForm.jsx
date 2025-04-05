@@ -14,7 +14,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
   const [organizerEmail, setOrganizerEmail] = useState("");
   const [bookingDate, setBookingDate] = useState("");
   const [loading, setLoading] = useState(false);
-  const [activityPrice, setActivityPrice] = useState(0);
+  const [activityPrices, setActivityPrices] = useState([]);
   const [packagePrice, setPackagePrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(price);
   const [minDate, setMinDate] = useState("");
@@ -46,11 +46,16 @@ export default function BookingPage({ id, price, activityName, destinations }) {
   }, []);
   // effect for adding all prices
   useEffect(() => {
+    const getSelectedActivityPrices = activityPrices.reduce((acc, curr) => {
+      return acc + parseInt(curr.value);
+    }, 0);
     let totalPrice =
-      parseInt(price) + parseInt(activityPrice) + parseInt(packagePrice);
+      parseInt(price) +
+      parseInt(getSelectedActivityPrices) +
+      parseInt(packagePrice);
 
     setTotalPrice(totalPrice);
-  }, [price, activityPrice, packagePrice]);
+  }, [price, activityPrices, packagePrice]);
 
   // const handleBooking = async (e) => {
   //   e.preventDefault();
@@ -196,7 +201,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
   if (!user) return <LoggedInMessage />;
 
   return (
-    <div className="mb-8 w-full px-3 py-8 text-neutral-200 shadow-xl">
+    <div className="w-full px-3 py-8 text-neutral-200">
       <h1 className="mb-8 text-center text-base font-bold text-secondary md:text-3xl dark:text-neutral-100">
         Level up your party with{" "}
         <span className="rounded-md border border-gray-200 bg-gray-100 px-1 py-0.5 dark:border-neutral-700 dark:bg-secondary">
@@ -205,9 +210,6 @@ export default function BookingPage({ id, price, activityName, destinations }) {
         Activities
       </h1>
 
-      {/* <p className="text-base font-medium text-white sm:text-xl">
-        Price: ${price}
-      </p> */}
       <form
         onSubmit={handleBooking}
         className="mt-20 grid grid-cols-1 gap-x-10 gap-y-4 md:grid-cols-2"
@@ -218,7 +220,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
             value={organizerEmail}
             placeholder="organizer@email.com"
             onChange={(e) => setOrganizerEmail(e.target.value)}
-            className="h-12 rounded-md bg-tertiary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
+            className="h-12 rounded-md bg-primary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
             autoComplete="on"
             required
           />
@@ -231,7 +233,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
             value={bookingDate}
             placeholder="yyyy-MM-DD"
             onChange={(e) => setBookingDate(e.target.value)}
-            className="h-12 rounded-md bg-tertiary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
+            className="h-12 rounded-md bg-primary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
             required
           />
         </FormRow>
@@ -243,8 +245,8 @@ export default function BookingPage({ id, price, activityName, destinations }) {
         />
 
         <SelectActivities
-          activityPrice={activityPrice}
-          setActivityPrice={setActivityPrice}
+          activityPrices={activityPrices}
+          setActivityPrices={setActivityPrices}
         />
         <SelectPackages
           packagePrice={packagePrice}
@@ -252,15 +254,14 @@ export default function BookingPage({ id, price, activityName, destinations }) {
         />
         <div className="flex items-start gap-3 [grid-column:1/-1]">
           <button
-            className="rounded bg-gradient-to-br from-emerald-800 to-green-500 px-4 py-2.5 font-semibold text-white duration-300 hover:scale-95 hover:bg-gradient-to-tr disabled:cursor-not-allowed disabled:from-neutral-700 disabled:to-neutral-700 disabled:opacity-50 disabled:hover:scale-100"
+            className="rounded bg-gradient-to-br from-emerald-800 to-green-500 px-4 py-2.5 font-medium text-white duration-300 hover:scale-95 hover:bg-gradient-to-tr disabled:cursor-not-allowed disabled:from-neutral-700 disabled:to-neutral-700 disabled:opacity-50 disabled:hover:scale-100"
             type="submit"
             disabled={loading || !organizerEmail || !bookingDate}
           >
             {loading ? "Processing..." : "Pay 15% to Confirm Booking"}{" "}
-            {totalPrice}
           </button>
           <button
-            className="-order-1 inline-block rounded bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 text-sm font-semibold capitalize text-white hover:bg-gradient-to-tr"
+            className="-order-1 inline-block rounded bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 font-medium capitalize text-white hover:bg-gradient-to-tr"
             onClick={addEmail}
             type="button"
           >
@@ -268,35 +269,6 @@ export default function BookingPage({ id, price, activityName, destinations }) {
           </button>
         </div>
       </form>
-
-      {/* {links.length > 0 && (
-        <div className="space-y-4">
-          <h2 className="bg-gradient-to-b from-green-400 via-green-500 to-green-950 bg-clip-text text-2xl font-semibold text-transparent">
-            Payment Links:
-          </h2>
-          <ul className="w-full space-y-2">
-            {links.map(({ email, link }, i) => (
-              <li
-                key={i}
-                className="flex w-80 flex-col items-start gap-2 overflow-hidden text-ellipsis rounded-md bg-green-100 px-4 py-4 text-green-900"
-              >
-                <p className="text-sm font-medium">{email}</p>
-
-                <Link
-                  href={link}
-                  className="flex items-center gap-2 rounded-md border-2 border-green-900 bg-green-900 px-4 py-1.5 text-sm font-semibold capitalize text-green-50 duration-300 hover:bg-transparent hover:text-green-900"
-                >
-                  <span>pay now</span>
-                  <span>
-                    <CurrencyDollarIcon width={15} />
-                  </span>
-                  
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )} */}
     </div>
   );
 }

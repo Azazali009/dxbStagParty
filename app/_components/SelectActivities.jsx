@@ -1,20 +1,34 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { getActivities } from "../_lib/data-services";
-import FormRow from "../_components/FormRow";
+import { MultiSelect } from "react-multi-select-component";
+import FormRow from "./FormRow";
 
-export default function SelectActivities({ setActivityPrice, activityPrice }) {
+export default function SelectActivities({
+  setActivityPrices,
+  activityPrices,
+}) {
   const [loading, setLoading] = useState(false);
-  const [activities, setActivities] = useState(null);
-  // effect to fetch activities for selection
+  const [activities, setActivities] = useState([]);
+
   useEffect(() => {
     async function fetchActivities() {
       setLoading(true);
-      const activities = await getActivities();
-      setActivities(activities);
+      const fetchedActivities = await getActivities();
+
+      const formatted = fetchedActivities.map((act) => ({
+        label: act.name,
+        value: String(act.price), // value ko string mein convert karna zaroori hai
+      }));
+
+      setActivities(formatted);
       setLoading(false);
     }
+
     fetchActivities();
   }, []);
+
   if (loading)
     return (
       <div className="h-20 w-full space-y-2">
@@ -22,21 +36,24 @@ export default function SelectActivities({ setActivityPrice, activityPrice }) {
         <div className="h-12 w-full animate-pulse rounded-md bg-tertiary"></div>
       </div>
     );
+
   return (
-    <FormRow label={"Add more activities"}>
-      <select
-        id="activities"
-        value={activityPrice}
-        onChange={(e) => setActivityPrice(e.target.value)}
-        className="h-12 rounded-md bg-tertiary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
-      >
-        <option value={0}>select activities</option>
-        {activities?.map((act) => (
-          <option value={act.price} key={act.id}>
-            {act.name}
-          </option>
-        ))}
-      </select>
+    <FormRow label="Select Activities:">
+      <MultiSelect
+        options={activities}
+        value={activityPrices}
+        onChange={(selected) => {
+          // Make sure selected value format is same as in options
+          setActivityPrices(
+            selected.map((item) => ({
+              label: item.label,
+              value: String(item.value),
+            })),
+          );
+        }}
+        labelledBy="Select Activities"
+        className="custom-multi-select"
+      />
     </FormRow>
   );
 }

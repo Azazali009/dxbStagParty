@@ -23,7 +23,7 @@ export default function ModalWindow({ children, onClose, ribbontext }) {
 
           <motion.div
             className={
-              "no-scrollbar relative z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-y-auto border border-transparent bg-white p-4 md:max-w-[70%] md:rounded-2xl dark:border-neutral-800 dark:bg-neutral-950"
+              "no-scrollbar relative z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-y-auto bg-neutral-950 p-4 md:max-w-[70%] md:rounded-2xl"
             }
             key="modal"
             initial={{
@@ -96,7 +96,7 @@ export const CloseIcon = ({ onClose }) => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="h-4 w-4 text-black transition duration-200 group-hover:rotate-3 group-hover:scale-125 dark:text-white"
+        className="h-4 w-4 text-white transition duration-200 group-hover:rotate-3 group-hover:scale-125"
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M18 6l-12 12" />
