@@ -3,7 +3,7 @@ import DestintaionHero from "../_components/DestinationsHero";
 
 export default function page() {
   return (
-    <div>
+    <div className="mx-auto max-w-7xl">
       <DestintaionHero />
       {/* <Map /> */}
     </div>

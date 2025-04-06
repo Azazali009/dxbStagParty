@@ -24,11 +24,7 @@ export const navbar = [
     navItem: "Experiences",
     href: "/experiences",
   },
-  {
-    id: 6,
-    navItem: "Gallery & Reviews",
-    href: "/gallery-reviews",
-  },
+
   {
     id: 7,
     navItem: "Blog",

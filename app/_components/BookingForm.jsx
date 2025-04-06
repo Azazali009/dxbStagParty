@@ -227,7 +227,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
 
       <form
         onSubmit={handleBooking}
-        className="mt-20 grid grid-cols-1 gap-x-10 gap-y-4 md:grid-cols-2"
+        className="mt-20 grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-2"
       >
         <FormRow label={"Organizer Email:"}>
           <input
@@ -235,7 +235,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
             value={organizerEmail}
             placeholder="organizer@email.com"
             onChange={(e) => setOrganizerEmail(e.target.value)}
-            className="h-12 rounded-md bg-primary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
+            className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600"
             autoComplete="on"
             required
           />
@@ -248,7 +248,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
             value={bookingDate}
             placeholder="yyyy-MM-DD"
             onChange={(e) => setBookingDate(e.target.value)}
-            className="h-12 rounded-md bg-primary px-2 text-sm placeholder:text-sm focus:outline-blue-600"
+            className="h-10 rounded-md border-none bg-primary px-2 text-xs placeholder:text-sm focus:outline-none focus:outline-blue-600"
             required
           />
         </FormRow>

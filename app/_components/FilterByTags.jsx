@@ -8,9 +8,9 @@ export default function FilterByTags({ tabs, filter, setFilter }) {
         <li key={tab} className="snap-start">
           <button
             onClick={() => setFilter(tab)}
-            className={`flex w-full min-w-max justify-center whitespace-nowrap rounded-full border-2 border-secondary px-6 py-2 text-sm capitalize transition-all duration-300 ${
-              filter === tab ? "bg-secondary" : "bg-transparent"
-            } hover:bg-secondary`}
+            className={`flex w-full min-w-max justify-center whitespace-nowrap rounded-full border-2 border-secondary px-6 py-2 text-sm font-medium capitalize transition-all duration-300 ${
+              filter === tab ? "bg-secondary text-white" : "bg-transparent"
+            } hover:bg-secondary hover:text-white`}
           >
             {tab}
           </button>

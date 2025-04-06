@@ -7,10 +7,10 @@ export const revalidate = 0;
 export default async function Page({ searchParams }) {
   const filter = searchParams.groupSize ?? "all";
   return (
-    <>
+    <div className="mx-auto max-w-7xl">
       <PackagesHeroSection />
       <StagPartyPackages filter={filter} />
       <Testimonilas />
-    </>
+    </div>
   );
 }

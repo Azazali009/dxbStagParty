@@ -6,10 +6,10 @@ import TrashIcon from "@/app/svgIcons/TrashIcon";
 export default async function Page() {
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-semibold text-secondary">My bookings</h1>
+      <h1 className="text-2xl font-semibold text-primary">My bookings</h1>
       <div className="space-y-4">
         {/* 1 */}
-        <div className="flex border border-primary">
+        <div className="flex border border-gray-300">
           <div className="flex-1 p-4">
             <div className="flex justify-between text-[#4d5053]">
               <div className="space-y-2">
@@ -38,14 +38,14 @@ export default async function Page() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2 border-l border-primary">
+          <div className="flex flex-col gap-2 border-l border-gray-300">
             <button className="flex flex-1 items-center gap-2 px-4 text-sm font-medium capitalize hover:opacity-70">
               {" "}
               <PencilIcon />
               <span>edit</span>{" "}
             </button>
             {/* divider */}
-            <div className="h-px w-full bg-primary"></div>
+            <div className="h-px w-full bg-gray-300"></div>
             <button className="flex flex-1 items-center gap-2 px-4 text-sm font-medium capitalize hover:opacity-70">
               {" "}
               <TrashIcon />
@@ -54,7 +54,7 @@ export default async function Page() {
           </div>
         </div>
         {/* 2 */}
-        <div className="flex border border-primary">
+        <div className="flex border border-gray-300">
           <div className="flex-1 p-4">
             <div className="flex justify-between text-[#4d5053]">
               <div className="space-y-2">
@@ -83,14 +83,14 @@ export default async function Page() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2 border-l border-primary">
+          <div className="flex flex-col gap-2 border-l border-gray-300">
             <button className="flex flex-1 items-center gap-2 px-4 text-sm font-medium capitalize hover:opacity-70">
               {" "}
               <PencilIcon />
               <span>edit</span>{" "}
             </button>
             {/* divider */}
-            <div className="h-px w-full bg-primary"></div>
+            <div className="h-px w-full bg-gray-300"></div>
             <button className="flex flex-1 items-center gap-2 px-4 text-sm font-medium capitalize hover:opacity-70">
               {" "}
               <TrashIcon />
@@ -99,7 +99,7 @@ export default async function Page() {
           </div>
         </div>
         {/* 3 */}
-        <div className="flex border border-primary">
+        <div className="flex border border-gray-300">
           <div className="flex-1 p-4">
             <div className="flex justify-between text-[#4d5053]">
               <div className="space-y-2">
@@ -128,14 +128,14 @@ export default async function Page() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2 border-l border-primary">
+          <div className="flex flex-col gap-2 border-l border-gray-300">
             <button className="flex flex-1 items-center gap-2 px-4 text-sm font-medium capitalize hover:opacity-70">
               {" "}
               <PencilIcon />
               <span>edit</span>{" "}
             </button>
             {/* divider */}
-            <div className="h-px w-full bg-primary"></div>
+            <div className="h-px w-full bg-gray-300"></div>
             <button className="flex flex-1 items-center gap-2 px-4 text-sm font-medium capitalize hover:opacity-70">
               {" "}
               <TrashIcon />

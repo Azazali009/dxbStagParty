@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import PackagesGrid from "../_components/PackagesGrid";
+import FilterablePackagesGrid from "./FilterablePackagesGrid";
 import { getPackages } from "@/app/_lib/packagesApi";
 import Spinner from "./Spinner";
 
@@ -24,8 +24,8 @@ export default async function StagPartyPackages({ filter }) {
     });
 
   return (
-    <div className="mx-auto flex max-w-6xl flex-col justify-center gap-4 py-24">
-      <h2 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl md:text-5xl">
+    <div className="flex flex-col justify-center gap-4 px-4 py-24">
+      <h2 className="bg-gradient-to-b from-neutral-500 to-neutral-700 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl md:text-5xl">
         Our expert built stag party packages
       </h2>
       <div className="max-w-4xl">
@@ -37,7 +37,7 @@ export default async function StagPartyPackages({ filter }) {
         </p>
       </div>
       <Suspense fallback={<Spinner />}>
-        <PackagesGrid packages={filteredPackages} filter={filter} />
+        <FilterablePackagesGrid packages={filteredPackages} filter={filter} />
       </Suspense>
     </div>
   );

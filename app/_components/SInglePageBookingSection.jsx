@@ -17,7 +17,7 @@ export default function SinglePageBookingSection({
   const onClose = () => setOpenModal(false);
   const open = () => setOpenModal(true);
   return (
-    <div className="flex flex-col items-start gap-6 rounded-md border border-tertiary px-4 py-6">
+    <div className="flex flex-col items-start gap-6 rounded-md border border-gray-300 px-4 py-6">
       <h4 className="text-sm font-medium">
         from <strong className="text-2xl">${price}</strong> per person
       </h4>

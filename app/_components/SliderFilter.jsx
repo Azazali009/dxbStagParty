@@ -11,16 +11,20 @@ export default function SliderFilter({
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const [range, setRange] = useState(groupSize); // Default value
+  const [range, setRange] = useState(groupSize);
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const value = e.target.value;
     setRange(value);
 
     const params = new URLSearchParams(searchParams);
     params.set("groupSize", value);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
+  };
+
+  // % fill for dynamic gradient
+  const rangePercent =
+    ((range - minGroupSize) / (maxGroupSize - minGroupSize)) * 100;
 
   return (
     <div className="flex flex-col items-center space-y-2 font-semibold text-neutral-600">
@@ -28,7 +32,6 @@ export default function SliderFilter({
         Number of guests upto (25+)
       </span>
 
-      {/* Styled Slider */}
       <input
         type="range"
         min={minGroupSize}
@@ -36,20 +39,19 @@ export default function SliderFilter({
         value={range}
         step={1}
         onChange={handleChange}
-        className="h-2 w-full appearance-none rounded-lg accent-white shadow-2xl"
+        className="h-2 w-full appearance-none rounded-lg"
         style={{
           WebkitAppearance: "none",
           appearance: "none",
           height: "8px",
-          background: "linear-gradient(to right, #bf9b30, #735d1d)",
-          borderRadius: "5px",
+          background: `linear-gradient(to right, #bf9b30 ${rangePercent}%, #e5d7ac ${rangePercent}%)`,
+          borderRadius: "8px",
           outline: "none",
           transition: "opacity .15s ease-in-out",
-          boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
+          // boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
         }}
       />
 
-      {/* Custom Handle */}
       <style jsx>{`
         input[type="range"]::-webkit-slider-thumb {
           -webkit-appearance: none;
@@ -62,22 +64,29 @@ export default function SliderFilter({
           border: 4px solid #bf9b30;
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
-
-        input[type="range"]::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
+        input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 25px;
+          height: 25px;
           background: white;
           border-radius: 50%;
           cursor: pointer;
           border: 4px solid #bf9b30;
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
+        input[type="range"]::-webkit-slider-thumb:hover {
+          background: #e5d7ac;
+        }
+        input[type="range"]::-moz-range-thumb:hover {
+          background: #e5d7ac;
+        }
       `}</style>
-      {/* Min/Max Labels */}
+
       <div className="flex w-full justify-between text-sm font-bold text-neutral-500">
-        <span>4</span>
+        <span>{minGroupSize}</span>
         <span>{range}</span>
-        <span>25</span>
+        <span>{maxGroupSize}</span>
       </div>
     </div>
   );

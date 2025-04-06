@@ -3,7 +3,7 @@ import React from "react";
 
 export default function SinglePageBookingDetails({ image, duration, minAge }) {
   return (
-    <div className="sticky top-12 rounded-md border border-tertiary px-2 py-6 lg:px-4">
+    <div className="sticky top-12 rounded-md border border-gray-300 px-2 py-6 lg:px-4">
       <Image
         className="rounded-md"
         src={image}

@@ -18,7 +18,7 @@ export default async function Page({ params }) {
   const { id, name, price, image, duration, minAge, destinations } = activity;
   if (!activity) return <Empty name={"Activity"} />;
   return (
-    <div className="space-y-6 px-2 py-8 text-neutral-700 sm:px-6">
+    <div className="mx-auto max-w-7xl space-y-6 px-2 py-8 text-neutral-700 sm:px-6">
       <h1 className="text-xl font-bold sm:text-3xl">{name}</h1>
       <div className="relative grid h-full grid-cols-1 items-start gap-8 lg:grid-cols-[2fr_1.1fr]">
         {/* Left Container */}

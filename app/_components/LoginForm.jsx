@@ -32,7 +32,7 @@ export default function LoginForm() {
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="mx-auto max-w-md rounded-md p-6 shadow-shadowOne">
+      <div className="mx-auto max-w-md rounded-md border border-gray-300 bg-white p-6">
         <h2 className="mb-4 text-center text-2xl font-semibold">Login</h2>
         {error && <p className="mb-3 text-red-500">{error}</p>}
 
@@ -40,7 +40,7 @@ export default function LoginForm() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full rounded border border-transparent bg-tertiary px-2 py-3 shadow-shadowOne focus:outline-none focus:ring-1 focus:ring-secondary"
+            className="h-10 w-full rounded border border-gray-300 bg-gray-100 px-2 text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -49,7 +49,7 @@ export default function LoginForm() {
           <input
             type="password"
             placeholder="Password"
-            className="w-full rounded border border-transparent bg-tertiary px-2 py-3 shadow-shadowOne focus:outline-none focus:ring-1 focus:ring-secondary"
+            className="h-10 w-full rounded border border-gray-300 bg-gray-100 px-2 text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

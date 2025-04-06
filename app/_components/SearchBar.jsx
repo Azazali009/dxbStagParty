@@ -26,9 +26,9 @@ export default function SearchBar() {
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="block flex-1 bg-transparent p-2 placeholder:text-sm focus:outline-none"
+        className="block flex-1 bg-transparent p-2 placeholder:text-xs focus:outline-none"
         type="text"
-        placeholder=" Glam, Beauty, Instagrammable, Photo, Luxury"
+        placeholder=" Glam, Beauty, Instagrammable, Photo, Luxury..."
       />
 
       <button className="flex size-8 items-center justify-center rounded-full bg-gray-200 p-2 shadow-xl outline-none duration-300 hover:scale-90 hover:shadow-none focus:border-none focus:outline-secondary">

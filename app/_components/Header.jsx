@@ -8,7 +8,7 @@ import Logo from "./Logo";
 import Navbar from "./Navbar";
 export default function Header() {
   return (
-    <header className="relative z-50 bg-transparent">
+    <header className="relative z-50 mx-auto max-w-7xl bg-gray-100">
       {/* <TopBar /> */}
       <SocialBar />
       <div className="flex items-center justify-between bg-gray-200 p-4">
@@ -29,10 +29,9 @@ export default function Header() {
         </LinkButton>
       </div>
       <Navbar />
-      <div className="flex items-center gap-4 py-4 lg:hidden">
-        {/* <AuthNav /> */}
-        <MobileNav />
-      </div>
+
+      {/* <AuthNav /> */}
+      <MobileNav />
     </header>
   );
 }

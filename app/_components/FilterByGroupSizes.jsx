@@ -47,9 +47,9 @@ function Button({ children, filter, activeFilter, handleFilter }) {
   return (
     <button
       onClick={() => handleFilter(filter)}
-      className={`flex w-full min-w-max justify-center whitespace-nowrap rounded-full border-2 border-secondary px-6 py-2 text-sm capitalize transition-all duration-300 ${
-        filter === activeFilter ? "bg-secondary" : "bg-transparent"
-      } hover:bg-secondary`}
+      className={`flex w-full min-w-max justify-center whitespace-nowrap rounded-full border-2 border-secondary px-6 py-2 text-sm font-medium capitalize transition-all duration-300 ${
+        filter === activeFilter ? "bg-secondary text-white" : "bg-transparent"
+      } hover:bg-secondary hover:text-white`}
     >
       {children}
     </button>

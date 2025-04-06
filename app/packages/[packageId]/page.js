@@ -20,45 +20,45 @@ export default async function Page({ params }) {
 
   return (
     <div className="mx-auto flex flex-col justify-center gap-14">
-      <div className="relative flex min-h-screen w-full items-center justify-center">
+      <div className="relative flex min-h-screen w-full items-center justify-center bg-black">
         <Image
           src={Package.image}
           fill
           alt={Package.name}
-          className="opacity-35"
+          className="bg-black opacity-35"
         />
         <AnimatedHeading className={"z-20 text-xl !leading-[1.6] md:text-5xl"}>
           {Package.name}
         </AnimatedHeading>
       </div>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-        <div className="flex flex-col gap-2 rounded-md bg-transparent p-4 text-center text-sm text-neutral-300 shadow-shadowOne sm:text-lg">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 text-neutral-700 md:grid-cols-3 lg:grid-cols-5">
+        <div className="flex flex-col gap-2 rounded-md p-4 text-center text-sm shadow-lg sm:text-lg">
           <span className="mr-2 font-semibold">Blurb:</span>{" "}
-          <span className="text-sm capitalize leading-[1.7] text-neutral-500">
+          <span className="text-sm capitalize leading-[1.7]">
             {Package.blurb}
           </span>
         </div>
-        <div className="flex flex-col gap-2 rounded-md bg-transparent p-4 text-center text-sm text-neutral-300 shadow-shadowOne sm:text-lg">
+        <div className="flex flex-col gap-2 rounded-md bg-transparent p-4 text-center text-sm shadow-lg sm:text-lg">
           <span className="mr-2 font-semibold">Tags:</span>{" "}
-          <span className="text-sm capitalize leading-[1.7] text-neutral-500">
+          <span className="text-sm capitalize leading-[1.7]">
             {Package.tags.join(", ")}
           </span>
         </div>
-        <div className="flex flex-col gap-2 rounded-md bg-transparent p-4 text-center text-sm text-neutral-300 shadow-shadowOne sm:text-lg">
+        <div className="flex flex-col gap-2 rounded-md bg-transparent p-4 text-center text-sm shadow-lg sm:text-lg">
           <span className="mr-2 font-semibold">Inclusions:</span>{" "}
-          <span className="text-sm capitalize leading-[1.7] text-neutral-500">
+          <span className="text-sm capitalize leading-[1.7]">
             {Package.inclusions.join(", ")}
           </span>
         </div>
-        <div className="flex flex-col gap-2 rounded-md bg-transparent p-4 text-center text-sm text-neutral-300 shadow-shadowOne sm:text-lg">
+        <div className="flex flex-col gap-2 rounded-md bg-transparent p-4 text-center text-sm shadow-lg sm:text-lg">
           <span className="mr-2 font-semibold">Group size:</span>{" "}
-          <span className="text-sm capitalize leading-[1.7] text-neutral-500">
+          <span className="text-sm capitalize leading-[1.7]">
             {Package.group_size} peoples
           </span>
         </div>
-        <div className="flex flex-col gap-2 rounded-md bg-transparent p-4 text-center text-sm text-neutral-300 shadow-shadowOne sm:text-lg">
+        <div className="flex flex-col gap-2 rounded-md bg-transparent p-4 text-center text-sm shadow-lg sm:text-lg">
           <span className="mr-2 font-semibold">Price:</span>{" "}
-          <span className="text-sm leading-[1.7] text-neutral-500">
+          <span className="text-sm leading-[1.7]">
             AED{" "}
             <strong className="text-xl text-secondary">
               {Package.price_band}

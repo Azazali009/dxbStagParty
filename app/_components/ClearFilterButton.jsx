@@ -15,10 +15,10 @@ export default function ClearFilterButton() {
   }
   return (
     <button
-      className="flex items-center gap-1 text-red-500 underline decoration-red-500 underline-offset-4"
+      className="flex items-center gap-1 font-semibold capitalize text-red-500 underline decoration-red-500 decoration-[2px] underline-offset-4 hover:no-underline"
       onClick={handleClear}
     >
-      <span>Clear</span> <XMarkIcon />{" "}
+      <span>Clear filters</span>{" "}
     </button>
   );
 }

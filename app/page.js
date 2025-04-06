@@ -12,7 +12,7 @@ export const revalidate = 0;
 export default async function Home() {
   const packages = await getPackages();
   return (
-    <div className="flex flex-col justify-center space-y-6">
+    <div className="mx-auto flex max-w-7xl flex-col justify-center space-y-6">
       <HomeHeroSection />
       <HomeActivities />
       <HomePackages packages={packages} />
