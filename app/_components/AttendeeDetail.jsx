@@ -1,6 +1,6 @@
 import React from "react";
 import PaymentTimer from "./PaymentTimer";
-import ExtendAttendeeExpiry from "@/app/_components/ExtendAttendeeExpiry";
+import ExtendAttendeeExpiry from "../_components/ExtendAttendeeExpiry";
 
 export default function AttendeeDetail({ attendee }) {
   if (!attendee.length)

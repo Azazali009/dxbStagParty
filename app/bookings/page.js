@@ -1,7 +1,7 @@
 import { getBookings } from "../_lib/data-services";
 
-import BookingFilter from "@/app/_components/BookingFilter";
-import DisplayBookingTable from "@/app/_components/DisplayBookingTable";
+import BookingFilter from "../_components/BookingFilter";
+import DisplayBookingTable from "../_components/DisplayBookingTable";
 
 export default async function Page({ searchParams }) {
   const bookings = await getBookings();
