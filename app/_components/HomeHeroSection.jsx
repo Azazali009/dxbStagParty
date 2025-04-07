@@ -1,9 +1,5 @@
 import Image from "next/image";
 import AnimatedHeading from "./AnimatedHeading";
-import packageIcon from "@/public/images/packages.png";
-import adventureIcon from "@/public/images/adventure.png";
-import planningIcon from "@/public/images/planning.png";
-import topRatedIcon from "@/public/images/top.png";
 
 export default function HomeHeroSection() {
   return (
@@ -37,7 +33,7 @@ export default function HomeHeroSection() {
       <div className="grid grid-cols-4 gap-20 text-white">
         <div className="flex items-center gap-2">
           <Image
-            src={packageIcon}
+            src={"/images/packages.png"}
             width={100}
             height={100}
             alt="packages"
@@ -47,7 +43,7 @@ export default function HomeHeroSection() {
         </div>
         <div className="flex items-center gap-2">
           <Image
-            src={adventureIcon}
+            src={"/images/adventure.png"}
             width={100}
             height={100}
             alt="packages"
@@ -57,7 +53,7 @@ export default function HomeHeroSection() {
         </div>
         <div className="flex items-center gap-2">
           <Image
-            src={planningIcon}
+            src={"/images/planning.png"}
             width={100}
             height={100}
             alt="packages"
@@ -68,7 +64,7 @@ export default function HomeHeroSection() {
         </div>
         <div className="flex items-center gap-2">
           <Image
-            src={topRatedIcon}
+            src={"/images/top.png"}
             width={100}
             height={100}
             alt="packages"

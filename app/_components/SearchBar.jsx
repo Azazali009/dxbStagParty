@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
-import searchIcon from "@/public/images/search.png";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function SearchBar() {
   const [search, setSearch] = useState("");
@@ -32,7 +31,12 @@ export default function SearchBar() {
       />
 
       <button className="flex size-8 items-center justify-center rounded-full bg-gray-200 p-2 shadow-xl outline-none duration-300 hover:scale-90 hover:shadow-none focus:border-none focus:outline-secondary">
-        <Image src={searchIcon} width={100} height={100} alt="search" />
+        <Image
+          src={"/images/search.png"}
+          width={100}
+          height={100}
+          alt="search"
+        />
       </button>
     </form>
   );

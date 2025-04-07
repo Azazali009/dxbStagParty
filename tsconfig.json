@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
-    "paths": {
-      "@/*": ["./*"]
-    },
     "lib": [
       "dom",
       "dom.iterable",
@@ -30,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "app/_components/ui/animated-testimonials.jsx"  ],
+  ],
   "exclude": [
     "node_modules"
   ]

@@ -1,8 +1,8 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
-import TosterComp from "@/app/_components/Toaster";
-import PendingBookingDataNotification from "@/app/_components/PendingBookingDataNotification";
+import TosterComp from "./_components/Toaster";
+import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
 
 const poppins = Poppins({
   subsets: ["latin"],

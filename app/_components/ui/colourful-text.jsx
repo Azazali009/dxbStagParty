@@ -4,16 +4,13 @@ import { motion } from "motion/react";
 
 export default function ColourfulText({ text }) {
   const colors = [
+    "#392e0e",
     "#bf9b30",
     "#997c26",
-    "#d2b96e",
-    "#fff1c1",
-    "#bf9b30",
-    "#d9c383",
-    "#ccaf59",
-    "#c5a545",
+    "#866d22",
+    "#604e18",
+    "#735d1d",
     "#ac8c2b",
-    "#bf9b30",
   ];
 
   const [currentColors, setCurrentColors] = React.useState(colors);

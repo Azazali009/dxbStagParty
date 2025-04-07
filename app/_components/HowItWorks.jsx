@@ -1,8 +1,5 @@
 import Image from "next/image";
 import MeteorsDemo from "./MeteorsDemo";
-import image from "@/public/how_it_works.webp";
-import image2 from "@/public/how_it_works2.webp";
-import image3 from "@/public/how_it_works3.webp";
 export default function HowItWorks() {
   return (
     <section className="mx-auto max-w-[95%] py-10 sm:py-20">
@@ -13,11 +10,10 @@ export default function HowItWorks() {
         <MeteorsDemo>
           <div className="flex flex-col items-center gap-3">
             <Image
-              src={image}
+              src={"/how_it_works.webp"}
               width={100}
               height={100}
               alt="how it works"
-              placeholder="blur"
               quality={80}
             />
 
@@ -33,11 +29,10 @@ export default function HowItWorks() {
         <MeteorsDemo>
           <div className="flex flex-col items-center gap-3">
             <Image
-              src={image2}
+              src={"/how_it_works2.webp"}
               width={100}
               height={100}
               alt="how it works"
-              placeholder="blur"
               quality={80}
             />
 
@@ -54,11 +49,10 @@ export default function HowItWorks() {
         <MeteorsDemo>
           <div className="flex flex-col items-center gap-3">
             <Image
-              src={image3}
+              src={"/how_it_works3.webp"}
               width={100}
               height={100}
               alt="how it works"
-              placeholder="blur"
               quality={80}
             />
 

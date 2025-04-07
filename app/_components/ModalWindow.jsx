@@ -1,5 +1,6 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
+import { formatToAED } from "../_lib/helpers";
 
 export default function ModalWindow({ children, onClose, ribbontext }) {
   return (
@@ -49,11 +50,8 @@ export default function ModalWindow({ children, onClose, ribbontext }) {
               damping: 15,
             }}
           >
-            {/* <div className="absolute left-0 top-0 flex h-12 w-[500px] -translate-x-0 -rotate-45 items-center justify-center bg-secondary text-center text-base font-bold text-black sm:text-xl">
-              <p>AED {ribbontext}</p>
-            </div> */}
             <div className="absolute left-[5%] top-[5%] flex h-12 w-[500px] -translate-x-1/2 -rotate-45 items-center justify-center bg-secondary text-center text-base font-bold text-black sm:text-xl">
-              <p>AED {ribbontext}</p>
+              <p className="text-sm"> {formatToAED(ribbontext)}</p>
             </div>
             <CloseIcon onClose={onClose} />
             {children}

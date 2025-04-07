@@ -6,6 +6,7 @@ import CheckBadgeIcon from "../svgIcons/CheckBadgeIcon";
 import InformationCircleIcon from "../svgIcons/InformationCircleIcon";
 import { useState } from "react";
 import Button from "./Button";
+import { formatToAED } from "../_lib/helpers";
 
 export default function SinglePageBookingSection({
   activityId,
@@ -19,7 +20,8 @@ export default function SinglePageBookingSection({
   return (
     <div className="flex flex-col items-start gap-6 rounded-md border border-gray-300 px-4 py-6">
       <h4 className="text-sm font-medium">
-        from <strong className="text-2xl">${price}</strong> per person
+        from <strong className="text-2xl">{formatToAED(price)}</strong> per
+        person
       </h4>
       {/* <div>
         <button className="w-full rounded-full bg-gradient-to-r from-[#735d1d] via-secondary to-[#735d1d] px-8 py-3 font-semibold text-white duration-300 hover:scale-90 hover:border-blue-600 hover:bg-gradient-to-l">

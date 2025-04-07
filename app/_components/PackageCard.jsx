@@ -1,7 +1,4 @@
-import React from "react";
-import { BackgroundGradient } from "./ui/background-gradient";
 import Image from "next/image";
-import Link from "next/link";
 import LinkButton from "./LinkButton";
 
 export default function PackageCard({ pack }) {

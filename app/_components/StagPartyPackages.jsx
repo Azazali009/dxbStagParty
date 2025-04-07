@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import FilterablePackagesGrid from "./FilterablePackagesGrid";
-import { getPackages } from "@/app/_lib/packagesApi";
+import { getPackages } from "../_lib/packagesApi";
 import Spinner from "./Spinner";
 
 export default async function StagPartyPackages({ filter }) {

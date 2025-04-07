@@ -1,9 +1,9 @@
-import AnimatedHeading from "@/app/_components/AnimatedHeading";
-import PackageAddons from "@/app/_components/PackageAddons";
-import RelatedPackages from "@/app/_components/RelatedPackages";
-import Divider from "@/app/_components/Divider";
-import { getPackages } from "@/app/_lib/packagesApi";
-import { getPackageById } from "@/app/_lib/packagesApi";
+import AnimatedHeading from "../../_components/AnimatedHeading";
+import PackageAddons from "../../_components/PackageAddons";
+import RelatedPackages from "../../_components/RelatedPackages";
+import Divider from "../../_components/Divider";
+import { getPackages } from "../../_lib/packagesApi";
+import { getPackageById } from "../../_lib/packagesApi";
 import Image from "next/image";
 
 export const revalidate = 0;

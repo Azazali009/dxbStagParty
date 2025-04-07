@@ -1,7 +1,7 @@
 import React from "react";
 import { format } from "date-fns";
-import PencilIcon from "@/app/svgIcons/PencilIcon";
-import TrashIcon from "@/app/svgIcons/TrashIcon";
+import PencilIcon from "../../svgIcons/PencilIcon";
+import TrashIcon from "../../svgIcons/TrashIcon";
 
 export default async function Page() {
   return (

@@ -1,5 +1,5 @@
-import Activities from "@/app/_components/Activities";
-import Spinner from "@/app/_components/Spinner";
+import Activities from "../_components/Activities";
+import Spinner from "../_components/Spinner";
 import AnimatedHeading from "../_components/AnimatedHeading";
 import { Suspense } from "react";
 import ActivityFilters from "../_components/ActivityFilters";

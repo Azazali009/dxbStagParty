@@ -1,8 +1,8 @@
 import { getActivities, getActivity } from "../../_lib/data-services";
 
-import SinglePageBookingSection from "../../_components/SInglePageBookingSection.jsx";
+import SinglePageBookingSection from "../../_components/SinglePageBookingSection.jsx";
 import SinglePageBookingDetails from "../../_components/SinglePageBookingDetails.jsx";
-import Empty from "../../_components/Empty";
+import Empty from "../../_components/Empty.jsx";
 
 export const revalidate = 0;
 export async function generateStaticParams() {

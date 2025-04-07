@@ -1,7 +1,6 @@
-import MobileNav from "@/app/_components/MobileNav";
-import SocialBar from "@/app/_components/SocialBar";
-import whatsappIcon from "@/public/images/whatsapp.png";
 import Image from "next/image";
+import MobileNav from "../_components/MobileNav";
+import SocialBar from "../_components/SocialBar";
 import Button from "./Button";
 import LinkButton from "./LinkButton";
 import Logo from "./Logo";
@@ -19,7 +18,7 @@ export default function Header() {
           className={"flex items-center gap-2"}
         >
           <Image
-            src={whatsappIcon}
+            src={"/images/whatsapp.png"}
             alt="whatsapp chat"
             width={100}
             height={100}

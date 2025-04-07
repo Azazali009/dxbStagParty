@@ -36,7 +36,7 @@ export default function DestinationHero() {
   ];
   return (
     <div className="relative mx-auto flex min-h-screen flex-col items-center justify-center overflow-hidden rounded-3xl">
-      <h2 className="relative z-20 mx-auto max-w-4xl text-balance text-center text-2xl font-bold text-white md:text-4xl lg:text-6xl">
+      <h2 className="relative z-20 mx-auto max-w-4xl text-balance text-center text-2xl font-bold !leading-[1.3] text-white md:text-4xl lg:text-6xl">
         This is your life and it&apos;s ending one{" "}
         <span className="relative z-20 inline-block rounded-xl bg-blue-500/40 px-4 py-1 text-white underline decoration-secondary decoration-[6px] underline-offset-[16px] backdrop-blur-sm">
           moment

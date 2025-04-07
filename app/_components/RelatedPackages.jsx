@@ -1,6 +1,4 @@
-"use client";
-import ColourfulText from "@/app/_components/ui/colourful-text";
-import { BackgroundGradient } from "./ui/background-gradient";
+import ColourfulText from "../_components/ui/colourful-text";
 import { allPackages } from "../_lib/packagesData";
 export default function RelatedPackages() {
   const filteredPackages = allPackages.filter(
@@ -14,9 +12,9 @@ export default function RelatedPackages() {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filteredPackages.slice(0, 4).map((pack) => {
           return (
-            <BackgroundGradient
+            <div
               key={pack.id}
-              className="flex h-full flex-col items-start gap-4 rounded-[22px] bg-zinc-900 p-4 sm:p-10"
+              className="flex h-full flex-col items-start gap-4 rounded-[22px] border-2 border-secondary bg-white p-4 sm:p-10"
             >
               <h3 className="mb-2 mt-4 text-balance leading-[1.5] text-neutral-200">
                 {pack.title}
@@ -38,7 +36,7 @@ export default function RelatedPackages() {
                         $100
                       </span> */}
               </button>
-            </BackgroundGradient>
+            </div>
           );
         })}
       </div>

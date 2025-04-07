@@ -3,11 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { accountNavigations } from "../_lib/accountNavigations";
 import { usePathname } from "next/navigation";
-export default function AccountSidebar() {
+import UserData from "./UserData";
+export default function AccountSidebar({ children }) {
   const pathname = usePathname();
   return (
-    <div className="sticky top-10 flex flex-col border-r border-gray-300 bg-gray-200 px-2">
-      <ul className="flex h-screen flex-col gap-2">
+    <div className="sticky top-10 flex flex-col border-r border-gray-300 bg-gray-200 p-2">
+      <ul className="flex min-h-screen flex-col gap-2">
         {accountNavigations.map((link) => {
           return (
             <li key={link.href}>
@@ -21,16 +22,7 @@ export default function AccountSidebar() {
             </li>
           );
         })}
-        <li className="mt-auto flex items-center gap-2">
-          <Image
-            src={"/paintball.jpg"}
-            width={50}
-            height={50}
-            alt="user name"
-            className="aspect-square w-12 rounded-full"
-          />
-          <p>user name</p>
-        </li>
+        {children}
       </ul>
     </div>
   );

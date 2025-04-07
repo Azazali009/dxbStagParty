@@ -1,14 +1,12 @@
-import AuthNav from "@/app/_components/AuthNav";
 import Image from "next/image";
 import Link from "next/link";
-import instaIcon from "@/public/images/insta.png";
-import fbIcon from "@/public/images/fb.png";
+import AuthNav from "../_components/AuthNav";
 export default function SocialBar() {
   return (
     <div className="flex items-center justify-end gap-4 px-8 py-2">
       <Link href={"/"}>
         <Image
-          src={instaIcon}
+          src={"/images/insta.png"}
           width={100}
           height={100}
           alt="instagram"
@@ -17,7 +15,7 @@ export default function SocialBar() {
       </Link>
       <Link href={"/"}>
         <Image
-          src={fbIcon}
+          src={"/images/fb.png"}
           width={100}
           height={100}
           alt="facebook"
