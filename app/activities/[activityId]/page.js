@@ -1,6 +1,6 @@
 import { getActivities, getActivity } from "../../_lib/data-services";
 
-import SinglePageBookingSection from "../../_components/SinglePageBookingSection";
+import SinglePageBookingSection from "../../_components/SInglePageBookingSection";
 import SinglePageBookingDetails from "../../_components/SinglePageBookingDetails";
 import Empty from "../../_components/Empty.jsx";
 
