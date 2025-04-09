@@ -1,9 +1,7 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
-import { accountNavigations } from "../_lib/accountNavigations";
 import { usePathname } from "next/navigation";
-import UserData from "./UserData";
+import { accountNavigations } from "../_lib/accountNavigations";
 export default function AccountSidebar({ children }) {
   const pathname = usePathname();
   return (
@@ -14,7 +12,7 @@ export default function AccountSidebar({ children }) {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`flex items-center gap-2 rounded px-5 py-3 font-normal capitalize transition-all duration-300 hover:bg-gray-300 ${pathname === link.href && "bg-gray-300"}`}
+                className={`flex items-center gap-2 rounded px-5 py-3 font-medium capitalize transition-all duration-300 hover:bg-gray-300 ${pathname === link.href && "bg-gray-300"}`}
               >
                 {link.icon}
                 <span>{link.name}</span>

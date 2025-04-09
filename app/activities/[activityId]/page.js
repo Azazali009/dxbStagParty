@@ -3,8 +3,10 @@ import { getActivities, getActivity } from "../../_lib/data-services";
 import SinglePageBookingSection from "../../_components/SInglePageBookingSection";
 import SinglePageBookingDetails from "../../_components/SinglePageBookingDetails";
 import Empty from "../../_components/Empty.jsx";
+import { auth } from "../../_lib/auth";
 
 export const revalidate = 0;
+
 export async function generateStaticParams() {
   const activities = await getActivities();
   const ids = activities.map((curActivity) => ({
@@ -14,9 +16,12 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }) {
+  const session = await auth();
   const activity = await getActivity(params.activityId);
   const { id, name, price, image, duration, minAge, destinations } = activity;
+
   if (!activity) return <Empty name={"Activity"} />;
+
   return (
     <div className="mx-auto max-w-7xl space-y-6 px-2 py-8 text-neutral-700 sm:px-6">
       <h1 className="text-xl font-bold sm:text-3xl">{name}</h1>
@@ -33,6 +38,7 @@ export default async function Page({ params }) {
           price={price}
           activityName={name}
           destinations={destinations}
+          session={session}
         />
       </div>
     </div>

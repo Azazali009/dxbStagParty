@@ -4,7 +4,7 @@ import EyeIcon from "../svgIcons/EyeIcon";
 export default function DisplayBookingTable({ bookings }) {
   return (
     <div>
-      <div className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] items-center rounded-t-md border border-[#424242] bg-[#383838] px-4 py-3 font-semibold">
+      <div className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] items-center rounded-t-md border border-gray-300 bg-white px-4 py-3 font-semibold">
         <p>Booking ID</p>
         <p>Booking Price</p>
         <p>Owner</p>
@@ -19,7 +19,7 @@ export default function DisplayBookingTable({ bookings }) {
           bookings.map((booking) => {
             return (
               <div
-                className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] items-center justify-center border border-[#424242] bg-transparent px-4 py-3 font-light last:rounded-b-md"
+                className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] items-center justify-center border border-gray-300 bg-white px-4 py-3 font-light last:rounded-b-md"
                 key={booking.id}
               >
                 <p>{booking.id}</p>
@@ -28,7 +28,7 @@ export default function DisplayBookingTable({ bookings }) {
                 {booking.paymentStatus === "pending" && (
                   <p
                     className={
-                      "max-w-28 rounded-full bg-tertiary py-1 text-center text-xs font-semibold capitalize tracking-wide"
+                      "max-w-28 rounded-full bg-tertiary py-1 text-center text-xs font-semibold capitalize tracking-wide text-white"
                     }
                   >
                     {booking.paymentStatus}

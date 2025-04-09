@@ -24,7 +24,7 @@ export default function ModalWindow({ children, onClose, ribbontext }) {
 
           <motion.div
             className={
-              "no-scrollbar relative z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-y-auto bg-neutral-950 p-4 md:max-w-[70%] md:rounded-2xl"
+              "no-scrollbar relative z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-y-auto bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
             }
             key="modal"
             initial={{

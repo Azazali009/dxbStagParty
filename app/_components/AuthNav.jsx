@@ -1,22 +1,26 @@
 import Link from "next/link";
 import { auth } from "../_lib/auth";
 import Image from "next/image";
+import SignOutButton from "./SignOutButton";
 
 export default async function AuthNav() {
   const session = await auth();
   return (
     <div>
       {session ? (
-        <Link href={"/account"}>
-          <Image
-            src={session?.user?.image}
-            width={100}
-            height={100}
-            alt={session?.user?.name}
-            className="size-8 rounded-full"
-            referrerPolicy="no-referrer"
-          />
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href={"/account"}>
+            <Image
+              src={session?.user?.image}
+              width={100}
+              height={100}
+              alt={session?.user?.name}
+              className="size-8 rounded-full"
+              referrerPolicy="no-referrer"
+            />
+          </Link>
+          <SignOutButton />
+        </div>
       ) : (
         <Link href={"/account"}>
           <svg

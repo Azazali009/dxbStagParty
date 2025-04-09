@@ -8,21 +8,24 @@ import FormRow from "./FormRow";
 export default function SelectActivities({
   setSelectedActivities,
   selectedActivities,
+  activityId,
 }) {
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState([]);
-
   // Effect to fetch activities
   useEffect(() => {
     async function fetchActivities() {
       setLoading(true);
       const fetchedActivities = await getActivities();
+
       setActivities(
-        fetchedActivities.map((act) => ({
-          label: act.name,
-          value: act.id,
-          price: act.price,
-        })),
+        fetchedActivities
+          ?.filter((act) => act.id !== activityId)
+          ?.map((act) => ({
+            label: act.name,
+            value: act.id,
+            price: act.price,
+          })),
       );
       setLoading(false);
     }

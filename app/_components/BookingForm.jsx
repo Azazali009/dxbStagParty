@@ -6,11 +6,18 @@ import SelectPackages from "../_components/SelectPackages";
 import toast from "react-hot-toast";
 import FormRow from "./FormRow";
 import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
+import Button from "./Button";
 
-export default function BookingPage({ id, price, activityName, destinations }) {
+export default function BookingPage({
+  id,
+  price,
+  activityName,
+  destinations,
+  session,
+}) {
   const [emails, setEmails] = useState([""]);
   const [user] = useState(true);
-  const [organizerEmail, setOrganizerEmail] = useState("");
+  const [organizerEmail, setOrganizerEmail] = useState(session.user.email);
   const [bookingDate, setBookingDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedActivities, setSelectedActivities] = useState([]);
@@ -146,7 +153,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
       // ✅ Check for Duplicate Emails
       const uniqueEmails = new Set(allEmails);
       if (uniqueEmails.size !== allEmails.length) {
-        toast.error("Duplicate emails are not allowed!");
+        toast.error("Duplicate emails are not allowed!", { id: toastId });
         setLoading(false);
         return;
       }
@@ -205,6 +212,7 @@ export default function BookingPage({ id, price, activityName, destinations }) {
 
       // ✅ Redirect Organizer to Stripe Checkout for Payment
       window.location.href = organizerPaymentData.paymentLink;
+      localStorage.setItem("bookingInProgress", "true");
     } catch (error) {
       console.error("❌ Error:", error);
       toast.error("Error processing payment.", { id: toastId });
@@ -227,15 +235,16 @@ export default function BookingPage({ id, price, activityName, destinations }) {
 
       <form
         onSubmit={handleBooking}
-        className="mt-20 grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-2"
+        className="mt-20 grid grid-cols-1 gap-x-10 gap-y-6 p-4 md:grid-cols-2"
       >
         <FormRow label={"Organizer Email:"}>
           <input
             type="email"
+            disabled
             value={organizerEmail}
             placeholder="organizer@email.com"
             onChange={(e) => setOrganizerEmail(e.target.value)}
-            className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600"
+            className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
             autoComplete="on"
             required
           />
@@ -262,21 +271,24 @@ export default function BookingPage({ id, price, activityName, destinations }) {
         <SelectActivities
           selectedActivities={selectedActivities}
           setSelectedActivities={setSelectedActivities}
+          activityId={id}
         />
         <SelectPackages
           selectedPackages={selectedPackages}
           setSelectedPackages={setSelectedPackages}
         />
-        <div className="flex items-start gap-3 [grid-column:1/-1]">
+        <div className="sticky bottom-0 flex w-full items-start gap-3 justify-self-center bg-neutral-950 p-4 [grid-column:1/-1]">
+          <div>
+            <Button
+              variation="gold"
+              type="submit"
+              disable={loading || !organizerEmail || !bookingDate}
+            >
+              {loading ? "Processing..." : "Pay 15% to Confirm Booking"}{" "}
+            </Button>
+          </div>
           <button
-            className="rounded bg-gradient-to-br from-emerald-800 to-green-500 px-4 py-2.5 font-medium text-white duration-300 hover:scale-95 hover:bg-gradient-to-tr disabled:cursor-not-allowed disabled:from-neutral-700 disabled:to-neutral-700 disabled:opacity-50 disabled:hover:scale-100"
-            type="submit"
-            disabled={loading || !organizerEmail || !bookingDate}
-          >
-            {loading ? "Processing..." : "Pay 15% to Confirm Booking"}{" "}
-          </button>
-          <button
-            className="-order-1 inline-block rounded bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 font-medium capitalize text-white hover:bg-gradient-to-tr"
+            className="-order-1 inline-block rounded-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 font-medium capitalize text-white hover:bg-gradient-to-tr"
             onClick={addEmail}
             type="button"
           >

@@ -17,10 +17,12 @@ export default function Paintball({ activity }) {
       <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center">
         {" "}
         <p className="text-xs">
-          <strong>Duration:</strong> <span>{duration}</span>{" "}
+          <strong>Duration:</strong>{" "}
+          <span className="font-medium">{duration}</span>{" "}
         </p>
         <p className="text-xs">
-          <strong>Guest upto:</strong> <span>{group_size}</span>{" "}
+          <strong>Guest upto:</strong>{" "}
+          <span className="font-medium">{group_size}</span>{" "}
         </p>
       </div>
 

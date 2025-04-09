@@ -1,3 +1,4 @@
+// "use client";
 import Image from "next/image";
 import MobileNav from "../_components/MobileNav";
 import SocialBar from "../_components/SocialBar";
@@ -5,7 +6,10 @@ import Button from "./Button";
 import LinkButton from "./LinkButton";
 import Logo from "./Logo";
 import Navbar from "./Navbar";
+// import { usePathname } from "next/navigation";
 export default function Header() {
+  // const pathname = usePathname();
+  // if (pathname === "/dashboard") return;
   return (
     <header className="relative z-50 mx-auto max-w-7xl bg-gray-100">
       {/* <TopBar /> */}

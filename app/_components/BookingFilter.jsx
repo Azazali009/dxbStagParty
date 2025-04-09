@@ -16,28 +16,28 @@ export default function BookingFilter() {
   }
   return (
     <div className="flex justify-end">
-      <div className="flex items-center divide-x divide-tertiary/50 rounded-sm border border-tertiary">
+      <div className="flex items-center divide-x divide-gray-300 rounded-sm border border-gray-300">
         <button
           onClick={() => handleFilter("all")}
-          className={`px-5 ${activeFilter === "all" && "bg-tertiary"} py-2 capitalize duration-300 hover:bg-tertiary`}
+          className={`px-5 ${activeFilter === "all" && "bg-tertiary text-white"} py-2 capitalize duration-300 hover:bg-tertiary hover:text-white`}
         >
           all
         </button>
         <button
           onClick={() => handleFilter("confirmed")}
-          className={`px-5 ${activeFilter === "confirmed" && "bg-tertiary"} py-2 capitalize duration-300 hover:bg-tertiary`}
+          className={`px-5 ${activeFilter === "confirmed" && "bg-tertiary text-white"} py-2 capitalize duration-300 hover:bg-tertiary hover:text-white`}
         >
           Confirmed
         </button>
         <button
           onClick={() => handleFilter("pending")}
-          className={`px-5 ${activeFilter === "pending" && "bg-tertiary"} py-2 capitalize duration-300 hover:bg-tertiary`}
+          className={`px-5 ${activeFilter === "pending" && "bg-tertiary text-white"} py-2 capitalize duration-300 hover:bg-tertiary hover:text-white`}
         >
           pending
         </button>
         <button
           onClick={() => handleFilter("cancelled")}
-          className={`px-5 ${activeFilter === "cancelled" && "bg-tertiary"} py-2 capitalize duration-300 hover:bg-tertiary`}
+          className={`px-5 ${activeFilter === "cancelled" && "bg-tertiary text-white"} py-2 capitalize duration-300 hover:bg-tertiary hover:text-white`}
         >
           cancelled
         </button>

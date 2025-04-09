@@ -5,7 +5,7 @@ export const content = [
   "./app/**/*.{js,ts,jsx,tsx,mdx}",
 ];
 export const theme = {
-  darkMode: "class",
+  // darkMode: "class",
   extend: {
     animation: {
       spotlight: "spotlight 2s ease .75s 1 forwards",

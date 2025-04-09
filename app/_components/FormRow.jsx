@@ -5,7 +5,7 @@ export default function FormRow({ children, label }) {
     <div className="flex flex-col gap-2 text-sm">
       <label
         className="text-sm font-medium capitalize"
-        htmlFor={children.props.id}
+        htmlFor={children?.props?.id}
       >
         {label}
       </label>

@@ -6,6 +6,7 @@ import CheckBadgeIcon from "../svgIcons/CheckBadgeIcon";
 import InformationCircleIcon from "../svgIcons/InformationCircleIcon";
 import { useState } from "react";
 import Button from "./Button";
+import LoggedInMessage from "./LoggedInMeesage";
 import { formatToAED } from "../_lib/helpers";
 
 export default function SinglePageBookingSection({
@@ -13,6 +14,7 @@ export default function SinglePageBookingSection({
   price,
   activityName,
   destinations,
+  session,
 }) {
   const [openModal, setOpenModal] = useState(false);
   const onClose = () => setOpenModal(false);
@@ -23,25 +25,28 @@ export default function SinglePageBookingSection({
         from <strong className="text-2xl">{formatToAED(price)}</strong> per
         person
       </h4>
-      {/* <div>
-        <button className="w-full rounded-full bg-gradient-to-r from-[#735d1d] via-secondary to-[#735d1d] px-8 py-3 font-semibold text-white duration-300 hover:scale-90 hover:border-blue-600 hover:bg-gradient-to-l">
-          Add to cart
-        </button>
-      </div> */}
-      {openModal ? (
-        <ModalWindow onClose={onClose} ribbontext={price}>
-          <BookingPage
-            id={activityId}
-            price={price}
-            activityName={activityName}
-            destinations={destinations}
-          />
-        </ModalWindow>
+
+      {session?.user ? (
+        openModal ? (
+          <ModalWindow onClose={onClose} ribbontext={price}>
+            <BookingPage
+              id={activityId}
+              price={price}
+              activityName={activityName}
+              destinations={destinations}
+              session={session}
+            />
+          </ModalWindow>
+        ) : (
+          <Button variation="gold" onClick={open}>
+            Book Now
+          </Button>
+          // Show this if not logged in but trying to open modal
+        )
       ) : (
-        <Button variation="gold" onClick={open}>
-          Book Now
-        </Button>
+        <LoggedInMessage />
       )}
+
       <MeteorsDemo>
         <ul className="space-y-4">
           <li className="flex items-center gap-4">
