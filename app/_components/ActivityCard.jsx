@@ -105,7 +105,7 @@ export default function Paintball({ activity }) {
         />
       </div>
 
-      <div className="border-b border-gray-200 text-sm font-semibold">
+      <div className="text-sm font-semibold">
         <h3>{name}</h3>
       </div>
       {/* <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center">
