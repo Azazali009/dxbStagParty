@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
 import TosterComp from "./_components/Toaster";
+import ClientHeader from "./_components/ClientHeader";
 import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
 
 const poppins = Poppins({
@@ -25,7 +26,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.className} overflow-x-hidden bg-gray-100 text-neutral-700 antialiased`}
       >
-        <Header />
+        <ClientHeader>
+          <Header />
+        </ClientHeader>
         <TosterComp />
         <PendingBookingDataNotification />
         <main className="">{children}</main>

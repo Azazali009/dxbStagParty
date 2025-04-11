@@ -20,8 +20,25 @@ export default function AdminActivityForm() {
       <FormRow label={"Min Age"}>
         <input type="number" name="minAge" />
       </FormRow>
-      <FormRow label={"Min Age"}>
+      <FormRow label={"Image"}>
         <input type="file" name="image" />
+      </FormRow>
+      <FormRow label={"Destinations"}>
+        <input type="text" name="destinations" />
+      </FormRow>
+      <FormRow label={"Description"}>
+        <input type="text" name="description" />
+      </FormRow>
+      <FormRow label={"Group Size"}>
+        <input type="text" name="group_size" />
+      </FormRow>
+      <FormRow label={"Tags"}>
+        <input
+          type="text"
+          name="tags"
+          title="split by commas"
+          placeholder="Glam,Beauty,Instagrammable,Photo,Luxury..."
+        />
       </FormRow>
       <button type="submit">add activity</button>
     </form>

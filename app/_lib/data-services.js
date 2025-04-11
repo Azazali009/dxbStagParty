@@ -1,5 +1,18 @@
 import { supabase } from "./supabase";
 
+export async function createActivity(newActivity) {
+  const { data, error } = await supabase
+    .from("activities")
+    .insert([newActivity])
+    .select();
+
+  if (error) {
+    console.log(error);
+    throw new Error("Error while creating Activity.😒");
+  }
+  return data;
+}
+
 export async function getActivities() {
   let { data, error } = await supabase.from("activities").select("*");
 
