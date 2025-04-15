@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { BackgroundLines } from "./ui/background-lines";
-import image from "../../public/wedding-online-winner.png";
 import Button from "../_components/Button";
 import AnimatedHeading from "./AnimatedHeading";
 
@@ -18,13 +17,6 @@ export default function PackagesHeroSection() {
         <Button>choose your destinations</Button>
         <Button>Search by dates</Button>
       </div>
-      <Image
-        src={image}
-        width={500}
-        height={200}
-        alt="Reviews"
-        placeholder="blur"
-      />
     </BackgroundLines>
   );
 }
