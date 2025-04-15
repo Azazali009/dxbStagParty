@@ -1,10 +1,8 @@
-"use client";
 import Image from "next/image";
-import { formatToAED } from "../_lib/helpers";
 import LinkButton from "./LinkButton";
-import { motion } from "framer-motion";
+import { cinzel, playfairDisplay } from "../layout";
 
-export default function Paintball({ activity, cinzel, playfairDisplay }) {
+export default function Paintball({ activity }) {
   const { image, name, id, description, duration, price, group_size } =
     activity;
 
@@ -136,8 +134,8 @@ export default function Paintball({ activity, cinzel, playfairDisplay }) {
         alt={name}
       />
       <div className="flex flex-col items-center justify-center gap-2 px-4 py-8 text-center">
-        <h2 className={`${cinzel.className} text-2xl font-bold`}>{name}</h2>
-        <p className={`${playfairDisplay.className} leading-[1.6]`}>
+        <h2 className={`${cinzel?.className} text-2xl font-bold`}>{name}</h2>
+        <p className={`${playfairDisplay?.className} leading-[1.6]`}>
           {description}
         </p>
       </div>

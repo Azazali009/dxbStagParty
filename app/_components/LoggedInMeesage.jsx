@@ -3,16 +3,16 @@ import React from "react";
 
 export default function LoggedInMeesage() {
   return (
-    <div>
+    <div className="">
       <p className="leading-[1.8]">
-        Please log in
+        Please login
         <Link
           className="px-1 font-medium text-secondary underline hover:no-underline"
           href={"/login"}
         >
-          login
+          here
         </Link>
-        to book you favourite activity and keep smooth booking.
+        to book you favourite activity!
       </p>
     </div>
   );

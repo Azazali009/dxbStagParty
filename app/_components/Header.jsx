@@ -8,7 +8,7 @@ import Navbar from "./Navbar";
 
 export default function Header() {
   return (
-    <header className="bg-navyBlue relative z-50 mx-auto max-w-7xl">
+    <header className="bg-navyBlue relative z-30 mx-auto max-w-7xl">
       {/* <TopBar /> */}
       <SocialBar />
       <div className="flex items-center justify-between bg-primary p-4">

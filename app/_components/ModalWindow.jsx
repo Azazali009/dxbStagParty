@@ -18,13 +18,13 @@ export default function ModalWindow({ children, onClose, ribbontext }) {
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className={`fixed inset-0 z-50 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]`}
+          className={`fixed inset-0 !z-[9999] flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]`}
         >
           <Overlay />
 
           <motion.div
             className={
-              "no-scrollbar relative z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-y-auto bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
+              "no-scrollbar relative !z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-y-auto bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
             }
             key="modal"
             initial={{
