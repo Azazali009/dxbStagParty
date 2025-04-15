@@ -1,22 +1,25 @@
 import Image from "next/image";
 import AnimatedHeading from "./AnimatedHeading";
+import { cinzel } from "../layout";
 
 export default function HomeHeroSection() {
   return (
-    <section className="flex flex-col items-center justify-center gap-10 bg-[url('/home-her-bg.webp')] bg-cover pb-10 pt-32 sm:min-h-screen">
-      <AnimatedHeading className={"text-white"}>
-        Stag Parties in{" "}
-        <span className="rounded-md bg-secondary/80 px-1 underline decoration-secondary decoration-[6px] underline-offset-[30px] backdrop-blur-md">
-          Dubai
-        </span>{" "}
-        – The Ultimate Bachelor Experience!
-      </AnimatedHeading>
-      <p className="text-balance text-center text-sm text-neutral-200 sm:w-[70%] sm:text-base">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum
-        quasi, dolorum nobis impedit veritatis ipsam enim earum iusto laboriosam
-        officiis, mollitia numquam temporibus?
-      </p>
+    <section className="relative flex flex-col gap-10 bg-[url('/images/home-hero.png')] bg-cover p-4 pb-10 pt-32 sm:min-h-screen">
+      {/* overlay */}
+      <div className="bg-navyBlue/30 absolute left-0 top-0 h-full w-full"></div>
 
+      <div className="relative z-10 ml-12 max-w-[500px] space-y-8">
+        <AnimatedHeading
+          className={`text-left ${cinzel.className} uppercase !leading-[1.2] text-white`}
+        >
+          Plan the ultimate stag party in dubai
+        </AnimatedHeading>
+        <button className="rounded-full bg-[#b78d5d] px-6 py-2 text-lg font-medium capitalize backdrop-blur-md duration-300 hover:opacity-80">
+          start plaining
+        </button>
+      </div>
+
+      {/* 
       <div className="flex gap-8 rounded-full bg-gradient-to-r from-secondary to-[#997c26] px-12 py-3 text-neutral-800">
         <button className="font-medium duration-300 hover:text-white">
           Activities
@@ -27,9 +30,9 @@ export default function HomeHeroSection() {
         <button className="font-medium duration-300 hover:text-white">
           Expereince
         </button>
-      </div>
+      </div> */}
       {/* divider */}
-      <div className="h-[0.06px] w-[95%] bg-neutral-600"></div>
+      {/* <div className="h-[0.06px] w-[95%] bg-neutral-600"></div>
       <div className="grid grid-cols-4 gap-20 text-white">
         <div className="flex items-center gap-2">
           <Image
@@ -73,7 +76,7 @@ export default function HomeHeroSection() {
 
           <p>top rated services</p>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

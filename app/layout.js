@@ -1,4 +1,4 @@
-import { Poppins } from "next/font/google";
+import { Poppins, Cinzel, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
 import TosterComp from "./_components/Toaster";
@@ -11,6 +11,17 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
+export const cinzel = Cinzel({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-cinzel",
+});
+export const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
 export const metadata = {
   title: {
     template: "%s | DXB Stag Party",
@@ -22,9 +33,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${poppins.className}`}>
       <body
-        className={`${poppins.className} overflow-x-hidden bg-gray-100 text-neutral-700 antialiased`}
+        className={`${poppins.className} text-softGold overflow-x-hidden bg-primary antialiased`}
       >
         <ClientHeader>
           <Header />

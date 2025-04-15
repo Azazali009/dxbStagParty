@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+h1,
+h2,
+h3 {
+  font-family: var(--font-cinzel), sans-serif;
+}
 .tab-design {
   transition-timing-function: linear !important;
   mask-image:

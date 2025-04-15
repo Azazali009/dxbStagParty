@@ -8,14 +8,14 @@ import Navbar from "./Navbar";
 
 export default function Header() {
   return (
-    <header className="relative z-50 mx-auto max-w-7xl bg-gray-100">
+    <header className="bg-navyBlue relative z-50 mx-auto max-w-7xl">
       {/* <TopBar /> */}
       <SocialBar />
-      <div className="flex items-center justify-between bg-gray-200 p-4">
+      <div className="flex items-center justify-between bg-primary p-4">
         <Button>build your package</Button>
         <Logo />
         <LinkButton
-          href={"https://wa.me/+92311123455"}
+          href={"https://wa.me/+971568347487"}
           className={"flex items-center gap-2"}
         >
           <Image

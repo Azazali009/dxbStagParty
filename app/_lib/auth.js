@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { createOrganizer, getOrganizer } from "./organizerApi";
 
-const authConfig = {
+export const authConfig = {
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,

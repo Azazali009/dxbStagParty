@@ -7,6 +7,9 @@ export const content = [
 export const theme = {
   // darkMode: "class",
   extend: {
+    fontFamily: {
+      cinzel: ["Cinzel", "sans-serif"],
+    },
     animation: {
       spotlight: "spotlight 2s ease .75s 1 forwards",
       "meteor-effect": "meteor 5s linear infinite",
@@ -35,9 +38,13 @@ export const theme = {
       shadowOne: "10px 10px 19px #1c1e22, -10px -10px 19px #1c1e22",
     },
     colors: {
-      primary: "#212428",
-      secondary: "#BF9B30",
-      tertiary: "#424242",
+      primary: "#05172a",
+      secondary: "#D4AF37",
+      navyBlue: "#0B0E1C",
+      charcoalBlack: "#1A1A1A",
+      softGold: "#F7E7CE",
+      reddish: "#2b030c",
+      matalicGold: "#e0b15e",
     },
   },
 };

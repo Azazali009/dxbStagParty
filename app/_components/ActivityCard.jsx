@@ -4,7 +4,7 @@ import { formatToAED } from "../_lib/helpers";
 import LinkButton from "./LinkButton";
 import { motion } from "framer-motion";
 
-export default function Paintball({ activity }) {
+export default function Paintball({ activity, cinzel, playfairDisplay }) {
   const { image, name, id, description, duration, price, group_size } =
     activity;
 
@@ -95,34 +95,55 @@ export default function Paintball({ activity }) {
     //     </div>
     //   </div>
     // </motion.div>
-    <div className="flex flex-col items-start gap-4 rounded-md p-4 text-neutral-700 [&:nth-child(2)]:col-span-2">
-      <div className="relative h-80 w-full overflow-hidden rounded-md border border-secondary object-cover">
-        <Image
-          src={image || "/default-activity-image.jpg"}
-          fill
-          alt={name}
-          className="h-full object-cover"
-        />
-      </div>
+    // card v3
+    // <div className="flex flex-col items-start gap-4 rounded-md p-4 text-neutral-700 [&:nth-child(2)]:col-span-2">
+    //   <div className="relative h-80 w-full overflow-hidden rounded-md border border-secondary object-cover">
+    //     <Image
+    //       src={image || "/default-activity-image.jpg"}
+    //       fill
+    //       alt={name}
+    //       className="h-full object-cover"
+    //     />
+    //   </div>
 
-      <div className="text-sm font-semibold">
-        <h3>{name}</h3>
-      </div>
-      {/* <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center">
-        {" "}
-        <p className="text-xs">
-          <strong>Duration:</strong>{" "}
-          <span className="font-medium">{duration}</span>{" "}
-        </p>
-        <p className="text-xs">
-          <strong>Guest upto:</strong>{" "}
-          <span className="font-medium">{group_size}</span>{" "}
-        </p>
-      </div> */}
+    //   <div className="text-sm font-semibold">
+    //     <h3>{name}</h3>
+    //   </div>
+    //   {/* <div className="flex items-center justify-between border-b border-tertiary pb-4 text-center">
+    //     {" "}
+    //     <p className="text-xs">
+    //       <strong>Duration:</strong>{" "}
+    //       <span className="font-medium">{duration}</span>{" "}
+    //     </p>
+    //     <p className="text-xs">
+    //       <strong>Guest upto:</strong>{" "}
+    //       <span className="font-medium">{group_size}</span>{" "}
+    //     </p>
+    //   </div> */}
 
-      <div>
-        <LinkButton size="small" href={`/activities/${id}`} variation="gold">
-          Book now
+    //   <div>
+    //     <LinkButton size="small" href={`/activities/${id}`} variation="gold">
+    //       Book now
+    //     </LinkButton>
+    //   </div>
+    // </div>
+    <div className="relative overflow-hidden rounded-lg bg-[#2b030c]">
+      <Image
+        className="h-64 object-cover"
+        src={image}
+        width={500}
+        height={500}
+        alt={name}
+      />
+      <div className="flex flex-col items-center justify-center gap-2 px-4 py-8 text-center">
+        <h2 className={`${cinzel.className} text-2xl font-bold`}>{name}</h2>
+        <p className={`${playfairDisplay.className} leading-[1.6]`}>
+          {description}
+        </p>
+      </div>
+      <div className="absolute right-2 top-2">
+        <LinkButton size="small" variation="gold" href={`/activities/${id}`}>
+          Book Now
         </LinkButton>
       </div>
     </div>
