@@ -4,7 +4,7 @@ import { cinzel } from "../layout";
 
 export default function HomeHeroSection() {
   return (
-    <section className="relative flex items-end justify-center gap-10 bg-[url('/images/home-hero2.png')] bg-cover p-4 pb-10 pt-32 sm:min-h-screen">
+    <section className="relative flex items-end justify-center gap-10 bg-[url('/images/home-hero-3.png')] bg-cover p-4 pb-10 pt-32 sm:min-h-[700px]">
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-primary/30 to-navyBlue"></div>
 
