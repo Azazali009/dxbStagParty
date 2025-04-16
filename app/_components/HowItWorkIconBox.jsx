@@ -3,7 +3,7 @@ import { cinzel } from "../layout";
 
 export default function HowItWorkIconBox({ image, title, desc }) {
   return (
-    <div className="flex items-start gap-6">
+    <div className="flex items-start gap-4">
       <Image src={image} width={100} height={100} alt="package" />
       <div>
         <h3

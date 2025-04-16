@@ -150,7 +150,7 @@ export default function ActivityCard({ activity }) {
     <div className="relative flex h-[500px] items-end justify-center overflow-hidden rounded-sm border border-matalicGold object-cover pb-8">
       <Image src={image} fill alt={name} className="bg-center object-cover" />
       {/* overlay */}
-      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-black/40 to-navyBlue"></div>
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
       <div className="relative z-10 space-y-4 p-4">
         <h2
           className={`${cinzel.className} text-balance text-2xl font-bold text-secondary`}
