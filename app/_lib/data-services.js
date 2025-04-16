@@ -16,7 +16,7 @@ export async function createActivity(newActivity) {
   }
 
   const { error: storageError } = await supabase.storage
-    .from("activity-imagess")
+    .from("activity-images")
     .upload(imageName, newActivity?.image);
   if (storageError) {
     console.log(storageError);
