@@ -4,18 +4,22 @@ import { cinzel } from "../layout";
 
 export default function HomeHeroSection() {
   return (
-    <section className="relative flex flex-col gap-10 bg-[url('/images/home-hero.png')] bg-cover p-4 pb-10 pt-32 sm:min-h-screen">
+    <section className="relative flex items-end justify-center gap-10 bg-[url('/images/home-hero2.png')] bg-cover p-4 pb-10 pt-32 sm:min-h-screen">
       {/* overlay */}
-      <div className="bg-navyBlue/30 absolute left-0 top-0 h-full w-full"></div>
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-primary/30 to-navyBlue"></div>
 
-      <div className="relative z-10 ml-12 max-w-[500px] space-y-8">
+      <div className="relative z-10 ml-12 flex flex-col items-center gap-2 text-center">
         <AnimatedHeading
-          className={`text-left ${cinzel.className} uppercase !leading-[1.2] text-white`}
+          className={`text-left font-semibold ${cinzel.className} uppercase !leading-[1.2] text-matalicGold`}
         >
-          Plan the ultimate stag party in dubai
+          Where legend celebrate
         </AnimatedHeading>
-        <button className="rounded-full bg-[#b78d5d] px-6 py-2 text-lg font-medium capitalize backdrop-blur-md duration-300 hover:opacity-80">
-          start plaining
+        <p className="text-lg">
+          Dubai most elite stag party expereinces &mdash;
+          bold,bespoke,unforgetable
+        </p>
+        <button className="mt-8 rounded border border-matalicGold bg-matalicGold px-6 py-2 font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80">
+          plan your party
         </button>
       </div>
 

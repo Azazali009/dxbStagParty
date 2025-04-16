@@ -3,7 +3,7 @@ import Link from "next/link";
 import AuthNav from "../_components/AuthNav";
 export default function SocialBar() {
   return (
-    <div className="flex items-center justify-end gap-4 px-8 py-2">
+    <div className="flex items-center justify-end gap-4 px-8">
       <Link href={"/"}>
         <Image
           src={"/images/insta.png"}

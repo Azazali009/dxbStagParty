@@ -22,20 +22,20 @@ export const playfairDisplay = Playfair_Display({
   display: "swap",
   weight: ["400", "500", "600", "700", "800", "900"],
 });
-export const metadata = {
-  title: {
-    template: "%s | DXB Stag Party",
-    default: "DXB Stag Party",
-  },
+// export const metadata = {
+//   title: {
+//     template: "%s | DXB Stag Party",
+//     default: "DXB Stag Party",
+//   },
 
-  description: "DXB Stag Party",
-};
+//   description: "DXB Stag Party",
+// };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${poppins.className}`}>
       <body
-        className={`${poppins.className} text-softGold overflow-x-hidden bg-primary antialiased`}
+        className={`${poppins.className} overflow-x-hidden bg-primary text-softGold antialiased`}
       >
         <ClientHeader>
           <Header />

@@ -136,3 +136,13 @@ h3 {
 .rmsc * {
   transition: none !important;
 }
+.card {
+  mask-image:
+    radial-gradient(circle at top, transparent 0%, black 0%),
+    radial-gradient(circle at bottom, transparent 0%, black 30%);
+  -webkit-mask-image:
+    radial-gradient(circle at top, transparent 0%, black 0%),
+    radial-gradient(circle at bottom, transparent 0%, black 70%);
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+}

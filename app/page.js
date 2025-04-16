@@ -6,9 +6,12 @@ import WhyChooseUs from "./_components/WhyChooseUs";
 import HomeActivities from "./_components/HomeActivities";
 import HomeWhatsAppButton from "./_components/HomeWhatsAppButton";
 
-export default async function Home() {
+export const metadata = {
+  title: "DXB Stag party",
+};
+export default function Home() {
   return (
-    <div className="mx-auto flex max-w-7xl flex-col justify-center space-y-6">
+    <div className="mx-auto max-w-7xl space-y-6">
       <HomeHeroSection />
       <HomeActivities />
       <HowItWorks />

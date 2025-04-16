@@ -2,7 +2,7 @@ import Image from "next/image";
 import LinkButton from "./LinkButton";
 import { cinzel, playfairDisplay } from "../layout";
 
-export default function Paintball({ activity }) {
+export default function ActivityCard({ activity }) {
   const { image, name, id, description, duration, price, group_size } =
     activity;
 
@@ -125,24 +125,42 @@ export default function Paintball({ activity }) {
     //     </LinkButton>
     //   </div>
     // </div>
-    <div className="relative overflow-hidden rounded-lg bg-[#2b030c]">
-      <Image
-        className="h-64 object-cover"
-        src={image}
-        width={500}
-        height={500}
-        alt={name}
-      />
-      <div className="flex flex-col items-center justify-center gap-2 px-4 py-8 text-center">
-        <h2 className={`${cinzel?.className} text-2xl font-bold`}>{name}</h2>
-        <p className={`${playfairDisplay?.className} leading-[1.6]`}>
-          {description}
-        </p>
-      </div>
-      <div className="absolute right-2 top-2">
-        <LinkButton size="small" variation="gold" href={`/activities/${id}`}>
-          Book Now
-        </LinkButton>
+    // card v4
+    // <div className="relative overflow-hidden rounded-lg bg-[#2b030c]">
+    //   <Image
+    //     className="h-64 object-cover"
+    //     src={image}
+    //     width={500}
+    //     height={500}
+    //     alt={name}
+    //   />
+    //   <div className="flex flex-col items-center justify-center gap-2 px-4 py-8 text-center">
+    //     <h2 className={`${cinzel?.className} text-2xl font-bold`}>{name}</h2>
+    //     <p className={`${playfairDisplay?.className} leading-[1.6]`}>
+    //       {description}
+    //     </p>
+    //   </div>
+    //   <div className="absolute right-2 top-2">
+    //     <LinkButton size="small" variation="gold" href={`/activities/${id}`}>
+    //       Book Now
+    //     </LinkButton>
+    //   </div>
+    // </div>
+    // card v5
+    <div className="relative flex h-[500px] items-end justify-center overflow-hidden rounded-3xl object-cover pb-8">
+      <Image src={image} fill alt={name} className="bg-center object-cover" />
+      {/* overlay */}
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-black/40 to-navyBlue"></div>
+      <div className="relative z-10 space-y-4 p-4">
+        <h2
+          className={`${cinzel.className} text-balance text-2xl font-bold text-secondary`}
+        >
+          {name}
+        </h2>
+        <p className="line-clamp-1">{description}...</p>
+        <button className="rounded-sm border-2 border-matalicGold bg-transparent px-4 py-2 text-sm uppercase tracking-wider duration-300 hover:bg-matalicGold hover:text-navyBlue">
+          Explore itinerary
+        </button>
       </div>
     </div>
   );
