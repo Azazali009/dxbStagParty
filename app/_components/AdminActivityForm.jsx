@@ -16,7 +16,10 @@ export default function AdminActivityForm() {
         toast.success("Activity added successfully!");
         ref.current?.reset();
       } catch (err) {
-        toast.error(err?.message);
+        console.log(err);
+        toast.error(
+          "Unexpected error while creating activity. Please try again.",
+        );
       }
     });
   };
