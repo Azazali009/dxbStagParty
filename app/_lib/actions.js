@@ -5,6 +5,7 @@ import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { createActivity } from "./data-services";
+import { minTime } from "date-fns/constants";
 
 // delete
 export async function test(formData) {
@@ -25,7 +26,7 @@ export async function test(formData) {
 }
 
 export async function signInAction() {
-  await signIn("google", { redirectTo: "/account" });
+  await signIn("google", { redirectTo: "/verify-login" });
 }
 export async function signOutAction() {
   await signOut({ redirectTo: "/" });
@@ -41,27 +42,39 @@ export async function addActivityAction(formData) {
   const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
   const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
   const alphaNumericRegex = /^[A-Za-z0-9]{3,20}$/;
-  const numericRegex = /^[0-9]{1,4}$/;
+  const numericRegex = /^[0-9]{1,10}$/;
 
   const name = formData.get("name");
   const price = Number(formData.get("price"));
   const duration = formData.get("duration");
   const minAge = formData.get("minAge");
-  const destinations = formData.get("destinations");
-  const description = formData.get("description");
+  const destinations = formData.get("destinations").slice(0, 100);
+  const description = formData.get("description").slice(0, 1000);
   const group_size = formData.get("group_size");
   const tags = formData.get("tags")?.split(",");
   const image = formData.get("image");
 
-  // form alpha numerci value fields validation
-  if (!alphaNumericRegex.test(name))
-    throw new Error("Please provide a valid Name");
+  // form alphaNumerci value fields validation
+  if (
+    !alphaNumericRegex.test(name) ||
+    !alphaNumericRegex.test(duration) ||
+    !alphaNumericRegex.test(destinations)
+  )
+    throw new Error("Please enter between 3 and 20 characters to continue.");
   // form numerci value fields validation
-  if (!numericRegex.test(price))
-    throw new Error("Please provide a valid price");
+  if (!numericRegex.test(price) || !numericRegex.test(minAge))
+    throw new Error(
+      "Oops! Price,minimum age and group size must be valid numbers(1-10) only.",
+    );
+  // for group size only
+  if (!/^(\d{1,2})-(\d{1,2})$/.test(group_size)) {
+    throw new Error(
+      "Please use valid formate for group size, separate two numbers with dash separator",
+    );
+  }
   // image type validation
   if (!ALLOWED_TYPES.includes(image.type)) {
-    throw new Error("Only JPG, PNG, and WEBP files are allowed");
+    throw new Error("Image: Only JPG, PNG, and WEBP files are allowed");
   }
   // image size constraints
   if (image.size > MAX_FILE_SIZE) {
@@ -76,6 +89,7 @@ export async function addActivityAction(formData) {
     description,
     group_size,
     tags,
+    image,
   };
   await createActivity(newActivity);
 }

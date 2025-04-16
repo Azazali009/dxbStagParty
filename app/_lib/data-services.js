@@ -1,14 +1,29 @@
 import { supabase } from "./supabase";
 
 export async function createActivity(newActivity) {
+  // https://dvuzbcalsepjpbwkypyz.supabase.co/storage/v1/object/public/activity-images//bf.jpg
+  const imageName = `${Math.random()}-${newActivity?.image?.name}`;
+  const imagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${imageName}`;
   const { data, error } = await supabase
     .from("activities")
-    .insert([newActivity])
-    .select();
+    .insert([{ ...newActivity, image: imagePath }])
+    .select()
+    .single();
 
   if (error) {
     console.log(error);
     throw new Error("Error while creating Activity.😒");
+  }
+
+  const { error: storageError } = await supabase.storage
+    .from("activity-imagess")
+    .upload(imageName, newActivity?.image);
+  if (storageError) {
+    console.log(storageError);
+    await supabase.from("activities").delete().eq("id", data.id);
+    throw new Error(
+      "Activity image could not uploaded and the activity was not created.",
+    );
   }
   return data;
 }

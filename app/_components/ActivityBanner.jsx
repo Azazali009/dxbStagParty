@@ -2,6 +2,7 @@ import Image from "next/image";
 import { auth } from "../_lib/auth";
 import { cinzel } from "../layout";
 import BookingWindowAndButton from "./BookingWindowAndButton";
+
 export default async function ActivityBanner({ activity }) {
   const { name, description, image } = activity;
   const session = await auth();
@@ -14,7 +15,7 @@ export default async function ActivityBanner({ activity }) {
         quality={100}
         className="object-cover object-top"
       />
-      <div className="from-navyBlue to-navyBlue/20 absolute left-0 top-0 h-full w-full bg-gradient-to-r"></div>
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-navyBlue to-navyBlue/20"></div>
       <div className="relative z-10 ml-6 max-w-[500px] space-y-4">
         <h1 className={`text-7xl font-bold tracking-tight ${cinzel.className}`}>
           {name}

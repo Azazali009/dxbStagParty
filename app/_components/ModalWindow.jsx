@@ -1,8 +1,9 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import { formatToAED } from "../_lib/helpers";
+import LoggedInMeesage from "./LoggedInMeesage";
 
-export default function ModalWindow({ children, onClose, ribbontext }) {
+export default function ModalWindow({ children, onClose, session }) {
   return (
     <AnimatePresence mode="wait">
       {
@@ -24,7 +25,7 @@ export default function ModalWindow({ children, onClose, ribbontext }) {
 
           <motion.div
             className={
-              "no-scrollbar relative !z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-y-auto bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
+              "no-scrollbar relative !z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col items-center justify-center overflow-y-auto bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
             }
             key="modal"
             initial={{
@@ -50,11 +51,8 @@ export default function ModalWindow({ children, onClose, ribbontext }) {
               damping: 15,
             }}
           >
-            <div className="absolute left-[5%] top-[5%] flex h-12 w-[500px] -translate-x-1/2 -rotate-45 items-center justify-center bg-secondary text-center text-base font-bold text-black sm:text-xl">
-              <p className="text-sm"> {formatToAED(ribbontext)}</p>
-            </div>
             <CloseIcon onClose={onClose} />
-            {children}
+            {session?.user ? children : <LoggedInMeesage />}
           </motion.div>
         </motion.div>
       }
@@ -83,7 +81,7 @@ const Overlay = ({ className }) => {
 
 export const CloseIcon = ({ onClose }) => {
   return (
-    <button onClick={onClose} className="group absolute right-4 top-4">
+    <button onClick={onClose} className="group absolute right-4 top-4 z-50">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

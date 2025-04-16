@@ -1,46 +1,104 @@
-import React from "react";
-import FormRow from "./FormRow";
+"use client";
+import Image from "next/image";
 import { addActivityAction } from "../_lib/actions";
-
+import plusIcon from "../svgIcons/plus.svg";
+import FormRow from "./FormRow";
+import SubmitButton from "./SubmitButton";
+import toast from "react-hot-toast";
+import { useRef, useTransition } from "react";
 export default function AdminActivityForm() {
+  const [isPending, startTransition] = useTransition();
+  const ref = useRef();
+  const handleSubmit = (formData) => {
+    startTransition(async () => {
+      try {
+        await addActivityAction(formData);
+        toast.success("Activity added successfully!");
+        ref.current?.reset();
+      } catch (err) {
+        toast.error(err?.message);
+      }
+    });
+  };
+
   return (
     <form
-      action={addActivityAction}
+      action={(formData) => handleSubmit(formData)}
       className="grid grid-cols-2 gap-x-16 gap-y-4"
+      ref={ref}
     >
       <FormRow label={"Activity Name"}>
-        <input type="text" name="name" />
+        <input
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          type="text"
+          name="name"
+        />
       </FormRow>
       <FormRow label={"Activity Price"}>
-        <input type="number" name="price" />
+        <input
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          type="number"
+          name="price"
+        />
       </FormRow>
       <FormRow label={"Activity duration"}>
-        <input type="text" name="duration" />
+        <input
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          type="text"
+          name="duration"
+        />
       </FormRow>
       <FormRow label={"Min Age"}>
-        <input type="number" name="minAge" />
+        <input
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          type="number"
+          name="minAge"
+        />
       </FormRow>
       <FormRow label={"Image"}>
-        <input type="file" name="image" />
+        <input
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          type="file"
+          name="image"
+        />
       </FormRow>
       <FormRow label={"Destinations"}>
-        <input type="text" name="destinations" />
+        <input
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          type="text"
+          name="destinations"
+        />
       </FormRow>
       <FormRow label={"Description"}>
-        <input type="text" name="description" />
+        <textarea
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          cols={10}
+          rows={8}
+          name="description"
+        />
       </FormRow>
       <FormRow label={"Group Size"}>
-        <input type="text" name="group_size" />
+        <input
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          type="text"
+          name="group_size"
+        />
       </FormRow>
       <FormRow label={"Tags"}>
         <input
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="text"
           name="tags"
           title="split by commas"
           placeholder="Glam,Beauty,Instagrammable,Photo,Luxury..."
         />
       </FormRow>
-      <button type="submit">add activity</button>
+      <div className="[grid-column:1/-1]">
+        <SubmitButton>
+          <Image src={plusIcon} width={20} height={20} alt="add" />
+          <span> add activity</span>
+        </SubmitButton>
+      </div>
     </form>
   );
 }

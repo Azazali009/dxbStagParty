@@ -10,31 +10,26 @@ export default function BookingWindowAndButton({ session, activity }) {
   const onClose = () => setOpenModal(false);
   const open = () => setOpenModal(true);
   return (
-    <>
-      {session?.user ? (
-        openModal ? (
-          <ModalWindow onClose={onClose} ribbontext={price}>
-            <BookingPage
-              id={id}
-              price={price}
-              activityName={activityName}
-              destinations={destinations}
-              session={session}
-            />
-          </ModalWindow>
-        ) : (
-          <button
-            className="bg-navyBlue border-t-matalicGold border-softGold hover:border-b-matalicGold hover:border-t-softGold block rounded border-2 px-8 py-3 capitalize duration-700"
-            variation="gold"
-            onClick={open}
-          >
-            Book Now
-          </button>
-          // Show this if not logged in but trying to open modal
-        )
+    <div>
+      {openModal ? (
+        <ModalWindow session={session} onClose={onClose} ribbontext={price}>
+          <BookingPage
+            id={id}
+            price={price}
+            activityName={activityName}
+            destinations={destinations}
+            session={session}
+          />
+        </ModalWindow>
       ) : (
-        <LoggedInMeesage />
+        <button
+          className="block rounded border-2 border-softGold border-t-matalicGold bg-navyBlue px-8 py-3 capitalize duration-700 hover:border-b-matalicGold hover:border-t-softGold"
+          variation="gold"
+          onClick={open}
+        >
+          Book Now
+        </button>
       )}
-    </>
+    </div>
   );
 }

@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import FormRow from "./FormRow";
 import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
 import Button from "./Button";
+import { formatToAED } from "../_lib/helpers";
 
 export default function BookingPage({
   id,
@@ -224,7 +225,10 @@ export default function BookingPage({
   if (!user) return <LoggedInMessage />;
 
   return (
-    <div className="w-full px-3 py-8 text-neutral-200">
+    <div className="relative w-full px-3 pt-20 text-neutral-200">
+      <div className="absolute left-[5%] top-[5%] flex h-12 w-[500px] -translate-x-1/2 -rotate-45 items-center justify-center bg-secondary text-center text-base font-bold text-black sm:text-xl">
+        <p className="text-sm"> {formatToAED(totalPrice)}</p>
+      </div>
       <h1 className="mb-8 text-center text-base font-bold text-secondary md:text-3xl dark:text-neutral-100">
         Level up your party with{" "}
         <span className="rounded-md border border-gray-200 bg-gray-100 px-1 py-0.5 dark:border-neutral-700 dark:bg-secondary">
