@@ -4,13 +4,13 @@ import { cinzel } from "../layout";
 
 export default function HomeHeroSection() {
   return (
-    <section className="relative flex items-end justify-center gap-10 bg-[url('/images/home-hero-3.png')] bg-cover p-4 pb-10 pt-32 sm:min-h-[700px]">
+    <section className="relative flex items-end justify-center gap-10 bg-[url('/images/home-hero-3.png')] bg-cover p-4 pb-10 pt-32 sm:min-h-[650px]">
       {/* overlay */}
-      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-primary/30 to-navyBlue"></div>
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
 
       <div className="relative z-10 ml-12 flex flex-col items-center gap-2 text-center">
         <AnimatedHeading
-          className={`text-left font-semibold ${cinzel.className} uppercase !leading-[1.2] text-matalicGold`}
+          className={`text-left font-semibold md:text-6xl ${cinzel.className} uppercase !leading-[1.2] text-matalicGold`}
         >
           Where legend celebrate
         </AnimatedHeading>
