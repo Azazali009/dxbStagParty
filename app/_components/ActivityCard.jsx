@@ -147,7 +147,7 @@ export default function ActivityCard({ activity }) {
     //   </div>
     // </div>
     // card v5
-    <div className="relative flex h-[500px] items-end justify-center overflow-hidden rounded-3xl object-cover pb-8">
+    <div className="relative flex h-[500px] items-end justify-center overflow-hidden rounded-sm border border-matalicGold object-cover pb-8">
       <Image src={image} fill alt={name} className="bg-center object-cover" />
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-black/40 to-navyBlue"></div>
