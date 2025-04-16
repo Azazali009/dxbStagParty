@@ -15,10 +15,10 @@ export default function Home() {
       <HomeHeroSection />
       <HomeActivities />
       <HowItWorks />
-      <HomePackages />
-      <Testimonilas />
-      <WhyChooseUs />
-      <HomeWhatsAppButton />
+      {/* <HomePackages /> */}
+      {/* <Testimonilas /> */}
+      {/* <WhyChooseUs /> */}
+      {/* <HomeWhatsAppButton /> */}
     </div>
   );
 }
