@@ -57,20 +57,20 @@ export async function addActivityAction(formData) {
   // empty fields
   if (!duration || !description || !destinations || !tags)
     throw new Error("Please fill required fields");
-  // form alphaNumerci value fields validation
-  if (!alphaNumericRegex.test(name) || !alphaNumericRegex.test(destinations))
-    throw new Error("Please enter between 3 and 100 characters to continue.");
-  // form numerci value fields validation
-  if (!numericRegex.test(price) || !numericRegex.test(minAge))
-    throw new Error(
-      "Oops! Price and minimum age must be valid numbers(1-10) only.",
-    );
-  // for group size only
-  if (!/^(\d{1,2})-(\d{1,2})$/.test(group_size)) {
-    throw new Error(
-      "Please use valid formate for group size, separate two numbers with dash separator",
-    );
-  }
+  // // form alphaNumerci value fields validation
+  // if (!alphaNumericRegex.test(name) || !alphaNumericRegex.test(destinations))
+  //   throw new Error("Please enter between 3 and 100 characters to continue.");
+  // // form numerci value fields validation
+  // if (!numericRegex.test(price) || !numericRegex.test(minAge))
+  //   throw new Error(
+  //     "Oops! Price and minimum age must be valid numbers(1-10) only.",
+  //   );
+  // // for group size only
+  // if (!/^(\d{1,2})-(\d{1,2})$/.test(group_size)) {
+  //   throw new Error(
+  //     "Please use valid formate for group size, separate two numbers with dash separator",
+  //   );
+  // }
   // image type validation
   if (!ALLOWED_TYPES.includes(image.type)) {
     throw new Error("Image: Only JPG, PNG, and WEBP files are allowed");
@@ -123,11 +123,11 @@ export async function editActivityAction(formData) {
   if (!duration || !description || !destinations || !tags || !price || !name)
     throw new Error("Please fill required fields");
   // form alphaNumerci value fields validation
-  if (!alphaNumericRegex.test(name) || !alphaNumericRegex.test(destinations))
-    throw new Error("Please enter between 3 and 100 characters to continue.");
-  // form numerci value fields validation
-  if (!numericRegex.test(price) || !numericRegex.test(minAge))
-    throw new Error("Oops! Price and minimum age must be valid numbers.");
+  // if (!alphaNumericRegex.test(name) || !alphaNumericRegex.test(destinations))
+  //   throw new Error("Please enter between 3 and 100 characters to continue.");
+  // // form numerci value fields validation
+  // if (!numericRegex.test(price) || !numericRegex.test(minAge))
+  //   throw new Error("Oops! Price and minimum age must be valid numbers.");
   // for group size only
   if (!/^(\d{1,2})-(\d{1,2})$/.test(group_size)) {
     throw new Error(
