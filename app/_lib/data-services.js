@@ -28,6 +28,40 @@ export async function createActivity(newActivity) {
   return data;
 }
 
+export async function editActivity(editActivity, id) {
+  const hasImagePath = editActivity?.image?.startsWith(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+  );
+
+  const imageName = `${Math.random()}-${editActivity?.image?.name}`;
+  const imagePath = hasImagePath
+    ? editActivity.image
+    : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${imageName}`;
+
+  const { data, error } = await supabase
+    .from("activities")
+    .update({ ...editActivity, image: imagePath })
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.log(error);
+    throw new Error("Error while updating Activity.😒");
+  }
+  if (hasImagePath) return data;
+  const { error: storageError } = await supabase.storage
+    .from("activity-images")
+    .upload(imageName, editActivity?.image);
+
+  if (storageError) {
+    console.log(error);
+    throw new Error(
+      "Activity image could not updated due to some internal error. Please try again",
+    );
+  }
+  return data;
+}
+
 export async function getActivities() {
   let { data, error } = await supabase.from("activities").select("*");
 
@@ -41,13 +75,14 @@ export async function getActivity(id) {
   let { data, error } = await supabase
     .from("activities")
     .select("*")
-    .eq("id", id);
+    .eq("id", id)
+    .single();
 
   if (error) {
     console.log(error);
     throw new Error("Error While Getting Activity.😒");
   }
-  return data[0];
+  return data;
 }
 export async function addBooking(booking) {
   const { data: CurBooking, error } = await supabase

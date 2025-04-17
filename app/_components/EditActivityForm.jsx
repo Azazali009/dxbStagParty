@@ -1,38 +1,33 @@
-"use client";
-import Image from "next/image";
-import { addActivityAction } from "../_lib/actions";
-import plusIcon from "../svgIcons/plus.svg";
+import { editActivityAction } from "../_lib/actions";
 import FormRow from "./FormRow";
 import SubmitButton from "./SubmitButton";
-import toast from "react-hot-toast";
-import { useRef, useTransition } from "react";
-export default function AdminActivityForm() {
-  const [isPending, startTransition] = useTransition();
-  const ref = useRef();
-  const handleSubmit = (formData) => {
-    startTransition(async () => {
-      try {
-        await addActivityAction(formData);
-        toast.success("Activity added successfully!");
-        ref.current?.reset();
-      } catch (err) {
-        console.log(err);
-        toast.error(err?.message);
-      }
-    });
-  };
+
+export default async function EditActivityForm({ activity }) {
+  const {
+    id,
+    name,
+    minAge,
+    duration,
+    price,
+    destinations,
+    description,
+    group_size,
+    tags,
+    image,
+  } = activity;
 
   return (
     <form
-      action={(formData) => handleSubmit(formData)}
+      action={editActivityAction}
+      //   action={(formData) => handleSubmit(formData)}
       className="grid grid-cols-2 gap-x-16 gap-y-4"
-      ref={ref}
     >
       <FormRow label={"Activity Name"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="text"
           name="name"
+          defaultValue={name}
         />
       </FormRow>
       <FormRow label={"Activity Price"}>
@@ -40,6 +35,7 @@ export default function AdminActivityForm() {
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="number"
           name="price"
+          defaultValue={price}
         />
       </FormRow>
       <FormRow label={"Activity duration"}>
@@ -47,6 +43,7 @@ export default function AdminActivityForm() {
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="text"
           name="duration"
+          defaultValue={duration}
         />
       </FormRow>
       <FormRow label={"Min Age"}>
@@ -54,6 +51,7 @@ export default function AdminActivityForm() {
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="number"
           name="minAge"
+          defaultValue={minAge}
         />
       </FormRow>
       <FormRow label={"Image"}>
@@ -63,11 +61,13 @@ export default function AdminActivityForm() {
           name="image"
         />
       </FormRow>
+      <input type="hidden" name="existingImage" value={image} />
       <FormRow label={"Destinations"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="text"
           name="destinations"
+          defaultValue={destinations}
         />
       </FormRow>
       <FormRow label={"Description"}>
@@ -76,6 +76,7 @@ export default function AdminActivityForm() {
           cols={10}
           rows={8}
           name="description"
+          defaultValue={description}
         />
       </FormRow>
       <FormRow label={"Group Size"}>
@@ -83,6 +84,7 @@ export default function AdminActivityForm() {
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="text"
           name="group_size"
+          defaultValue={group_size}
         />
       </FormRow>
       <FormRow label={"Tags"}>
@@ -92,12 +94,13 @@ export default function AdminActivityForm() {
           name="tags"
           title="split by commas"
           placeholder="Glam,Beauty,Instagrammable,Photo,Luxury..."
+          defaultValue={tags}
         />
       </FormRow>
+      <input type="hidden" name="activityId" value={id} />
       <div className="[grid-column:1/-1]">
         <SubmitButton>
-          <Image src={plusIcon} width={20} height={20} alt="add" />
-          <span> add activity</span>
+          <span> edit activity</span>
         </SubmitButton>
       </div>
     </form>

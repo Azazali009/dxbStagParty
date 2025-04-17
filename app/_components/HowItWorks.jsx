@@ -42,8 +42,8 @@ export default function HowItWorks() {
       </div>
       <div className="relative -z-10 h-full">
         <Image
-          src={"/images/home-hero2.png"}
-          className="h-full object-cover object-center"
+          src={"/images/how-it-work.webp"}
+          className="h-full object-contain object-center"
           fill
           alt="image"
         />

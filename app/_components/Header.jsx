@@ -1,14 +1,10 @@
-import Image from "next/image";
 import MobileNav from "../_components/MobileNav";
 import SocialBar from "../_components/SocialBar";
-import Button from "./Button";
-import LinkButton from "./LinkButton";
-import Logo from "./Logo";
 import Navbar from "./Navbar";
 
 export default function Header() {
   return (
-    <header className="relative z-30 mx-auto -mb-[100px] flex h-[100px] max-w-7xl flex-col justify-center bg-transparent py-2">
+    <header className="relative z-30 mx-auto flex h-[110px] max-w-7xl flex-col justify-center bg-transparent">
       {/* <TopBar /> */}
       <SocialBar />
       {/* <div className="flex items-center justify-between bg-primary p-4">
