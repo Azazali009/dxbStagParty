@@ -4,7 +4,11 @@ import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
+export const AnimatedTestimonials = ({
+  testimonials,
+  autoplay = false,
+  cinzel,
+}) => {
   const [active, setActive] = useState(0);
 
   const handleNext = () => {
@@ -31,7 +35,9 @@ export const AnimatedTestimonials = ({ testimonials, autoplay = false }) => {
   };
   return (
     <section className="mx-auto max-w-sm px-4 py-20 font-sans antialiased sm:mx-0 md:max-w-5xl md:px-8 lg:px-12">
-      <h3 className="mb-10 bg-gradient-to-b from-neutral-500 to-neutral-700 bg-clip-text text-2xl font-bold text-transparent sm:text-4xl">
+      <h3
+        className={`mb-10 text-2xl ${cinzel.className} font-bold text-matalicGold sm:text-4xl`}
+      >
         What our client says
       </h3>
       <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">

@@ -14,11 +14,11 @@ export const navbar = [
     navItem: "Packages",
     href: "/packages",
   },
-  {
-    id: 4,
-    navItem: "Destinations",
-    href: "/destinations",
-  },
+  // {
+  //   id: 4,
+  //   navItem: "Destinations",
+  //   href: "/destinations",
+  // },
   {
     id: 5,
     navItem: "Experiences",

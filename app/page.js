@@ -16,7 +16,7 @@ export default function Home() {
       <HomeActivities />
       <HowItWorks />
       {/* <HomePackages /> */}
-      {/* <Testimonilas /> */}
+      <Testimonilas />
       {/* <WhyChooseUs /> */}
       {/* <HomeWhatsAppButton /> */}
     </div>
