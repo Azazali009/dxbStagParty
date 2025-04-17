@@ -91,6 +91,8 @@ export async function addActivityAction(formData) {
     image,
   };
   await createActivity(newActivity);
+
+  revalidatePath("/dashboard/activities");
 }
 
 export async function editActivityAction(formData) {
@@ -129,11 +131,11 @@ export async function editActivityAction(formData) {
   // if (!numericRegex.test(price) || !numericRegex.test(minAge))
   //   throw new Error("Oops! Price and minimum age must be valid numbers.");
   // for group size only
-  if (!/^(\d{1,2})-(\d{1,2})$/.test(group_size)) {
-    throw new Error(
-      "Please use valid formate for group size, separate two numbers with dash separator",
-    );
-  }
+  // if (!/^(\d{1,2})-(\d{1,2})$/.test(group_size)) {
+  //   throw new Error(
+  //     "Please use valid formate for group size, separate two numbers with dash separator",
+  //   );
+  // }
 
   if (isValidFile) {
     if (!ALLOWED_TYPES.includes(image.type)) {
@@ -171,7 +173,12 @@ export async function editActivityAction(formData) {
     console.log(error);
     throw new Error("Error while updating Activity.😒");
   }
-  if (!isValidFile) return data;
+  if (!isValidFile) {
+    revalidatePath(`/dashboard/edit-activity/${activityId}`);
+    revalidatePath("/dashboard/activities");
+
+    return redirect("/dashboard/activities");
+  }
   const { error: storageError } = await supabase.storage
     .from("activity-images")
     .upload(imageName, image);
@@ -185,4 +192,6 @@ export async function editActivityAction(formData) {
 
   revalidatePath(`/dashboard/edit-activity/${activityId}`);
   revalidatePath("/dashboard/activities");
+
+  redirect("/dashboard/activities");
 }
