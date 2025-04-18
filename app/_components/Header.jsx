@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 
 export default function Header() {
   return (
-    <header className="relative z-30 mx-auto flex h-[110px] max-w-7xl flex-col justify-center bg-transparent">
+    <header className="relative z-10 mx-auto flex h-[110px] max-w-full flex-col justify-center bg-transparent">
       {/* <TopBar /> */}
       <SocialBar />
       {/* <div className="flex items-center justify-between bg-primary p-4">

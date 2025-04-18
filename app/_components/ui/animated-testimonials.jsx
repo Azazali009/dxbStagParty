@@ -40,7 +40,7 @@ export const AnimatedTestimonials = ({
       >
         What our client says
       </h3>
-      <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">
+      <div className="relative grid grid-cols-1 gap-28 md:grid-cols-2">
         <div>
           <div className="relative min-h-80 w-full">
             <AnimatePresence>
@@ -73,7 +73,7 @@ export const AnimatedTestimonials = ({
                     duration: 0.4,
                     ease: "easeInOut",
                   }}
-                  className="absolute inset-0 origin-bottom"
+                  className="absolute inset-0 h-[400px] origin-bottom rounded-lg bg-softGold p-4 pb-20"
                 >
                   <Image
                     src={testimonial.src}
@@ -81,7 +81,7 @@ export const AnimatedTestimonials = ({
                     width={500}
                     height={500}
                     draggable={false}
-                    className="h-full w-full rounded-3xl object-cover object-center"
+                    className="h-[300px] rounded-sm object-cover object-center"
                   />
                 </motion.div>
               ))}
@@ -108,10 +108,13 @@ export const AnimatedTestimonials = ({
               ease: "easeInOut",
             }}
           >
-            <h3 className="text-2xl font-bold">{testimonials[active].name}</h3>
+            <h3 className={`text-2xl ${cinzel.className} font-bold`}>
+              {testimonials[active].name}
+            </h3>
             <p className="text-sm text-neutral-500">
               {testimonials[active].designation}
             </p>
+            <p className="text-2xl text-[#FCD53F]">★★★★★</p>
             <motion.p className="mt-8 text-sm sm:text-lg">
               {testimonials[active].quote.split(" ").map((word, index) => (
                 <motion.span
@@ -141,15 +144,17 @@ export const AnimatedTestimonials = ({
           <div className="flex gap-4 pt-12 md:pt-0">
             <button
               onClick={handlePrev}
-              className="group/button flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 shadow-lg"
+              className="rounded-md bg-reddish px-6 py-2.5 font-semibold capitalize duration-300 hover:scale-95"
             >
-              <IconArrowLeft className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:rotate-12 dark:text-neutral-400" />
+              previous legend
+              {/* <IconArrowLeft className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:rotate-12 dark:text-neutral-400" /> */}
             </button>
             <button
               onClick={handleNext}
-              className="group/button flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 shadow-lg"
+              className="rounded-md bg-reddish px-6 py-2.5 font-semibold capitalize duration-300 hover:scale-95"
             >
-              <IconArrowRight className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:-rotate-12 dark:text-neutral-400" />
+              {/* <IconArrowRight className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:-rotate-12 dark:text-neutral-400" /> */}
+              Next legend
             </button>
           </div>
         </div>

@@ -13,11 +13,13 @@ export default async function ActivityBanner({ activity }) {
         fill
         alt={name}
         quality={100}
-        className="object-cover object-top"
+        className="object-cover object-center"
       />
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-navyBlue to-navyBlue/20"></div>
       <div className="relative z-10 ml-6 max-w-[500px] space-y-4">
-        <h1 className={`text-7xl font-bold tracking-tight ${cinzel.className}`}>
+        <h1
+          className={`text-7xl font-bold tracking-tight text-matalicGold ${cinzel.className}`}
+        >
           {name}
         </h1>
         <p className="leading-[1.6]">{description}</p>

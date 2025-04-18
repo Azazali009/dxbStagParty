@@ -1,6 +1,5 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import { formatToAED } from "../_lib/helpers";
 import LoggedInMeesage from "./LoggedInMeesage";
 
 export default function ModalWindow({ children, onClose, session }) {
@@ -25,7 +24,7 @@ export default function ModalWindow({ children, onClose, session }) {
 
           <motion.div
             className={
-              "no-scrollbar relative !z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col items-center justify-center overflow-y-auto bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
+              "no-scrollbar relative !z-[9999] flex max-h-[90%] min-h-[50%] flex-1 flex-col items-center justify-center overflow-y-auto bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
             }
             key="modal"
             initial={{

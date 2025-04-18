@@ -5,11 +5,11 @@ import Spinner from "../_components/Spinner";
 export default async function Page() {
   const { user } = await auth();
 
-  if (user?.role === "admin") {
+  if (user?.role === "admin" && user?.role !== "user") {
     return redirect("/dashboard");
   }
 
-  if (user?.role === "user") {
+  if (user?.role === "user" && user?.role !== "admin") {
     return redirect("/account");
   }
 

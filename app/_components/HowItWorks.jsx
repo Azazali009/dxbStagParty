@@ -4,7 +4,7 @@ import HowItWorkIconBox from "./HowItWorkIconBox";
 import { cinzel } from "../layout";
 export default function HowItWorks() {
   return (
-    <section className={`relative grid grid-cols-2 overflow-hidden`}>
+    <section className={`relative grid grid-cols-2 overflow-hidden p-4`}>
       <div className="absolute left-0 top-0 z-20 h-full w-full bg-gradient-to-r from-primary via-navyBlue to-black/50"></div>
       <div className="relative z-20 space-y-10 px-8 py-24">
         <h2
@@ -12,7 +12,7 @@ export default function HowItWorks() {
         >
           How it works
         </h2>
-        <div className="mx-auto flex flex-col gap-14">
+        <div className="mx-auto flex flex-col gap-8">
           {/* package box */}
           <HowItWorkIconBox
             image="/images/packageIcon.png"

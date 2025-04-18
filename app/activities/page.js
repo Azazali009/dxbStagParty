@@ -24,7 +24,7 @@ export default async function Page({ searchParams }) {
   const maxGroupSize = Math.max(...allSizes.map((size) => size.max));
 
   return (
-    <div className="mx-auto min-h-screen max-w-7xl space-y-20 bg-gray-100 px-2 antialiased sm:p-6">
+    <div className="mx-auto min-h-screen max-w-full space-y-20 px-2 antialiased sm:p-6">
       <div className="space-y-4">
         <AnimatedHeading className={"text-nowrap pt-16 text-xl sm:text-wrap"}>
           {" "}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import LinkButton from "./LinkButton";
 import { cinzel, playfairDisplay } from "../layout";
+import Link from "next/link";
 
 export default function ActivityCard({ activity }) {
   const { image, name, id, description, duration, price, group_size } =
@@ -158,9 +159,12 @@ export default function ActivityCard({ activity }) {
           {name}
         </h2>
         <p className="line-clamp-1">{description}...</p>
-        <button className="rounded-sm border-2 border-matalicGold bg-transparent px-4 py-2 text-sm uppercase tracking-wider duration-300 hover:bg-matalicGold hover:text-navyBlue">
+        <Link
+          href={`/activities/${id}`}
+          className="block w-fit rounded-sm border-2 border-matalicGold bg-transparent px-4 py-2 text-sm uppercase tracking-wider backdrop-blur duration-300 hover:bg-matalicGold hover:text-navyBlue"
+        >
           Explore itinerary
-        </button>
+        </Link>
       </div>
     </div>
   );

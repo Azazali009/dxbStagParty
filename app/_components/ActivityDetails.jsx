@@ -4,6 +4,7 @@ import clock from "../svgIcons/clock.svg";
 import includes from "../svgIcons/includes.svg";
 import user from "../svgIcons/user.svg";
 import ActivityBanner from "./ActivityBanner";
+import Link from "next/link";
 export default function ActivityDetails({ activity }) {
   const {
     id,
@@ -20,7 +21,7 @@ export default function ActivityDetails({ activity }) {
       {/* header image banner */}
       <ActivityBanner activity={activity} />
       {/* overview section */}
-      <section className="border-navyBlue mx-auto grid w-[95%] max-w-7xl grid-cols-1 items-center justify-items-center gap-8 border-b py-14 md:grid-cols-2">
+      <section className="mx-auto grid w-[95%] max-w-7xl grid-cols-1 items-center justify-items-center gap-8 border-b border-navyBlue/30 py-14 md:grid-cols-2">
         <div className="space-y-4">
           <h2 className={`${cinzel.className} text-4xl font-bold uppercase`}>
             Overview
@@ -43,7 +44,7 @@ export default function ActivityDetails({ activity }) {
         />
       </section>
       {/* details section */}
-      <section className="mx-auto w-[95%] max-w-7xl space-y-8 py-14">
+      <section className="mx-auto w-[95%] max-w-7xl space-y-8 border-b border-navyBlue/30 py-14">
         <h2 className={`${cinzel.className} text-4xl font-bold uppercase`}>
           details
         </h2>
@@ -52,7 +53,7 @@ export default function ActivityDetails({ activity }) {
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-2">
               <Image src={clock} height={25} width={25} alt="clock" />
-              <span className="text-matalicGold text-xl font-semibold uppercase">
+              <span className="text-xl font-semibold uppercase text-matalicGold">
                 Duration
               </span>
             </div>
@@ -62,7 +63,7 @@ export default function ActivityDetails({ activity }) {
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-2">
               <Image src={user} height={25} width={25} alt="clock" />
-              <span className="text-matalicGold text-xl font-semibold uppercase">
+              <span className="text-xl font-semibold uppercase text-matalicGold">
                 Group size
               </span>
             </div>
@@ -72,12 +73,37 @@ export default function ActivityDetails({ activity }) {
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-2">
               <Image src={includes} height={25} width={25} alt="clock" />
-              <span className="text-matalicGold text-xl font-semibold uppercase">
+              <span className="text-xl font-semibold uppercase text-matalicGold">
                 includes
               </span>
             </div>
             <p>Multi-course buffet</p>
           </div>
+        </div>
+      </section>
+      <section className="mx-auto grid w-[95%] grid-cols-2 gap-16 py-20">
+        {/*  */}
+        <div className="relative h-[400px] object-cover">
+          <Image src={"/images/home-hero.webp"} fill alt="image" />
+        </div>
+        <div className="space-y-8">
+          <h2
+            className={`${cinzel.className} text-2xl font-bold text-matalicGold sm:text-5xl`}
+          >
+            Whats included
+          </h2>
+          <ul className="list-inside list-disc space-y-4 text-xl font-extralight capitalize">
+            <li>multi-course buffet</li>
+            <li>unlimited drinks</li>
+            <li>live music or DJ</li>
+            <li>reserved table</li>
+          </ul>
+          <Link
+            href={"/contact"}
+            className="inline-block rounded-md border border-b-2 border-matalicGold border-b-white bg-gradient-to-b from-primary to-navyBlue px-6 py-2 duration-300 hover:scale-105 hover:opacity-80"
+          >
+            contact us
+          </Link>
         </div>
       </section>
     </>

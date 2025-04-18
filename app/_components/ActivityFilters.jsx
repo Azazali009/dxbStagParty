@@ -15,7 +15,7 @@ export default function ActivityFilter({
           {" "}
           <strong className="font-bold uppercase">online</strong> booking
         </h3>
-        <div className="absolute -right-16 bottom-0 z-10 h-[50px] w-40 translate-x-0 rotate-45 bg-gray-100"></div>
+        <div className="absolute -right-16 bottom-0 z-10 h-[50px] w-40 translate-x-0 rotate-45 bg-primary"></div>
       </div>
       <div className="grid grid-cols-3 items-center gap-6 rounded-md rounded-l-none rounded-bl-md border-2 border-secondary p-4">
         <SearchBar />
