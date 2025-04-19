@@ -42,9 +42,6 @@ export default function BookingPage({
     setEmails(updatedEmails);
   };
 
-  // ✅ Always include organizer email
-  const allEmails = [...emails, organizerEmail];
-
   // effect to disbale previous dates
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format

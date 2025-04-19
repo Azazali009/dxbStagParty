@@ -4,10 +4,13 @@ import nodemailer from "nodemailer";
 
 export async function POST(req) {
   try {
-    const { emails, totalPrice, activityName } = await req.json();
+    const { emails, totalPrice, activities } = await req.json();
 
-    if (!emails || emails.length === 0) {
-      return NextResponse.json({ error: "Emails required" }, { status: 400 });
+    if (!emails || emails.length === 0 || !totalPrice) {
+      return NextResponse.json(
+        { error: "Email and total price are required" },
+        { status: 400 },
+      );
     }
 
     const perPersonAmount = Math.round(totalPrice / emails.length);
@@ -23,7 +26,7 @@ export async function POST(req) {
           {
             price_data: {
               currency: "usd",
-              product_data: { name: activityName },
+              product_data: { name: "DXB Stag party" },
               unit_amount: perPersonAmount * 100, // Amount in cents
             },
             quantity: 1,

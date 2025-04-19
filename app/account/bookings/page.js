@@ -20,9 +20,12 @@ export default async function Page() {
       <div className="space-y-4">
         {bookings.map((booking) => {
           return (
-            <div key={booking.id} className="flex border border-gray-300">
+            <div
+              key={booking.id}
+              className="flex rounded-md border border-gray-800"
+            >
               <div className="flex-1 p-4">
-                <div className="flex justify-between text-[#4d5053]">
+                <div className="flex justify-between">
                   <div className="space-y-2">
                     <h3 className="flex flex-col gap-[2px] text-sm font-semibold capitalize">
                       {booking.activities?.slice(0, 2)?.map((act) => {
@@ -57,7 +60,7 @@ export default async function Page() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-2 border-l border-gray-300">
+              <div className="flex flex-col gap-2 border-l border-gray-700">
                 {/* <button className="flex flex-1 items-center gap-2 px-4 text-sm font-medium capitalize hover:opacity-70">
                   {" "}
                   <PencilIcon />

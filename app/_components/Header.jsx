@@ -25,9 +25,6 @@ export default function Header() {
         </LinkButton>
       </div> */}
       <Navbar />
-
-      {/* <AuthNav /> */}
-      <MobileNav />
     </header>
   );
 }

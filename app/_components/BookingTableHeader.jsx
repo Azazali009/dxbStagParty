@@ -1,6 +1,6 @@
 export default function BookingTableHeader() {
   return (
-    <div className="grid grid-cols-8 justify-items-center rounded-t-md border border-gray-300 bg-white py-2">
+    <div className="grid grid-cols-8 justify-items-center rounded-t-md border border-gray-700 bg-navyBlue py-2">
       <p>🎬Activities:</p>
       <p>🎁Packages:</p>
       <p>💲Total Price:</p>

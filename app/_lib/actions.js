@@ -55,7 +55,17 @@ export async function addActivityAction(formData) {
   const image = formData.get("image");
 
   // empty fields
-  if (!duration || !description || !destinations || !tags)
+  if (
+    !duration ||
+    !description ||
+    !destinations ||
+    !tags ||
+    !image ||
+    !group_size ||
+    !name ||
+    !minAge ||
+    !price
+  )
     throw new Error("Please fill required fields");
   // // form alphaNumerci value fields validation
   // if (!alphaNumericRegex.test(name) || !alphaNumericRegex.test(destinations))
@@ -72,12 +82,14 @@ export async function addActivityAction(formData) {
   //   );
   // }
   // image type validation
-  if (!ALLOWED_TYPES.includes(image.type)) {
-    throw new Error("Image: Only JPG, PNG, and WEBP files are allowed");
-  }
-  // image size constraints
-  if (image.size > MAX_FILE_SIZE) {
-    throw new Error("File size must be less than 1MB");
+  if (image) {
+    if (!ALLOWED_TYPES.includes(image.type)) {
+      throw new Error("Image: Only JPG, PNG, and WEBP files are allowed");
+    }
+    // image size constraints
+    if (image.size > MAX_FILE_SIZE) {
+      throw new Error("File size must be less than 1MB");
+    }
   }
   const newActivity = {
     name,
@@ -93,6 +105,8 @@ export async function addActivityAction(formData) {
   await createActivity(newActivity);
 
   revalidatePath("/dashboard/activities");
+
+  redirect("/dashboard/activities");
 }
 
 export async function editActivityAction(formData) {
@@ -163,7 +177,7 @@ export async function editActivityAction(formData) {
     ? finalImage
     : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${imageName}`;
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("activities")
     .update({ ...updateActivity, image: imagePath })
     .eq("id", activityId)
@@ -194,4 +208,18 @@ export async function editActivityAction(formData) {
   revalidatePath("/dashboard/activities");
 
   redirect("/dashboard/activities");
+}
+
+export async function deleteActivityAction(activityId) {
+  const session = await auth();
+  if (!session || session?.user?.role !== "admin")
+    throw new Error("You are not allowed to perform this action");
+  const { error } = await supabase
+    .from("activities")
+    .delete()
+    .eq("id", activityId);
+
+  if (error) throw new Error("Unable to delete activity. Please try again!");
+
+  revalidatePath("/dashboard/activities");
 }

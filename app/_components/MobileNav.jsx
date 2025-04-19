@@ -10,7 +10,7 @@ export default function MobileNav() {
   const ref = useRef();
   const pathName = usePathname();
   const [navOpen, setNavOpen] = useState(false);
-  const handleCloseMenu = () => setNavOpen(false);
+
   useEffect(() => {
     const html = document.querySelector("html");
     if (navOpen) {

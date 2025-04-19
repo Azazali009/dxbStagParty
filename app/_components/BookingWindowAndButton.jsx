@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import BookingPage from "./BookingForm";
-import LoggedInMeesage from "./LoggedInMeesage";
 import ModalWindow from "./ModalWindow";
 export default function BookingWindowAndButton({ session, activity }) {
-  const { id, price, activityName, destinations } = activity;
+  const { id, price, name, destinations } = activity;
   const [openModal, setOpenModal] = useState(false);
   const onClose = () => setOpenModal(false);
   const open = () => setOpenModal(true);
@@ -16,7 +15,7 @@ export default function BookingWindowAndButton({ session, activity }) {
           <BookingPage
             id={id}
             price={price}
-            activityName={activityName}
+            activityName={name}
             destinations={destinations}
             session={session}
           />

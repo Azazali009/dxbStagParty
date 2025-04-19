@@ -2,15 +2,16 @@
 import Link from "next/link";
 import { navbar } from "./navbarData";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+import Logo from "../_components/Logo";
+import MobileNav from "./MobileNav";
 
 export default function Navbar() {
   const pathName = usePathname();
 
   return (
-    <nav className="sticky top-0 hidden items-center justify-between px-4 lg:flex">
-      <Image src={"/logo.png"} width={100} height={100} alt="logo" />
-      <ul className="flex items-center gap-6">
+    <nav className="sticky top-0 flex items-center justify-between px-4">
+      <Logo />
+      <ul className="hidden items-center gap-6 lg:flex">
         {navbar.map((cur) => (
           <li
             key={cur.id}
@@ -20,6 +21,7 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
+      <MobileNav />
     </nav>
   );
 }

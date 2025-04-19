@@ -1,7 +1,6 @@
 import Image from "next/image";
-import MeteorsDemo from "./MeteorsDemo";
-import HowItWorkIconBox from "./HowItWorkIconBox";
 import { cinzel } from "../layout";
+import HowItWorkIconBox from "./HowItWorkIconBox";
 export default function HowItWorks() {
   return (
     <section className={`relative grid grid-cols-2 overflow-hidden p-4`}>

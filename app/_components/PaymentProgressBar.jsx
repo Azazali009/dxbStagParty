@@ -9,7 +9,7 @@ export default function PaymentProgressBar({ attendee }) {
       <div className="font-semibold">
         Total Paid: {paidAttendees}/{attendee.length}
       </div>
-      <div className="relative h-6 w-full rounded-full bg-neutral-400 shadow-xl">
+      <div className="relative h-6 w-full rounded-full bg-neutral-600 shadow-xl">
         <div
           className={`absolute left-0 top-0 h-full rounded-full px-2 text-right font-semibold text-primary`}
           style={{

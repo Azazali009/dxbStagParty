@@ -33,7 +33,7 @@ export default function CompleteBooking() {
           body: JSON.stringify({
             emails: attendeeEmails,
             totalPrice,
-            activityName: bookingData.activityName,
+            activities: bookingData.activities,
           }),
         });
 

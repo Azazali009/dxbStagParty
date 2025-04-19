@@ -1,8 +1,11 @@
+"use client";
+import { useRef, useTransition } from "react";
 import { editActivityAction } from "../_lib/actions";
 import FormRow from "./FormRow";
-import SubmitButton from "./SubmitButton";
+import SpinnerMini from "./SpinnerMini";
+import toast from "react-hot-toast";
 
-export default async function EditActivityForm({ activity }) {
+export default function EditActivityForm({ activity }) {
   const {
     id,
     name,
@@ -15,11 +18,25 @@ export default async function EditActivityForm({ activity }) {
     tags,
     image,
   } = activity;
-
+  const [isPending, startTransition] = useTransition();
+  const editFormRef = useRef();
+  const handleSubmit = (formData) => {
+    startTransition(async () => {
+      try {
+        await editActivityAction(formData);
+        toast.success("Activity updated successfully!");
+        editFormRef.current?.reset();
+      } catch (err) {
+        console.log(err);
+        toast.error(err?.message);
+      }
+    });
+  };
   return (
     <form
-      action={editActivityAction}
-      //   action={(formData) => handleSubmit(formData)}
+      ref={editFormRef}
+      // action={editActivityAction}
+      action={(formData) => handleSubmit(formData)}
       className="grid grid-cols-2 gap-x-16 gap-y-4"
     >
       <FormRow label={"Activity Name"}>
@@ -99,9 +116,20 @@ export default async function EditActivityForm({ activity }) {
       </FormRow>
       <input type="hidden" name="activityId" value={id} />
       <div className="[grid-column:1/-1]">
-        <SubmitButton>
-          <span> edit activity</span>
-        </SubmitButton>
+        <button
+          className="flex items-center gap-2 rounded bg-black/80 px-6 py-2.5 capitalize duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+          type="submit"
+          disabled={isPending}
+        >
+          {isPending ? (
+            <div className="flex items-center gap-2">
+              {" "}
+              <SpinnerMini /> <span>updating...</span>
+            </div>
+          ) : (
+            "update activity"
+          )}
+        </button>
       </div>
     </form>
   );

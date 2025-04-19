@@ -12,9 +12,8 @@ export default function ActivityDetails({ activity }) {
     price,
     image,
     duration,
-    minAge,
-    destinations,
-    description,
+
+    group_size,
   } = activity;
   return (
     <>
@@ -57,7 +56,7 @@ export default function ActivityDetails({ activity }) {
                 Duration
               </span>
             </div>
-            <p>3 hour</p>
+            <p>{duration}</p>
           </div>
           {/* Group size box */}
           <div className="flex flex-col items-center gap-2">
@@ -67,7 +66,7 @@ export default function ActivityDetails({ activity }) {
                 Group size
               </span>
             </div>
-            <p>4-20 people</p>
+            <p>{group_size} people</p>
           </div>
           {/* includes box */}
           <div className="flex flex-col items-center gap-2">

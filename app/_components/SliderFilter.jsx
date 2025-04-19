@@ -27,8 +27,8 @@ export default function SliderFilter({
     ((range - minGroupSize) / (maxGroupSize - minGroupSize)) * 100;
 
   return (
-    <div className="flex flex-col items-center space-y-2 font-semibold text-neutral-600">
-      <span className="mb-2 block text-sm font-bold">
+    <div className="flex flex-col items-center gap-4 font-semibold">
+      <span className="mb-2 block text-sm font-light">
         Number of guests upto (25+)
       </span>
 
@@ -83,7 +83,7 @@ export default function SliderFilter({
         }
       `}</style>
 
-      <div className="flex w-full justify-between text-sm font-bold text-neutral-500">
+      <div className="flex w-full justify-between text-sm font-bold text-neutral-400">
         <span>{minGroupSize}</span>
         <span>{range}</span>
         <span>{maxGroupSize}</span>

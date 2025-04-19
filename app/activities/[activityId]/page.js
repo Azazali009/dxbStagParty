@@ -1,10 +1,7 @@
 import { getActivities, getActivity } from "../../_lib/data-services";
 
-import SinglePageBookingSection from "../../_components/SInglePageBookingSection";
-import SinglePageBookingDetails from "../../_components/SinglePageBookingDetails";
-import Empty from "../../_components/Empty.jsx";
 import ActivityDetails from "../../_components/ActivityDetails";
-import { auth } from "../../_lib/auth";
+import Empty from "../../_components/Empty.jsx";
 
 export const revalidate = 0;
 
@@ -17,7 +14,6 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }) {
-  const session = await auth();
   const activity = await getActivity(params.activityId);
 
   if (!activity) return <Empty name={"Activity"} />;

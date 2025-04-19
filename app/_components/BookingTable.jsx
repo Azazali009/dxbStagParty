@@ -3,7 +3,7 @@ import BookingTableHeader from "./BookingTableHeader";
 export default function BookingTable({ booking, attendee }) {
   return (
     <div className="!my-20">
-      <h1 className="mb-4 bg-gradient-to-b from-neutral-500 to-neutral-700 bg-clip-text text-3xl font-bold capitalize text-transparent">
+      <h1 className="mb-4 text-3xl font-bold capitalize text-secondary">
         Payment:{" "}
         <span
           className={`${booking.paymentStatus === "pending" ? "text-red-600" : "text-green-500"}`}
@@ -11,9 +11,9 @@ export default function BookingTable({ booking, attendee }) {
           {booking.paymentStatus}
         </span>
       </h1>
-      <div className="hidden max-w-full bg-white text-[14px] md:block">
+      <div className="hidden max-w-full bg-navyBlue text-[14px] md:block">
         <BookingTableHeader />
-        <div className="grid grid-cols-8 items-center justify-items-center rounded-b-md border border-gray-300 bg-transparent px-2 py-2">
+        <div className="grid grid-cols-8 items-center justify-items-center rounded-b-md border border-gray-700 bg-transparent px-2 py-2">
           <p className="flex flex-col gap-1 text-xs">
             {" "}
             {booking?.activities?.map((act, i) => {
