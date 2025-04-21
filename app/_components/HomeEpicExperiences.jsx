@@ -38,8 +38,8 @@ export default function HomeEpicExperiences() {
               desert buggy racing
             </h3>
             <p className="text-lg leading-[1.5]">
-              kick up cand, smash the throttle &mdash; this is fuir throttle
-              dune mahem with crew
+              Kick up sand, smash the throttle — this is full-throttle dune
+              mayhem with the crew.
             </p>
           </div>
         </motion.div>
@@ -69,8 +69,8 @@ export default function HomeEpicExperiences() {
               yacht cruising
             </h3>
             <p className="text-lg leading-[1.5]">
-              Champagne, beats, and pangramic views &mdash; the ultimate
-              pre-party at sea
+              Champagne, beats, and panoramic views — the ultimate pre-party at
+              sea.
             </p>
           </div>
         </motion.div>
@@ -100,7 +100,8 @@ export default function HomeEpicExperiences() {
               skydiving
             </h3>
             <p className="text-lg leading-[1.5]">
-              Go big or go home +1300 Off over the Palm with be chearing on
+              Go big or go home — 1,300 ft off over the Palm, with us cheering
+              you on!
             </p>
           </div>
         </motion.div>
@@ -130,7 +131,7 @@ export default function HomeEpicExperiences() {
               private chef dinner
             </h3>
             <p className="text-lg leading-[1.5]">
-              five-stars steaks, Your own villa. No shirts require
+              Five-star steaks. Your own villa. No shirts required.
             </p>
           </div>
         </motion.div>
@@ -159,7 +160,9 @@ export default function HomeEpicExperiences() {
             <h3 className="text-2xl font-bold capitalize leading-[1.2] text-matalicGold sm:text-5xl">
               pool party
             </h3>
-            <p className="text-lg leading-[1.5]">serious belly laughs.</p>
+            <p className="text-lg leading-[1.5]">
+              Get ready for some serious belly laughs.
+            </p>
           </div>
         </motion.div>
       </div>

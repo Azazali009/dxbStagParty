@@ -16,26 +16,22 @@ export default function HowItWorks() {
           <HowItWorkIconBox
             image="/images/packageIcon.png"
             title="Choose Package"
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque,
-              officia!"
+            desc="Pick from our cinematic packages-or build your own. You're in charge."
           />
           <HowItWorkIconBox
             image="/images/Customize.png"
             title="Customize"
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque,
-          officia!"
+            desc="Tailor it all-dinner, DJs,dune buggies, and a few widcarrs."
           />
           <HowItWorkIconBox
             image="/images/Split-Payment.png"
             title="Split Payment"
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque,
-          officia!"
+            desc="Each guest pays their share.No stress for the best man."
           />
           <HowItWorkIconBox
             image="/images/party.png"
             title="party"
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque,
-          officia!"
+            desc="Show up, turn up, and party like there's no tomorrow."
           />
         </div>
       </div>

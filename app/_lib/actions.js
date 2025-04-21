@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
-import { createActivity, editActivity } from "./data-services";
+import { createActivity, editActivity, getActivity } from "./data-services";
 import { minTime } from "date-fns/constants";
 
 // delete
@@ -211,9 +211,33 @@ export async function editActivityAction(formData) {
 }
 
 export async function deleteActivityAction(activityId) {
+  const activity = await getActivity(activityId);
+  const imageUrl = activity?.image;
+  const extractImagePath = (publicUrl) => {
+    const prefix = "/storage/v1/object/public/activity-images/";
+    const pathIndex = publicUrl.indexOf(prefix);
+    if (pathIndex === -1) return null;
+    return publicUrl.substring(pathIndex + prefix.length);
+  };
+
+  // Example usage:
+  const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/axe.png`;
+  const imagePath = extractImagePath(imageUrl)?.replace(/^\/+/, "");
+
+  console.log(imagePath); // "axe.png"
   const session = await auth();
   if (!session || session?.user?.role !== "admin")
     throw new Error("You are not allowed to perform this action");
+
+  // 1. Delete image from bucket
+  const { error: imageError } = await supabase.storage
+    .from("activity-images")
+    .remove([imagePath]);
+
+  if (imageError)
+    throw new Error("Some internal error occurs while deleteing an activity");
+
+  // 2 delete activity
   const { error } = await supabase
     .from("activities")
     .delete()

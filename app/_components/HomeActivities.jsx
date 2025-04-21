@@ -17,7 +17,7 @@ export default async function HomeActivities() {
           signature stag styles
         </h2>
         <p className="text-2xl capitalize">
-          choose the style that match your crew
+          choose the style that matchs your crew
         </p>
       </div>
       <ActivityCarousel Activities={Activities} />

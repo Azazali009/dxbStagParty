@@ -24,7 +24,7 @@ export default function CompleteBooking() {
           return;
         }
 
-        const { attendeeEmails, totalPrice } = bookingData;
+        const { attendeeEmails, totalPrice, organizerEmail } = bookingData;
 
         // ✅ Generate Attendee Payment Links
         const res = await fetch("/api/create-payment-links", {
@@ -52,7 +52,18 @@ export default function CompleteBooking() {
           (totalPrice * 0.85) / attendeeEmails.length,
         );
 
-        const { CurBooking, error } = await addBooking(bookingData);
+        // ✅ Filter organizerEmail from attendeeEmails before saving to DB
+        const filteredAttendeeEmails = attendeeEmails.filter(
+          (email) => email !== organizerEmail,
+        );
+
+        // ✅ Prepare booking object with cleaned attendee list
+        const sanitizedBooking = {
+          ...bookingData,
+          attendeeEmails: filteredAttendeeEmails,
+        };
+
+        const { CurBooking, error } = await addBooking(sanitizedBooking);
         if (error) {
           toast.error("Unexpected error while adding booking.", {
             id: toastId,

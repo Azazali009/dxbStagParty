@@ -12,7 +12,7 @@ export default function HomeHeroSection() {
         <AnimatedHeading
           className={`text-left font-semibold md:text-6xl ${cinzel.className} uppercase !leading-[1.2] text-matalicGold`}
         >
-          Where legend celebrate
+          Where legends celebrate
         </AnimatedHeading>
         <p className="text-lg">
           Dubai most elite stag party expereinces &mdash;
