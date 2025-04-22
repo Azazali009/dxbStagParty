@@ -25,7 +25,7 @@ export async function POST(req) {
         line_items: [
           {
             price_data: {
-              currency: "usd",
+              currency: "aed",
               product_data: { name: "DXB Stag party" },
               unit_amount: perPersonAmount * 100, // Amount in cents
             },

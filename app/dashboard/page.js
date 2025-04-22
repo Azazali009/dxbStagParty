@@ -1,9 +1,12 @@
-import { redirect } from "next/navigation";
-import { auth } from "../_lib/auth";
-
+import { Suspense } from "react";
+import AdminStats from "../_components/AdminStats";
+import Spinner from "../_components/Spinner";
 export default async function page() {
-  const { user } = await auth();
-
-  if (user.role !== "admin") redirect("/account");
-  if (user.role === "admin") return <div className="">Admin dashboard</div>;
+  return (
+    <div className="">
+      <Suspense fallback={<Spinner />}>
+        <AdminStats />
+      </Suspense>
+    </div>
+  );
 }

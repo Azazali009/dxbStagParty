@@ -1,6 +1,5 @@
-import Image from "next/image";
-import AnimatedHeading from "./AnimatedHeading";
 import { cinzel } from "../layout";
+import AnimatedHeading from "./AnimatedHeading";
 
 export default function HomeHeroSection() {
   return (

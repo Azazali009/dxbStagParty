@@ -16,28 +16,28 @@ export default function BookingFilter() {
   }
   return (
     <div className="flex justify-end">
-      <div className="flex items-center divide-x divide-gray-300 rounded-sm border border-gray-300">
+      <div className="flex items-center divide-x divide-gray-800 rounded-sm border border-gray-800">
         <button
           onClick={() => handleFilter("all")}
-          className={`px-5 ${activeFilter === "all" && "bg-tertiary text-white"} py-2 capitalize duration-300 hover:bg-tertiary hover:text-white`}
+          className={`px-5 ${activeFilter === "all" && "bg-navyBlue text-white"} py-2 capitalize duration-300 hover:bg-navyBlue hover:text-white`}
         >
           all
         </button>
         <button
-          onClick={() => handleFilter("confirmed")}
-          className={`px-5 ${activeFilter === "confirmed" && "bg-tertiary text-white"} py-2 capitalize duration-300 hover:bg-tertiary hover:text-white`}
+          onClick={() => handleFilter("completed")}
+          className={`px-5 ${activeFilter === "completed" && "bg-navyBlue text-white"} py-2 capitalize duration-300 hover:bg-navyBlue hover:text-white`}
         >
-          Confirmed
+          completed
         </button>
         <button
           onClick={() => handleFilter("pending")}
-          className={`px-5 ${activeFilter === "pending" && "bg-tertiary text-white"} py-2 capitalize duration-300 hover:bg-tertiary hover:text-white`}
+          className={`px-5 ${activeFilter === "pending" && "bg-navyBlue text-white"} py-2 capitalize duration-300 hover:bg-navyBlue hover:text-white`}
         >
           pending
         </button>
         <button
           onClick={() => handleFilter("cancelled")}
-          className={`px-5 ${activeFilter === "cancelled" && "bg-tertiary text-white"} py-2 capitalize duration-300 hover:bg-tertiary hover:text-white`}
+          className={`px-5 ${activeFilter === "cancelled" && "bg-navyBlue text-white"} py-2 capitalize duration-300 hover:bg-navyBlue hover:text-white`}
         >
           cancelled
         </button>

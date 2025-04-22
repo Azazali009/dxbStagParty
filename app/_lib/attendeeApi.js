@@ -74,23 +74,48 @@ export async function checkAndUpdateBookingStatus(bookingID) {
   }
 }
 // ✅4️⃣  Update Payment Status of a Specific Attendee
-export async function updateAttendeeStatus(email) {
-  const { data, error } = await supabase
-    .from("attendee")
-    .update({ status: "paid" })
-    .eq("email", email)
-    .select("bookingID");
+export async function updateAttendeeStatus(email, amount) {
+  console.log(email, amount);
+  // const { data, error } = await supabase
+  //   .from("attendee")
+  //   .update({ status: "paid" })
+  //   .eq("email", email)
+  //   .select("bookingID");
 
-  if (error) {
-    console.error("❌ Error updating attendee status:", error);
-    throw new Error("Error while updating attendee status");
-  }
+  // if (error) {
+  //   console.error("❌ Error updating attendee status:", error);
+  //   throw new Error("Error while updating attendee status");
+  // }
 
   const bookingID = data[0]?.bookingID;
   if (!bookingID) return;
 
-  // 🔄 Step 4: Check if All Attendees Have Paid
-  await checkAndUpdateBookingStatus(bookingID);
+  // Fetch current paidAmount
+  const { data: bookingData, error: fetchError } = await supabase
+    .from("booking")
+    .select("paidAmount")
+    .eq("id", bookingID)
+    .single();
+
+  if (fetchError) {
+    console.error("❌ Error fetching booking:", fetchError);
+    throw new Error("Error while fetching booking");
+  }
+  const currentPaid = bookingData?.paidAmount || 0;
+  const updatedPaidAmount = Number(currentPaid + amount);
+  console.log(updatedPaidAmount);
+  // Step 3: Update booking paidAmount
+  // const { error: updateError } = await supabase
+  //   .from("booking")
+  //   .update({ paidAmount: updatedPaidAmount })
+  //   .eq("id", bookingID);
+
+  // if (updateError) {
+  //   console.error("❌ Error updating booking paidAmount:", updateError);
+  //   throw new Error("Error while updating paid amount");
+  // }
+  // // 🔄 Step 4: Check if All Attendees Have Paid
+  // await checkAndUpdateBookingStatus(bookingID);
 }
 
 // ✅ Function to Extend Expiry Date by 24 Hours

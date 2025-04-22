@@ -15,7 +15,7 @@ export async function POST(req) {
       line_items: [
         {
           price_data: {
-            currency: "usd",
+            currency: "aed",
             product_data: {
               name: `Organizer Payment for ${activityName}`,
             },

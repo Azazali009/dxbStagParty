@@ -3,6 +3,7 @@ import { stripe } from "../../_lib/stripe";
 import { updateAttendeeStatus } from "../../_lib/attendeeApi"; // Update attendee in DB
 
 export async function POST(req) {
+  console.log("🚀 Webhook endpoint called");
   const payload = await req.text();
   const sig = req.headers.get("stripe-signature");
 
@@ -17,11 +18,12 @@ export async function POST(req) {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
       const email = session.customer_email; // ✅ Get attendee's email
+      const amount = session.amount_total;
 
       console.log(`✅ Payment received from: ${email}`);
 
       // ✅ Update Attendee Status in Supabase
-      await updateAttendeeStatus(email);
+      await updateAttendeeStatus(email, amount);
     }
 
     return NextResponse.json({ received: true });

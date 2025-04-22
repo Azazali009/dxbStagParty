@@ -5,6 +5,7 @@ import UserIcon from "../svgIcons/UserIcon";
 import WebsiteIcon from "../svgIcons/WebsiteIcon";
 import ChartPieIcon from "../svgIcons/ChartPieIcon";
 import { usePathname } from "next/navigation";
+import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
 
 const SideBar = () => {
   const pathname = usePathname();
@@ -26,6 +27,13 @@ const SideBar = () => {
         >
           <ChartPieIcon />
           <span> activities</span>
+        </Link>
+        <Link
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium ${pathname === "/dashboard/bookings" && "bg-secondary text-navyBlue"} capitalize transition-all duration-300 hover:bg-secondary hover:text-navyBlue`}
+          href={"/dashboard/bookings"}
+        >
+          <CalenderDaysIcon />
+          <span> bookings</span>
         </Link>
         <Link
           className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium capitalize transition-all duration-300 hover:bg-secondary hover:text-navyBlue`}

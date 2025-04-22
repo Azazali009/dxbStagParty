@@ -1,9 +1,9 @@
+import Divider from "./_components/Divider";
 import HomeActivities from "./_components/HomeActivities";
 import HomeEpicExperiences from "./_components/HomeEpicExperiences";
 import HomeHeroSection from "./_components/HomeHeroSection";
 import HowItWorks from "./_components/HowItWorks";
 import Testimonilas from "./_components/Testimonials";
-import Divider from "./_components/Divider";
 
 export const metadata = {
   title: "DXB Stag party",
