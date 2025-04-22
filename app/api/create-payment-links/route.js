@@ -13,7 +13,8 @@ export async function POST(req) {
       );
     }
 
-    const perPersonAmount = Math.round(totalPrice / emails.length);
+    // calculte price for each attendee and remove the 15% which is paid by the organizer
+    const perPersonAmount = Math.round((totalPrice * 0.85) / emails.length);
     let paymentLinks = [];
 
     for (const email of emails) {
