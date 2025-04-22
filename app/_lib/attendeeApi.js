@@ -102,20 +102,20 @@ export async function updateAttendeeStatus(email, amount) {
     throw new Error("Error while fetching booking");
   }
   const currentPaid = bookingData?.paidAmount || 0;
-  const updatedPaidAmount = Number(currentPaid + amount);
-  console.log(updatedPaidAmount);
-  // Step 3: Update booking paidAmount
-  // const { error: updateError } = await supabase
-  //   .from("booking")
-  //   .update({ paidAmount: updatedPaidAmount })
-  //   .eq("id", bookingID);
+  const updatedPaidAmount = Number(currentPaid) + Number(amount);
 
-  // if (updateError) {
-  //   console.error("❌ Error updating booking paidAmount:", updateError);
-  //   throw new Error("Error while updating paid amount");
-  // }
-  // // 🔄 Step 4: Check if All Attendees Have Paid
-  // await checkAndUpdateBookingStatus(bookingID);
+  // Step 3: Update booking paidAmount
+  const { error: updateError } = await supabase
+    .from("booking")
+    .update({ paidAmount: updatedPaidAmount })
+    .eq("id", bookingID);
+
+  if (updateError) {
+    console.error("❌ Error updating booking paidAmount:", updateError);
+    throw new Error("Error while updating paid amount");
+  }
+  // 🔄 Step 4: Check if All Attendees Have Paid
+  await checkAndUpdateBookingStatus(bookingID);
 }
 
 // ✅ Function to Extend Expiry Date by 24 Hours
