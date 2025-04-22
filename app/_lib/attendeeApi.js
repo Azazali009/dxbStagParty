@@ -76,16 +76,16 @@ export async function checkAndUpdateBookingStatus(bookingID) {
 // ✅4️⃣  Update Payment Status of a Specific Attendee
 export async function updateAttendeeStatus(email, amount) {
   console.log(email, amount);
-  // const { data, error } = await supabase
-  //   .from("attendee")
-  //   .update({ status: "paid" })
-  //   .eq("email", email)
-  //   .select("bookingID");
+  const { data, error } = await supabase
+    .from("attendee")
+    .update({ status: "paid" })
+    .eq("email", email)
+    .select("bookingID");
 
-  // if (error) {
-  //   console.error("❌ Error updating attendee status:", error);
-  //   throw new Error("Error while updating attendee status");
-  // }
+  if (error) {
+    console.error("❌ Error updating attendee status:", error);
+    throw new Error("Error while updating attendee status");
+  }
 
   const bookingID = data[0]?.bookingID;
   if (!bookingID) return;
