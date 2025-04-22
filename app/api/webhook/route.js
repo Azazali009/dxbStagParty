@@ -18,7 +18,7 @@ export async function POST(req) {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
       const email = session.customer_email; // ✅ Get attendee's email
-      const amount = session.amount_total;
+      const amount = session.amount_total / 100; // Amount in AED
 
       console.log(`✅ Payment received from: ${email}`);
 
