@@ -31,7 +31,7 @@ export default function BookingRow({ booking }) {
       <div className="flex items-center gap-2 justify-self-center">
         <Link
           className=""
-          href={`/bookings/${booking.id}`}
+          href={`/dashboard/bookings/${booking.id}`}
           title="View Booking"
         >
           <EyeIcon />

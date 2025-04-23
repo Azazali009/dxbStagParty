@@ -60,13 +60,7 @@ export default function AdminActivityForm() {
           placeholder="18"
         />
       </FormRow>
-      <FormRow label={"Image"}>
-        <input
-          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
-          type="file"
-          name="image"
-        />
-      </FormRow>
+
       <FormRow label={"Destinations"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
@@ -75,15 +69,7 @@ export default function AdminActivityForm() {
           placeholder="dubai"
         />
       </FormRow>
-      <FormRow label={"Description"}>
-        <textarea
-          className="rounded bg-navyBlue p-2 outline-none placeholder:text-matalicGold/20 focus:outline-matalicGold"
-          cols={10}
-          rows={8}
-          name="description"
-          placeholder="description"
-        />
-      </FormRow>
+
       <FormRow label={"Group Size"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
@@ -99,6 +85,30 @@ export default function AdminActivityForm() {
           name="tags"
           title="split by commas"
           placeholder="Glam,Beauty,Instagrammable,Photo,Luxury..."
+        />
+      </FormRow>
+
+      <FormRow label={"Card Image"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="file"
+          name="image"
+        />
+      </FormRow>
+      <FormRow label={"Banner Image"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="file"
+          name="bannerImage"
+        />
+      </FormRow>
+      <FormRow label={"Description"} className={"[grid-column:1/-1]"}>
+        <textarea
+          className="rounded bg-navyBlue p-2 outline-none placeholder:text-matalicGold/20 focus:outline-matalicGold"
+          cols={10}
+          rows={8}
+          name="description"
+          placeholder="description"
         />
       </FormRow>
       <div className="[grid-column:1/-1]">

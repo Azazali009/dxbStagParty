@@ -1,12 +1,21 @@
 import { supabase } from "./supabase";
 
 export async function createActivity(newActivity) {
-  // https://dvuzbcalsepjpbwkypyz.supabase.co/storage/v1/object/public/activity-images//bf.jpg
-  const imageName = `${Math.random()}-${newActivity?.image?.name}`;
+  const imageName = `card-image-${Math.random()}-${newActivity?.image?.name}`;
+  const bannerImageName = `banner-image-${Math.random()}-${newActivity?.bannerImage?.name}`;
+
   const imagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${imageName}`;
+  const bannerImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${bannerImageName}`;
+
   const { data, error } = await supabase
     .from("activities")
-    .insert([{ ...newActivity, image: imagePath }])
+    .insert([
+      {
+        ...newActivity,
+        image: imagePath,
+        bannerImage: bannerImagePath,
+      },
+    ])
     .select()
     .single();
 
@@ -15,16 +24,30 @@ export async function createActivity(newActivity) {
     throw new Error("Error while creating Activity.😒");
   }
 
-  const { error: storageError } = await supabase.storage
+  const { error: imageUploadError } = await supabase.storage
     .from("activity-images")
     .upload(imageName, newActivity?.image);
-  if (storageError) {
-    console.log(storageError);
+
+  if (imageUploadError) {
+    console.log(imageUploadError);
     await supabase.from("activities").delete().eq("id", data.id);
     throw new Error(
-      "Activity image could not uploaded and the activity was not created.",
+      "Activity image could not be uploaded. Activity was deleted.",
     );
   }
+
+  const { error: bannerUploadError } = await supabase.storage
+    .from("activity-images")
+    .upload(bannerImageName, newActivity?.bannerImage);
+
+  if (bannerUploadError) {
+    console.log(bannerUploadError);
+    await supabase.from("activities").delete().eq("id", data.id);
+    throw new Error(
+      "Banner image could not be uploaded. Activity was deleted.",
+    );
+  }
+
   return data;
 }
 

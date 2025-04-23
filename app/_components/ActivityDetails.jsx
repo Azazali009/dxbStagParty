@@ -5,20 +5,15 @@ import includes from "../svgIcons/includes.svg";
 import user from "../svgIcons/user.svg";
 import ActivityBanner from "./ActivityBanner";
 import Link from "next/link";
-export default function ActivityDetails({ activity }) {
-  const {
-    id,
-    name,
-    price,
-    image,
-    duration,
-
-    group_size,
-  } = activity;
+import BookingWindowAndButton from "./BookingWindowAndButton";
+import { auth } from "../_lib/auth";
+export default async function ActivityDetails({ activity }) {
+  const { duration, group_size } = activity;
+  const session = await auth();
   return (
     <>
       {/* header image banner */}
-      <ActivityBanner activity={activity} />
+      <ActivityBanner activity={activity} session={session} />
       {/* overview section */}
       <section className="mx-auto grid w-[95%] max-w-7xl grid-cols-1 items-center justify-items-center gap-8 border-b border-navyBlue/30 py-14 md:grid-cols-2">
         <div className="space-y-4">
@@ -97,12 +92,7 @@ export default function ActivityDetails({ activity }) {
             <li>live music or DJ</li>
             <li>reserved table</li>
           </ul>
-          <Link
-            href={"/contact"}
-            className="inline-block rounded-md border border-b-2 border-matalicGold border-b-white bg-gradient-to-b from-primary to-navyBlue px-6 py-2 duration-300 hover:scale-105 hover:opacity-80"
-          >
-            contact us
-          </Link>
+          <BookingWindowAndButton session={session} activity={activity} />
         </div>
       </section>
     </>

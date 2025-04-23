@@ -3,7 +3,7 @@ import plusIcon from "../svgIcons/plus.svg";
 import Image from "next/image";
 export default function AdminHeader() {
   return (
-    <div className="flex items-center justify-between bg-navyBlue/40 p-4">
+    <div className="sticky top-0 z-10 flex items-center justify-between bg-navyBlue/40 p-4 shadow-sm">
       <input
         type="text"
         placeholder="Search activity,package,blogs..."

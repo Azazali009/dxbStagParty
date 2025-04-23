@@ -11,10 +11,10 @@ export default function BookingTable({ booking, attendee }) {
           {booking.paymentStatus}
         </span>
       </h1>
-      <div className="hidden max-w-full bg-navyBlue text-[14px] md:block">
+      <div className="hidden bg-navyBlue text-[14px] md:block">
         <BookingTableHeader />
-        <div className="grid grid-cols-8 items-center justify-items-center rounded-b-md border border-gray-700 bg-transparent px-2 py-2">
-          <p className="flex flex-col gap-1 text-xs">
+        <div className="grid grid-cols-9 items-center justify-items-center rounded-b-md border border-gray-700 bg-transparent px-2 py-2 text-xs">
+          <p className="col-span-2 flex flex-col gap-1">
             {" "}
             {booking?.activities?.map((act, i) => {
               return <span key={i}>{act.name}</span>;

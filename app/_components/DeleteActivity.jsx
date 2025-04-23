@@ -15,7 +15,7 @@ export default function DeleteActivity({ activityId }) {
       onClick={handleDelete}
       disabled={isPending}
       title="Delete Activity"
-      className="capitalize text-red-700 duration-300 hover:translate-y-[2px] disabled:opacity-40"
+      className="fill-red-700 capitalize duration-300 hover:translate-y-[2px] disabled:opacity-40"
     >
       {isPending ? <SpinnerMini /> : <TrashIcon />}
     </button>

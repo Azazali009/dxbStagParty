@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
-import { createActivity, editActivity, getActivity } from "./data-services";
-import { minTime } from "date-fns/constants";
+import { createActivity, getActivity } from "./data-services";
+import { extractImagePath } from "./helpers";
 
 // delete
 export async function test(formData) {
@@ -53,6 +53,7 @@ export async function addActivityAction(formData) {
   const group_size = formData.get("group_size");
   const tags = formData.get("tags")?.split(",");
   const image = formData.get("image");
+  const bannerImage = formData.get("bannerImage");
 
   // empty fields
   if (
@@ -61,6 +62,7 @@ export async function addActivityAction(formData) {
     !destinations ||
     !tags ||
     !image ||
+    !bannerImage ||
     !group_size ||
     !name ||
     !minAge ||
@@ -82,13 +84,19 @@ export async function addActivityAction(formData) {
   //   );
   // }
   // image type validation
-  if (image) {
-    if (!ALLOWED_TYPES.includes(image.type)) {
+  if (image || bannerImage) {
+    if (
+      !ALLOWED_TYPES.includes(image.type) ||
+      !ALLOWED_TYPES.includes(bannerImage.type)
+    ) {
       throw new Error("Image: Only JPG, PNG, and WEBP files are allowed");
     }
     // image size constraints
     if (image.size > MAX_FILE_SIZE) {
-      throw new Error("File size must be less than 1MB");
+      throw new Error("Card image size must be less than 1MB");
+    }
+    if (bannerImage.size > MAX_FILE_SIZE) {
+      throw new Error("Banner Image size must be less than 1MB");
     }
   }
   const newActivity = {
@@ -101,6 +109,7 @@ export async function addActivityAction(formData) {
     group_size,
     tags,
     image,
+    bannerImage,
   };
   await createActivity(newActivity);
 
@@ -213,18 +222,14 @@ export async function editActivityAction(formData) {
 export async function deleteActivityAction(activityId) {
   const activity = await getActivity(activityId);
   const imageUrl = activity?.image;
-  const extractImagePath = (publicUrl) => {
-    const prefix = "/storage/v1/object/public/activity-images/";
-    const pathIndex = publicUrl.indexOf(prefix);
-    if (pathIndex === -1) return null;
-    return publicUrl.substring(pathIndex + prefix.length);
-  };
+  const bannerImageUrl = activity?.bannerImage;
 
-  // Example usage:
-  const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/axe.png`;
+  // function to extract image path
+
   const imagePath = extractImagePath(imageUrl)?.replace(/^\/+/, "");
+  const bannerImagePath = extractImagePath(bannerImageUrl)?.replace(/^\/+/, "");
 
-  console.log(imagePath); // "axe.png"
+  console.log(imagePath, bannerImagePath);
   const session = await auth();
   if (!session || session?.user?.role !== "admin")
     throw new Error("You are not allowed to perform this action");
@@ -232,7 +237,7 @@ export async function deleteActivityAction(activityId) {
   // 1. Delete image from bucket
   const { error: imageError } = await supabase.storage
     .from("activity-images")
-    .remove([imagePath]);
+    .remove([imagePath, bannerImagePath]);
 
   if (imageError)
     throw new Error("Some internal error occurs while deleteing an activity");

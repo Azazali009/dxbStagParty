@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import EyeIcon from "../svgIcons/EyeIcon";
+import PencilIcon from "../svgIcons/PencilIcon";
 import DeleteActivity from "./DeleteActivity";
 export default function ActivityRow({ activity }) {
   return (
@@ -11,14 +11,14 @@ export default function ActivityRow({ activity }) {
       <p className="">{activity.duration}</p>
       <p className="">{activity.destinations}</p>
       <p className="">{activity.group_size}</p>
-      <div className="col-span-2 flex items-center justify-center gap-4 text-sm">
+      <div className="col-span-2 flex items-center justify-center gap-2 text-sm">
         <DeleteActivity activityId={activity.id} />
         <Link
           title="Update Activity"
           href={`/dashboard/edit-activity/${activity.id}`}
-          className="capitalize text-matalicGold duration-300 hover:translate-y-[2px]"
+          className="capitaliz fill-sky-500 duration-300 hover:translate-y-[2px]"
         >
-          <EyeIcon />
+          <PencilIcon />
         </Link>
       </div>
     </div>

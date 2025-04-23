@@ -9,12 +9,27 @@ export default async function Layout({ children }) {
   if (user.role !== "admin") redirect("/account");
   if (user.role === "admin")
     return (
-      <div className="grid h-full min-h-screen grid-cols-[16rem_1fr] items-start">
+      <div className="grid min-h-screen grid-cols-[16rem_1fr]">
         <AdminSidebar />
-        <div className="h-full">
+
+        <div className="flex h-screen w-full flex-col">
           <AdminHeader />
-          <div className="p-4">{children}</div>
+          <div className="flex-1 overflow-y-auto p-4">{children}</div>
         </div>
       </div>
     );
+}
+{
+  /* <div className="grid grid-cols-[16rem_1fr] min-h-screen">
+
+  <div className="sticky top-0 h-screen">
+    <AdminSidebar />
+  </div>
+
+
+  <div className="flex flex-col w-full">
+    <AdminHeader />
+    <div className="p-4 overflow-y-auto">{children}</div>
+  </div>
+</div> */
 }

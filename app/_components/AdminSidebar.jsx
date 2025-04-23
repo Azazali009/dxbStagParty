@@ -11,7 +11,7 @@ const SideBar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="sticky top-0 flex h-full flex-col bg-navyBlue p-0 px-6 py-3 text-white">
+    <aside className="sticky top-0 flex h-screen flex-col bg-navyBlue p-0 px-6 py-3 text-white">
       <h1 className="text-center text-xl font-bold">Admin panel</h1>
       <ul className="mt-20 flex flex-col gap-4">
         <Link
