@@ -3,6 +3,7 @@
 import { useState } from "react";
 import BookingPage from "./BookingForm";
 import ModalWindow from "./ModalWindow";
+
 export default function BookingWindowAndButton({ session, activity }) {
   const { id, price, name, destinations } = activity;
   const [openModal, setOpenModal] = useState(false);

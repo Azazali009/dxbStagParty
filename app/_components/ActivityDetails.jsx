@@ -4,9 +4,9 @@ import clock from "../svgIcons/clock.svg";
 import includes from "../svgIcons/includes.svg";
 import user from "../svgIcons/user.svg";
 import ActivityBanner from "./ActivityBanner";
-import Link from "next/link";
 import BookingWindowAndButton from "./BookingWindowAndButton";
 import { auth } from "../_lib/auth";
+
 export default async function ActivityDetails({ activity }) {
   const { duration, group_size } = activity;
   const session = await auth();
@@ -78,7 +78,7 @@ export default async function ActivityDetails({ activity }) {
       <section className="mx-auto grid w-[95%] grid-cols-2 gap-16 py-20">
         {/*  */}
         <div className="relative h-[400px] object-cover">
-          <Image src={"/images/home-hero.webp"} fill alt="image" />
+          <Image src={"/images/home-hero-bg.webp"} fill alt="image" />
         </div>
         <div className="space-y-8">
           <h2

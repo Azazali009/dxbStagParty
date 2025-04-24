@@ -1,6 +1,6 @@
 import Activities from "../_components/Activities";
 import Spinner from "../_components/Spinner";
-import AnimatedHeading from "../_components/AnimatedHeading";
+import ActivityHeroSection from "../_components/ActivityHeroSection";
 import { Suspense } from "react";
 import ActivityFilters from "../_components/ActivityFilters";
 import { getActivities } from "../_lib/data-services";
@@ -25,15 +25,7 @@ export default async function Page({ searchParams }) {
 
   return (
     <div className="mx-auto min-h-screen max-w-full space-y-20 px-2 antialiased sm:p-6">
-      <div className="space-y-4">
-        <AnimatedHeading className={"text-nowrap pt-16 text-xl sm:text-wrap"}>
-          {" "}
-          Epic Stag Do Activities
-        </AnimatedHeading>
-        <p className="text-center text-neutral-500">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas, ad!
-        </p>
-      </div>
+      <ActivityHeroSection />
       {/* <SearchBar searchQuery={searchQuery} /> */}
       <ActivityFilters
         minGroupSize={minGroupSize}

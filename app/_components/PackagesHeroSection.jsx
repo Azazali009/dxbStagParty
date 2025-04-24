@@ -6,7 +6,7 @@ import AnimatedHeading from "./AnimatedHeading";
 
 export default function PackagesHeroSection() {
   return (
-    <BackgroundLines className="flex w-full flex-col items-center justify-center gap-8 border-b border-tertiary/40 py-8">
+    <BackgroundLines className="border-tertiary/40 relative -z-10 flex w-full flex-col items-center justify-center gap-8 border-b py-8">
       <AnimatedHeading>Ready Made Stag Do Packages</AnimatedHeading>
       <p className="mx-auto max-w-xl text-center text-sm text-neutral-400 md:text-lg">
         Book an epic Stag Party Package, including the top Stag Party

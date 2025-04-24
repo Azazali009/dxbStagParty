@@ -33,8 +33,8 @@ export default function SelectPackages({
   if (loading)
     return (
       <div className="h-20 w-full space-y-2">
-        <div className="h-4 w-[200px] animate-pulse rounded-md bg-tertiary"></div>
-        <div className="h-12 w-full animate-pulse rounded-md bg-tertiary"></div>
+        <div className="h-4 w-[200px] animate-pulse rounded-md bg-navyBlue"></div>
+        <div className="h-12 w-full animate-pulse rounded-md bg-navyBlue"></div>
       </div>
     );
 

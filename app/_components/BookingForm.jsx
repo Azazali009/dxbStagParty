@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { act, useEffect, useState } from "react";
 import LoggedInMessage from "../_components/LoggedInMeesage";
 import SelectActivities from "../_components/SelectActivities";
 import SelectPackages from "../_components/SelectPackages";
@@ -223,9 +223,6 @@ export default function BookingPage({
 
   return (
     <div className="relative w-full px-3 pt-20 text-neutral-200">
-      <div className="absolute left-[5%] top-[5%] flex h-12 w-[500px] -translate-x-1/2 -rotate-45 items-center justify-center bg-secondary text-center text-base font-bold text-black sm:text-xl">
-        <p className="text-sm"> {formatToAED(totalPrice)}</p>
-      </div>
       <h1 className="mb-8 text-center text-base font-bold text-secondary md:text-3xl dark:text-neutral-100">
         Level up your party with{" "}
         <span className="rounded-md border border-gray-200 bg-gray-100 px-1 py-0.5 dark:border-neutral-700 dark:bg-secondary">
@@ -297,6 +294,46 @@ export default function BookingPage({
           </button>
         </div>
       </form>
+      <div className="fixed bottom-0 right-0 max-h-[400px] space-y-6 overflow-y-auto bg-navyBlue p-8">
+        {selectedActivities.map((activity) => {
+          return (
+            <div
+              key={activity.value}
+              className="flex items-center justify-between text-sm"
+            >
+              <span className="text-matalicGold">{activity.label}:</span>{" "}
+              <span className="text-matalicGold">
+                {formatToAED(activity.price)}
+              </span>
+            </div>
+          );
+        })}
+        {selectedPackages.map((pack) => {
+          return (
+            <div
+              key={pack.value}
+              className="flex items-center justify-between text-sm"
+            >
+              <span className="text-matalicGold">{pack.label}:</span>{" "}
+              <span className="text-matalicGold">
+                {formatToAED(pack.price)}
+              </span>
+            </div>
+          );
+        })}
+
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-matalicGold">
+            Total Price:
+          </h2>
+          <p className="text-lg font-semibold text-matalicGold">
+            {formatToAED(totalPrice)}
+          </p>
+        </div>
+        {/* <p className="text-sm font-light text-matalicGold">
+          (Includes 15% Organizer Fee){" "}
+        </p> */}
+      </div>
     </div>
   );
 }

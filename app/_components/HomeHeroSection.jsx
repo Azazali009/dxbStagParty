@@ -21,65 +21,6 @@ export default function HomeHeroSection() {
           plan your party
         </button>
       </div>
-
-      {/* 
-      <div className="flex gap-8 rounded-full bg-gradient-to-r from-secondary to-[#997c26] px-12 py-3 text-neutral-800">
-        <button className="font-medium duration-300 hover:text-white">
-          Activities
-        </button>
-        <button className="font-medium duration-300 hover:text-white">
-          Packages
-        </button>
-        <button className="font-medium duration-300 hover:text-white">
-          Expereince
-        </button>
-      </div> */}
-      {/* divider */}
-      {/* <div className="h-[0.06px] w-[95%] bg-neutral-600"></div>
-      <div className="grid grid-cols-4 gap-20 text-white">
-        <div className="flex items-center gap-2">
-          <Image
-            src={"/images/packages.png"}
-            width={100}
-            height={100}
-            alt="packages"
-            className="w-8"
-          />
-          <p>Exclusive packages</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Image
-            src={"/images/adventure.png"}
-            width={100}
-            height={100}
-            alt="packages"
-            className="w-8"
-          />
-          <p>Luxury & adventure</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Image
-            src={"/images/planning.png"}
-            width={100}
-            height={100}
-            alt="packages"
-            className="w-8"
-          />
-
-          <p>hassle free planning</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Image
-            src={"/images/top.png"}
-            width={100}
-            height={100}
-            alt="packages"
-            className="w-8"
-          />
-
-          <p>top rated services</p>
-        </div>
-      </div> */}
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { editActivityAction } from "../_lib/actions";
 import FormRow from "./FormRow";
 import SpinnerMini from "./SpinnerMini";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 export default function EditActivityForm({ activity }) {
   const {
@@ -17,6 +18,7 @@ export default function EditActivityForm({ activity }) {
     group_size,
     tags,
     image,
+    bannerImage,
   } = activity;
   const [isPending, startTransition] = useTransition();
   const editFormRef = useRef();
@@ -71,14 +73,7 @@ export default function EditActivityForm({ activity }) {
           defaultValue={minAge}
         />
       </FormRow>
-      <FormRow label={"Image"}>
-        <input
-          className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
-          type="file"
-          name="image"
-        />
-      </FormRow>
-      <input type="hidden" name="existingImage" value={image} />
+
       <FormRow label={"Destinations"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
@@ -87,15 +82,7 @@ export default function EditActivityForm({ activity }) {
           defaultValue={destinations}
         />
       </FormRow>
-      <FormRow label={"Description"}>
-        <textarea
-          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
-          cols={10}
-          rows={8}
-          name="description"
-          defaultValue={description}
-        />
-      </FormRow>
+
       <FormRow label={"Group Size"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
@@ -112,6 +99,32 @@ export default function EditActivityForm({ activity }) {
           title="split by commas"
           placeholder="Glam,Beauty,Instagrammable,Photo,Luxury..."
           defaultValue={tags}
+        />
+      </FormRow>
+
+      <FormRow label={"Card Image"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          type="file"
+          name="image"
+        />
+      </FormRow>
+      <FormRow label={"Banner Image"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          type="file"
+          name="bannerImage"
+        />
+      </FormRow>
+      <input type="hidden" name="existingImage" value={image} />
+      <input type="hidden" name="existingBannerImage" value={bannerImage} />
+      <FormRow label={"Description"} className={"[grid-column:1/-1]"}>
+        <textarea
+          className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+          cols={10}
+          rows={8}
+          name="description"
+          defaultValue={description}
         />
       </FormRow>
       <input type="hidden" name="activityId" value={id} />
