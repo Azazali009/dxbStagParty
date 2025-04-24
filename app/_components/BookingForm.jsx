@@ -157,7 +157,7 @@ export default function BookingPage({
       }
 
       // ✅ Calculate Organizer's 15% Payment
-      const organizerAmount = Math.round(price * 0.15);
+      const organizerAmount = Math.round(totalPrice * 0.15);
       // ✅ Save Booking Data to LocalStorage (Before Payment)
       localStorage.setItem(
         "bookingData",
