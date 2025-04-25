@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import FormRow from "./FormRow";
 import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
 import Button from "./Button";
+import Summary from "./Summary";
 import { formatToAED } from "../_lib/helpers";
 
 export default function BookingPage({
@@ -25,6 +26,7 @@ export default function BookingPage({
   const [selectedPackages, setSelectedPackages] = useState([]);
   const [totalPrice, setTotalPrice] = useState(price);
   const [minDate, setMinDate] = useState("");
+
   // const [links, setLinks] = useState([]);
   // add email function
   const addEmail = () => {
@@ -275,7 +277,7 @@ export default function BookingPage({
           selectedPackages={selectedPackages}
           setSelectedPackages={setSelectedPackages}
         />
-        <div className="sticky bottom-0 flex w-full items-start gap-3 justify-self-center bg-neutral-950 p-4 [grid-column:1/-1]">
+        <div className="sticky bottom-0 flex w-full items-center gap-3 justify-self-center bg-neutral-950 p-4 [grid-column:1/-1]">
           <div>
             <Button
               variation="gold"
@@ -286,7 +288,7 @@ export default function BookingPage({
             </Button>
           </div>
           <button
-            className="-order-1 inline-block rounded-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 font-medium capitalize text-white hover:bg-gradient-to-tr"
+            className="inline-block rounded-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 font-medium capitalize text-white hover:bg-gradient-to-tr"
             onClick={addEmail}
             type="button"
           >
@@ -294,46 +296,14 @@ export default function BookingPage({
           </button>
         </div>
       </form>
-      <div className="fixed bottom-0 right-0 max-h-[400px] space-y-6 overflow-y-auto bg-navyBlue p-8">
-        {selectedActivities.map((activity) => {
-          return (
-            <div
-              key={activity.value}
-              className="flex items-center justify-between text-sm"
-            >
-              <span className="text-matalicGold">{activity.label}:</span>{" "}
-              <span className="text-matalicGold">
-                {formatToAED(activity.price)}
-              </span>
-            </div>
-          );
-        })}
-        {selectedPackages.map((pack) => {
-          return (
-            <div
-              key={pack.value}
-              className="flex items-center justify-between text-sm"
-            >
-              <span className="text-matalicGold">{pack.label}:</span>{" "}
-              <span className="text-matalicGold">
-                {formatToAED(pack.price)}
-              </span>
-            </div>
-          );
-        })}
-
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-matalicGold">
-            Total Price:
-          </h2>
-          <p className="text-lg font-semibold text-matalicGold">
-            {formatToAED(totalPrice)}
-          </p>
-        </div>
-        {/* <p className="text-sm font-light text-matalicGold">
-          (Includes 15% Organizer Fee){" "}
-        </p> */}
-      </div>
+      {/* summary */}
+      <Summary
+        selectedActivities={selectedActivities}
+        selectedPackages={selectedPackages}
+        price={price}
+        activityName={activityName}
+        totalPrice={totalPrice}
+      />
     </div>
   );
 }
