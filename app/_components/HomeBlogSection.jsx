@@ -55,7 +55,7 @@ export default function HomeBlogSection() {
             <InterestImageBox icon={messageIcon} text={"real stories"} />
             <InterestImageBox icon={moonIcon} text={"Day/Night planning"} />
           </div>
-          <div className="ml-4 flex items-center gap-4">
+          <div className="ml-4 flex items-center gap-10">
             <InterestImageBox icon={folderPlayIcon} text={"Blog"} />
             <InterestImageBox icon={videoIcon} text={"Video"} />
             {/* <InterestImageBox icon={pdfIcon} text={"PDF"} />
