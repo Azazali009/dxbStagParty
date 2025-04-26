@@ -6,6 +6,8 @@ import HowItWorks from "./_components/HowItWorks";
 import Testimonilas from "./_components/Testimonials";
 import HomeFeaturedPackage from "./_components/HomeFeaturedPackage";
 import WhyChooseUs from "./_components/WhyChooseUs";
+import HomeBlogSection from "./_components/HomeBlogSection";
+import HomeCTA from "./_components/HomeCTA";
 
 export const metadata = {
   title: "DXB Stag party",
@@ -21,7 +23,8 @@ export default function Home() {
       <Testimonilas />
       <HomeFeaturedPackage />
       <WhyChooseUs />
-      {/* <HomeWhatsAppButton /> */}
+      <HomeBlogSection />
+      <HomeCTA />
     </div>
   );
 }

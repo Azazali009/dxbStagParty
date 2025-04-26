@@ -78,8 +78,6 @@ export default function Page() {
           name="email"
           autoComplete="email"
           className="w-full rounded-md border px-4 py-2"
-          // value={email}
-          // onChange={(e) => setEmail(e.target.value)}
           required
         />
 
@@ -88,17 +86,9 @@ export default function Page() {
           placeholder="Password"
           name="password"
           className="w-full rounded-md border px-4 py-2"
-          // value={password}
-          // onChange={(e) => setPassword(e.target.value)}
           required
         />
 
-        {/* <button
-          type="submit"
-          className="w-full rounded-md bg-blue-600 py-2 text-white hover:bg-blue-700"
-        >
-          Login with Email
-        </button> */}
         <button
           className="flex w-full items-center justify-center gap-2 rounded bg-sky-600 px-6 py-2.5 text-center font-medium capitalize text-softGold duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           type="submit"
@@ -128,23 +118,3 @@ export default function Page() {
     </div>
   );
 }
-
-// function Button() {
-//   const { pending } = useFormStatus();
-//   return (
-//     <button
-//       className="flex w-full items-center justify-center gap-2 rounded bg-sky-600 px-6 py-2.5 text-center font-medium capitalize text-softGold duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
-//       type="submit"
-//       disabled={pending}
-//     >
-//       {pending ? (
-//         <div className="flex items-center gap-2">
-//           {" "}
-//           <SpinnerMini /> <span>Logging In...</span>
-//         </div>
-//       ) : (
-//         "Login"
-//       )}
-//     </button>
-//   );
-// }
