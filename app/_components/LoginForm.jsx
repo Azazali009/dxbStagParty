@@ -31,7 +31,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex items-center justify-center">
       <div className="mx-auto max-w-md rounded-md border border-gray-300 bg-white p-6">
         <h2 className="mb-4 text-center text-2xl font-semibold">Login</h2>
         {error && <p className="mb-3 text-red-500">{error}</p>}

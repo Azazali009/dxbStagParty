@@ -19,7 +19,7 @@ export default async function Page({ params }) {
   if (!activity) return <Empty name={"Activity"} />;
 
   return (
-    <div className="mx-auto mt-[110px] max-w-full space-y-6 bg-white p-4 text-navyBlue">
+    <div className="mx-auto max-w-full space-y-6 bg-white p-4 text-navyBlue">
       {/* <h1 className="text-xl font-bold sm:text-3xl">{name}</h1> */}
       {/* <div className="relative grid h-full grid-cols-1 items-start gap-8 lg:grid-cols-[2fr_1.1fr]">
         {/* Left Container */}

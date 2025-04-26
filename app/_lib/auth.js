@@ -1,12 +1,38 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { createOrganizer, getOrganizer } from "./organizerApi";
+import { supabase } from "./supabase";
 
 export const authConfig = {
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        const { email, password } = credentials;
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (error || !data.user) return null;
+
+        return {
+          id: data.user.id,
+          name: data.user.user_metadata?.full_name || data.user.email,
+          email: data.user.email,
+          image: data.user.user_metadata?.avatar_url || null,
+        };
+      },
     }),
   ],
   callbacks: {

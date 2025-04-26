@@ -5,7 +5,7 @@ export default async function Page() {
 
   return (
     <div className="space-y-4">
-      <h1>Welcome, {user?.name}</h1>
+      <h1>Welcome, {user?.name || "no"}</h1>
     </div>
   );
 }

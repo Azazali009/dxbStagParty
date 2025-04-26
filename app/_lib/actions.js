@@ -6,23 +6,40 @@ import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { createActivity, getActivity } from "./data-services";
 import { extractImagePath } from "./helpers";
-
+import { signIn as credentialsSignIn } from "next-auth/react";
 // delete
-export async function test(formData) {
+export async function credentialsSignInAction(formData) {
   const email = formData.get("email");
   const password = formData.get("password");
-
-  const { error } = await supabase.auth.signInWithPassword({
+  const res = await signIn("credentials", {
     email,
     password,
+    redirect: false,
   });
-  if (error) {
-    console.log(error);
-    throw new Error("Could not signIn");
-  }
+  if (res?.error) throw new Error("Invalid email or password");
 
   revalidatePath("/account");
-  redirect("/account");
+  redirect("/verify-login");
+}
+
+export async function signUpAction(formData) {
+  const email = formData.get("email");
+  const password = formData.get("password");
+  const name = formData.get("name");
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: name,
+        // avatar_url: image,
+      },
+    },
+  });
+  if (error) throw new Error(error.message);
+  // revalidatePath("/account");
+  redirect("/login");
 }
 
 export async function signInAction() {
