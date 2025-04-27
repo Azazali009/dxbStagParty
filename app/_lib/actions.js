@@ -7,6 +7,7 @@ import { auth, signIn, signOut } from "./auth";
 import { createActivity, getActivity } from "./data-services";
 import { extractImagePath } from "./helpers";
 import { signIn as credentialsSignIn } from "next-auth/react";
+import { supabaseAdmin } from "./adminSupabase";
 // delete
 export async function credentialsSignInAction(formData) {
   const email = formData.get("email");
@@ -514,4 +515,15 @@ export async function deleteActivityAction(activityId) {
   if (error) throw new Error("Unable to delete activity. Please try again!");
 
   revalidatePath("/dashboard/activities");
+}
+
+export async function deleteUserAction(userId) {
+  // check if user is login and user is admin
+  const session = await auth();
+  if (!session || session?.user?.role !== "admin")
+    throw new Error("You are not allowed to perform this action");
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
+
+  if (error) throw new Error(error.message);
+  revalidatePath("/dashboard/user");
 }

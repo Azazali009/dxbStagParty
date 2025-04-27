@@ -1,10 +1,8 @@
-import React from "react";
 import { getUsers } from "../_lib/apiUser";
-import Link from "next/link";
 import TrashIcon from "../svgIcons/TrashIcon";
+import DeleteUser from "./DeleteUser";
 export default async function UserTable() {
   const users = await getUsers();
-
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold capitalize">All Users</h2>
@@ -23,9 +21,7 @@ export default async function UserTable() {
             <p className="">{user.id.split("-")[0]}</p>
             <p className="text-left">{user.user_metadata.full_name}</p>
             <p>{user.email}</p>
-            <button className="fill-red-600">
-              <TrashIcon />
-            </button>
+            <DeleteUser userId={user.id} />
           </div>
         ))}
       </div>
