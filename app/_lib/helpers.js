@@ -13,3 +13,66 @@ export const extractImagePath = (publicUrl) => {
   if (pathIndex === -1) return null;
   return publicUrl.substring(pathIndex + prefix.length);
 };
+
+export const preferredDatesArr = [
+  {
+    id: 110,
+    name: "United Arab Emirates (UAE)",
+    value: "uae",
+  },
+  {
+    id: 111,
+    name: "United Kingdom (UK)",
+    value: "uk",
+  },
+  {
+    id: 112,
+    name: "Ireland",
+    value: "Ireland",
+  },
+  {
+    id: 113,
+    name: "Australia",
+    value: "Australia",
+  },
+  {
+    id: 114,
+    name: "USA",
+    value: "USA",
+  },
+  {
+    id: 115,
+    name: "Canada",
+    value: "Canada",
+  },
+  {
+    id: 115,
+    name: "Europe",
+    value: "Europe",
+  },
+  {
+    id: 116,
+    name: "India",
+    value: "India",
+  },
+  {
+    id: 117,
+    name: "Middle East",
+    value: "Middle East",
+  },
+  {
+    id: 118,
+    name: "South Africa",
+    value: "South Africa",
+  },
+  {
+    id: 119,
+    name: "Asia",
+    value: "Asia",
+  },
+  {
+    id: 120,
+    name: "Others",
+    value: "Others",
+  },
+];

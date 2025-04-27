@@ -38,6 +38,6 @@ export const navbar = [
   {
     id: 9,
     navItem: "Contact",
-    href: "/Contact",
+    href: "/contact",
   },
 ];

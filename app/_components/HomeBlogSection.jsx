@@ -23,7 +23,12 @@ export default function HomeBlogSection() {
       </div>
       <div className="grid grid-cols-2 items-center gap-12 p-12">
         <div className="relative flex h-[500px] items-end overflow-hidden rounded-lg p-6">
-          <Image src={"/images/home-hero-bg.webp"} fill alt="image" />
+          <Image
+            src={"/images/planLikeApro.webp"}
+            className="object-cover"
+            fill
+            alt="image"
+          />
           {/* overlay */}
           <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
           <div className="relative z-20 space-y-6">

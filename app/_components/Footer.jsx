@@ -1,0 +1,70 @@
+import Image from "next/image";
+import React from "react";
+import Divider from "./Divider";
+import Link from "next/link";
+import instaIcon from "../svgIcons/insta.svg";
+import tiktok from "../svgIcons/tiktok.svg";
+import whatsapp from "../svgIcons/whatsapp.svg";
+export default function Footer() {
+  return (
+    <footer className="relative space-y-14 bg-navyBlue px-8 py-16">
+      {/* footer top blur line */}
+      <div className="absolute left-0 top-0 h-16 w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
+      <div className="flex justify-center">
+        <Image src={"/logo.png"} width={200} height={200} alt="logo" />
+      </div>
+      <div className="h-[2px] w-full bg-neutral-700"></div>
+
+      <ul className="flex flex-wrap justify-center gap-8">
+        <li className="text-lg font-medium uppercase">
+          <Link href={"#"}>Expereinces</Link>
+        </li>
+        <li className="text-lg font-medium uppercase">
+          <Link href={"#"}>Packages</Link>
+        </li>
+        <li className="text-lg font-medium uppercase">
+          <Link href={"#"}>dxb hen party</Link>
+        </li>
+        <li className="text-lg font-medium uppercase">
+          <Link href={"#"}>become a supplier</Link>
+        </li>
+        <li className="text-lg font-medium uppercase">
+          <Link href={"#"}>faqs</Link>
+        </li>
+        <li className="text-lg font-medium uppercase">
+          <Link href={"#"}>terms and conditions</Link>
+        </li>
+        <li className="text-lg font-medium uppercase">
+          <Link href={"#"}>privacy policy</Link>
+        </li>
+        <li className="text-lg font-medium uppercase">
+          <Link href={"#"}>careers</Link>
+        </li>
+      </ul>
+
+      <div className="flex items-center justify-center gap-6">
+        <Image
+          src={instaIcon}
+          width={100}
+          height={100}
+          alt="instagram"
+          className="w-6 hover:opacity-70"
+        />
+        <Image
+          src={tiktok}
+          width={100}
+          height={100}
+          alt="tiktok"
+          className="w-6 hover:opacity-70"
+        />
+        <Image
+          src={whatsapp}
+          width={100}
+          height={100}
+          alt="whatsapp"
+          className="w-8 hover:opacity-70"
+        />
+      </div>
+    </footer>
+  );
+}

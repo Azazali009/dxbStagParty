@@ -2,8 +2,9 @@ import { Poppins, Cinzel, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
 import TosterComp from "./_components/Toaster";
-import ClientHeader from "./_components/ClientHeader";
+import ClientComponent from "./_components/ClientComponent";
 import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
+import Footer from "./_components/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -33,16 +34,19 @@ export const playfairDisplay = Playfair_Display({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${poppins.className}`}>
+    <html lang="en" className={`${poppins.className} scroll-smooth`}>
       <body
         className={`${poppins.className} overflow-x-hidden bg-primary text-softGold antialiased`}
       >
-        <ClientHeader>
+        <ClientComponent>
           <Header />
-        </ClientHeader>
+        </ClientComponent>
         <TosterComp />
         <PendingBookingDataNotification />
         <main className="">{children}</main>
+        <ClientComponent>
+          <Footer />
+        </ClientComponent>
       </body>
     </html>
   );

@@ -75,7 +75,7 @@ export default async function HomeFeaturedPackage() {
           view package
         </Link> */}
       </div>
-      <div className="relative z-20 -mt-40 w-full p-6 backdrop-blur-md">
+      <div className="relative z-20 -mt-40 w-full bg-gradient-to-b from-transparent via-navyBlue to-navyBlue p-6 backdrop-blur-sm">
         <div className="mx-auto w-[70%] space-y-4">
           <AnimatedHeading
             className={`${cinzel.className} text-left text-matalicGold`}
