@@ -19,11 +19,11 @@ export const navbar = [
   //   navItem: "Destinations",
   //   href: "/destinations",
   // },
-  {
-    id: 5,
-    navItem: "Experiences",
-    href: "/experiences",
-  },
+  // {
+  //   id: 5,
+  //   navItem: "Experiences",
+  //   href: "/experiences",
+  // },
 
   {
     id: 7,

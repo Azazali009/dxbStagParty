@@ -15,35 +15,35 @@ const SideBar = () => {
       <h1 className="text-center text-xl font-bold">Admin panel</h1>
       <ul className="mt-20 flex flex-col gap-4">
         <Link
-          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium ${pathname === "/dashboard" && "bg-secondary text-navyBlue"} capitalize transition-all duration-300 hover:bg-secondary hover:text-navyBlue`}
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium ${pathname === "/dashboard" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
           href={"/dashboard"}
         >
           <HomeIcon />
           <span>home</span>
         </Link>
         <Link
-          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium ${pathname === "/dashboard/activities" && "bg-secondary text-navyBlue"} capitalize transition-all duration-300 hover:bg-secondary hover:text-navyBlue`}
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium ${pathname === "/dashboard/activities" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
           href={"/dashboard/activities"}
         >
           <ChartPieIcon />
           <span> activities</span>
         </Link>
         <Link
-          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium ${pathname === "/dashboard/bookings" && "bg-secondary text-navyBlue"} capitalize transition-all duration-300 hover:bg-secondary hover:text-navyBlue`}
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium ${pathname === "/dashboard/bookings" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
           href={"/dashboard/bookings"}
         >
           <CalenderDaysIcon />
           <span> bookings</span>
         </Link>
         <Link
-          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium capitalize transition-all duration-300 hover:bg-secondary hover:text-navyBlue`}
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium capitalize transition-all duration-300 hover:bg-sky-600`}
           href={"/dashboard"}
         >
           <UserIcon />
           <span> users</span>
         </Link>
         <Link
-          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium capitalize transition-all duration-300 hover:bg-secondary hover:text-navyBlue`}
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium capitalize transition-all duration-300 hover:bg-sky-600`}
           href={"/"}
         >
           <WebsiteIcon />

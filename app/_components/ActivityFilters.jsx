@@ -9,7 +9,7 @@ export default function ActivityFilter({
   minGroupSize,
 }) {
   return (
-    <div className="relative z-20 overflow-hidden [grid-column:1/-1]">
+    <div className="relative z-20 overflow-hidden p-4 [grid-column:1/-1]">
       <div className="relative flex h-10 w-[40%] items-center overflow-hidden rounded-md rounded-bl-none bg-secondary px-6">
         <h3 className="text-2xl capitalize text-white">
           {" "}

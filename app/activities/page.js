@@ -24,7 +24,7 @@ export default async function Page({ searchParams }) {
   const maxGroupSize = Math.max(...allSizes.map((size) => size.max));
 
   return (
-    <div className="mx-auto min-h-screen max-w-full space-y-20 px-2 antialiased sm:p-6">
+    <div className="mx-auto min-h-screen max-w-full space-y-20 antialiased">
       <ActivityHeroSection />
       {/* <SearchBar searchQuery={searchQuery} /> */}
       <ActivityFilters

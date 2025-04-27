@@ -24,7 +24,6 @@ export default function Home() {
       <HomeFeaturedPackage />
       <WhyChooseUs />
       <HomeBlogSection />
-      <HomeCTA />
     </div>
   );
 }

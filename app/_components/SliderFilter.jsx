@@ -44,7 +44,7 @@ export default function SliderFilter({
           WebkitAppearance: "none",
           appearance: "none",
           height: "8px",
-          background: `linear-gradient(to right, #bf9b30 ${rangePercent}%, #e5d7ac ${rangePercent}%)`,
+          background: `linear-gradient(to right, #bf9b30 ${rangePercent}%, #0B0E1C ${rangePercent}%)`,
           borderRadius: "8px",
           outline: "none",
           transition: "opacity .15s ease-in-out",

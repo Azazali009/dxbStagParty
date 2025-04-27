@@ -154,3 +154,30 @@ export async function getBookingByOrganizer(organizerEmail) {
   }
   return bookings;
 }
+
+export async function getRecentBookings() {
+  const { data, error } = await supabase
+    .from("booking")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+export async function getRecentTopActivities() {
+  const { data, error } = await supabase
+    .from("activities")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
