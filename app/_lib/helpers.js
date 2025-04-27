@@ -76,3 +76,22 @@ export const preferredDatesArr = [
     value: "Others",
   },
 ];
+
+export const faqsArr = [
+  {
+    question: "How fast will you reply?",
+    answer: "Usually within a few hours – often faster on WhatsApp.",
+  },
+  {
+    question: "Can you create custom stag packages?",
+    answer: "Absolutely – tell us your dream, we’ll make it happen.",
+  },
+  {
+    question: "Can you help with last-minute plans?",
+    answer: "Yes! Dubai is built for quick legends.",
+  },
+  {
+    question: "How do payments work?",
+    answer: "We’ll send you easy, secure options based on your package.",
+  },
+];

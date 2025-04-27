@@ -2,24 +2,8 @@
 import React, { useState } from "react";
 import { cinzel } from "../layout";
 import { motion, AnimatePresence } from "framer-motion";
-const faqs = [
-  {
-    question: "How fast will you reply?",
-    answer: "Usually within a few hours – often faster on WhatsApp.",
-  },
-  {
-    question: "Can you create custom stag packages?",
-    answer: "Absolutely – tell us your dream, we’ll make it happen.",
-  },
-  {
-    question: "Can you help with last-minute plans?",
-    answer: "Yes! Dubai is built for quick legends.",
-  },
-  {
-    question: "How do payments work?",
-    answer: "We’ll send you easy, secure options based on your package.",
-  },
-];
+import { faqsArr } from "../_lib/helpers";
+
 export default function Faqs() {
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -35,7 +19,7 @@ export default function Faqs() {
       <h1 className={`${cinzel.className} text-3xl font-semibold`}>
         quick questions?
       </h1>
-      {faqs.map((faq, index) => (
+      {faqsArr.map((faq, index) => (
         <div key={index} className="border-b border-neutral-800">
           <button
             onClick={() => toggleFAQ(index)}

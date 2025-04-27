@@ -130,7 +130,7 @@ export default function EditActivityForm({ activity }) {
       <input type="hidden" name="activityId" value={id} />
       <div className="[grid-column:1/-1]">
         <button
-          className="flex items-center gap-2 rounded bg-black/80 px-6 py-2.5 capitalize duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+          className="flex h-10 items-center gap-2 rounded bg-sky-700 px-6 capitalize tracking-wide duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           type="submit"
           disabled={isPending}
         >

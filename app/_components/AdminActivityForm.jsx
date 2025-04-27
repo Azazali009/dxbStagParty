@@ -113,7 +113,7 @@ export default function AdminActivityForm() {
       </FormRow>
       <div className="[grid-column:1/-1]">
         <SubmitButton>
-          <Image src={plusIcon} width={20} height={20} alt="add" />
+          <span className="text-lg">+</span>
           <span> add activity</span>
         </SubmitButton>
       </div>

@@ -37,7 +37,7 @@ const SideBar = () => {
         </Link>
         <Link
           className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium capitalize transition-all duration-300 hover:bg-sky-600`}
-          href={"/dashboard"}
+          href={"/dashboard/user"}
         >
           <UserIcon />
           <span> users</span>

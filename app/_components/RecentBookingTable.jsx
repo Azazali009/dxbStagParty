@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
+import PencilIcon from "../svgIcons/PencilIcon";
 
 export default function RecentBookingTable({ recentBookings }) {
   const [viewBookings, setViewBookings] = useState(2);
@@ -19,18 +21,18 @@ export default function RecentBookingTable({ recentBookings }) {
         </button>
       </div>
       <div className="overflow-hidden rounded-md border border-b-0 border-white/5">
-        <div className="grid grid-cols-5 justify-items-center bg-navyBlue py-2 text-sm">
+        <div className="grid grid-cols-6 justify-items-center bg-navyBlue py-2 text-sm">
           <p className="">Booking ID</p>
           <p className="col-span-2">organizer</p>
           <p>Supplier</p>
           <p>Payment</p>
-          <p></p>
+          <p>Action</p>
         </div>
         {recentBookings?.slice(0, viewBookings)?.map((booking) => {
           return (
             <div
               key={booking.id}
-              className="grid grid-cols-5 items-center justify-items-center border-b border-white/5 bg-transparent px-2 py-2 text-sm"
+              className="grid grid-cols-6 items-center justify-items-center border-b border-white/5 bg-transparent px-2 py-2 text-sm"
             >
               <p className="">#{booking.id}</p>
               <p className="col-span-2">{booking.organizerEmail}</p>
@@ -40,7 +42,12 @@ export default function RecentBookingTable({ recentBookings }) {
               >
                 {booking.paymentStatus}
               </p>
-              <p></p>
+              <Link
+                className="fill-sky-600"
+                href={`/dashboard/bookings/${booking.id}`}
+              >
+                <PencilIcon />
+              </Link>
             </div>
           );
         })}
