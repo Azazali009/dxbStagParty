@@ -9,7 +9,7 @@ export default function AddUserAndSearch() {
       />
       <Link
         className="flex h-10 items-center gap-3 rounded-md bg-sky-600 px-6 capitalize shadow-lg duration-300 hover:bg-sky-800 hover:shadow-none"
-        href={"/dashboard/create-activity"}
+        href={"/dashboard/create-user"}
       >
         <span className="text-xl">+</span>
         <span>Add user</span>

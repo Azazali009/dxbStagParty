@@ -4,7 +4,7 @@ import gridIcon from "../svgIcons/grid.svg";
 
 export default function GridList({ list, grid, handleList, handleGrid }) {
   return (
-    <div className="flex items-center justify-end gap-4 p-4">
+    <div className="flex items-center justify-end gap-2 p-4">
       <button
         className={`rounded-sm p-1 duration-300 ${list ? "scale-110 bg-sky-600" : "scale-100 bg-transparent"}`}
         onClick={handleList}

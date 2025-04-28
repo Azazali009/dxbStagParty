@@ -10,7 +10,7 @@ export default function BookingRow({ booking }) {
     <div className="grid grid-cols-[1fr_1fr_1fr_2fr_1fr_1fr] items-center justify-center border border-gray-800 bg-navyBlue px-4 py-3 text-sm font-light last:rounded-b-md">
       <p>#{booking.id}</p>
       <p>${booking.totalPrice} </p>
-      <p>{format(booking.created_at, " EEE, MMM dd yyyy,p")} </p>
+      <p>{format(booking.created_at, " MMM dd yyyy")} </p>
       <p> {booking.organizerEmail} </p>
       {booking.paymentStatus === "pending" && (
         <p

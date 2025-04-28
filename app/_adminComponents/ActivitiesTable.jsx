@@ -6,8 +6,8 @@ import CreateActivityAndSearch from "./CreateActivityAndSearch";
 import GridList from "./GridList";
 import { motion, AnimatePresence } from "framer-motion";
 export default function ActivitiesTable({ Activities }) {
-  const [grid, setGrid] = useState(true);
-  const [list, setList] = useState(false);
+  const [grid, setGrid] = useState(false);
+  const [list, setList] = useState(true);
   function handleGrid() {
     setGrid(true);
     setList(false);
