@@ -56,13 +56,28 @@ export const authConfig = {
       }
     },
     async session({ session, user }) {
-      const organizer = await getOrganizer(session.user.email);
-      session.user.organizerId = organizer.id;
-      const adminEmails =
-        process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
-      session.user.role = adminEmails.includes(session.user.email)
-        ? "admin"
-        : "user";
+      // const organizer = await getOrganizer(session.user.email);
+      // session.user.organizerId = organizer.id;
+      // const adminEmails =
+      //   process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
+      // session.user.role = adminEmails.includes(session.user.email)
+      //   ? "admin"
+      //   : "user";
+      // return session;
+      const { data, error } = await supabase
+        .from("users")
+        .select("id, role")
+        .eq("email", session.user.email) // Match user by ID
+        .single();
+
+      if (error) {
+        // console.error("Error fetching user profile:", error?.message);
+        session.user.role = "user"; // default
+        return session;
+      }
+
+      session.user.role = data.role;
+      session.user.organizerId = data.id;
       return session;
     },
   },

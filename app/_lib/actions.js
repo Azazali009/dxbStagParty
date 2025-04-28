@@ -522,8 +522,56 @@ export async function deleteUserAction(userId) {
   const session = await auth();
   if (!session || session?.user?.role !== "admin")
     throw new Error("You are not allowed to perform this action");
+  const { error: customUserError } = await supabaseAdmin
+    .from("users") // <-- your profile table name
+    .delete()
+    .eq("id", userId);
+  if (customUserError) throw new Error(error.message);
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
   if (error) throw new Error(error.message);
   revalidatePath("/dashboard/users");
+}
+
+export async function createUserByAdmin(formData) {
+  const session = await auth();
+  if (!session || session?.user?.role !== "admin")
+    throw new Error("You are not allowed to perform this action");
+
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const password = formData.get("password");
+  const role = formData.get("role");
+  // Step 1: Auth create
+  const { data: authData, error: authError } =
+    await supabaseAdmin.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true,
+      user_metadata: {
+        full_name: name,
+        // avatar_url: 'https://example.com/avatar.png'
+      },
+    });
+
+  if (authError) {
+    console.error("Error creating auth user:", authError.message);
+    throw new Error(authError.message);
+  }
+
+  const userId = authData.user.id;
+  const userData = { id: userId, fullName: name, role: role, email };
+  // Step 2: Profile create
+  const { error: profileError } = await supabase
+    .from("users")
+    .insert([userData]);
+
+  if (profileError) {
+    console.error("Error creating profile:", profileError.message);
+    throw new Error(profileError.message);
+  }
+
+  // return authData.user;
+  revalidatePath("/dashboard/users");
+  redirect("/dashboard/users");
 }
