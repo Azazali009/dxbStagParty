@@ -525,5 +525,5 @@ export async function deleteUserAction(userId) {
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
   if (error) throw new Error(error.message);
-  revalidatePath("/dashboard/user");
+  revalidatePath("/dashboard/users");
 }

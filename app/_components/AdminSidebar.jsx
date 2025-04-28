@@ -36,8 +36,8 @@ const SideBar = () => {
           <span> bookings</span>
         </Link>
         <Link
-          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium capitalize transition-all duration-300 hover:bg-sky-600`}
-          href={"/dashboard/user"}
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 font-medium capitalize ${pathname === "/dashboard/users" && "bg-sky-600"} transition-all duration-300 hover:bg-sky-600`}
+          href={"/dashboard/users"}
         >
           <UserIcon />
           <span> users</span>

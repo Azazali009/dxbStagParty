@@ -16,13 +16,13 @@ export default function AttendeeDetail({ attendee }) {
               key={attendee.id}
               className={`space-y-4 bg-navyBlue/50 shadow-lg ${attendee.status === "unpaid" ? "text-softGold" : "text-green-500"} rounded-lg px-6 py-10 shadow-lg`}
             >
-              <h1 className="flex items-center gap-2 text-xl font-bold md:text-2xl">
+              <h1 className="flex items-center gap-2 text-xl font-bold md:text-xl">
                 <span>Attendee:</span>
-                <span className="text-lg font-normal sm:text-xl">
+                <span className="text-base font-normal sm:text-lg">
                   {attendee?.email?.split("@")[0]}
                 </span>
               </h1>
-              <div className="space-x-2 text-base tracking-wide md:text-xl">
+              <div className="space-x-2 text-base tracking-wide md:text-lg">
                 <span className="font-bold">Attendee Payment:</span>
                 <span
                   className={`font-semibold capitalize ${attendee.status === "unpaid" ? "text-red-500" : "text-green-500"}`}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import PencilIcon from "../svgIcons/PencilIcon";
+import EyeIcon from "../svgIcons/EyeIcon";
 
 export default function RecentBookingTable({ recentBookings }) {
   const [viewBookings, setViewBookings] = useState(2);
@@ -46,7 +46,7 @@ export default function RecentBookingTable({ recentBookings }) {
                 className="fill-sky-600"
                 href={`/dashboard/bookings/${booking.id}`}
               >
-                <PencilIcon />
+                <EyeIcon />
               </Link>
             </div>
           );

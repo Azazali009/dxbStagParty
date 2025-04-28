@@ -1,5 +1,5 @@
 import Link from "next/link";
-export default function AdminHeader() {
+export default function AddUserAndSearch() {
   return (
     <div className="sticky top-0 z-10 flex items-center justify-between bg-navyBlue p-4 shadow-sm">
       <input
@@ -12,7 +12,7 @@ export default function AdminHeader() {
         href={"/dashboard/create-activity"}
       >
         <span className="text-xl">+</span>
-        <span>create activity</span>
+        <span>Add user</span>
       </Link>
     </div>
   );

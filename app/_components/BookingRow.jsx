@@ -3,12 +3,14 @@ import React from "react";
 import EyeIcon from "../svgIcons/EyeIcon";
 import TrashIcon from "../svgIcons/TrashIcon";
 import PencilIcon from "../svgIcons/PencilIcon";
+import { format } from "date-fns";
 
 export default function BookingRow({ booking }) {
   return (
-    <div className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] items-center justify-center border border-gray-800 bg-navyBlue px-4 py-3 font-light last:rounded-b-md">
+    <div className="grid grid-cols-[1fr_1fr_1fr_2fr_1fr_1fr] items-center justify-center border border-gray-800 bg-navyBlue px-4 py-3 text-sm font-light last:rounded-b-md">
       <p>#{booking.id}</p>
       <p>${booking.totalPrice} </p>
+      <p>{format(booking.created_at, " EEE, MMM dd yyyy,p")} </p>
       <p> {booking.organizerEmail} </p>
       {booking.paymentStatus === "pending" && (
         <p
@@ -30,7 +32,7 @@ export default function BookingRow({ booking }) {
       )}
       <div className="flex items-center gap-2 justify-self-center">
         <Link
-          className=""
+          className="fill-matalicGold"
           href={`/dashboard/bookings/${booking.id}`}
           title="View Booking"
         >

@@ -7,7 +7,7 @@ import Testimonilas from "./_components/Testimonials";
 import HomeFeaturedPackage from "./_components/HomeFeaturedPackage";
 import WhyChooseUs from "./_components/WhyChooseUs";
 import HomeBlogSection from "./_components/HomeBlogSection";
-import HomeCTA from "./_components/HomeCTA";
+import HomeCTA from "./_components/PreFooter";
 
 export const metadata = {
   title: "DXB Stag party",

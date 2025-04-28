@@ -14,7 +14,7 @@ export default function HomeHeroSection() {
           Where legends celebrate
         </AnimatedHeading>
         <p className="text-lg">
-          Dubai most elite stag party expereinces &mdash;
+          Dubai most elite stag party experiences &mdash;
           bold,bespoke,unforgetable
         </p>
         <button className="mt-8 rounded border border-matalicGold bg-matalicGold px-6 py-2 font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80">

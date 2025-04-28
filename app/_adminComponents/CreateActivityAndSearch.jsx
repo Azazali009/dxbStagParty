@@ -1,7 +1,7 @@
 import Link from "next/link";
-export default function AdminHeader() {
+export default function CreateActivityAndSearch() {
   return (
-    <div className="sticky top-0 z-10 flex items-center justify-between bg-navyBlue p-4 shadow-sm">
+    <div className="sticky top-0 z-30 flex items-center justify-between bg-navyBlue p-4 shadow-sm">
       <input
         type="text"
         placeholder="Search activity,package,blogs..."

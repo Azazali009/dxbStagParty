@@ -1,7 +1,7 @@
 import React from "react";
 import { cinzel } from "../layout";
 
-export default function HomeCTA() {
+export default function PreFooter() {
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center justify-end bg-[url('/images/cta-bg.webp')] bg-cover bg-no-repeat p-8">
       <div className="absolute -top-6 left-0 z-20 h-10 w-full bg-primary blur-md"></div>

@@ -4,7 +4,7 @@ import DeleteUser from "./DeleteUser";
 export default async function UserTable() {
   const users = await getUsers();
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-4">
       <h2 className="text-xl font-semibold capitalize">All Users</h2>
       <div className="overflow-hidden rounded-md border border-b-0 border-white/5">
         <div className="grid grid-cols-4 justify-items-center bg-navyBlue py-2 text-sm">

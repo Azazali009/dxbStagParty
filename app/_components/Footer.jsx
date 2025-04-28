@@ -1,32 +1,28 @@
 import Image from "next/image";
-import React from "react";
-import Divider from "./Divider";
 import Link from "next/link";
 import instaIcon from "../svgIcons/insta.svg";
 import tiktok from "../svgIcons/tiktok.svg";
 import whatsapp from "../svgIcons/whatsapp.svg";
-import HomeCTA from "./HomeCTA";
+import PreFooter from "./PreFooter";
 export default function Footer() {
   return (
     <>
-      {/* footer top blur line */}
-      {/* <div className="h-16 w-full bg-gradient-to-b from-primary to-navyBlue"></div> */}
-      <HomeCTA />
+      <PreFooter />
       <footer className="relative space-y-14 bg-navyBlue px-8 py-16">
         <div className="flex justify-center">
           <Image src={"/logo.png"} width={200} height={200} alt="logo" />
         </div>
         <div className="h-[2px] w-full bg-neutral-700"></div>
 
-        <ul className="flex flex-wrap justify-center gap-8">
+        <ul className="mx-auto flex max-w-2xl flex-wrap gap-8">
           <li className="text-lg font-medium uppercase">
-            <Link href={"#"}>Expereinces</Link>
+            <Link href={"#"}>experiences</Link>
           </li>
           <li className="text-lg font-medium uppercase">
             <Link href={"#"}>Packages</Link>
           </li>
           <li className="text-lg font-medium uppercase">
-            <Link href={"#"}>dxb hen party</Link>
+            <Link href={"#"}>dxb hen parties</Link>
           </li>
           <li className="text-lg font-medium uppercase">
             <Link href={"#"}>become a supplier</Link>
