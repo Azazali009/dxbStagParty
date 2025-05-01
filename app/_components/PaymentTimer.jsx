@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function PaymentTimer({ expiresAt }) {
+export default function PaymentTimer({ expiresAt, bookingPaymentStatus }) {
   const [timeLeft, setTimeLeft] = useState(null);
   const [hydrated, setHydrated] = useState(false); // ✅ Prevent SSR mismatch
 
@@ -47,12 +47,16 @@ export default function PaymentTimer({ expiresAt }) {
   }
 
   return (
-    <p className="text-base font-semibold text-secondary md:text-lg">
+    <p className={`text-base font-medium text-secondary md:text-lg`}>
       Payment link expires in:{" "}
-      <span className="font-semibold">
-        {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
-        {timeLeft.seconds}s
-      </span>
+      {bookingPaymentStatus !== "cancelled" ? (
+        <span className="font-semibold">
+          {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
+          {timeLeft.seconds}s
+        </span>
+      ) : (
+        <span className="font-medium">Expired</span>
+      )}
     </p>
   );
 }

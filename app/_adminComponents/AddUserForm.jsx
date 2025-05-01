@@ -76,10 +76,11 @@ export default function AddUserForm() {
           <select
             name="role"
             id="role"
-            className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2"
+            className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 capitalize"
           >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
+            <option value="user">organiser</option>
+            <option value="admin">admin</option>
+            <option value="admin">supplier</option>
           </select>
         </FormRow>
         <button

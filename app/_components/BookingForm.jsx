@@ -1,5 +1,5 @@
 "use client";
-import { act, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoggedInMessage from "../_components/LoggedInMeesage";
 import SelectActivities from "../_components/SelectActivities";
 import SelectPackages from "../_components/SelectPackages";
@@ -8,7 +8,7 @@ import FormRow from "./FormRow";
 import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
 import Button from "./Button";
 import Summary from "./Summary";
-import { formatToAED } from "../_lib/helpers";
+import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
 
 export default function BookingPage({
   id,
@@ -17,9 +17,11 @@ export default function BookingPage({
   destinations,
   session,
 }) {
+  const inputRef = useRef(null);
   const [emails, setEmails] = useState([""]);
   const [user] = useState(true);
-  const [organizerEmail, setOrganizerEmail] = useState(session.user.email);
+  // const [organizerEmail, setOrganizerEmail] = useState(session.user.email);
+  // const [organizerName, setOrganizerName] = useState(session.user.name);
   const [bookingDate, setBookingDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedActivities, setSelectedActivities] = useState([]);
@@ -145,10 +147,10 @@ export default function BookingPage({
     setLoading(true);
 
     try {
-      if (!emails || !organizerEmail || !bookingDate) return;
+      if (!emails || !bookingDate) return;
 
       // Combine Organizer Email + Attendees
-      const allEmails = [...emails, organizerEmail];
+      const allEmails = [...emails, session.user.email];
 
       // ✅ Check for Duplicate Emails
       const uniqueEmails = new Set(allEmails);
@@ -179,9 +181,10 @@ export default function BookingPage({
             name: pkg.label,
             price: pkg.price,
           })),
+          userId: session.user.userId,
           totalPrice,
           attendeeEmails: allEmails,
-          organizerEmail,
+          organizerEmail: session.user.email,
           activityName,
           bookingDate,
           paidAmount: organizerAmount,
@@ -194,7 +197,7 @@ export default function BookingPage({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: organizerEmail,
+          email: session.user.email,
           amount: organizerAmount,
           activityName,
         }),
@@ -241,9 +244,21 @@ export default function BookingPage({
           <input
             type="email"
             disabled
-            value={organizerEmail}
+            value={session.user.email}
             placeholder="organizer@email.com"
-            onChange={(e) => setOrganizerEmail(e.target.value)}
+            // onChange={(e) => setOrganizerEmail(e.target.value)}
+            className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
+            autoComplete="on"
+            required
+          />
+        </FormRow>
+        <FormRow label={"Organizer Name:"}>
+          <input
+            type="text"
+            disabled
+            value={session.user.name}
+            placeholder="Organizer name"
+            // onChange={(e) => setOrganizerName(e.target.value)}
             className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
             autoComplete="on"
             required
@@ -251,15 +266,26 @@ export default function BookingPage({
         </FormRow>
 
         <FormRow label={"Select Date:"}>
-          <input
-            type="date"
-            min={minDate}
-            value={bookingDate}
-            placeholder="yyyy-MM-DD"
-            onChange={(e) => setBookingDate(e.target.value)}
-            className="h-10 rounded-md border-none bg-primary px-2 text-xs placeholder:text-sm focus:outline-none focus:outline-blue-600"
-            required
-          />
+          <div className="relative w-full">
+            <input
+              ref={inputRef}
+              type="date"
+              min={minDate}
+              id="date"
+              value={bookingDate}
+              placeholder="yyyy-MM-DD"
+              onChange={(e) => setBookingDate(e.target.value)}
+              className="h-10 w-full rounded-md border-none bg-primary px-2 text-xs placeholder:text-sm focus:outline-none focus:outline-blue-600"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => inputRef.current.showPicker((show) => !show)}
+              className="absolute right-2 top-1/2 block -translate-y-1/2 duration-300 active:scale-90"
+            >
+              <CalenderDaysIcon />
+            </button>
+          </div>
         </FormRow>
 
         <AttendeeEmailInputFields
@@ -282,7 +308,7 @@ export default function BookingPage({
             <Button
               variation="gold"
               type="submit"
-              disable={loading || !organizerEmail || !bookingDate}
+              disable={loading || !bookingDate}
             >
               {loading ? "Processing..." : "Pay 15% to Confirm Booking"}{" "}
             </Button>

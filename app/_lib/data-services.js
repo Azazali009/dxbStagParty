@@ -122,7 +122,11 @@ export async function addBooking(booking) {
 }
 
 export async function getBookings() {
-  let { data: booking, error } = await supabase.from("booking").select("*");
+  let { data: booking, error } = await supabase.from("booking").select(`*
+      ,users (
+      fullName,
+      email
+    )`);
   // .select(
   //   "totalPrice,attendeeEmails,paymentStatus,organizerEmail,destination,activities(name,price)",
   // );
@@ -135,7 +139,12 @@ export async function getBookings() {
 export async function getBooking(id) {
   let { data: booking, error } = await supabase
     .from("booking")
-    .select("*")
+    .select(
+      `*,users (
+      fullName,
+      email
+    )`,
+    )
     .eq("id", id);
   if (error) {
     console.log(error);
@@ -143,14 +152,14 @@ export async function getBooking(id) {
   }
   return booking[0];
 }
-export async function getBookingByOrganizer(organizerEmail) {
+export async function getBookingByUserId(userId) {
   let { data: bookings, error } = await supabase
     .from("booking")
     .select("*")
-    .eq("organizerEmail", organizerEmail);
+    .eq("userId", userId);
   if (error) {
     console.log(error);
-    throw new Error("Error while getting booking by organizer.");
+    throw new Error("Error while getting your bookings.");
   }
   return bookings;
 }
@@ -158,7 +167,11 @@ export async function getBookingByOrganizer(organizerEmail) {
 export async function getRecentBookings() {
   const { data, error } = await supabase
     .from("booking")
-    .select("*")
+    .select(
+      `*,users (
+      email
+    )`,
+    )
     .order("created_at", { ascending: false })
     .limit(10);
 

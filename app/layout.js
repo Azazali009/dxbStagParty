@@ -1,10 +1,10 @@
-import { Poppins, Cinzel, Playfair_Display } from "next/font/google";
-import "./globals.css";
-import Header from "./_components/Header";
-import TosterComp from "./_components/Toaster";
+import { Cinzel, Playfair_Display, Poppins } from "next/font/google";
 import ClientComponent from "./_components/ClientComponent";
-import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
 import Footer from "./_components/Footer";
+import Header from "./_components/Header";
+import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
+import TosterComp from "./_components/Toaster";
+import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],

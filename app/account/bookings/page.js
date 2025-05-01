@@ -3,20 +3,22 @@ import { format } from "date-fns";
 // import PencilIcon from "../../svgIcons/PencilIcon";
 import TrashIcon from "../../svgIcons/TrashIcon";
 import { auth } from "../../_lib/auth";
-import { getBookingByOrganizer } from "../../_lib/data-services";
+import { getBookingByUserId } from "../../_lib/data-services";
 import { formatToAED } from "../../_lib/helpers";
+import Link from "next/link";
 // import Empty from "../../_components/Empty";
 
 export default async function Page() {
   const { user } = await auth();
-  const bookings = await getBookingByOrganizer(user?.email);
-  if (!bookings.length)
+
+  const bookings = await getBookingByUserId(user?.userId);
+  if (!bookings.length || !user)
     return (
       <div className="mx-auto my-7 text-center">You have no bookings yet.</div>
     );
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-semibold text-primary">My bookings</h1>
+      <h1 className="text-2xl font-semibold">My bookings</h1>
       <div className="space-y-4">
         {bookings.map((booking) => {
           return (
@@ -27,12 +29,14 @@ export default async function Page() {
               <div className="flex-1 p-4">
                 <div className="flex justify-between">
                   <div className="space-y-2">
-                    <h3 className="flex flex-col gap-[2px] text-sm font-semibold capitalize">
-                      {booking.activities?.slice(0, 2)?.map((act) => {
-                        return <span key={act.name}>{act.name}</span>;
-                      })}
-                      <span>...</span>
-                    </h3>
+                    <Link href={`/bookings/${booking.id}`}>
+                      <h3 className="flex flex-col gap-[2px] text-sm font-semibold capitalize">
+                        {booking.activities?.slice(0, 2)?.map((act) => {
+                          return <span key={act.name}>{act.name}</span>;
+                        })}
+                        <span>...</span>
+                      </h3>
+                    </Link>
                     <p className="text-base font-semibold capitalize">
                       Destination:{" "}
                       <span className="font-medium">
@@ -60,15 +64,10 @@ export default async function Page() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-2 border-l border-gray-700">
-                {/* <button className="flex flex-1 items-center gap-2 px-4 text-sm font-medium capitalize hover:opacity-70">
-                  {" "}
-                  <PencilIcon />
-                  <span>edit</span>{" "}
-                </button> */}
-                {/* divider */}
-                {/* <div className="h-px w-full bg-gray-300"></div> */}
-                <button className="flex flex-1 items-center gap-2 px-4 text-sm font-medium capitalize hover:opacity-70">
+              {/* divider */}
+              <div className="h-[120px] w-px self-center bg-neutral-800"></div>
+              <div className="flex flex-col gap-2 self-center">
+                <button className="flex flex-1 items-center gap-2 fill-red-600 px-4 text-sm font-medium capitalize hover:opacity-70">
                   {" "}
                   <TrashIcon />
                   <span>delete</span>{" "}

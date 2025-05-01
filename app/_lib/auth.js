@@ -23,8 +23,8 @@ export const authConfig = {
           email,
           password,
         });
-
-        if (error || !data.user) return null;
+        console.log(email, password);
+        if (error || !data.user) throw new Error(error);
 
         return {
           id: data.user.id,
@@ -41,14 +41,14 @@ export const authConfig = {
     },
     async signIn({ user, account, profile }) {
       try {
-        const existingOrganzier = await getOrganizer(user.email);
+        // const existingOrganzier = await getOrganizer(user.email);
 
-        if (!existingOrganzier)
-          await createOrganizer({
-            email: user.email,
-            fullName: user.name,
-            image: user.image,
-          });
+        // if (!existingOrganzier)
+        //   await createOrganizer({
+        //     email: user.email,
+        //     fullName: user.name,
+        //     image: user.image,
+        //   });
 
         return true;
       } catch {
@@ -72,12 +72,12 @@ export const authConfig = {
 
       if (error) {
         // console.error("Error fetching user profile:", error?.message);
-        session.user.role = "user"; // default
+        session.user.role = "organiser"; // default
         return session;
       }
 
       session.user.role = data.role;
-      session.user.organizerId = data.id;
+      session.user.userId = data.id;
       return session;
     },
   },

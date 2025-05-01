@@ -1,60 +1,21 @@
-// import SignInButton from "../_components/SignInButton";
-
-// export const metadata = {
-//   title: "Login",
-// };
-
-// export default function Page() {
-//   return (
-//     <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-10 px-4 py-14">
-//       <h1 className="bg-gradient-to-b from-neutral-500 to-neutral-700 bg-clip-text text-3xl font-semibold text-transparent">
-//         Login to access your area
-//       </h1>
-
-//       <SignInButton />
-//     </div>
-//   );
-// }
-
 "use client";
 
-import { useState, useTransition } from "react";
-import { useFormStatus } from "react-dom";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import SignInButton from "../_components/SignInButton";
-import { credentialsSignInAction } from "../_lib/actions";
-import SpinnerMini from "../_components/SpinnerMini";
-import toast from "react-hot-toast";
 import Link from "next/link";
+import { useTransition } from "react";
+import toast from "react-hot-toast";
+import SignInButton from "../_components/SignInButton";
+import SpinnerMini from "../_components/SpinnerMini";
+import { credentialsSignInAction } from "../_lib/actions";
+import { login } from "../_lib/userProfileAction";
 
 export default function Page() {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
-  // const handleCredentialsLogin = async (e) => {
-  //   e.preventDefault();
-  //   setError("");
-
-  //   const res = await signIn("credentials", {
-  //     email,
-  //     password,
-  //     redirect: false,
-  //   });
-
-  //   if (res?.error) {
-  //     setError("Invalid email or password");
-  //   } else {
-  //     router.push("/");
-  //   }
-  // };
   const handleSubmit = (formData) => {
     startTransition(async () => {
       try {
-        await credentialsSignInAction(formData);
+        await login(formData);
+        window.location.href = "/account";
       } catch (err) {
         console.log(err);
         toast.error("Invalid email or password");
@@ -70,6 +31,7 @@ export default function Page() {
         // onSubmit={handleCredentialsLogin}
         // action={credentialsSignInAction}
         action={(formData) => handleSubmit(formData)}
+        // action={login}
         className="w-full max-w-sm space-y-4 text-navyBlue"
       >
         <input
@@ -113,8 +75,8 @@ export default function Page() {
           Create account
         </Link>{" "}
       </div>
-      <div className="text-gray-500">or</div>
-      <SignInButton />
+      {/* <div className="text-gray-500">or</div> */}
+      {/* <SignInButton /> */}
     </div>
   );
 }

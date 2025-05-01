@@ -1,6 +1,7 @@
 import { getAttendees } from "../../../_lib/attendeeApi";
 import { getBooking, getBookings } from "../../../_lib/data-services";
-import PaymentProgressBar from "../../../_components/PaymentProgressBar";
+import PaymentProgressBar from "../../../_adminComponents/PaymentProgressBar";
+import BookingsActions from "../../../_adminComponents/BookingsActions";
 import BookingTable from "../../../_components/BookingTable";
 import AttendeeDetail from "../../../_components/AttendeeDetail";
 
@@ -16,16 +17,23 @@ export async function generateStaticParams() {
 
 export default async function page({ params }) {
   const booking = await getBooking(params.bookingID);
-  const attendee = await getAttendees(booking?.id);
+  const { attendees, user } = await getAttendees(booking?.id);
 
   // await updateAttendeeStatus("aizaz.0938@gmail.com");
 
   return (
     <div className="space-y-14 p-4 py-8">
-      <PaymentProgressBar attendee={attendee} />
-      <BookingTable booking={booking} attendee={attendee} />
+      <BookingsActions booking={booking} />
+      <PaymentProgressBar
+        bookingPaymentStatus={booking.paymentStatus}
+        attendee={attendees}
+      />
+      <BookingTable booking={booking} attendee={attendees} user={user} />
 
-      <AttendeeDetail attendee={attendee} />
+      <AttendeeDetail
+        bookingPaymentStatus={booking.paymentStatus}
+        attendee={attendees}
+      />
     </div>
   );
 }

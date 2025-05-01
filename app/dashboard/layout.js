@@ -1,5 +1,5 @@
 import AdminSidebar from "../_components/AdminSidebar";
-import AdminHeader from "../_components/AdminHeader";
+import AdminHeader from "../_adminComponents/AdminHeader";
 import { auth } from "../_lib/auth";
 import { redirect } from "next/navigation";
 export const revalidate = 0;

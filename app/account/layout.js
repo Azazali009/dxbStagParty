@@ -1,5 +1,4 @@
 import AccountSidebar from "../_components/AccountSidebar";
-import UserData from "../_components/UserData";
 
 export default function Layout({ children }) {
   return (

@@ -1,22 +1,28 @@
 import { redirect } from "next/navigation";
-import { auth } from "../_lib/auth";
 import Spinner from "../_components/Spinner";
+import { getCurrentUser } from "../_lib/getCurrentUser";
+// import { auth } from "../_lib/auth";
+// import { supabaseAdmin } from "../_lib/adminSupabase";
 
 export default async function Page() {
-  const { user } = await auth();
-
-  if (user?.role === "admin" && user?.role !== "user") {
+  const user = await getCurrentUser();
+  console.log(user);
+  // if (user?.role === "admin") {
+  if (user?.role === "admin") {
     redirect("/dashboard");
   }
 
-  if (user?.role === "user" && user?.role !== "admin") {
+  if (user?.role === "organiser") {
     redirect("/account");
   }
-  if (!user)
-    return (
-      <div className="flex flex-col items-center justify-center py-10">
-        <Spinner />
-        <p>you are being redirected. please stay here.</p>
-      </div>
-    );
+
+  // Optional fallback, in case user has no recognized role
+  return (
+    <div className="flex min-h-dvh w-full flex-col items-center justify-center gap-3">
+      <Spinner />
+      <p className="text-gray-400">
+        Redirecting you now. Please wait a moment...
+      </p>
+    </div>
+  );
 }

@@ -35,7 +35,7 @@ export default function RecentBookingTable({ recentBookings }) {
               className="grid grid-cols-6 items-center justify-items-center border-b border-white/5 bg-transparent px-2 py-2 text-sm"
             >
               <p className="">#{booking.id}</p>
-              <p className="col-span-2">{booking.organizerEmail}</p>
+              <p className="col-span-2">{booking.users.email}</p>
               <p>{booking?.supplier || "Not assigned yet"}</p>
               <p
                 className={`rounded-md px-2 py-1.5 capitalize text-white ${booking.paymentStatus === "completed" ? "bg-green-500" : "bg-navyBlue"}`}

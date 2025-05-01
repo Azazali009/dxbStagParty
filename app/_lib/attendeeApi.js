@@ -11,15 +11,28 @@ export async function addAttendees(attendeeData) {
   return { curAttendees, error };
 }
 export async function getAttendees(id) {
-  const { data, error } = await supabase
+  const { data: attendees, error } = await supabase
     .from("attendee")
-    .select("*")
+    .select(`*,booking(userId)`)
     .eq("bookingID", id);
   if (error) {
     console.log(error);
     throw new Error("Error while getting attendees. Please try again later!");
   }
-  return data;
+  // get user ID
+  const userId = attendees?.[0]?.booking?.userId;
+
+  // fetch user
+  const { data: user, error: userError } = await supabase
+    .from("users")
+    .select("fullName")
+    .eq("id", userId)
+    .single();
+  if (userError) {
+    console.log(userError);
+    throw new Error("Error while fetching user name");
+  }
+  return { attendees, user };
 }
 
 // ✅ 3️⃣ Check if All Attendees are Paid & Update `bookings`

@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
-import { navbar } from "./navbarData";
 import { usePathname } from "next/navigation";
 import Logo from "../_components/Logo";
 import MobileNav from "./MobileNav";
+import { navbar } from "./navbarData";
 
 export default function Navbar() {
   const pathName = usePathname();

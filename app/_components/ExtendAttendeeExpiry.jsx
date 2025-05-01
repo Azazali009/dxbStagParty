@@ -10,6 +10,7 @@ export default function ExtendAttendeeExpiry({
   id,
   hasExtended,
   attendeePayemntStatus,
+  bookingPaymentStatus,
 }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -36,8 +37,14 @@ export default function ExtendAttendeeExpiry({
     }
   };
 
-  return !hasExtended && attendeePayemntStatus === "unpaid" ? (
-    <Button variation="gold" onClick={handleExtendExpiry} disabled={loading}>
+  return !hasExtended &&
+    attendeePayemntStatus === "unpaid" &&
+    bookingPaymentStatus !== "cancelled" ? (
+    <Button
+      variation="gold"
+      onClick={handleExtendExpiry}
+      disabled={loading || bookingPaymentStatus === "cancelled"}
+    >
       {loading ? "Processing..." : "Extend Expiry by 24h"}
     </Button>
   ) : (

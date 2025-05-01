@@ -16,6 +16,7 @@ export default function AttendeeEmailInputFields({
             type="email"
             placeholder={`Enter Attendee ${index + 1} email`}
             value={email}
+            autoComplete="email"
             onChange={(e) => updateEmail(index, e.target.value)}
             className="h-10 flex-1 rounded-md border-none bg-primary px-2 text-[14px] placeholder:text-sm focus:outline-none focus:outline-blue-600"
             required

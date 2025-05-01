@@ -1,16 +1,18 @@
 "use client";
-import React, { useTransition } from "react";
-import SpinnerMini from "./SpinnerMini";
-import SignInButton from "./SignInButton";
-import { signUpAction } from "../_lib/actions";
+import { useTransition } from "react";
 import toast from "react-hot-toast";
+import { signUpAction } from "../_lib/actions";
+import { signup } from "../_lib/userProfileAction";
+import SignInButton from "./SignInButton";
+import SpinnerMini from "./SpinnerMini";
+import Link from "next/link";
 
 export default function UserSignupForm() {
   const [isPending, startTransition] = useTransition();
   function handleSubmit(formData) {
     startTransition(async () => {
       try {
-        await signUpAction(formData);
+        await signup(formData);
         toast.success("Account created successfully!");
       } catch (error) {
         console.log(error);
@@ -18,6 +20,7 @@ export default function UserSignupForm() {
       }
     });
   }
+
   return (
     <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-6 px-4 py-14">
       <h1 className="text-3xl font-semibold">Sign up to access your area</h1>
@@ -26,6 +29,7 @@ export default function UserSignupForm() {
         // onSubmit={handleCredentialsLogin}
         // action={signUpAction}
         action={(formData) => handleSubmit(formData)}
+        // action={signup}
         className="w-full max-w-sm space-y-4 text-navyBlue"
       >
         <input
@@ -78,8 +82,17 @@ export default function UserSignupForm() {
           )}
         </button>
       </form>
-      <div className="text-gray-500">or</div>
-      <SignInButton />
+      <div className="flex items-center gap-4">
+        <p>Already have an account? </p>
+        <Link
+          className="text-sky-600 underline hover:text-white"
+          href={"/login"}
+        >
+          Login
+        </Link>{" "}
+      </div>
+      {/* <div className="text-gray-500">or</div> */}
+      {/* <SignInButton /> */}
     </div>
   );
 }

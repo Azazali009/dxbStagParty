@@ -24,7 +24,17 @@ export default function CompleteBooking() {
           return;
         }
 
-        const { attendeeEmails, totalPrice, organizerEmail } = bookingData;
+        const {
+          attendeeEmails,
+          totalPrice,
+          activities,
+          activityName,
+          bookingDate,
+          destinations,
+          packages,
+          paidAmount,
+          userId,
+        } = bookingData;
 
         // ✅ Generate Attendee Payment Links
         const res = await fetch("/api/create-payment-links", {
@@ -53,14 +63,20 @@ export default function CompleteBooking() {
         );
 
         // ✅ Filter organizerEmail from attendeeEmails before saving to DB
-        const filteredAttendeeEmails = attendeeEmails.filter(
-          (email) => email !== organizerEmail,
-        );
+        // const filteredAttendeeEmails = attendeeEmails.filter(
+        //   (email) => email !== organizerEmail,
+        // );
 
         // ✅ Prepare booking object with cleaned attendee list
         const sanitizedBooking = {
-          ...bookingData,
-          attendeeEmails: filteredAttendeeEmails,
+          totalPrice,
+          activities,
+          activityName,
+          bookingDate,
+          destinations,
+          packages,
+          paidAmount,
+          userId,
         };
 
         const { CurBooking, error } = await addBooking(sanitizedBooking);

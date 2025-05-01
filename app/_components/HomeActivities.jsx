@@ -1,7 +1,5 @@
 import { getActivities } from "../_lib/data-services";
-import { cinzel, playfairDisplay } from "../layout";
-import ActivityCard from "./ActivityCard";
-import LinkButton from "./LinkButton";
+import { cinzel } from "../layout";
 import ActivityCarousel from "./ActivityCarousel";
 
 export default async function HomeActivities() {

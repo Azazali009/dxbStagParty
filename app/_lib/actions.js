@@ -1,14 +1,17 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
-import { auth, signIn, signOut } from "./auth";
-import { createActivity, getActivity } from "./data-services";
-import { extractImagePath } from "./helpers";
-import { signIn as credentialsSignIn } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { supabaseAdmin } from "./adminSupabase";
-// delete
+import { auth, signIn, signOut } from "./auth";
+import {
+  createActivity,
+  getActivity,
+  getBookingByUserId,
+} from "./data-services";
+import { extractImagePath } from "./helpers";
+import { supabase } from "./supabase";
+
 export async function credentialsSignInAction(formData) {
   const email = formData.get("email");
   const password = formData.get("password");
@@ -17,7 +20,7 @@ export async function credentialsSignInAction(formData) {
     password,
     redirect: false,
   });
-  if (res?.error) throw new Error("Invalid email or password");
+  if (res?.error) throw new Error(res.error);
 
   revalidatePath("/account");
   redirect("/verify-login");
@@ -28,18 +31,38 @@ export async function signUpAction(formData) {
   const password = formData.get("password");
   const name = formData.get("name");
 
-  const { error } = await supabase.auth.signUp({
+  // Step 1: Create user in Supabase Auth
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: {
         full_name: name,
-        // avatar_url: image,
+        role: "organiser",
       },
     },
   });
+
   if (error) throw new Error(error.message);
-  // revalidatePath("/account");
+
+  const userId = data.user?.id;
+  if (!userId) throw new Error("User ID not found after signup");
+
+  // Step 2: Add to your custom 'users' table
+  const { error: userError } = await supabase.from("users").insert([
+    {
+      id: userId,
+      email,
+      fullName: name,
+      role: "organiser", // same as above or adjust as needed
+    },
+  ]);
+
+  if (userError) {
+    console.error("Error creating user profile:", userError.message);
+    throw new Error(userError.message);
+  }
+
   redirect("/login");
 }
 
@@ -522,14 +545,49 @@ export async function deleteUserAction(userId) {
   const session = await auth();
   if (!session || session?.user?.role !== "admin")
     throw new Error("You are not allowed to perform this action");
+
+  // Get all bookings of the user
+  const bookings = await getBookingByUserId(userId);
+  // Get all booking Ids
+  const bookingIds = bookings?.map((b) => b.id);
+
+  if (bookingIds.length > 0) {
+    // 2. Delete attendees linked to these bookings
+    const { error: attendeeDeleteError } = await supabase
+      .from("attendee")
+      .delete()
+      .in("bookingID", bookingIds);
+
+    if (attendeeDeleteError) {
+      throw new Error("Failed to delete attendee data.");
+    }
+
+    // 3. Delete bookings
+    const { error: bookingDeleteError } = await supabase
+      .from("booking")
+      .delete()
+      .in("id", bookingIds);
+
+    if (bookingDeleteError) {
+      throw new Error("Failed to delete booking data.");
+    }
+  }
+  // delete normal user from custom user table
   const { error: customUserError } = await supabaseAdmin
-    .from("users") // <-- your profile table name
+    .from("users")
     .delete()
     .eq("id", userId);
-  if (customUserError) throw new Error(error.message);
+  if (customUserError) {
+    console.log(customUserError.message);
+    throw new Error("Unexpected Error has occurred.");
+  }
+  // Delete built in user table user
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    console.log(error.message);
+    throw new Error("Unexpected Error has occurred.");
+  }
   revalidatePath("/dashboard/users");
 }
 
@@ -550,7 +608,7 @@ export async function createUserByAdmin(formData) {
       email_confirm: true,
       user_metadata: {
         full_name: name,
-        // avatar_url: 'https://example.com/avatar.png'
+        // avatar: 'https://example.com/avatar.png'
       },
     });
 
@@ -562,16 +620,56 @@ export async function createUserByAdmin(formData) {
   const userId = authData.user.id;
   const userData = { id: userId, fullName: name, role: role, email };
   // Step 2: Profile create
-  const { error: profileError } = await supabase
-    .from("users")
-    .insert([userData]);
+  const { error: userError } = await supabase.from("users").insert([userData]);
 
-  if (profileError) {
-    console.error("Error creating profile:", profileError.message);
-    throw new Error(profileError.message);
+  if (userError) {
+    console.error("Error creating profile:", userError.message);
+    throw new Error(userError.message);
   }
 
   // return authData.user;
   revalidatePath("/dashboard/users");
   redirect("/dashboard/users");
+}
+export async function updateBookingPaymentStatus(updateBookingData, formData) {
+  // Check if user is logged in and is an admin
+  const session = await auth();
+  if (!session || session?.user?.role !== "admin")
+    throw new Error("You are not allowed to perform this action");
+
+  // Get data from form
+  const paymentStatus = formData.get("paymentStatus");
+  const bookingId = formData.get("bookingId");
+
+  if (paymentStatus === "null" || paymentStatus === "")
+    throw new Error("Please select a valid option.");
+
+  // If status is 'completed', update attendee table
+  if (paymentStatus === "completed") {
+    const { error: attendeeError } = await supabase
+      .from("attendee")
+      .update({ status: "paid" })
+      .eq("bookingID", bookingId);
+
+    if (attendeeError)
+      throw new Error(
+        "The attendee could not be found. They may have been removed or do not exist.",
+      );
+  }
+
+  // Conditionally prepare booking update payload
+  const bookingUpdatePayload =
+    paymentStatus === "cancelled"
+      ? { paymentStatus, totalPrice: 0 }
+      : { ...updateBookingData, paymentStatus };
+
+  // Update booking table
+  const { error } = await supabase
+    .from("booking")
+    .update(bookingUpdatePayload)
+    .eq("id", bookingId);
+
+  if (error) throw new Error("Unable to update booking. Please try again.");
+
+  revalidatePath(`/dashboard/bookings/${bookingId}`);
 }

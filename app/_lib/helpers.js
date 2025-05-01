@@ -2,8 +2,8 @@ export function formatToAED(amount) {
   return new Intl.NumberFormat("en-AE", {
     style: "currency",
     currency: "AED",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(amount);
 }
 

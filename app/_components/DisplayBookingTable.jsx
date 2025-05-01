@@ -1,5 +1,3 @@
-import Link from "next/link";
-import EyeIcon from "../svgIcons/EyeIcon";
 import BookingRow from "../_components/BookingRow";
 
 export default function DisplayBookingTable({ bookings }) {

@@ -158,3 +158,8 @@ h3 {
 .react-multiple-carousel__arrow::before {
   color: #05172a !important;
 }
+
+/* hide booking form date calender icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none !important;
+}

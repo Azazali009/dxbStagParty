@@ -24,7 +24,7 @@ export default function LoginForm() {
     if (error) {
       setError(error.message);
     } else {
-      router.push("/account");
+      router.push("/verify-login");
     }
 
     setLoading(false);
