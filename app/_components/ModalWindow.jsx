@@ -2,7 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import LoggedInMeesage from "./LoggedInMeesage";
 
-export default function ModalWindow({ children, onClose, session }) {
+export default function ModalWindow({ children, onClose, user }) {
   return (
     <AnimatePresence mode="wait">
       {
@@ -18,7 +18,7 @@ export default function ModalWindow({ children, onClose, session }) {
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className={`fixed inset-0 !z-[9999] flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]`}
+          className={`fixed inset-0 !z-30 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]`}
         >
           <Overlay />
 
@@ -51,7 +51,7 @@ export default function ModalWindow({ children, onClose, session }) {
             }}
           >
             <CloseIcon onClose={onClose} />
-            {session?.user ? children : <LoggedInMeesage />}
+            {user ? children : <LoggedInMeesage />}
           </motion.div>
         </motion.div>
       }

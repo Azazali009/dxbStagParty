@@ -1,12 +1,32 @@
 "use client";
 
+import { useTransition } from "react";
 import { updateUserProfileAction } from "../_lib/userProfileAction";
 import FormRow from "./FormRow";
+import toast from "react-hot-toast";
+import SpinnerMini from "./SpinnerMini";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../_context/AuthProvider";
 export default function UpdateProfile({ user }) {
+  const { refreshUser } = useAuth();
+  const [isPending, startTransition] = useTransition();
+  function handleSubmit(formData) {
+    startTransition(async () => {
+      try {
+        await updateUserProfileAction(formData);
+        refreshUser();
+      } catch (error) {
+        toast.error(error?.message);
+      }
+    });
+  }
   return (
     <div className="space-y-10">
       <h1 className={`text-2xl font-semibold`}>Your(Organiser) Area</h1>
-      <form action={updateUserProfileAction} className="grid grid-cols-2 gap-6">
+      <form
+        action={async (formData) => handleSubmit(formData)}
+        className="grid grid-cols-2 gap-6"
+      >
         <FormRow label="Email">
           <input
             disabled
@@ -31,6 +51,11 @@ export default function UpdateProfile({ user }) {
             name="avatar"
           />
         </FormRow>
+        <input
+          type="hidden"
+          name="existingAvatar"
+          value={user?.user_metadata?.avatar_url}
+        />
         <FormRow label="New Password">
           <input
             className="h-10 rounded border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold"
@@ -40,8 +65,19 @@ export default function UpdateProfile({ user }) {
           />
         </FormRow>
         <div>
-          <button className="mt-4 w-fit self-end rounded bg-sky-600 px-6 py-2 capitalize duration-300 hover:bg-sky-700">
-            update profile
+          <button
+            disabled={isPending}
+            className="mt-4 w-fit self-end rounded bg-sky-600 px-6 py-2 capitalize duration-300 hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isPending ? (
+              <div className="flex items-center justify-center gap-2">
+                <SpinnerMini />
+
+                <span>Updating...</span>
+              </div>
+            ) : (
+              "update profile"
+            )}
           </button>
         </div>
       </form>

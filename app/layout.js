@@ -4,6 +4,7 @@ import Footer from "./_components/Footer";
 import Header from "./_components/Header";
 import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
 import TosterComp from "./_components/Toaster";
+import { AuthProvider } from "./_context/AuthProvider";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -38,15 +39,17 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.className} overflow-x-hidden bg-primary text-softGold antialiased`}
       >
-        <ClientComponent>
-          <Header />
-        </ClientComponent>
-        <TosterComp />
-        <PendingBookingDataNotification />
-        <main className="">{children}</main>
-        <ClientComponent>
-          <Footer />
-        </ClientComponent>
+        <AuthProvider>
+          <ClientComponent>
+            <Header />
+          </ClientComponent>
+          <TosterComp />
+          <PendingBookingDataNotification />
+          <main className="">{children}</main>
+          <ClientComponent>
+            <Footer />
+          </ClientComponent>
+        </AuthProvider>
       </body>
     </html>
   );

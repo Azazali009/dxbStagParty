@@ -4,7 +4,7 @@ import { useState } from "react";
 import BookingPage from "./BookingForm";
 import ModalWindow from "./ModalWindow";
 
-export default function BookingWindowAndButton({ session, activity }) {
+export default function BookingWindowAndButton({ user, activity }) {
   const { id, price, name, destinations } = activity;
   const [openModal, setOpenModal] = useState(false);
   const onClose = () => setOpenModal(false);
@@ -12,13 +12,13 @@ export default function BookingWindowAndButton({ session, activity }) {
   return (
     <div>
       {openModal ? (
-        <ModalWindow session={session} onClose={onClose} ribbontext={price}>
+        <ModalWindow user={user} onClose={onClose} ribbontext={price}>
           <BookingPage
             id={id}
             price={price}
             activityName={name}
             destinations={destinations}
-            session={session}
+            user={user}
           />
         </ModalWindow>
       ) : (

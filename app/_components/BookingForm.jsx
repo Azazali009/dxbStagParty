@@ -15,11 +15,11 @@ export default function BookingPage({
   price,
   activityName,
   destinations,
-  session,
+  user,
 }) {
   const inputRef = useRef(null);
   const [emails, setEmails] = useState([""]);
-  const [user] = useState(true);
+
   // const [organizerEmail, setOrganizerEmail] = useState(session.user.email);
   // const [organizerName, setOrganizerName] = useState(session.user.name);
   const [bookingDate, setBookingDate] = useState("");
@@ -150,7 +150,7 @@ export default function BookingPage({
       if (!emails || !bookingDate) return;
 
       // Combine Organizer Email + Attendees
-      const allEmails = [...emails, session.user.email];
+      const allEmails = [...emails, user.email];
 
       // ✅ Check for Duplicate Emails
       const uniqueEmails = new Set(allEmails);
@@ -181,10 +181,10 @@ export default function BookingPage({
             name: pkg.label,
             price: pkg.price,
           })),
-          userId: session.user.userId,
+          userId: user.id,
           totalPrice,
           attendeeEmails: allEmails,
-          organizerEmail: session.user.email,
+          organizerEmail: user.email,
           activityName,
           bookingDate,
           paidAmount: organizerAmount,
@@ -197,7 +197,7 @@ export default function BookingPage({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: session.user.email,
+          email: user.email,
           amount: organizerAmount,
           activityName,
         }),
@@ -244,7 +244,7 @@ export default function BookingPage({
           <input
             type="email"
             disabled
-            value={session.user.email}
+            value={user.email}
             placeholder="organizer@email.com"
             // onChange={(e) => setOrganizerEmail(e.target.value)}
             className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
@@ -256,7 +256,7 @@ export default function BookingPage({
           <input
             type="text"
             disabled
-            value={session.user.name}
+            value={user?.user_metadata?.full_name}
             placeholder="Organizer name"
             // onChange={(e) => setOrganizerName(e.target.value)}
             className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"

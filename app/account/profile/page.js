@@ -1,5 +1,4 @@
 import UpdateProfile from "../../_components/UpdateProfile";
-import { createClient } from "../../_utils/supabase/server";
 import { getCurrentUser } from "../../_lib/getCurrentUser";
 export const revalidate = 0;
 export default async function Page() {

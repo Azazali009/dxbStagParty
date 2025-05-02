@@ -1,13 +1,14 @@
 import AdminSidebar from "../_components/AdminSidebar";
-import AdminHeader from "../_adminComponents/AdminHeader";
-import { auth } from "../_lib/auth";
 import { redirect } from "next/navigation";
-export const revalidate = 0;
-export default async function Layout({ children }) {
-  const { user } = await auth();
+import { getCurrentUser } from "../_lib/getCurrentUser";
 
-  if (user.role !== "admin") redirect("/account");
-  if (user.role === "admin")
+export const revalidate = 0;
+
+export default async function Layout({ children }) {
+  const user = await getCurrentUser();
+
+  if (user?.user_metadata?.role !== "admin") redirect("/account");
+  if (user?.user_metadata?.role === "admin")
     return (
       <div className="grid min-h-screen grid-cols-[16rem_1fr]">
         <AdminSidebar />

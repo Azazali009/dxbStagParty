@@ -6,28 +6,12 @@ import SignOutButton from "./SignOutButton";
 import { createClient } from "../_utils/supabase/client";
 import { useEffect, useState } from "react";
 import SpinnerMini from "./SpinnerMini";
+import { useAuth } from "../_context/AuthProvider";
 
 export default function AuthNav() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function getUser() {
-      const supabase = createClient();
-      const { data } = await supabase.auth.getUser();
-
-      setUser(data?.user || null);
-      setLoading(false);
-    }
-    getUser();
-  }, [setUser, setLoading]);
-
-  if (loading)
-    return (
-      <div>
-        <SpinnerMini />
-      </div>
-    );
+  const { user, loading } = useAuth();
+  console.log(user);
+  if (loading) return <SpinnerMini />;
 
   return (
     <div>
@@ -40,19 +24,27 @@ export default function AuthNav() {
               height={100}
               alt={user?.user_metadata?.full_name}
               // alt={"text"}
-              className="size-8 rounded-full"
+              className="size-10 rounded-full bg-gray-600 object-cover"
               referrerPolicy="no-referrer"
             />
           </Link>
           <SignOutButton />
         </div>
       ) : (
-        <Link
-          className="inline-block rounded-sm border-2 border-matalicGold bg-matalicGold px-6 py-1.5 font-semibold capitalize text-navyBlue duration-300 hover:bg-transparent hover:text-white"
-          href={"/account"}
-        >
-          Login
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            className="inline-block rounded-sm border-2 border-matalicGold bg-matalicGold px-6 py-1.5 font-semibold capitalize text-navyBlue duration-300 hover:bg-transparent hover:text-white"
+            href={"/account"}
+          >
+            Login
+          </Link>
+          <Link
+            className="inline-block rounded-sm border-2 border-sky-600 bg-sky-600 px-6 py-1.5 font-semibold capitalize duration-300 hover:bg-transparent hover:text-white"
+            href={"/signup"}
+          >
+            Signup
+          </Link>
+        </div>
       )}
     </div>
   );

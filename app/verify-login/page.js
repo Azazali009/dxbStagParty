@@ -1,18 +1,16 @@
 import { redirect } from "next/navigation";
 import Spinner from "../_components/Spinner";
 import { getCurrentUser } from "../_lib/getCurrentUser";
-// import { auth } from "../_lib/auth";
-// import { supabaseAdmin } from "../_lib/adminSupabase";
 
 export default async function Page() {
   const user = await getCurrentUser();
-  console.log(user);
+
   // if (user?.role === "admin") {
-  if (user?.role === "admin") {
+  if (user?.user_metadata?.role === "admin") {
     redirect("/dashboard");
   }
 
-  if (user?.role === "organiser") {
+  if (user?.user_metadata?.role === "organiser") {
     redirect("/account");
   }
 

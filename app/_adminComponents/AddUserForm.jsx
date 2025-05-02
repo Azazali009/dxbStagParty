@@ -78,7 +78,7 @@ export default function AddUserForm() {
             id="role"
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 capitalize"
           >
-            <option value="user">organiser</option>
+            <option value="organiser">organiser</option>
             <option value="admin">admin</option>
             <option value="admin">supplier</option>
           </select>

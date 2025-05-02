@@ -1,15 +1,11 @@
 import Image from "next/image";
-import { cinzel } from "../layout";
-import clock from "../svgIcons/clock.svg";
-import includes from "../svgIcons/includes.svg";
-import user from "../svgIcons/user.svg";
-import ActivityBanner from "./ActivityBanner";
-import BookingWindowAndButton from "./BookingWindowAndButton";
 import { auth } from "../_lib/auth";
+import BookingWindowAndButton from "./BookingWindowAndButton";
+import { getCurrentUser } from "../_lib/getCurrentUser";
 
 export default async function ActivityDetails({ activity }) {
-  const { duration, group_size, name, description, image } = activity;
-  const session = await auth();
+  const { name, description, image } = activity;
+  const user = await getCurrentUser();
   return (
     // <>
     //   {/* header image banner */}
@@ -137,7 +133,7 @@ export default async function ActivityDetails({ activity }) {
         {/* <button className="block w-full rounded-md bg-red-600 py-3 text-lg font-semibold text-white duration-300 hover:bg-red-700">
           Book now
         </button> */}
-        <BookingWindowAndButton session={session} activity={activity} />
+        <BookingWindowAndButton user={user} activity={activity} />
         {/* details */}
         <div className="space-y-4">
           <h2 className="text-2xl font-semibold">Details</h2>

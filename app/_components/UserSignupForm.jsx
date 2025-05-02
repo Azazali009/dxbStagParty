@@ -13,7 +13,7 @@ export default function UserSignupForm() {
     startTransition(async () => {
       try {
         await signup(formData);
-        toast.success("Account created successfully!");
+        window.location.href = "/account";
       } catch (error) {
         console.log(error);
         toast.error(error.message || "Something went wrong!");
@@ -22,24 +22,19 @@ export default function UserSignupForm() {
   }
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-6 px-4 py-14">
+    <div className="mx-auto flex max-w-2xl flex-col items-center justify-center gap-6 px-4 py-14">
       <h1 className="text-3xl font-semibold">Sign up to access your area</h1>
 
       <form
-        // onSubmit={handleCredentialsLogin}
-        // action={signUpAction}
         action={(formData) => handleSubmit(formData)}
-        // action={signup}
-        className="w-full max-w-sm space-y-4 text-navyBlue"
+        className="w-full space-y-8 rounded-xl border border-gray-800 p-10"
       >
         <input
           type="text"
           placeholder="Name"
           name="name"
           autoComplete="name"
-          className="w-full rounded-md border px-4 py-2"
-          // value={email}
-          // onChange={(e) => setEmail(e.target.value)}
+          className="w-full rounded-md border border-gray-800 bg-transparent px-4 py-2 outline-none focus:outline-matalicGold"
           required
         />
         <input
@@ -47,9 +42,7 @@ export default function UserSignupForm() {
           placeholder="Email"
           name="email"
           autoComplete="email"
-          className="w-full rounded-md border px-4 py-2"
-          // value={email}
-          // onChange={(e) => setEmail(e.target.value)}
+          className="w-full rounded-md border border-gray-800 bg-transparent px-4 py-2 outline-none focus:outline-matalicGold"
           required
         />
 
@@ -57,18 +50,12 @@ export default function UserSignupForm() {
           type="password"
           placeholder="Password"
           name="password"
-          className="w-full rounded-md border px-4 py-2"
+          className="w-full rounded-md border border-gray-800 bg-transparent px-4 py-2 outline-none focus:outline-matalicGold"
           required
         />
 
-        {/* <button
-          type="submit"
-          className="w-full rounded-md bg-blue-600 py-2 text-white hover:bg-blue-700"
-        >
-          Login with Email
-        </button> */}
         <button
-          className="flex w-full items-center justify-center gap-2 rounded bg-sky-600 px-6 py-2.5 text-center font-medium capitalize text-softGold duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+          className="flex items-center justify-center gap-2 rounded bg-emerald-700 px-4 py-1.5 text-center font-medium capitalize text-softGold duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           type="submit"
           disabled={isPending}
         >
@@ -82,10 +69,10 @@ export default function UserSignupForm() {
           )}
         </button>
       </form>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 text-sm">
         <p>Already have an account? </p>
         <Link
-          className="text-sky-600 underline hover:text-white"
+          className="text-lg font-medium text-sky-600 underline decoration-matalicGold decoration-[2px] underline-offset-4 hover:text-white"
           href={"/login"}
         >
           Login

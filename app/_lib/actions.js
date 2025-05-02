@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { supabaseAdmin } from "./adminSupabase";
-import { auth, signIn, signOut } from "./auth";
+// import { auth, signIn, signOut } from "./auth";
 import {
   createActivity,
   getActivity,
@@ -11,79 +11,78 @@ import {
 } from "./data-services";
 import { extractImagePath } from "./helpers";
 import { supabase } from "./supabase";
+import { getCurrentUser } from "./getCurrentUser";
 
-export async function credentialsSignInAction(formData) {
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const res = await signIn("credentials", {
-    email,
-    password,
-    redirect: false,
-  });
-  if (res?.error) throw new Error(res.error);
+// export async function credentialsSignInAction(formData) {
+//   const email = formData.get("email");
+//   const password = formData.get("password");
+//   const res = await signIn("credentials", {
+//     email,
+//     password,
+//     redirect: false,
+//   });
+//   if (res?.error) throw new Error(res.error);
 
-  revalidatePath("/account");
-  redirect("/verify-login");
-}
+//   revalidatePath("/account");
+//   redirect("/verify-login");
+// }
 
-export async function signUpAction(formData) {
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const name = formData.get("name");
+// export async function signUpAction(formData) {
+//   const email = formData.get("email");
+//   const password = formData.get("password");
+//   const name = formData.get("name");
 
-  // Step 1: Create user in Supabase Auth
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        full_name: name,
-        role: "organiser",
-      },
-    },
-  });
+//   // Step 1: Create user in Supabase Auth
+//   const { data, error } = await supabase.auth.signUp({
+//     email,
+//     password,
+//     options: {
+//       data: {
+//         full_name: name,
+//         role: "organiser",
+//       },
+//     },
+//   });
 
-  if (error) throw new Error(error.message);
+//   if (error) throw new Error(error.message);
 
-  const userId = data.user?.id;
-  if (!userId) throw new Error("User ID not found after signup");
+//   const userId = data.user?.id;
+//   if (!userId) throw new Error("User ID not found after signup");
 
-  // Step 2: Add to your custom 'users' table
-  const { error: userError } = await supabase.from("users").insert([
-    {
-      id: userId,
-      email,
-      fullName: name,
-      role: "organiser", // same as above or adjust as needed
-    },
-  ]);
+//   // Step 2: Add to your custom 'users' table
+//   const { error: userError } = await supabase.from("users").insert([
+//     {
+//       id: userId,
+//       email,
+//       fullName: name,
+//       role: "organiser", // same as above or adjust as needed
+//     },
+//   ]);
 
-  if (userError) {
-    console.error("Error creating user profile:", userError.message);
-    throw new Error(userError.message);
-  }
+//   if (userError) {
+//     console.error("Error creating user profile:", userError.message);
+//     throw new Error(userError.message);
+//   }
 
-  redirect("/login");
-}
+//   redirect("/login");
+// }
 
-export async function signInAction() {
-  await signIn("google", { redirectTo: "/verify-login" });
-}
-export async function signOutAction() {
-  await signOut({ redirectTo: "/" });
-}
+// export async function signInAction() {
+//   await signIn("google", { redirectTo: "/verify-login" });
+// }
+// export async function signOutAction() {
+//   await signOut({ redirectTo: "/" });
+// }
 
 export async function addActivityAction(formData) {
   // check if user is login and user is admin
-  const session = await auth();
-  if (!session || session?.user?.role !== "admin")
-    throw new Error("You are not allowed to perform this action");
+  // const session = await auth();
+  // if (!session || session?.user?.role !== "admin")
+  //   throw new Error("You are not allowed to perform this action");
 
   // General vars
   const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
   const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
-  const alphaNumericRegex = /^[A-Za-z0-9 ]{3,100}$/;
-  const numericRegex = /^[1-9]{1,10}$/;
 
   const name = formData.get("name").slice(0, 100);
   const price = Number(formData.get("price"));
@@ -110,20 +109,7 @@ export async function addActivityAction(formData) {
     !price
   )
     throw new Error("Please fill required fields");
-  // // form alphaNumerci value fields validation
-  // if (!alphaNumericRegex.test(name) || !alphaNumericRegex.test(destinations))
-  //   throw new Error("Please enter between 3 and 100 characters to continue.");
-  // // form numerci value fields validation
-  // if (!numericRegex.test(price) || !numericRegex.test(minAge))
-  //   throw new Error(
-  //     "Oops! Price and minimum age must be valid numbers(1-10) only.",
-  //   );
-  // // for group size only
-  // if (!/^(\d{1,2})-(\d{1,2})$/.test(group_size)) {
-  //   throw new Error(
-  //     "Please use valid formate for group size, separate two numbers with dash separator",
-  //   );
-  // }
+
   // image type validation
   if (image || bannerImage) {
     if (
@@ -386,11 +372,6 @@ export async function addActivityAction(formData) {
 //   redirect("/dashboard/activities");
 // }
 export async function editActivityAction(formData) {
-  // allow only admin to edit activity
-  const session = await auth();
-  if (!session || session?.user?.role !== "admin")
-    throw new Error("You are not allowed to perform this action");
-
   // General vars
   const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
   const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -542,11 +523,12 @@ export async function deleteActivityAction(activityId) {
 
 export async function deleteUserAction(userId) {
   // check if user is login and user is admin
-  const session = await auth();
-  if (!session || session?.user?.role !== "admin")
+  const user = await getCurrentUser();
+
+  if (!user || user?.user_metadata?.role !== "admin")
     throw new Error("You are not allowed to perform this action");
 
-  // Get all bookings of the user
+  // // Get all bookings of the user
   const bookings = await getBookingByUserId(userId);
   // Get all booking Ids
   const bookingIds = bookings?.map((b) => b.id);
@@ -592,9 +574,9 @@ export async function deleteUserAction(userId) {
 }
 
 export async function createUserByAdmin(formData) {
-  const session = await auth();
-  if (!session || session?.user?.role !== "admin")
-    throw new Error("You are not allowed to perform this action");
+  // const session = await auth();
+  // if (!session || session?.user?.role !== "admin")
+  //   throw new Error("You are not allowed to perform this action");
 
   const name = formData.get("name");
   const email = formData.get("email");
@@ -608,6 +590,7 @@ export async function createUserByAdmin(formData) {
       email_confirm: true,
       user_metadata: {
         full_name: name,
+        role,
         // avatar: 'https://example.com/avatar.png'
       },
     });

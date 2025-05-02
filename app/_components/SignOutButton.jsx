@@ -5,14 +5,17 @@ import { signOutAction } from "../_lib/actions";
 import logoutIcon from "../svgIcons/logout.svg";
 import { signOut } from "../_lib/userProfileAction";
 import SpinnerMini from "./SpinnerMini";
+import { useAuth } from "../_context/AuthProvider";
 
 export default function SignOutButton() {
+  const { refreshUser } = useAuth();
   const [isPending, startTransition] = useTransition();
   function handleSubmit(formData) {
     startTransition(async () => {
       try {
         await signOut();
-        window.location.href = "/";
+        // window.location.reload();
+        refreshUser();
       } catch (error) {
         console.log(error);
       }
