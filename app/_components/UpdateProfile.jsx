@@ -10,14 +10,12 @@ import { useAuth } from "../_context/AuthProvider";
 export default function UpdateProfile({ user }) {
   const { refreshUser } = useAuth();
   const [isPending, startTransition] = useTransition();
+
   function handleSubmit(formData) {
     startTransition(async () => {
-      try {
-        await updateUserProfileAction(formData);
-        refreshUser();
-      } catch (error) {
-        toast.error(error?.message);
-      }
+      const res = await updateUserProfileAction(formData);
+      refreshUser();
+      if (res?.error) toast.error(res?.error);
     });
   }
   return (

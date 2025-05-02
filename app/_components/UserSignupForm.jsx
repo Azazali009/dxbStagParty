@@ -6,18 +6,17 @@ import { signup } from "../_lib/userProfileAction";
 import SignInButton from "./SignInButton";
 import SpinnerMini from "./SpinnerMini";
 import Link from "next/link";
+import { useAuth } from "../_context/AuthProvider";
 
 export default function UserSignupForm() {
+  const { refreshUser } = useAuth();
   const [isPending, startTransition] = useTransition();
+
   function handleSubmit(formData) {
     startTransition(async () => {
-      try {
-        await signup(formData);
-        window.location.href = "/account";
-      } catch (error) {
-        console.log(error);
-        toast.error(error.message || "Something went wrong!");
-      }
+      const res = await signup(formData);
+      refreshUser();
+      if (res?.error) toast.error(res?.error);
     });
   }
 

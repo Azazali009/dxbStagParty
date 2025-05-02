@@ -16,13 +16,9 @@ export default function AddUserForm() {
   const [isPending, startTransition] = useTransition();
   function handleSubmit(formData) {
     startTransition(async () => {
-      try {
-        await createUserByAdmin(formData);
-        toast.success("User created successfully!");
-      } catch (error) {
-        console.log(error);
-        toast.error(error.message || "Something went wrong!");
-      }
+      const res = await createUserByAdmin(formData);
+      toast.success("User created successfully!");
+      if (res?.error) toast.error(res?.error);
     });
   }
   return (

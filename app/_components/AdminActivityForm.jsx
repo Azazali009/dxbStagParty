@@ -1,24 +1,20 @@
 "use client";
-import Image from "next/image";
+import { useRef, useTransition } from "react";
+import toast from "react-hot-toast";
 import { addActivityAction } from "../_lib/actions";
-import plusIcon from "../svgIcons/plus.svg";
 import FormRow from "./FormRow";
 import SubmitButton from "./SubmitButton";
-import toast from "react-hot-toast";
-import { useRef, useTransition } from "react";
+
 export default function AdminActivityForm() {
   const [isPending, startTransition] = useTransition();
   const ref = useRef();
+
   const handleSubmit = (formData) => {
     startTransition(async () => {
-      try {
-        await addActivityAction(formData);
-        toast.success("Activity added successfully!");
-        ref.current?.reset();
-      } catch (err) {
-        console.log(err);
-        toast.error(err?.message);
-      }
+      const res = await addActivityAction(formData);
+      toast.success("Activity added successfully!");
+      ref.current?.reset();
+      if (res?.error) toast.error(res?.error);
     });
   };
 

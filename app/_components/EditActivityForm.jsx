@@ -1,10 +1,9 @@
 "use client";
 import { useRef, useTransition } from "react";
+import toast from "react-hot-toast";
 import { editActivityAction } from "../_lib/actions";
 import FormRow from "./FormRow";
 import SpinnerMini from "./SpinnerMini";
-import toast from "react-hot-toast";
-import Image from "next/image";
 
 export default function EditActivityForm({ activity }) {
   const {
@@ -24,14 +23,10 @@ export default function EditActivityForm({ activity }) {
   const editFormRef = useRef();
   const handleSubmit = (formData) => {
     startTransition(async () => {
-      try {
-        await editActivityAction(formData);
-        toast.success("Activity updated successfully!");
-        editFormRef.current?.reset();
-      } catch (err) {
-        console.log(err);
-        toast.error(err?.message);
-      }
+      const res = await editActivityAction(formData);
+      toast.success("Activity updated successfully!");
+      editFormRef.current?.reset();
+      if (res?.error) toast.error(res?.error);
     });
   };
   return (

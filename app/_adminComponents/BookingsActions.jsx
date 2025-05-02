@@ -24,12 +24,9 @@ export default function BookingsActions({ booking }) {
   // handle function
   const handleChangePaymentStatus = (formData) => {
     startTransition(async () => {
-      try {
-        await updateBookingPaymentStatusWithUpdateData(formData);
-        setOpen(false);
-      } catch (error) {
-        toast.error(error?.message);
-      }
+      const res = await updateBookingPaymentStatusWithUpdateData(formData);
+      setOpen(false);
+      if (res?.error) toast.error(res?.error);
     });
   };
 

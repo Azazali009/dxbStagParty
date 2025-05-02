@@ -11,7 +11,7 @@ export default async function Page() {
   }
 
   if (user?.user_metadata?.role === "organiser") {
-    redirect("/account");
+    redirect("/activities");
   }
 
   // Optional fallback, in case user has no recognized role

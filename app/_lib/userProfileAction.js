@@ -17,19 +17,19 @@ export async function updateUserProfileAction(formData) {
   const avatar = formData.get("avatar");
   const existingAvatar = formData.get("existingAvatar");
   const password = formData.get("password")?.toString();
-  console.log(existingAvatar);
+
   const imageName = `${Math.random()}-${avatar.name}`;
   const imagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/user-avatar/${imageName}`;
 
   if (avatar && avatar.size > 0) {
     if (!ALLOWED_TYPES.includes(avatar.type)) {
       return {
-        error: "Image: Only JPEG, JPG, PNG, and WEBP files are allowed",
+        error: "Please upload an image in JPEG, JPG, PNG, or WEBP format.",
       };
     }
     // image size constraints
     if (avatar.size > MAX_FILE_SIZE) {
-      throw new Error("Image size must be less than 1MB");
+      return { error: "Kindly ensure your image is under 1MB in size." };
     }
     //   1. upload user image
     const { error: storageError } = await supabase.storage
@@ -42,7 +42,10 @@ export async function updateUserProfileAction(formData) {
     }
     if (storageError) {
       console.log(storageError);
-      throw new Error("Some server error has occurred while uploading image.");
+      return {
+        error:
+          "We’re sorry, something went wrong while uploading your image. Please try again.”",
+      };
     }
   }
 
@@ -61,7 +64,7 @@ export async function updateUserProfileAction(formData) {
 
   if (authUpdateError) {
     console.log(authUpdateError);
-    throw new Error("Failed to update your profile");
+    return { error: "Failed to update your profile" };
   }
   // 3. Update your custom users table
   const { error: userTableError } = await supabase
@@ -73,7 +76,7 @@ export async function updateUserProfileAction(formData) {
     .eq("id", userId);
 
   if (userTableError) {
-    throw new Error("Failed to update profile");
+    return { error: "Failed to update profile" };
   }
 
   revalidatePath("/account/profile");
@@ -119,12 +122,13 @@ export async function signup(formData) {
   });
   if (error) {
     console.log(error);
-    throw new Error(error?.message);
+    return { error: "Oops! Something went wrong while creating your account." };
   }
 
   // insert user in custom user table
   const userId = data?.user?.id;
-  if (!userId) throw new Error("User ID not found after signup");
+  if (!userId)
+    return { error: "Unable to complete signup — user ID was not generated." };
 
   // Step 2: Add to your custom 'users' table
   const { error: userError } = await supabase.from("users").insert([
@@ -138,7 +142,7 @@ export async function signup(formData) {
 
   if (userError) {
     console.error("Error creating user profile:", userError.message);
-    throw new Error(userError.message);
+    return { error: "Unable to create your account" };
   }
   redirect("/account");
 }
@@ -181,11 +185,13 @@ export async function resetPassword(formData) {
   const confirmPassword = formData.get("confirmPassword");
 
   // check if field are empty
-  if (!password || !confirmPassword) throw new Error("Please fill all fields.");
+  if (!password || !confirmPassword)
+    return { error: "Please fill all fields." };
   // check the password shoudl be same
-  if (password !== confirmPassword) throw new Error("Password should be same.");
+  if (password !== confirmPassword)
+    return { error: "Password should be same." };
 
   await supabase.auth.updateUser({ password });
-  await supabase.auth.signOut();
+
   redirect("/login");
 }
