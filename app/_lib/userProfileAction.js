@@ -183,7 +183,7 @@ export async function resetPassword(formData) {
   // check the password shoudl be same
   if (password !== confirmPassword) throw new Error("Password should be same.");
 
-  await supabase.auth.updateUser(password);
+  await supabase.auth.updateUser({ password });
   await supabase.auth.signOut();
   redirect("/login");
 }
