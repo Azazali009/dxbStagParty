@@ -15,14 +15,10 @@ export default function Page() {
 
   const handleSubmit = (formData) => {
     startTransition(async () => {
-      try {
-        await login(formData);
-        // window.location.href = "/verify-login";
-        refreshUser();
-      } catch (err) {
-        console.log(err);
-        toast.error("Invalid email or password");
-      }
+      const res = await login(formData);
+      // window.location.href = "/verify-login";
+      refreshUser();
+      if (res?.error) toast.error(res?.error);
     });
   };
 

@@ -68,7 +68,7 @@ export default function ResetPassword() {
         >
           {isPending ? (
             <div className="flex items-center justify-center gap-2">
-              <SpinnerMini /> <span>Changing...</span>
+              <SpinnerMini /> <span>reseting...</span>
             </div>
           ) : (
             "Change password"

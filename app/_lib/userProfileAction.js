@@ -23,7 +23,9 @@ export async function updateUserProfileAction(formData) {
 
   if (avatar && avatar.size > 0) {
     if (!ALLOWED_TYPES.includes(avatar.type)) {
-      throw new Error("Image: Only JPEG, JPG, PNG, and WEBP files are allowed");
+      return {
+        error: "Image: Only JPEG, JPG, PNG, and WEBP files are allowed",
+      };
     }
     // image size constraints
     if (avatar.size > MAX_FILE_SIZE) {
@@ -89,7 +91,7 @@ export async function login(formData) {
 
   if (error) {
     console.log(error);
-    throw new Error(error?.message);
+    return { error: "Invalid login credentials!" };
   }
 
   revalidatePath("/", "layout");
