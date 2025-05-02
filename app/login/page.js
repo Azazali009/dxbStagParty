@@ -18,7 +18,7 @@ export default function Page() {
       const res = await login(formData);
       // window.location.href = "/verify-login";
       refreshUser();
-      if (res?.error) toast.error(res?.error);
+      if (res?.error) return toast.error(res?.error);
     });
   };
 

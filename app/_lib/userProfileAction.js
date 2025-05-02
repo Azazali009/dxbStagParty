@@ -157,7 +157,7 @@ export async function signOut() {
 
 export async function forgotPassword(formData) {
   const email = formData.get("email");
-  if (!email) throw new Error("Please enter email.");
+  if (!email) return { error: "Please enter email." };
 
   const supabase = await createClient();
   const { error } = await supabase
@@ -166,15 +166,14 @@ export async function forgotPassword(formData) {
     .eq("email", email)
     .single();
   if (error) {
+    console.log(error);
     return {
       error:
         "Invalid email or user may not found with this email. Try correct email",
     };
   }
-  const { error: resetError } = await supabase.auth.resetPasswordForEmail(
-    email,
-    { redirectTo: "https://dxb-stag-party.vercel.app/reset-password" },
-  );
+  const { error: resetError } =
+    await supabase.auth.resetPasswordForEmail(email);
   if (resetError) {
     console.log(resetError);
     return { error: "Error while sending password reset link" };

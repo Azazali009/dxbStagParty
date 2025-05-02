@@ -12,9 +12,9 @@ export default function AdminActivityForm() {
   const handleSubmit = (formData) => {
     startTransition(async () => {
       const res = await addActivityAction(formData);
+      if (res?.error) return toast.error(res?.error);
       toast.success("Activity added successfully!");
       ref.current?.reset();
-      if (res?.error) toast.error(res?.error);
     });
   };
 

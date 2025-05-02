@@ -12,8 +12,8 @@ export default function ForgotPassword() {
   function handleSubmit(formData) {
     startTransition(async () => {
       const res = await forgotPassword(formData);
+      if (res?.error) return toast.error(res?.error);
       toast.success("Password reset link is sent to your email");
-      if (res?.error) toast.error(res?.error);
     });
   }
   return (

@@ -16,7 +16,7 @@ export default function UserSignupForm() {
     startTransition(async () => {
       const res = await signup(formData);
       refreshUser();
-      if (res?.error) toast.error(res?.error);
+      if (res?.error) return toast.error(res?.error);
     });
   }
 

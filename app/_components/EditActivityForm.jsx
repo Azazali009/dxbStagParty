@@ -24,9 +24,9 @@ export default function EditActivityForm({ activity }) {
   const handleSubmit = (formData) => {
     startTransition(async () => {
       const res = await editActivityAction(formData);
+      if (res?.error) return toast.error(res?.error);
       toast.success("Activity updated successfully!");
       editFormRef.current?.reset();
-      if (res?.error) toast.error(res?.error);
     });
   };
   return (

@@ -11,7 +11,7 @@ export default function DeleteUser({ userId }) {
     if (confirm("Are you sure you want to delete this user?"))
       startTransition(async () => {
         const res = await deleteUserAction(userId);
-        if (res?.error) toast.error(res?.error);
+        if (res?.error) return toast.error(res?.error);
       });
   }
   return (
