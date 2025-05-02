@@ -7,6 +7,8 @@ import { cinzel } from "../layout";
 import { formatToAED } from "../_lib/helpers";
 
 export default function ActivityGrid({ Activities }) {
+  if (Activities?.length <= 0)
+    return <p className="p-4 text-center text-sm">No data found</p>;
   return (
     <div className="grid grid-cols-6 gap-x-2 gap-y-12 p-4">
       {Activities.map((activity) => {

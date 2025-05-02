@@ -5,9 +5,38 @@ import ActivityList from "../_adminComponents/ActivityList";
 import CreateActivityAndSearch from "./CreateActivityAndSearch";
 import GridList from "./GridList";
 import { motion, AnimatePresence } from "framer-motion";
+import Fuse from "fuse.js";
+
 export default function ActivitiesTable({ Activities }) {
   const [grid, setGrid] = useState(false);
   const [list, setList] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log(searchQuery);
+  // 🔍 Optional Synonym Mapping
+  const synonymMap = {
+    luxurious: "luxury",
+    adventureous: "adventure",
+    hiking: "trekking",
+    campig: "camping",
+  };
+
+  // Normalize search term
+  const normalizedQuery = searchQuery
+    ? synonymMap[searchQuery.toLowerCase()] || searchQuery.toLowerCase()
+    : "";
+
+  // 🔍 Fuzzy search setup
+  const fuse = new Fuse(Activities, {
+    keys: ["name", "tags", "description"],
+    threshold: 0.3,
+  });
+
+  // 🔍 Run fuzzy search or return all
+  const searchedActivities =
+    !normalizedQuery || normalizedQuery === ""
+      ? Activities
+      : fuse.search(normalizedQuery).map((res) => res.item);
+
   function handleGrid() {
     setGrid(true);
     setList(false);
@@ -19,7 +48,10 @@ export default function ActivitiesTable({ Activities }) {
 
   return (
     <div className="space-y-4">
-      <CreateActivityAndSearch />
+      <CreateActivityAndSearch
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <GridList
         handleGrid={handleGrid}
         handleList={handleList}
@@ -36,7 +68,7 @@ export default function ActivitiesTable({ Activities }) {
             transition={{ duration: 0.5 }}
             className="p-4"
           >
-            <ActivityList Activities={Activities} />
+            <ActivityList Activities={searchedActivities} />
           </motion.div>
         )}
 
@@ -48,7 +80,7 @@ export default function ActivitiesTable({ Activities }) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
           >
-            <ActivityGrid Activities={Activities} />
+            <ActivityGrid Activities={searchedActivities} />
           </motion.div>
         )}
       </AnimatePresence>

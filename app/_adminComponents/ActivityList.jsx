@@ -13,9 +13,13 @@ export default function ActivityList({ Activities }) {
         <p>Group Size</p>
         <p className="col-span-2">Action</p>
       </div>
-      {Activities.map((activity) => (
-        <ActivityRow key={activity.id} activity={activity} />
-      ))}
+      {Activities?.length > 0 ? (
+        Activities.map((activity) => (
+          <ActivityRow key={activity.id} activity={activity} />
+        ))
+      ) : (
+        <p className="p-4 text-center text-sm">No data found</p>
+      )}
     </>
   );
 }
