@@ -166,16 +166,18 @@ export async function forgotPassword(formData) {
     .eq("email", email)
     .single();
   if (error) {
-    console.log(error);
-    throw new Error(
-      "Invalid email or user may not found with this email. Try correct email",
-    );
+    return {
+      error:
+        "Invalid email or user may not found with this email. Try correct email",
+    };
   }
-  const { error: resetError } =
-    await supabase.auth.resetPasswordForEmail(email);
+  const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+    email,
+    { redirectTo: "https://dxb-stag-party.vercel.app/reset-password" },
+  );
   if (resetError) {
     console.log(resetError);
-    throw new Error("Error while sending password reset link");
+    return { error: "Error while sending password reset link" };
   }
 }
 
