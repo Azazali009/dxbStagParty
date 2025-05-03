@@ -188,11 +188,17 @@ export async function resetPassword(formData) {
   // check if field are empty
   if (!password || !confirmPassword)
     return { error: "Please fill all fields." };
-  // check the password shoudl be same
+  // check the password should be same
   if (password !== confirmPassword)
     return { error: "Password should be same." };
 
-  await supabase.auth.updateUser({ password });
-
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) {
+    console.log(error);
+    return {
+      error: "Sorry, this link has expired. Please request a fresh one.",
+    };
+  }
+  revalidatePath("/reset-password");
   redirect("/login");
 }

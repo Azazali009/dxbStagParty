@@ -15,7 +15,7 @@ export default function ResetPassword() {
     startTransition(async () => {
       const res = await resetPassword(formData);
       if (res?.error) return toast.error(res?.error);
-      toast.success("Password change successfully.");
+      toast.success("Password changed successfully.");
     });
   }
   return (
