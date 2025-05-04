@@ -133,6 +133,62 @@ h3 {
 .custom-multi-select .dropdown-content .search {
   color: #212428 !important;
 }
+/* create package form select */
+.custom-multi-select2 .dropdown-container {
+  background-color: #0b0e1c !important; /* light black */
+  color: white !important;
+  font-size: 14px !important;
+  border: none !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.custom-multi-select2 .dropdown-content {
+  background-color: #212428 !important;
+  color: white !important;
+}
+
+.custom-multi-select2 .options {
+  background-color: #212428 !important;
+  color: white !important;
+  font-size: 14px !important;
+}
+.custom-multi-select2 .options .select-item:hover {
+  background: white !important;
+  color: #212428 !important;
+}
+.custom-multi-select2 .options .select-item.selected {
+  background: white !important;
+  color: #212428 !important;
+}
+
+.custom-multi-select2 .multi-select__multi-value {
+  background-color: #212428 !important; /* Selected pill */
+  color: white !important;
+}
+
+.custom-multi-select2 .multi-select__multi-value__label {
+  color: white !important;
+}
+
+.custom-multi-select2 .multi-select__multi-value__remove {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+.custom-multi-select2 .multi-select__multi-value__remove:hover {
+  background-color: #ef4444 !important; /* Red on hover */
+  color: white !important;
+}
+
+.custom-multi-select2 .dropdown-content .option:hover {
+  background-color: white !important;
+  color: black !important;
+}
+.custom-multi-select2 .dropdown-content .search {
+  color: #212428 !important;
+}
 .rmsc * {
   transition: none !important;
 }
@@ -162,4 +218,21 @@ h3 {
 /* hide booking form date calender icon */
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none !important;
+}
+
+.card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 15px;
+  /* padding: 25px; */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Tilt effect */
+.tilted-card {
+  transform: rotate(3deg) rotateY(5deg);
+  transition: transform 0.3s ease;
+  transform-origin: 0;
 }

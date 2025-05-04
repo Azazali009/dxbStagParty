@@ -15,9 +15,9 @@ import { getCurrentUser } from "./getCurrentUser";
 
 export async function addActivityAction(formData) {
   // check if user is login and user is admin
-  // const session = await auth();
-  // if (!session || session?.user?.role !== "admin")
-  //   throw new Error("You are not allowed to perform this action");
+  const user = await getCurrentUser();
+  if (!user || user?.user_metadata.role !== "admin")
+    return { error: "You are not allowed to perform this action" };
 
   // General vars
   const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB

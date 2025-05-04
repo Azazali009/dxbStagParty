@@ -46,7 +46,7 @@ export default function Activities({
 
   // ✅ Render cards
   return (
-    <div className="mx-auto grid grid-cols-1 gap-x-4 gap-y-10 p-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="mx-auto grid w-[95%] grid-cols-1 gap-x-4 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
       {filteredActivities?.map((activity) => (
         <ActivityCard key={activity.id} activity={activity} />
       ))}

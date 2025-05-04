@@ -2,7 +2,7 @@
 import { useState } from "react";
 import ActivityGrid from "../_adminComponents/ActivityGrid";
 import ActivityList from "../_adminComponents/ActivityList";
-import CreateActivityAndSearch from "./CreateActivityAndSearch";
+import CreateActivityAndSearch from "./CreatPackageAndSearch";
 import GridList from "./GridList";
 import { motion, AnimatePresence } from "framer-motion";
 import Fuse from "fuse.js";

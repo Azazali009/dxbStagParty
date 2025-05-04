@@ -2,15 +2,13 @@
 import Link from "next/link";
 // import { auth } from "../_lib/auth";
 import Image from "next/image";
-import SignOutButton from "./SignOutButton";
-import { createClient } from "../_utils/supabase/client";
-import { useEffect, useState } from "react";
-import SpinnerMini from "./SpinnerMini";
 import { useAuth } from "../_context/AuthProvider";
+import SignOutButton from "./SignOutButton";
+import SpinnerMini from "./SpinnerMini";
 
 export default function AuthNav() {
   const { user, loading } = useAuth();
-  console.log(user);
+
   if (loading) return <SpinnerMini />;
 
   return (

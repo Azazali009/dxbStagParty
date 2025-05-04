@@ -174,10 +174,13 @@ export async function forgotPassword(formData) {
   }
   const { error: resetError } =
     await supabase.auth.resetPasswordForEmail(email);
-  if (resetError) {
+  const { error: signOutError } = await supabase.auth.signOut();
+  if (resetError || signOutError) {
     console.log(resetError);
     return { error: "Error while sending password reset link" };
   }
+  revalidatePath("/forgot-password");
+  revalidatePath("/");
 }
 
 export async function resetPassword(formData) {

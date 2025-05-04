@@ -28,9 +28,7 @@ export default function SliderFilter({
 
   return (
     <div className="flex flex-col items-center gap-4 font-semibold">
-      <span className="mb-2 block text-sm font-light">
-        Number of guests upto (25+)
-      </span>
+      <span className="mb-2 block text-sm font-semibold">Group Size</span>
 
       <input
         type="range"
