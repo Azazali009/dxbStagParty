@@ -35,6 +35,25 @@ export default async function Page({ searchParams }) {
         searchQuery={searchQuery}
         groupSize={groupSize}
       />
+      <section className="bg-red-100 py-20 text-navyBlue">
+        <div className="mx-auto w-[95%] space-y-6">
+          <div className="w-1/2">
+            <h2 className="text-4xl font-semibold uppercase leading-[1.3]">
+              vip spotlight &mdash; the experience everyone talks about
+            </h2>
+          </div>
+          <div className="flex h-[600px] flex-col items-start justify-end gap-4 rounded-lg bg-[url('/images/home-hero-bg.webp')] p-6 text-softGold">
+            <h2 className="w-[60%] text-xl leading-[1.7]">
+              Cruise dubai&apos;s coastline on your own private yacht-free-flow
+              drinks, onboard tunes, and epic skyline views
+            </h2>
+            <button className="block rounded-md bg-orange-600 px-6 py-3 font-medium uppercase text-softGold hover:bg-orange-700">
+              {" "}
+              view yacht party details
+            </button>
+          </div>
+        </div>
+      </section>
       {/* section 2 */}
       <section className="bg-[#694621] py-20">
         <div className="mx-auto w-[95%]">
@@ -114,7 +133,7 @@ export default async function Page({ searchParams }) {
           <h2 className="text-3xl font-semibold uppercase">
             big energy day to night &mdash;{" "}
             <span className="capitalize">
-              dubai&apos;s ultimate party line0up{" "}
+              dubai&apos;s ultimate party line-up{" "}
             </span>{" "}
           </h2>
           <p>
@@ -229,7 +248,7 @@ export default async function Page({ searchParams }) {
           >
             Chill & Luxe &mdash;{" "}
             <span className="font-light">
-              Because not everything has to be be loud
+              Because not everything has to be loud
             </span>{" "}
           </h2>
           <p className="leading-[1.8]">
