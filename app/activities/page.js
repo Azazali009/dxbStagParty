@@ -3,9 +3,10 @@ import Spinner from "../_components/Spinner";
 import ActivityHeroSection from "../_components/ActivityHeroSection";
 import { Suspense } from "react";
 import ActivityFilters from "../_components/ActivityFilters";
-import { getActivities } from "../_lib/data-services";
+import { getActivities, getActivity } from "../_lib/data-services";
 import Image from "next/image";
 import { playfairDisplay } from "../layout";
+import Link from "next/link";
 
 export const revalidate = 0;
 
@@ -17,7 +18,7 @@ export default async function Page({ searchParams }) {
     return { min, max };
   };
   const ActivitiesArray = await getActivities();
-
+  const activity = await getActivity(66);
   // Get min & max across all activities
   const allSizes = ActivitiesArray.map((activity) =>
     extractMinMax(activity.group_size),
@@ -63,49 +64,34 @@ export default async function Page({ searchParams }) {
           </div>
           <div className="!mt-20 grid grid-cols-[1fr_0.9fr_1fr] items-start gap-x-12">
             {/* card 1 */}
-            <div className="relative flex h-[500px] items-end overflow-hidden rounded-lg p-10 [transform:perspective(300px)_rotateY(-5deg)]">
-              {/* overlay */}
-              <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
-              <Image
-                src={"/images/home-hero-bg.webp"}
-                fill
-                alt="image"
-                className="object-cover"
-              />
-              <h2 className="relative z-20 text-2xl font-medium">
-                Lock, load and aim for the stag
-              </h2>
-            </div>
-            {/* card 2 */}
-            <div className="relative z-30 -mt-6 flex h-[600px] items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(-3deg)]">
-              {/* overlay */}
-              <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
-              <Image
-                src={"/images/home-hero-bg.webp"}
-                fill
-                alt="image"
-                className="object-cover"
-              />
-              <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
-                Speed battles at Dubai&apos;s premier indoor karting arena
-              </h2>
-            </div>
-            {/* card 3 */}
-            <div className="relative -mt-14 flex h-[630px] origin-center items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateX(5deg)]">
-              {/* overlay */}
-              <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
-              <Image
-                src={"/images/home-hero-bg.webp"}
-                fill
-                alt="image"
-                className="object-cover"
-              />
-              <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
-                View all adrenaline
-              </h2>
-            </div>
-            {/* card 4 */}
-            <div className="card tilted-card relative col-span-2 -mt-10 flex h-[400px] items-end overflow-hidden rounded-lg">
+            {ActivitiesArray.slice(0, 3).map((activity, index) => {
+              return (
+                <div
+                  key={activity.id}
+                  className={`relative flex origin-top items-end overflow-hidden rounded-lg p-10 [transform:perspective(300px)_rotateY(-5deg)] ${
+                    index === 1
+                      ? "h-[600px]"
+                      : index === 2
+                        ? "h-[630px]"
+                        : "h-[500px]"
+                  }`}
+                >
+                  {/* overlay */}
+                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
+                  <Image
+                    src={activity.image}
+                    fill
+                    alt={activity.name}
+                    className="object-cover"
+                  />
+                  <h2 className="relative z-20 text-2xl font-medium">
+                    {activity.name}
+                  </h2>
+                </div>
+              );
+            })}
+
+            <div className="card tilted-card relative col-span-2 -mt-10 flex h-[400px] rotate-90 items-end overflow-hidden rounded-lg">
               {/* titl design */}
               <div className="absolute right-0 top-0 z-20 h-6 w-[50%] rounded-b-3xl rounded-r-none bg-[#694621]"></div>
               {/* overlay */}
@@ -122,7 +108,7 @@ export default async function Page({ searchParams }) {
               <button className="block rounded-2xl bg-orange-700 p-6 text-3xl font-medium capitalize">
                 explore all adrenaline activities
               </button>
-              <p className="text-xl">or browse all 60% stag activities</p>
+              <p className="text-xl">or browse all 60+ stag activities</p>
             </div>
           </div>
         </div>
@@ -144,30 +130,26 @@ export default async function Page({ searchParams }) {
         <div className="grid grid-cols-2 gap-8 p-6">
           {/* column 1 */}
           <div className="space-y-6">
-            <div className="relative flex h-[500px] rotate-12 items-end overflow-hidden rounded-lg p-10 [transform:perspective(300px)_rotateY(-2deg)]">
-              {/* overlay */}
-              <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
-              <Image
-                src={"/images/home-hero-bg.webp"}
-                fill
-                alt="image"
-                className="object-cover"
-              />
-              <h2 className="relative z-20 text-4xl font-medium">Pool Party</h2>
-            </div>
-            <div className="relative flex h-[300px] origin-left rotate-12 items-end overflow-hidden rounded-lg p-10 [transform:perspective(300px)_rotateY(2deg)]">
-              {/* overlay */}
-              <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
-              <Image
-                src={"/images/home-hero-bg.webp"}
-                fill
-                alt="image"
-                className="object-cover"
-              />
-              <h2 className="relative z-20 text-4xl font-medium">
-                Beach Club Days
-              </h2>
-            </div>
+            {ActivitiesArray.slice(0, 2).map((activity, index) => {
+              return (
+                <div
+                  key={activity.id}
+                  className={`relative flex ${index === 0 ? "h-[400px] [transform:perspective(300px)_rotateY(-2deg)]" : "h-[300px] origin-left [transform:perspective(300px)_rotateY(2deg)]"} rotate-12 items-end overflow-hidden rounded-lg p-10`}
+                >
+                  {/* overlay */}
+                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+                  <Image
+                    src={activity.image}
+                    fill
+                    alt={activity.name}
+                    className="object-cover"
+                  />
+                  <h2 className="relative z-20 text-4xl font-medium">
+                    {activity.name}
+                  </h2>
+                </div>
+              );
+            })}
           </div>
 
           {/* column 2 */}
@@ -186,52 +168,53 @@ export default async function Page({ searchParams }) {
               </h2>
             </div>
             <div className="grid grid-cols-2 gap-6">
-              {/* 1 */}
-              <div className="relative flex h-[400px] origin-top items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(-3deg)]">
-                {/* overlay */}
-                <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
-                <Image
-                  src={"/images/home-hero-bg.webp"}
-                  fill
-                  alt="image"
-                  className="object-cover"
-                />
-                <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
-                  Beach Club days
-                </h2>
-              </div>
-              {/* 2 */}
-              <div className="relative flex h-[400px] origin-top items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(-3deg)]">
-                {/* overlay */}
-                <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
-                <Image
-                  src={"/images/home-hero-bg.webp"}
-                  fill
-                  alt="image"
-                  className="object-cover"
-                />
-                <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
-                  Bottomless Brunch
-                </h2>
-                <p className="absolute left-4 top-4 rounded-full bg-black px-6 py-2">
-                  Best for Day Drinking
-                </p>
-              </div>
+              {ActivitiesArray.slice(0, 2).map((activity, index) => {
+                return (
+                  <div
+                    key={activity.id}
+                    className="relative flex h-[400px] origin-top items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(-3deg)]"
+                  >
+                    {index === 1 && (
+                      <p className="absolute left-4 top-4 z-20 rounded-full bg-black px-6 py-2">
+                        Best for Day Drinking
+                      </p>
+                    )}
+                    {/* overlay */}
+                    <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+                    <Image
+                      src={activity.image}
+                      fill
+                      alt={activity.name}
+                      className="object-cover"
+                    />
+                    <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
+                      {activity.name}
+                    </h2>
+                  </div>
+                );
+              })}
             </div>
             {/* 3 */}
-            <div className="relative flex h-[250px] origin-right items-center overflow-hidden rounded-lg p-6 [transform:perspective(800px)_rotateY(-3deg)]">
-              {/* overlay */}
-              <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
-              <Image
-                src={"/images/home-hero-bg.webp"}
-                fill
-                alt="image"
-                className="object-cover"
-              />
-              <h2 className="relative z-20 text-4xl font-medium leading-[1.5]">
-                Nightlife DJ
-              </h2>
-            </div>
+            {ActivitiesArray.slice(0, 1).map((activity) => {
+              return (
+                <div
+                  key={activity.id}
+                  className="relative flex h-[250px] origin-right items-center overflow-hidden rounded-lg p-6 [transform:perspective(800px)_rotateY(-3deg)]"
+                >
+                  {/* overlay */}
+                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+                  <Image
+                    src={activity.image}
+                    fill
+                    alt={activity.name}
+                    className="object-cover"
+                  />
+                  <h2 className="relative z-20 text-4xl font-medium leading-[1.5]">
+                    {activity.name}
+                  </h2>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="flex justify-center">
@@ -241,8 +224,8 @@ export default async function Page({ searchParams }) {
         </div>
       </section>
       {/* section 4 */}
-      <section className="space-y-14 bg-red-100 p-4 py-20 text-navyBlue">
-        <div className="max-w-[50%] space-y-4">
+      <section className="relative space-y-14 bg-red-100 p-4 py-20">
+        <div className="max-w-[50%] space-y-4 text-navyBlue">
           <h2
             className={`${playfairDisplay.className} text-4xl font-bold capitalize leading-[1.4]`}
           >
@@ -256,6 +239,90 @@ export default async function Page({ searchParams }) {
             and seriously smooth.
           </p>
         </div>
+        <div
+          className={`h-12 ${playfairDisplay.className} flex w-fit items-center rounded-md bg-[#e5cbcb] px-6 text-lg font-light italic text-[#b29e9e]`}
+        >
+          <p>Not everything needs a shot and a strobe light</p>
+        </div>
+        <div className="grid grid-cols-2 gap-8">
+          {/* column 1 */}
+
+          <div className="space-y-6">
+            {ActivitiesArray.slice(0, 2).map((activity, index) => {
+              return (
+                <div
+                  key={activity.id}
+                  className={`relative flex ${index === 0 ? "h-[400px] [transform:perspective(300px)_rotateX(-2deg)]" : "h-[350px] origin-left [transform:perspective(300px)_rotateY(1deg)]"} rotate-12 items-end overflow-hidden rounded-lg p-10`}
+                >
+                  {/* overlay */}
+                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+                  <Image
+                    src={activity.image}
+                    fill
+                    alt={activity.name}
+                    className="object-cover"
+                  />
+                  <h2 className="relative z-20 text-4xl font-medium">
+                    {activity.name}
+                  </h2>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* column 2 */}
+          <div className="space-y-8">
+            <div className="relative flex h-[300px] rotate-12 items-end overflow-hidden rounded-lg p-10 [transform:perspective(300px)_rotateX(2deg)]">
+              {/* overlay */}
+              <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+              <Image
+                src={activity.image}
+                fill
+                alt={activity.name}
+                className="object-cover"
+              />
+              <h2 className="relative z-20 text-lg font-semibold capitalize">
+                {activity.name}
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
+              {ActivitiesArray.slice(0, 2).map((activity, index) => {
+                return (
+                  <div
+                    key={activity.id}
+                    className={`relative flex h-[400px] items-end overflow-hidden rounded-lg p-6 ${index === 0 && "[transform:perspective(300px)_rotateX(4deg)]"}`}
+                  >
+                    {index === 1 && (
+                      <p className="absolute left-4 top-4 z-20 rounded-full bg-black px-6 py-2">
+                        Best for Day Drinking
+                      </p>
+                    )}
+                    {/* overlay */}
+                    <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+                    <Image
+                      src={activity.image}
+                      fill
+                      alt={activity.name}
+                      className="object-cover"
+                    />
+                    <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
+                      {activity.name}
+                    </h2>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-4">
+          <button className="rounded-lg bg-[#e5cbcb] px-6 py-2 capitalize text-navyBlue duration-300 hover:bg-reddish hover:text-white">
+            explore all chill & luxe
+          </button>
+          <Link className="text-sm text-navyBlue hover:underline" href={"#"}>
+            Or view the full activity list
+          </Link>
+        </div>
+        <div className="absolute bottom-0 left-0 z-50 h-12 w-full bg-red-100"></div>
       </section>
       {/* <Suspense fallback={<Spinner />} key={groupSize}>
         <Activities
@@ -267,3 +334,31 @@ export default async function Page({ searchParams }) {
     </div>
   );
 }
+
+// <div className="relative z-30 -mt-6 flex h-[600px] items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(-3deg)]">
+//             {/* overlay */}
+//             <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
+//             <Image
+//               src={"/images/home-hero-bg.webp"}
+//               fill
+//               alt="image"
+//               className="object-cover"
+//             />
+//             <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
+//               Speed battles at Dubai&apos;s premier indoor karting arena
+//             </h2>
+//           </div>
+//           {/* card 3 */}
+//           <div className="relative -mt-14 flex h-[630px] origin-center items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateX(5deg)]">
+//             {/* overlay */}
+//             <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
+//             <Image
+//               src={"/images/home-hero-bg.webp"}
+//               fill
+//               alt="image"
+//               className="object-cover"
+//             />
+//             <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
+//               View all adrenaline
+//             </h2>
+//           </div>
