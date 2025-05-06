@@ -236,3 +236,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   transition: transform 0.3s ease;
   transform-origin: 0;
 }
+
+/* map */
+.map-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: transparent;
+  padding: 20px;
+}
+.high-contrast-map {
+  width: 100%;
+  height: 350px;
+  border: none;
+  /* CSS filters to create high contrast effect */
+  /* filter: grayscale(100%) invert(1) contrast(1.2) brightness(0.9); */
+}
