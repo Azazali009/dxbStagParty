@@ -324,6 +324,104 @@ export default async function Page({ searchParams }) {
         </div>
         <div className="absolute bottom-0 left-0 z-50 h-12 w-full bg-red-100"></div>
       </section>
+      {/* section 5 */}
+      <section className="relative space-y-14 bg-red-100 p-4 py-20">
+        <div className="mx-auto max-w-[50%] space-y-4 text-center text-navyBlue">
+          <h2
+            className={`${playfairDisplay.className} text-4xl font-bold uppercase leading-[1.4]`}
+          >
+            Home & Villa Friendly
+          </h2>
+          <h3 className="text-xl font-medium">
+            Turn Your Crib Into the Main Event
+          </h3>
+          <p className="leading-[1.8]">
+            Private chefs,cocktail masters, game nights, and more all brought
+            straight to you
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8">
+          {/* column 1 */}
+
+          <div className="space-y-2">
+            {ActivitiesArray.slice(0, 2).map((activity, index) => {
+              return (
+                <div
+                  key={activity.id}
+                  className={`relative flex ${index === 0 ? "h-[500px] [transform:perspective(600px)_rotateY(-3deg)]" : "h-[500px] origin-left [transform:perspective(600px)_rotateY(3deg)]"} rotate-12 items-end overflow-hidden rounded-xl p-10`}
+                >
+                  {/* overlay */}
+                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+                  <Image
+                    src={activity.image}
+                    fill
+                    alt={activity.name}
+                    className="object-cover"
+                  />
+                  <h2 className="relative z-20 text-4xl font-medium">
+                    {activity.name}
+                  </h2>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* column 2 */}
+          <div className="space-y-8">
+            <div className="relative flex h-[400px] origin-right items-end overflow-hidden rounded-lg p-10 [transform:perspective(600px)_rotateY(-4deg)]">
+              {/* overlay */}
+              <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+              <Image
+                src={activity.image}
+                fill
+                alt={activity.name}
+                className="object-cover"
+              />
+              <h2 className="relative z-20 text-lg font-semibold capitalize">
+                {activity.name}
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+              {ActivitiesArray.slice(0, 2).map((activity, index) => {
+                return (
+                  <div
+                    key={activity.id}
+                    className={`relative flex h-[400px] origin-top items-end overflow-hidden rounded-lg p-6 ${index === 0 ? "[transform:perspective(300px)_rotateX(4deg)_rotateY(4deg)]" : "[transform:perspective(500px)_rotateX(5deg)]"}`}
+                  >
+                    {index === 1 && (
+                      <p className="absolute left-4 top-4 z-20 rounded-full bg-black px-6 py-2">
+                        Best for Day Drinking
+                      </p>
+                    )}
+                    {/* overlay */}
+                    <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+                    <Image
+                      src={activity.image}
+                      fill
+                      alt={activity.name}
+                      className="object-cover"
+                    />
+                    <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
+                      {activity.name}
+                    </h2>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-4">
+          <button className="rounded-lg bg-orange-700 px-6 py-2 capitalize text-softGold duration-300 hover:bg-reddish hover:text-white">
+            see all Villa - Friendly Ideas
+          </button>
+          <Link className="text-sm text-navyBlue hover:underline" href={"#"}>
+            Or view the full activity list
+          </Link>
+        </div>
+        <div className="absolute bottom-0 left-0 z-50 h-12 w-full bg-red-100"></div>
+      </section>
       {/* <Suspense fallback={<Spinner />} key={groupSize}>
         <Activities
           ActivitiesArray={ActivitiesArray}

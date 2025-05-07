@@ -95,3 +95,46 @@ export const faqsArr = [
     answer: "We’ll send you easy, secure options based on your package.",
   },
 ];
+export async function deleteImagesFromBucket(
+  supabase,
+  imageUrls = [],
+  bucketName,
+) {
+  if (!imageUrls.length) return { error: "No image URLs provided" };
+
+  // sab image paths extract karo
+  const imagePaths = imageUrls
+    .map((url) => decodeURIComponent(url.split(`/${bucketName}/`)[1]))
+    .filter((path) => !!path); // null ya undefined hatao
+
+  if (!imagePaths.length) return { error: "No valid image paths extracted" };
+
+  const { error: storageError } = await supabase.storage
+    .from(bucketName)
+    .remove(imagePaths);
+
+  if (storageError) {
+    console.log("Image deletion error:", storageError);
+    return { error: "Unable to delete images. Please try again later." };
+  }
+  return { success: true };
+}
+
+export async function uploadSingleImageToBucket(supabase, file, bucketName) {
+  if (!file) return { error: "No file provided" };
+
+  const uniqueFileName = `${Math.random()}-${file.name}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from(bucketName)
+    .upload(uniqueFileName, file);
+
+  if (uploadError) {
+    console.log("Upload error:", uploadError);
+    return { error: "Unable to upload image. Please try again later." };
+  }
+
+  const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucketName}/${uniqueFileName}`;
+
+  return { success: true, path: uniqueFileName, publicUrl };
+}

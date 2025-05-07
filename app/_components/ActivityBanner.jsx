@@ -15,13 +15,15 @@ export default async function ActivityBanner({ activity, user }) {
       />
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-[#120900]/20 to-[#3D1F00]"></div>
-      <div className="relative z-10 flex h-[600px] max-w-[500px] flex-col gap-4">
-        <h1
-          className={`text-center text-7xl font-bold tracking-tight text-matalicGold ${cinzel.className}`}
-        >
-          {name}
-        </h1>
-        <p className="text-center leading-[1.6]">{description}</p>
+      <div className="relative z-10 flex max-w-[500px] flex-col gap-12">
+        <div>
+          <h1
+            className={`text-center text-7xl font-bold tracking-tight text-matalicGold ${cinzel.className}`}
+          >
+            {name}
+          </h1>
+          <p className="text-center leading-[1.6]">{description}</p>
+        </div>
         {/* <BookingWindowAndButton user={user} activity={activity} /> */}
         <div className="mt-auto space-y-6">
           {/* icons */}

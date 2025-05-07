@@ -273,7 +273,6 @@ export async function deleteUserAction(userId) {
     .delete()
     .eq("id", userId);
   if (customUserError) {
-    console.log(customUserError.message);
     return { error: "Unexpected Error has occurred." };
   }
   // Delete built in user table user

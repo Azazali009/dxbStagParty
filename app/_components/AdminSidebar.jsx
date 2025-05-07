@@ -7,12 +7,14 @@ import ChartPieIcon from "../svgIcons/ChartPieIcon";
 import { usePathname } from "next/navigation";
 import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
 import PackgeIcon from "../svgIcons/PackgeIcon";
+import Image from "next/image";
+import SignOutButton from "./SignOutButton";
 
-const SideBar = () => {
+const SideBar = ({ user }) => {
   const pathname = usePathname();
 
   return (
-    <aside className="sticky top-0 flex h-screen flex-col bg-navyBlue p-0 px-6 py-3 text-white">
+    <aside className="sticky top-0 flex min-h-screen flex-col bg-navyBlue p-0 px-6 py-3 text-white">
       <h1 className="text-center text-xl font-bold">Admin panel</h1>
       <ul className="mt-20 flex flex-col gap-4">
         <Link
@@ -58,6 +60,24 @@ const SideBar = () => {
           <span>visite website</span>
         </Link>
       </ul>
+      <div className="my-auto flex items-center gap-4 p-4">
+        <Link href={"/account"}>
+          <Image
+            src={user?.user_metadata?.avatar_url || "/images/defaultUser.png"}
+            width={30}
+            height={300}
+            alt={user?.user_metadata?.full_name}
+            className="size-10 rounded-full object-cover"
+          />
+        </Link>
+        <div>
+          <h3 className="font-semibold capitalize text-matalicGold">
+            {user?.user_metadata?.full_name?.split(" ")[0]}
+          </h3>
+          <p className="font-light text-gray-600">{user?.user_metadata.role}</p>
+        </div>
+        {/* <SignOutButton /> */}
+      </div>
     </aside>
   );
 };

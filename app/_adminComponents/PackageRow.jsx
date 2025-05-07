@@ -40,7 +40,10 @@ export default function PackageRow({ Package }) {
         >
           {isPending ? <SpinnerMini /> : <TrashIcon />}
         </button>
-        <Link href={`#`} className="fill-blue-500 hover:opacity-80">
+        <Link
+          href={`/dashboard/packages/edit-package/${Package.id}`}
+          className="fill-blue-500 hover:opacity-80"
+        >
           <PencilIcon />
         </Link>
       </div>

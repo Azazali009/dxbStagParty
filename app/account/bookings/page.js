@@ -2,16 +2,16 @@ import React from "react";
 import { format } from "date-fns";
 // import PencilIcon from "../../svgIcons/PencilIcon";
 import TrashIcon from "../../svgIcons/TrashIcon";
-import { auth } from "../../_lib/auth";
+
 import { getBookingByUserId } from "../../_lib/data-services";
 import { formatToAED } from "../../_lib/helpers";
 import Link from "next/link";
-// import Empty from "../../_components/Empty";
+import { getCurrentUser } from "../../_lib/getCurrentUser";
 
 export default async function Page() {
-  const { user } = await auth();
+  const user = await getCurrentUser();
 
-  const bookings = await getBookingByUserId(user?.userId);
+  const bookings = await getBookingByUserId(user?.id);
   if (!bookings.length || !user)
     return (
       <div className="mx-auto my-7 text-center">You have no bookings yet.</div>
