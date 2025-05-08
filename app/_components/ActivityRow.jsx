@@ -15,7 +15,7 @@ export default function ActivityRow({ activity }) {
         <DeleteActivity activityId={activity.id} />
         <Link
           title="Update Activity"
-          href={`/dashboard/edit-activity/${activity.id}`}
+          href={`/dashboard/activities/edit-activity/${activity.id}`}
           className="capitaliz fill-sky-500 duration-300 hover:translate-y-[2px]"
         >
           <PencilIcon />

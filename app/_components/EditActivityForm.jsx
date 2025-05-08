@@ -34,7 +34,7 @@ export default function EditActivityForm({ activity }) {
       ref={editFormRef}
       // action={editActivityAction}
       action={(formData) => handleSubmit(formData)}
-      className="grid grid-cols-2 gap-x-16 gap-y-4"
+      className="grid grid-cols-2 gap-x-16 gap-y-4 px-10 py-20"
     >
       <FormRow label={"Activity Name"}>
         <input

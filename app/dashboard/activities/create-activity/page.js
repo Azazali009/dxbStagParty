@@ -1,4 +1,4 @@
-import AdminActivityForm from "../../_components/AdminActivityForm";
+import AdminActivityForm from "../../../_components/AdminActivityForm";
 
 export default async function Page() {
   return (

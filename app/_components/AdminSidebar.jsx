@@ -7,6 +7,7 @@ import ChartPieIcon from "../svgIcons/ChartPieIcon";
 import { usePathname } from "next/navigation";
 import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
 import PackgeIcon from "../svgIcons/PackgeIcon";
+import SupplierIcon from "../svgIcons/SupplierIcon";
 import Image from "next/image";
 import SignOutButton from "./SignOutButton";
 
@@ -16,7 +17,7 @@ const SideBar = ({ user }) => {
   return (
     <aside className="sticky top-0 flex min-h-screen flex-col bg-navyBlue p-0 px-6 py-3 text-white">
       <h1 className="text-center text-xl font-bold">Admin panel</h1>
-      <ul className="mt-20 flex flex-col gap-4">
+      <ul className="mt-20 flex flex-col gap-2">
         <Link
           className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
           href={"/dashboard"}
@@ -25,7 +26,7 @@ const SideBar = ({ user }) => {
           <span>home</span>
         </Link>
         <Link
-          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/activities" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname.startsWith("/dashboard/activities") && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
           href={"/dashboard/activities"}
         >
           <ChartPieIcon />
@@ -46,7 +47,14 @@ const SideBar = ({ user }) => {
           <span> packages</span>
         </Link>
         <Link
-          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize ${pathname === "/dashboard/users" && "bg-sky-600"} transition-all duration-300 hover:bg-sky-600`}
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/supplier" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
+          href={"/dashboard/supplier"}
+        >
+          <SupplierIcon />
+          <span> supplier</span>
+        </Link>
+        <Link
+          className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize ${pathname.startsWith("/dashboard/users") && "bg-sky-600"} transition-all duration-300 hover:bg-sky-600`}
           href={"/dashboard/users"}
         >
           <UserIcon />
@@ -60,7 +68,7 @@ const SideBar = ({ user }) => {
           <span>visite website</span>
         </Link>
       </ul>
-      <div className="my-auto flex items-center gap-4 p-4">
+      <div className="mt-auto flex items-center gap-4 px-4">
         <Link href={"/account"}>
           <Image
             src={user?.user_metadata?.avatar_url || "/images/defaultUser.png"}
@@ -71,12 +79,14 @@ const SideBar = ({ user }) => {
           />
         </Link>
         <div>
-          <h3 className="font-semibold capitalize text-matalicGold">
+          <h3 className="text-xl font-medium capitalize">
             {user?.user_metadata?.full_name?.split(" ")[0]}
           </h3>
-          <p className="font-light text-gray-600">{user?.user_metadata.role}</p>
+          <p className="text-sm font-light capitalize text-gray-400">
+            {user?.user_metadata.role}
+          </p>
         </div>
-        {/* <SignOutButton /> */}
+        <SignOutButton />
       </div>
     </aside>
   );
