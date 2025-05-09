@@ -1,11 +1,14 @@
 "use client";
-import { useRef, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { addActivityAction } from "../_lib/actions";
 import FormRow from "./FormRow";
 import SubmitButton from "./SubmitButton";
+import { getSuppliers } from "../_lib/apiSupplier";
 
 export default function AdminActivityForm() {
+  const [loading, setLoading] = useState(false);
+  const [suppliers, setSuppliers] = useState([]);
   const [isPending, startTransition] = useTransition();
   const ref = useRef();
 
@@ -18,6 +21,22 @@ export default function AdminActivityForm() {
     });
   };
 
+  // Effect to fetch activities
+  useEffect(() => {
+    async function fetchSuppliers() {
+      setLoading(true);
+      const fetchedSuppliers = await getSuppliers();
+
+      setSuppliers(
+        fetchedSuppliers.map((sup) => ({
+          name: sup.name,
+          value: sup.id,
+        })),
+      );
+      setLoading(false);
+    }
+    fetchSuppliers();
+  }, []);
   return (
     <form
       action={(formData) => handleSubmit(formData)}
@@ -98,6 +117,30 @@ export default function AdminActivityForm() {
           name="bannerImage"
         />
       </FormRow>
+      {loading ? (
+        <div className="my-4 flex flex-col gap-4">
+          <div className="h-4 w-[50%] animate-pulse rounded-xl bg-navyBlue"></div>
+          <div className="h-4 w-full animate-pulse rounded-xl bg-navyBlue"></div>
+        </div>
+      ) : (
+        <FormRow label={"Link Supplier"}>
+          <select
+            name="supplier"
+            className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 text-softGold"
+          >
+            <option disabled selected value="">
+              Select supplier
+            </option>
+            {suppliers?.map((supplier) => {
+              return (
+                <option key={supplier.value} value={supplier.value}>
+                  {supplier.name}
+                </option>
+              );
+            })}
+          </select>
+        </FormRow>
+      )}
       <FormRow label={"Description"} className={"[grid-column:1/-1]"}>
         <textarea
           className="rounded bg-navyBlue p-2 outline-none placeholder:text-matalicGold/20 focus:outline-matalicGold"

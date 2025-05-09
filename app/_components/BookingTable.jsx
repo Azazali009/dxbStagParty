@@ -28,7 +28,7 @@ export default function BookingTable({ booking, attendee, organizerName }) {
               return <span key={i}>{act.name}</span>;
             })}
           </p>
-          <p className="flex flex-col gap-1 text-xs">
+          <p className="flex flex-col gap-1 text-center text-xs">
             {" "}
             {booking?.packages?.map((pack, i) => {
               return <span key={i}>{pack.name}</span>;
@@ -38,7 +38,7 @@ export default function BookingTable({ booking, attendee, organizerName }) {
           <p> {booking?.paidAmount ?? "0"}</p>
           <p> {attendee.length}</p>
           <p>{booking.destinations}</p>
-          <p>{organizerName}</p>
+          <p>{booking.users.fullName}</p>
           <p className="col-span-2 text-balance"> {booking.users.email}</p>
         </div>
       </div>

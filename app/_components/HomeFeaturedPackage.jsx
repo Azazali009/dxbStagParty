@@ -86,10 +86,11 @@ export default async function HomeFeaturedPackage() {
             Command the coast rule the night.
           </p>
           <p className="font-extralight leading-[1.8]">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto
-            quibusdam quidem repudiandae corrupti quam molestiae rerum ab unde,
-            vero error voluptatum expedita. Esse non, impedit quam vel quibusdam
-            illo sapiente.
+            No shoes, No rules, Just pure superyacht swagger. A 3-hour private
+            takeover of Dubai's sleekest vessel - because this isn't just a
+            party, it's a statement. Set sail from Dubai Harbour with your
+            personal DJ, your butler, and your cocktail assassin. All you need
+            to do is show up and own it.
           </p>
           <HomePackageIncludes inclusions={inclusions} />
         </div>

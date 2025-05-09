@@ -20,6 +20,7 @@ export default function ContactForm() {
             name="firstName"
             id="firstName"
             required
+            placeholder="Jhon"
             className="h-8 rounded-md border border-neutral-700 bg-transparent px-3 focus:outline-none focus:outline-matalicGold"
           />
         </FormRow>
@@ -28,6 +29,7 @@ export default function ContactForm() {
             type="text"
             name="lastName"
             id="lastName"
+            placeholder="Doe"
             required
             className="h-8 rounded-md border border-neutral-700 bg-transparent px-3 focus:outline-none focus:outline-matalicGold"
           />
@@ -38,6 +40,7 @@ export default function ContactForm() {
             name="email"
             id="email"
             required
+            placeholder="jhondoe@example.com"
             autoComplete="email"
             className="h-8 rounded-md border border-neutral-700 bg-transparent px-3 focus:outline-none focus:outline-matalicGold"
           />
@@ -48,6 +51,7 @@ export default function ContactForm() {
             name="whatsapp"
             id="whatsapp"
             autoComplete="tel"
+            placeholder="+97123456789"
             className="h-8 rounded-md border border-neutral-700 bg-transparent px-3 focus:outline-none focus:outline-matalicGold"
           />
         </FormRow>
@@ -55,6 +59,7 @@ export default function ContactForm() {
           <input
             type="text"
             name="groupSize"
+            placeholder="4-10"
             id="groupSize"
             className="h-8 rounded-md border border-neutral-700 bg-transparent px-3 focus:outline-none focus:outline-matalicGold"
           />
@@ -118,7 +123,7 @@ export default function ContactForm() {
           </div>
         </FormRow>
         <button className="block rounded-md border border-neutral-700 bg-transparent px-6 py-2.5 text-base font-medium capitalize backdrop-blur-sm duration-300 [grid-column:1/-1] hover:scale-95">
-          Let&apos;s make it legendary
+          send message
         </button>
       </form>
     </div>

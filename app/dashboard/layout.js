@@ -19,17 +19,3 @@ export default async function Layout({ children }) {
       </div>
     );
 }
-{
-  /* <div className="grid grid-cols-[16rem_1fr] min-h-screen">
-
-  <div className="sticky top-0 h-screen">
-    <AdminSidebar />
-  </div>
-
-
-  <div className="flex flex-col w-full">
-    <AdminHeader />
-    <div className="p-4 overflow-y-auto">{children}</div>
-  </div>
-</div> */
-}

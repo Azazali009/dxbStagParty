@@ -33,6 +33,7 @@ export async function addActivityAction(formData) {
   const tags = formData.get("tags")?.split(",");
   const image = formData.get("image");
   const bannerImage = formData.get("bannerImage");
+  const supplier = Number(formData.get("supplier"));
 
   // empty fields
   if (
@@ -45,7 +46,8 @@ export async function addActivityAction(formData) {
     !group_size ||
     !name ||
     !minAge ||
-    !price
+    !price ||
+    !supplier
   )
     return { error: "Please fill required fields" };
 
@@ -76,6 +78,7 @@ export async function addActivityAction(formData) {
     tags,
     image,
     bannerImage,
+    supplier,
   };
   await createActivity(newActivity);
 
@@ -85,6 +88,9 @@ export async function addActivityAction(formData) {
 }
 
 export async function editActivityAction(formData) {
+  const user = await getCurrentUser();
+  if (!user || user?.user_metadata.role !== "admin")
+    return { error: "You are not allowed to perform this action" };
   // General vars
   const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
   const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -103,7 +109,7 @@ export async function editActivityAction(formData) {
   const existingImage = formData.get("existingImage");
   const existingBannerImage = formData.get("existingBannerImage");
   const activityId = Number(formData.get("activityId"));
-
+  const supplier = Number(formData.get("supplier"));
   // Check validity
   const isValidImage = image && image.size > 0 && image.name !== "undefined";
   const isValidBanner =
@@ -122,7 +128,8 @@ export async function editActivityAction(formData) {
     !image ||
     !bannerImage ||
     !group_size ||
-    !minAge
+    !minAge ||
+    !supplier
   )
     return { error: "Please fill required fields" };
 
@@ -163,6 +170,7 @@ export async function editActivityAction(formData) {
     tags,
     image: imagePath,
     bannerImage: bannerPath,
+    supplier,
   };
 
   const { error } = await supabase
@@ -195,7 +203,7 @@ export async function editActivityAction(formData) {
     }
   }
 
-  revalidatePath(`/dashboard/edit-activity/${activityId}`);
+  revalidatePath(`/dashboard/activities/edit-activity/${activityId}`);
   revalidatePath("/dashboard/activities");
 
   return redirect("/dashboard/activities");

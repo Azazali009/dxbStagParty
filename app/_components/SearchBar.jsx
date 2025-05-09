@@ -18,26 +18,31 @@ export default function SearchBar() {
     setSearch("");
   }
   return (
-    <form
-      onSubmit={handleSearch}
-      className="flex h-12 max-w-lg items-center rounded-full bg-navyBlue px-4 shadow-lg"
-    >
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="block flex-1 bg-transparent p-2 placeholder:text-xs focus:outline-none"
-        type="text"
-        placeholder=" Glam, Beauty, Instagrammable, Photo, Luxury..."
-      />
-
-      <button className="flex size-8 items-center justify-center rounded-full bg-primary p-2 shadow-xl outline-none duration-300 hover:bg-transparent hover:shadow-none focus:border-none focus:outline-secondary">
-        <Image
-          src={"/images/search.png"}
-          width={100}
-          height={100}
-          alt="search"
+    <div className="space-y-3">
+      <label className="block font-medium" htmlFor="">
+        Activity Type
+      </label>
+      <form
+        onSubmit={handleSearch}
+        className="flex h-12 max-w-lg items-center rounded-md bg-navyBlue px-4 shadow-lg"
+      >
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="block flex-1 bg-transparent p-2 placeholder:text-xs focus:outline-none"
+          type="text"
+          placeholder=" Glam, Beauty, Instagrammable, Photo, Luxury..."
         />
-      </button>
-    </form>
+
+        <button className="flex size-8 items-center justify-center rounded-full bg-primary p-2 shadow-xl outline-none duration-300 hover:bg-transparent hover:shadow-none focus:border-none focus:outline-secondary">
+          <Image
+            src={"/images/search.png"}
+            width={100}
+            height={100}
+            alt="search"
+          />
+        </button>
+      </form>
+    </div>
   );
 }

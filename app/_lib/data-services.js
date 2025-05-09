@@ -86,7 +86,9 @@ export async function editActivity(editActivity, id) {
 }
 
 export async function getActivities() {
-  let { data, error } = await supabase.from("activities").select("*");
+  let { data, error } = await supabase
+    .from("activities")
+    .select(`*,supplier(name)`);
 
   if (error) {
     console.log(error);
@@ -97,7 +99,7 @@ export async function getActivities() {
 export async function getActivity(id) {
   let { data, error } = await supabase
     .from("activities")
-    .select("*")
+    .select(`*,supplier(id,name)`)
     .eq("id", id)
     .single();
 
@@ -133,6 +135,18 @@ export async function getBookings() {
   if (error) {
     console.log(error);
     throw new Error("Error while getting bookings.");
+  }
+  return booking;
+}
+export async function getPendingBookings() {
+  let { data: booking, error } = await supabase
+    .from("booking")
+    .select("*")
+    .eq("paymentStatus", "pending");
+
+  if (error) {
+    console.log(error);
+    throw new Error("Error while getting pending bookings.");
   }
   return booking;
 }
