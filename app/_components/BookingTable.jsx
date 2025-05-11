@@ -21,7 +21,7 @@ export default function BookingTable({ booking, attendee, organizerName }) {
       </h1>
       <div className="hidden bg-navyBlue text-[14px] md:block">
         <BookingTableHeader />
-        <div className="grid grid-cols-10 items-center justify-items-center rounded-b-md border border-gray-700 bg-transparent px-2 py-2 text-xs">
+        <div className="grid grid-cols-10 items-center justify-items-center rounded-b-md border border-gray-700 bg-transparent px-2 py-2 text-center text-xs">
           <p className="col-span-2 flex flex-col gap-1">
             {" "}
             {booking?.activities?.map((act, i) => {
