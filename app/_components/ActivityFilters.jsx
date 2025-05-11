@@ -1,6 +1,11 @@
+"use client";
 import ClearFilterButton from "./ClearFilterButton";
 import SliderFilter from "./SliderFilter";
+import DayTimeFilter from "./DayTimeFilter";
+import Budget from "./Budget";
 import SearchBar from "./SearchBar";
+import DownSvg from "../svgIcons/DownSvg";
+import { useState } from "react";
 
 export default function ActivityFilter({
   searchQuery,
@@ -10,24 +15,15 @@ export default function ActivityFilter({
 }) {
   return (
     <div className="relative z-20 mx-auto w-[95%] overflow-hidden py-14 [grid-column:1/-1]">
-      <div className="grid grid-cols-4 items-center gap-6 rounded-md border border-gray-800 p-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-start gap-10 rounded-md border border-gray-800 p-4 transition-all duration-300">
         <SearchBar />
+        <DayTimeFilter />
         <SliderFilter
           minGroupSize={minGroupSize}
           maxGroupSize={maxGroupSize}
           groupSize={groupSize}
         />
-
-        <div className="space-y-3">
-          <label className="block font-medium" htmlFor="">
-            Budget
-          </label>
-          <input
-            type="text"
-            placeholder="Search"
-            className="h-12 rounded-md border-2 border-matalicGold bg-transparent px-4"
-          />
-        </div>
+        <Budget />
         {(groupSize || (searchQuery && searchQuery !== "all")) && (
           <ClearFilterButton />
         )}

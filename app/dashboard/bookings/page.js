@@ -2,6 +2,8 @@ import { getBookings } from "../../_lib/data-services";
 
 import BookingFilter from "../../_components/BookingFilter";
 import DisplayBookingTable from "../../_components/DisplayBookingTable";
+import AdminBookingCalendar from "../../_adminComponents/AdminBookingCalendar";
+import CalenderViewButton from "../../_adminComponents/CalenderViewButton";
 
 export const revalidate = 0;
 export default async function Page({ searchParams }) {
@@ -25,7 +27,11 @@ export default async function Page({ searchParams }) {
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-4 p-4 text-sm">
       <h1 className="mb-6 text-2xl font-semibold capitalize">all bookings</h1>
-      <BookingFilter />
+      <div className="flex items-center justify-between">
+        <CalenderViewButton />
+        <BookingFilter />
+      </div>
+      <AdminBookingCalendar bookings={bookings} />
       <DisplayBookingTable bookings={filteredBookings} />
     </div>
   );

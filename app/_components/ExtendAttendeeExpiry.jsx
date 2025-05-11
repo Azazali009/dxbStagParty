@@ -44,6 +44,7 @@ export default function ExtendAttendeeExpiry({
       variation="gold"
       onClick={handleExtendExpiry}
       disabled={loading || bookingPaymentStatus === "cancelled"}
+      className="text-nowrap"
     >
       {loading ? "Processing..." : "Extend Expiry by 24h"}
     </Button>

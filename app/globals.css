@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* calender buttons */
+.rbc-toolbar button {
+  color: white !important;
+  border: 1px solid #1f2937 !important;
+}
+
+.rbc-toolbar button:active,
+.rbc-toolbar button.rbc-active {
+  background: #1f2937 !important;
+}
+.rbc-toolbar button:hover {
+  background: #1f2937 !important;
+}
+/* calender border */
+.rbc-month-view,
+.rbc-time-view,
+.rbc-header,
+.rbc-day-bg + .rbc-day-bg,
+.rbc-month-row + .rbc-month-row {
+  border-color: #1f2937 !important;
+}
+/* calender previous and next month box */
+.rbc-off-range-bg {
+  background-color: #0b0e1c !important;
+}
+/* calender today box */
+.rbc-today {
+  background-color: #beac5c !important;
+}
+
 h1,
 h2,
 h3 {

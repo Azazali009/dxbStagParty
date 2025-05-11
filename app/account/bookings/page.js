@@ -29,7 +29,7 @@ export default async function Page() {
               <div className="flex-1 p-4">
                 <div className="flex justify-between">
                   <div className="space-y-2">
-                    <Link href={`/bookings/${booking.id}`}>
+                    <Link href={`/account/bookings/${booking.id}`}>
                       <h3 className="flex flex-col gap-[2px] text-sm font-semibold capitalize">
                         {booking.activities?.slice(0, 2)?.map((act) => {
                           return <span key={act.name}>{act.name}</span>;

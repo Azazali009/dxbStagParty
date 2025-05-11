@@ -5,6 +5,7 @@ import Header from "./_components/Header";
 import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
 import TosterComp from "./_components/Toaster";
 import { AuthProvider } from "./_context/AuthProvider";
+import { BookingProvider } from "./_context/bookingProvider";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -45,7 +46,9 @@ export default function RootLayout({ children }) {
           </ClientComponent>
           <TosterComp />
           <PendingBookingDataNotification />
-          <main className="">{children}</main>
+          <BookingProvider>
+            <main className="">{children}</main>
+          </BookingProvider>
           <ClientComponent>
             <Footer />
           </ClientComponent>

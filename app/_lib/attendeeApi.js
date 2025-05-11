@@ -177,3 +177,32 @@ export async function extendAttendeeExpiry(attendeeID) {
 
   return newExpiry;
 }
+
+export async function updateAttendeeResendIncrement(attendeeId) {
+  // Get the current resendIncrement value first
+  const { data, error } = await supabase
+    .from("attendee")
+    .select("resendIncrement")
+    .eq("id", attendeeId)
+    .single();
+
+  if (error) {
+    return { error: "Oops! Could not fetch attendee data." };
+  }
+
+  const currentValue = data.resendIncrement;
+
+  if (currentValue <= 0) {
+    return { error: "Maximum resend attempts reached." };
+  }
+
+  // Decrease the value by 1
+  const { error: updateError } = await supabase
+    .from("attendee")
+    .update({ resendIncrement: currentValue - 1 })
+    .eq("id", attendeeId);
+
+  if (updateError) {
+    return { error: "Oops! Something went wrong updating the resend counter." };
+  }
+}

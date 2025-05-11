@@ -1,3 +1,5 @@
+import { getPendingBookings } from "./data-services";
+
 export function formatToAED(amount) {
   return new Intl.NumberFormat("en-AE", {
     style: "currency",

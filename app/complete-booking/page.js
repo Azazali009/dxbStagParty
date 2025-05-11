@@ -62,11 +62,6 @@ export default function CompleteBooking() {
           (totalPrice * 0.85) / attendeeEmails.length,
         );
 
-        // ✅ Filter organizerEmail from attendeeEmails before saving to DB
-        // const filteredAttendeeEmails = attendeeEmails.filter(
-        //   (email) => email !== organizerEmail,
-        // );
-
         // ✅ Prepare booking object with cleaned attendee list
         const sanitizedBooking = {
           totalPrice,
@@ -116,7 +111,9 @@ export default function CompleteBooking() {
         localStorage.removeItem("bookingData");
       } catch (error) {
         console.log(error);
-        toast.error("Unexpected error.", { id: toastId });
+        toast.error("Opps! Something went wrong on the server", {
+          id: toastId,
+        });
       } finally {
         setLoading(false);
       }

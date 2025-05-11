@@ -9,9 +9,11 @@ import UserIcon from "../svgIcons/UserIcon";
 import WebsiteIcon from "../svgIcons/WebsiteIcon";
 import { usePathname } from "next/navigation";
 import { getPendingBookings } from "../_lib/data-services";
+import { getPendingBookingCount } from "../_lib/helpers";
+import { useBooking } from "../_context/bookingProvider";
 
 export default function SidebarNavigations() {
-  const [pendingBookingCount, setPendingBookingCount] = useState(0);
+  const { pendingBookingCount, setPendingBookingCount } = useBooking();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export default function SidebarNavigations() {
       setPendingBookingCount(bookings.length);
     }
     fetchPendingBookings();
-  }, []);
+  }, [setPendingBookingCount]);
   return (
     <ul className="mt-20 flex flex-col gap-2 self-stretch">
       <Link

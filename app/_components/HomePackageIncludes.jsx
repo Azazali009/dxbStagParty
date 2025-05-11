@@ -31,9 +31,9 @@ export default function InclusionsComponent({ inclusions = [] }) {
     <div className="space-y-6 pb-16">
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="rounded-sm border border-matalicGold bg-matalicGold px-6 py-2.5 font-extralight text-navyBlue duration-300 hover:bg-transparent hover:text-softGold"
+        className="rounded-sm border border-matalicGold bg-matalicGold px-6 py-2.5 font-medium text-navyBlue duration-300 hover:bg-transparent hover:text-softGold"
       >
-        View includes
+        Secure your spot
       </button>
 
       <AnimatePresence initial={false}>

@@ -68,12 +68,6 @@ export default async function HomeFeaturedPackage() {
           fill
           alt={name}
         />
-        {/* <Link
-          href={`/packages/${id}`}
-          className="block rounded-full bg-[#b78d5d] px-6 py-2 uppercase backdrop-blur-md duration-300 hover:opacity-80"
-        >
-          view package
-        </Link> */}
       </div>
       <div className="relative z-20 -mt-40 w-full bg-gradient-to-b from-transparent via-navyBlue to-navyBlue p-6 backdrop-blur-sm">
         <div className="mx-auto w-[70%] space-y-4">

@@ -36,14 +36,15 @@ export default async function Page({ searchParams }) {
         searchQuery={searchQuery}
         groupSize={groupSize}
       />
+      {/* section 1 */}
       <section className="bg-red-100 py-20 text-navyBlue">
-        <div className="mx-auto w-[95%] space-y-6">
-          <div className="w-1/2">
+        <div className="space-y-6">
+          <div className="w-1/2 p-6">
             <h2 className="text-4xl font-semibold uppercase leading-[1.3]">
               vip spotlight &mdash; the experience everyone talks about
             </h2>
           </div>
-          <div className="flex h-[600px] flex-col items-start justify-end gap-4 rounded-lg bg-[url('/images/home-hero-bg.webp')] p-6 text-softGold">
+          <div className="flex h-[600px] flex-col items-start justify-end gap-4 bg-[url('/images/home-hero-bg.webp')] p-8 text-softGold">
             <h2 className="w-[60%] text-xl leading-[1.7]">
               Cruise dubai&apos;s coastline on your own private yacht-free-flow
               drinks, onboard tunes, and epic skyline views
@@ -78,6 +79,16 @@ export default async function Page({ searchParams }) {
                 >
                   {/* overlay */}
                   <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
+                  {/* book button */}
+                  <div className="group absolute left-0 top-0 z-20 flex h-full w-full items-center justify-center duration-300 hover:bg-navyBlue/60">
+                    {" "}
+                    <Link
+                      className="pointer-events-none invisible translate-y-full rounded-md bg-reddish px-6 py-2 capitalize opacity-0 shadow-2xl duration-500 active:translate-y-2 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+                      href={`/activities/${activity.id}`}
+                    >
+                      Book your slot
+                    </Link>
+                  </div>
                   <Image
                     src={activity.image}
                     fill

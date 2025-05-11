@@ -1,8 +1,14 @@
 import React from "react";
 import PaymentTimer from "./PaymentTimer";
 import ExtendAttendeeExpiry from "../_components/ExtendAttendeeExpiry";
+import ResendPaymentLink from "./ResendPaymentLink";
+import ResendReminder from "../_components/ResendReminder";
 
-export default function AttendeeDetail({ attendee, bookingPaymentStatus }) {
+export default function AttendeeDetail({
+  attendee,
+  bookingPaymentStatus,
+  bookingID,
+}) {
   if (!attendee.length)
     return <p className="text-center text-red-500">No attendess found</p>;
   return (
@@ -16,6 +22,10 @@ export default function AttendeeDetail({ attendee, bookingPaymentStatus }) {
               key={attendee.id}
               className={`space-y-4 ${bookingPaymentStatus === "cancelled" && "grayscale"} bg-navyBlue/50 shadow-lg ${attendee.status === "unpaid" ? "text-softGold" : "text-green-500"} rounded-lg px-6 py-10 shadow-lg`}
             >
+              <ResendReminder
+                status={attendee.status}
+                attempts={attendee.resendIncrement}
+              />
               <h1
                 className={`flex items-center gap-2 text-xl font-bold md:text-xl`}
               >
@@ -40,12 +50,19 @@ export default function AttendeeDetail({ attendee, bookingPaymentStatus }) {
               )}
               <p>{attendee.email}</p>
 
-              <ExtendAttendeeExpiry
-                id={attendee.id}
-                bookingPaymentStatus={bookingPaymentStatus}
-                attendeePayemntStatus={attendee.status}
-                hasExtended={attendee.has_extended}
-              />
+              <div className="grid grid-cols-2 items-center gap-4">
+                <ExtendAttendeeExpiry
+                  id={attendee.id}
+                  bookingPaymentStatus={bookingPaymentStatus}
+                  attendeePayemntStatus={attendee.status}
+                  hasExtended={attendee.has_extended}
+                />
+                <ResendPaymentLink
+                  bookingPaymentStatus={bookingPaymentStatus}
+                  bookingID={bookingID}
+                  attendee={attendee}
+                />
+              </div>
             </div>
           ),
           // ),

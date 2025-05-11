@@ -4,11 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { updateBookingPaymentStatus } from "../_lib/actions";
 import toast from "react-hot-toast";
 import SpinnerMini from "../_components/SpinnerMini";
+import { getPendingBookings } from "../_lib/data-services";
+import { useBooking } from "../_context/bookingProvider";
 
 export default function BookingsActions({ booking }) {
   const { id, totalPrice, paymentStatus } = booking;
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
+  const { setPendingBookingCount } = useBooking();
 
   const handleToggle = () => {
     setOpen(!open);
@@ -26,6 +29,8 @@ export default function BookingsActions({ booking }) {
     startTransition(async () => {
       const res = await updateBookingPaymentStatusWithUpdateData(formData);
       setOpen(false);
+      const updateBookings = await getPendingBookings();
+      setPendingBookingCount(updateBookings.length);
       if (res?.error) toast.error(res?.error);
     });
   };
@@ -62,7 +67,7 @@ export default function BookingsActions({ booking }) {
               required
               className="rounded-md border-none bg-navyBlue px-4 py-1.5 outline-none focus:outline-matalicGold disabled:bg-navyBlue"
             >
-              <option disabled selected value="">
+              <option selected value="">
                 Change payment status
               </option>
               <option value="completed">Completed</option>
