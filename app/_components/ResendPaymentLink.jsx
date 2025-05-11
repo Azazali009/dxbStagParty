@@ -30,7 +30,7 @@ export default function ResendPayment({
         <button
           onClick={handleClick}
           disabled={isPending}
-          className="rounded-full border-2 border-emerald-700 px-4 py-3 text-base font-medium capitalize duration-300 hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
+          className="rounded-full border-2 border-emerald-700 px-4 py-3 text-sm font-medium capitalize duration-300 hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
         >
           {isPending ? (
             <div className="flex items-center justify-center gap-2">
@@ -43,7 +43,7 @@ export default function ResendPayment({
       ) : (
         <button
           disabled
-          className="text-nowrap rounded-full border-2 border-emerald-700 px-5 py-3 text-base font-medium text-white shadow-md duration-300 disabled:cursor-not-allowed disabled:opacity-60"
+          className="text-nowrap rounded-full border-2 border-emerald-700 px-5 py-3 text-sm font-medium text-white shadow-md duration-300 disabled:cursor-not-allowed disabled:opacity-60"
         >
           🚫 Limit Reached
         </button>
