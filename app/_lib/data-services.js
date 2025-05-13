@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
+import { createClient } from "../_utils/supabase/client";
 
 export async function createActivity(newActivity) {
   const imageName = `card-image-${Math.random()}-${newActivity?.image?.name}`;
@@ -125,17 +126,16 @@ export async function addBooking(booking) {
 }
 
 export async function getBookings() {
-  let { data: booking, error } = await supabase.from("booking").select(`*
+  const supabaseServer = createClient();
+  let { data: booking, error } = await supabaseServer.from("booking").select(`*
       ,users (
       fullName,
       email
     )`);
-  // .select(
-  //   "totalPrice,attendeeEmails,paymentStatus,organizerEmail,destination,activities(name,price)",
-  // );
+
   if (error) {
     console.log(error);
-    throw new Error("Error while getting bookings.");
+    return { error: "Error while getting bookings." };
   }
   return booking;
 }

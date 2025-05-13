@@ -1,12 +1,11 @@
 "use client";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useState } from "react";
-import { useBooking } from "../_context/bookingProvider";
-import { AnimatePresence, motion } from "framer-motion";
-import CustomEventWithPopup from "../_adminComponents/CalenderToolTip";
 import { format } from "date-fns";
+import { AnimatePresence, motion } from "framer-motion";
+import moment from "moment";
+import { useState } from "react";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { useBooking } from "../_context/bookingProvider";
 
 const localizer = momentLocalizer(moment);
 
@@ -54,11 +53,6 @@ export default function AdminBookingCalender({ bookings }) {
             onNavigate={setCurrentDate}
             view={currentView}
             onView={setCurrentView}
-            // tooltipAccessor={() => null} // disable tooltip data
-            // titleAccessor={() => ""}
-            // components={{
-            //   event: CustomEventWithPopup, // 👈 Custom event renderer
-            // }}
           />
         </motion.div>
       )}
