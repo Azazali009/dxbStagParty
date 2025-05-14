@@ -51,34 +51,48 @@ export default function PendingBookingAlert() {
           animate={{ x: 0, opacity: 1, scale: 1 }}
           exit={{ x: "100%", opacity: 0, scale: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="absolute right-0 top-0 z-[999] max-w-xl space-y-3 rounded-md border-l-4 border-yellow-500 bg-yellow-100 px-4 py-8 shadow-md"
+          className="relative space-y-2 rounded-lg border-l-4 border-yellow-500 bg-yellow-100 px-4 py-8 shadow-xl"
         >
-          <h2 className="text-lg font-bold text-yellow-800">
+          <button
+            onClick={handleDismiss}
+            className="absolute right-4 top-4 text-2xl text-red-600"
+          >
+            &times;
+          </button>
+          {/* <motion.div
+          key="pending-alert"
+          initial={{ x: "100%", opacity: 0, scale: 0 }}
+          animate={{ x: 0, opacity: 1, scale: 1 }}
+          exit={{ x: "100%", opacity: 0, scale: 0 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+          className="absolute right-0 top-0 z-[999] max-w-xl space-y-3 rounded-md border-l-4 border-yellow-500 bg-yellow-100 px-4 py-8 shadow-md"
+        > */}
+          <h2 className="font-bold text-yellow-800">
             🚨 You have {pendingCount} pending booking
             {pendingCount > 1 ? "s" : ""}!
           </h2>
-          <p className="leading-[1.6] text-yellow-700">
+          <p className="text-sm leading-[1.6] text-yellow-700">
             Please review the pending bookings in your dashboard.{" "}
-            {oldPending && (
-              <span className="font-semibold">
-                Some have been pending for over 24 hours!
-              </span>
-            )}
-          </p>
-          <div className="space-x-4">
-            <button
+            {/* <button
               onClick={handleDismiss}
               className="inline-block rounded bg-yellow-600 px-4 py-2 text-white hover:bg-yellow-700"
             >
               Dismiss Alert
-            </button>
+            </button> */}
             <Link
-              className="inline-block rounded bg-red-600 px-4 py-2 capitalize hover:bg-red-700"
+              className="inline-block capitalize text-indigo-600 underline hover:no-underline"
               href={"/dashboard/bookings"}
             >
               Review pending bookings
             </Link>
-          </div>
+            {oldPending && (
+              <div>
+                <span className="text-sm font-semibold">
+                  Some have been pending for over 24 hours!
+                </span>
+              </div>
+            )}
+          </p>
         </motion.div>
       )}
     </AnimatePresence>

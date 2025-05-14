@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function UserInfo({ user }) {
   return (
-    <div className="mt-auto flex items-center gap-4 self-stretch px-4">
+    <div className="flex items-center justify-end gap-4 self-stretch px-4 py-2">
       <Link href={"/account"}>
         <Image
           src={user?.user_metadata?.avatar_url || "/images/defaultUser.png"}

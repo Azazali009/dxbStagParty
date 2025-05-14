@@ -26,21 +26,21 @@ export default function SidebarNavigations() {
   return (
     <ul className="mt-20 flex flex-col gap-2 self-stretch">
       <Link
-        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard" && "bg-indigo-600"} capitalize transition-all duration-300 hover:bg-indigo-600`}
         href={"/dashboard"}
       >
         <HomeIcon />
         <span>home</span>
       </Link>
       <Link
-        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname.startsWith("/dashboard/activities") && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname.startsWith("/dashboard/activities") && "bg-indigo-600"} capitalize transition-all duration-300 hover:bg-indigo-600`}
         href={"/dashboard/activities"}
       >
         <ChartPieIcon />
         <span> activities</span>
       </Link>
       <Link
-        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/bookings" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/bookings" && "bg-indigo-600"} capitalize transition-all duration-300 hover:bg-indigo-600`}
         href={"/dashboard/bookings"}
       >
         <CalenderDaysIcon />
@@ -52,35 +52,35 @@ export default function SidebarNavigations() {
         )}
       </Link>
       <Link
-        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/packages" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/packages" && "bg-indigo-600"} capitalize transition-all duration-300 hover:bg-indigo-600`}
         href={"/dashboard/packages"}
       >
         <PackgeIcon />
         <span> packages</span>
       </Link>
       <Link
-        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/supplier" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/supplier" && "bg-indigo-600"} capitalize transition-all duration-300 hover:bg-indigo-600`}
         href={"/dashboard/supplier"}
       >
         <SupplierIcon />
         <span> supplier</span>
       </Link>
       <Link
-        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/supplier" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/supplier" && "bg-indigo-600"} capitalize transition-all duration-300 hover:bg-indigo-600`}
         href={"/dashboard/blog"}
       >
         <BlogIcon />
         <span> blog</span>
       </Link>
       <Link
-        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize ${pathname.startsWith("/dashboard/users") && "bg-sky-600"} transition-all duration-300 hover:bg-sky-600`}
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize ${pathname.startsWith("/dashboard/users") && "bg-indigo-600"} transition-all duration-300 hover:bg-indigo-600`}
         href={"/dashboard/users"}
       >
         <UserIcon />
         <span> users</span>
       </Link>
       <Link
-        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize transition-all duration-300 hover:bg-sky-600`}
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize transition-all duration-300 hover:bg-indigo-600`}
         href={"/"}
       >
         <WebsiteIcon />

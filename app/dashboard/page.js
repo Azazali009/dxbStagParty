@@ -35,10 +35,10 @@ export default async function page() {
     );
   }
   return (
-    <div className="relative">
-      <PendingBookingPopup />
+    <div className="relative space-y-10 p-4">
       <AdminHeader />
-      <div className="space-y-10 p-4">
+      <PendingBookingPopup />
+      <div className="space-y-10">
         <Suspense fallback={<Spinner />}>
           <AdminStats />
           <AdminBookingCalender bookings={bookings} />

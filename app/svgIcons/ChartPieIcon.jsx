@@ -1,10 +1,10 @@
-export default function ChartPieIcon() {
+export default function ChartPieIcon({ size = "5" }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className="size-5"
+      className={`size-${size}`}
     >
       <path
         fillRule="evenodd"

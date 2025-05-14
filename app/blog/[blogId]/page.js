@@ -39,13 +39,15 @@ export default async function Page({ params }) {
         </div>
       </div>
       <div className="relative flex min-h-[700px] items-center justify-center">
+        {/* overlay */}
+        <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-transparent via-transparent to-primary"></div>
         <Image src={image} fill alt={name} className="object-cover" />
         <h1
           className={`relative ${cinzel.className} z-10 text-7xl font-black capitalize text-matalicGold`}
         >
           {name}
         </h1>
-        <div className="absolute left-8 top-8 w-fit rounded-bl-full rounded-tr-full bg-matalicGold px-6 py-2.5 font-semibold capitalize text-navyBlue">
+        <div className="absolute left-8 top-8 w-fit animate-bounce rounded-bl-full rounded-tr-full bg-matalicGold px-6 py-2.5 font-semibold capitalize text-navyBlue">
           {category}
         </div>
       </div>

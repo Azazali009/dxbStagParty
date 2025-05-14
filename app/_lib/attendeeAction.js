@@ -17,6 +17,7 @@ export async function updateAttendeeResendIncrementAction(attendee, bookingID) {
       body: JSON.stringify({
         email: attendee.email,
         amount: attendee.amountPaid,
+        remainingAttempts: attendee.resendIncrement,
       }),
     },
   );

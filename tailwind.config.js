@@ -7,12 +7,23 @@ export const content = [
 export const theme = {
   // darkMode: "class",
   extend: {
-    fontFamily: {
-      cinzel: ["Cinzel", "sans-serif"],
+    keyframes: {
+      wave: {
+        "0%": { transform: "rotate(0deg)" },
+        "15%": { transform: "rotate(14deg)" },
+        "30%": { transform: "rotate(-8deg)" },
+        "40%": { transform: "rotate(14deg)" },
+        "50%": { transform: "rotate(-4deg)" },
+        "60%": { transform: "rotate(10deg)" },
+        "70%": { transform: "rotate(0deg)" },
+        "100%": { transform: "rotate(0deg)" },
+      },
     },
     animation: {
-      spotlight: "spotlight 2s ease .75s 1 forwards",
-      "meteor-effect": "meteor 5s linear infinite",
+      wave: "wave 1.6s ease-in-out infinite",
+    },
+    fontFamily: {
+      cinzel: ["Cinzel", "sans-serif"],
     },
 
     boxShadow: {

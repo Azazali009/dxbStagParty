@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
   try {
-    const { email, amount } = await req.json();
+    const { email, amount, remainingAttempts } = await req.json();
 
     // 🔹 1️⃣ Create Stripe Checkout Session for Organizer Payment
     const session = await stripe.checkout.sessions.create({
@@ -52,8 +52,9 @@ async function sendEmail(to, paymentLink) {
     subject: "Resend payment Link of activity",
     text: `Click the link to pay: ${paymentLink}`,
     html: `<h1>Stag Activity Payment</h1>
+    <p>Be carefull you have ${remainingAttempts} attemps left</p>
       <p style="font-size:16px; font-weight:400;line-height:1.7;">Hi there! Below is your payment link. All other payment links have been sent to your friend emails. Please ensure timely payment to secure your booking.</p>
-       <a style="background-image: linear-gradient(to right, #086647, #21bf5d);
+      <a style="background-image: linear-gradient(to right, #086647, #21bf5d);
          padding: 10px 24px;
          border-radius: 6px;
          font-weight: 700;
