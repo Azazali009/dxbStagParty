@@ -137,7 +137,7 @@ export async function editActivityAction(formData) {
     isValidImage &&
     (!ALLOWED_TYPES.includes(image.type) || image.size > MAX_FILE_SIZE)
   ) {
-    return { error: "Main image must be J, PNG or WEBP and less than 1MB" };
+    return { error: "Main image must be JPG, PNG or WEBP and less than 1MB" };
   }
 
   if (

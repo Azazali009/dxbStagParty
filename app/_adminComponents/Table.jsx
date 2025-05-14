@@ -4,7 +4,9 @@ export default function Table({ headers, data, RowComponent }) {
       {/* Table Header */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-center justify-items-center rounded-t-md border border-b-0 border-gray-800 bg-navyBlue px-4 py-3 font-semibold">
         {headers.map((header, index) => (
-          <p key={index}>{header}</p>
+          <p className="capitalize" key={index}>
+            {header}
+          </p>
         ))}
       </div>
 

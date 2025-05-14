@@ -9,8 +9,8 @@ import UserIcon from "../svgIcons/UserIcon";
 import WebsiteIcon from "../svgIcons/WebsiteIcon";
 import { usePathname } from "next/navigation";
 import { getPendingBookings } from "../_lib/data-services";
-import { getPendingBookingCount } from "../_lib/helpers";
 import { useBooking } from "../_context/bookingProvider";
+import BlogIcon from "../svgIcons/BlogIcon";
 
 export default function SidebarNavigations() {
   const { pendingBookingCount, setPendingBookingCount } = useBooking();
@@ -64,6 +64,13 @@ export default function SidebarNavigations() {
       >
         <SupplierIcon />
         <span> supplier</span>
+      </Link>
+      <Link
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/supplier" && "bg-sky-600"} capitalize transition-all duration-300 hover:bg-sky-600`}
+        href={"/dashboard/blog"}
+      >
+        <BlogIcon />
+        <span> blog</span>
       </Link>
       <Link
         className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize ${pathname.startsWith("/dashboard/users") && "bg-sky-600"} transition-all duration-300 hover:bg-sky-600`}

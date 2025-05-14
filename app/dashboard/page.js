@@ -9,7 +9,7 @@ import AdminBookingCalender from "../_adminComponents/AdminBookingCalendar";
 import { getBookings } from "../_lib/data-services";
 
 export default async function page() {
-  const bookingsArr = await getBookings();
+  // const bookings = await getBookings();
   let bookings = [];
   let errorOccurred = false;
 
