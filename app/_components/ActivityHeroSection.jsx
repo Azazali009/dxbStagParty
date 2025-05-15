@@ -1,3 +1,4 @@
+import { BebasNeue } from "../layout";
 import AnimatedHeading from "./AnimatedHeading";
 
 export default function ActivityHeroSection() {
@@ -7,12 +8,12 @@ export default function ActivityHeroSection() {
       <div className="absolute left-0 top-0 flex h-full w-full items-end bg-gradient-to-b from-black/20 via-black/20 to-primary"></div>
       <div className="relative z-10 max-w-[70%] space-y-6">
         <AnimatedHeading
-          className={`text-balance pt-16 text-left text-xl font-bold uppercase !leading-[1.1] text-softGold sm:text-wrap md:text-6xl`}
+          className={`text-balance pt-16 text-left text-xl font-bold uppercase !leading-[1.1] text-softGold ${BebasNeue.className} sm:text-wrap md:text-6xl`}
         >
           {" "}
           Dubai most legendary stag party experiences
         </AnimatedHeading>
-        <p className="">60% curated activities. One unforgettable weekend.</p>
+        <p className="">60+ curated activities. One unforgettable weekend.</p>
       </div>
       {/* <div className="relative z-10 mx-auto flex max-w-[50%] items-center gap-6 rounded-md bg-neutral-800/80 p-4">
         <button>Group Size</button>

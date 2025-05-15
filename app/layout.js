@@ -33,7 +33,7 @@ export const playfairDisplay = Playfair_Display({
 export const BebasNeue = Bebas_Neue({
   subsets: ["latin"],
   display: "swap",
-  weight: ["600", "700", "800", "900"],
+  weight: ["400"],
 });
 // export const metadata = {
 //   title: {
