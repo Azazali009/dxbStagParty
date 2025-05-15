@@ -38,9 +38,10 @@ export async function addActivityAction(formData) {
   const alcoholPermitted = formData.get("alcoholPermitted");
   const photoVideoIncluded = formData.get("photoVideoIncluded");
   const cancellationPolicy = formData.get("cancellationPolicy");
-  const optionalAddOns = formData.get("optionalAddOns");
-  const coreInclusions = formData.get("coreInclusions");
+  const optionalAddOns = formData.get("optionalAddOns")?.split(",");
+  const coreInclusions = formData.get("coreInclusions")?.split(",");
   const depositRequired = formData.get("depositRequired");
+  const category = formData.get("category");
 
   // empty fields
   if (
@@ -61,7 +62,8 @@ export async function addActivityAction(formData) {
     !cancellationPolicy ||
     !optionalAddOns ||
     !coreInclusions ||
-    !depositRequired
+    !depositRequired ||
+    !category
   )
     return { error: "Please fill required fields" };
 
@@ -100,6 +102,7 @@ export async function addActivityAction(formData) {
     optionalAddOns,
     coreInclusions,
     depositRequired,
+    category,
   };
   await createActivity(newActivity);
 
@@ -131,6 +134,14 @@ export async function editActivityAction(formData) {
   const existingBannerImage = formData.get("existingBannerImage");
   const activityId = Number(formData.get("activityId"));
   const supplier = Number(formData.get("supplier"));
+  const dayTime = formData.get("dayTime");
+  const alcoholPermitted = formData.get("alcoholPermitted");
+  const photoVideoIncluded = formData.get("photoVideoIncluded");
+  const cancellationPolicy = formData.get("cancellationPolicy");
+  const optionalAddOns = formData.get("optionalAddOns")?.split(",");
+  const coreInclusions = formData.get("coreInclusions")?.split(",");
+  const depositRequired = formData.get("depositRequired");
+  const category = formData.get("category");
   // Check validity
   const isValidImage = image && image.size > 0 && image.name !== "undefined";
   const isValidBanner =
@@ -150,7 +161,15 @@ export async function editActivityAction(formData) {
     !bannerImage ||
     !group_size ||
     !minAge ||
-    !supplier
+    !supplier ||
+    !dayTime ||
+    !alcoholPermitted ||
+    !photoVideoIncluded ||
+    !cancellationPolicy ||
+    !optionalAddOns ||
+    !coreInclusions ||
+    !depositRequired ||
+    !category
   )
     return { error: "Please fill required fields" };
 
@@ -192,6 +211,14 @@ export async function editActivityAction(formData) {
     image: imagePath,
     bannerImage: bannerPath,
     supplier,
+    dayTime,
+    alcoholPermitted,
+    photoVideoIncluded,
+    cancellationPolicy,
+    optionalAddOns,
+    coreInclusions,
+    depositRequired,
+    category,
   };
 
   const { error } = await supabase

@@ -126,7 +126,7 @@ export default function AdminActivityForm() {
         <FormRow label={"Link Supplier"}>
           <select
             name="supplier"
-            className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 text-softGold"
+            className="h-10 w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 text-softGold"
           >
             <option selected value="">
               Select supplier
@@ -160,13 +160,19 @@ export default function AdminActivityForm() {
         />
       </FormRow>
       <FormRow label={"Photo Video Included"}>
-        <input
+        <select
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
-          type="text"
           name="photoVideoIncluded"
-          autoComplete="on"
-          placeholder="Yes (photographer) / No / Optional (drone add-on)"
-        />
+          id="photoVideoIncluded"
+          required
+        >
+          <option selected value="">
+            Select Photo Video Inclusion?
+          </option>
+          <option value="yes">Yes</option>
+          <option value="No">No, available as add-on</option>
+          <option value="optional">Optional</option>
+        </select>
       </FormRow>
       <FormRow label={"cancellation Policy"}>
         <input
@@ -199,14 +205,22 @@ export default function AdminActivityForm() {
         <select
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
           name="depositRequired"
-          id=""
         >
           <option selected value="">
-            Select deposit
+            Deposit required
           </option>
           <option value="yes">yes</option>
           <option value="no">No</option>
         </select>
+      </FormRow>
+      <FormRow label={"category"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="category"
+          autoComplete="on"
+          placeholder="Vip / Adrenalin / Competitive etc..."
+        />
       </FormRow>
       <FormRow label={"Description"} className={"[grid-column:1/-1]"}>
         <textarea

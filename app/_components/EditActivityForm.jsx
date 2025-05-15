@@ -20,7 +20,16 @@ export default function EditActivityForm({ activity }) {
     image,
     bannerImage,
     supplier,
+    dayTime,
+    alcoholPermitted,
+    photoVideoIncluded,
+    coreInclusions,
+    optionalAddOns,
+    cancellationPolicy,
+    depositRequired,
+    category,
   } = activity;
+
   const [loading, setLoading] = useState(false);
   const [suppliers, setSuppliers] = useState([]);
   const [isPending, startTransition] = useTransition();
@@ -164,6 +173,95 @@ export default function EditActivityForm({ activity }) {
           </select>
         </FormRow>
       )}
+      <FormRow label={"Day time"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="dayTime"
+          autoComplete="on"
+          defaultValue={dayTime}
+          placeholder="Evening/Night"
+        />
+      </FormRow>
+      <FormRow label={"alcohol Permitted"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="alcoholPermitted"
+          autoComplete="on"
+          defaultValue={alcoholPermitted}
+          placeholder="Yes (venue dependent)"
+        />
+      </FormRow>
+      <FormRow label={"Photo Video Included"}>
+        <select
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          name="photoVideoIncluded"
+          id="photoVideoIncluded"
+          defaultValue={photoVideoIncluded}
+          required
+        >
+          <option selected value="">
+            Select Photo Video Inclusion?
+          </option>
+          <option value="yes">Yes</option>
+          <option value="No, available as add-on">
+            No, available as add-on
+          </option>
+          <option value="optional">Optional</option>
+        </select>
+      </FormRow>
+      <FormRow label={"cancellation Policy"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="cancellationPolicy"
+          autoComplete="on"
+          defaultValue={cancellationPolicy}
+          placeholder="48-hour cancellation"
+        />
+      </FormRow>
+      <FormRow label={"optional Add Ons"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="optionalAddOns"
+          autoComplete="on"
+          defaultValue={optionalAddOns}
+          placeholder="Lighting rig, MC host, smoke machine"
+        />
+      </FormRow>
+      <FormRow label={"core Inclusions"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="coreInclusions"
+          title="split by commas"
+          defaultValue={coreInclusions}
+          placeholder="Professional DJ for 2–3 hrs, full deck setup, curated playlist, sound system..."
+        />
+      </FormRow>
+      <FormRow label={"deposit Required"}>
+        <select
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          name="depositRequired"
+          defaultValue={depositRequired}
+        >
+          <option value="">Deposit required</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </FormRow>
+      <FormRow label={"category"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="category"
+          autoComplete="on"
+          defaultValue={category}
+          placeholder="Vip / Adrenalin / Competitive etc..."
+        />
+      </FormRow>
       <FormRow label={"Description"} className={"[grid-column:1/-1]"}>
         <textarea
           className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
