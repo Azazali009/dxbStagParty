@@ -128,7 +128,7 @@ export default function AdminActivityForm() {
             name="supplier"
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 text-softGold"
           >
-            <option disabled selected value="">
+            <option selected value="">
               Select supplier
             </option>
             {suppliers?.map((supplier) => {
@@ -141,6 +141,73 @@ export default function AdminActivityForm() {
           </select>
         </FormRow>
       )}
+      <FormRow label={"Day time"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="dayTime"
+          autoComplete="on"
+          placeholder="Evening/Night"
+        />
+      </FormRow>
+      <FormRow label={"alcohol Permitted"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="alcoholPermitted"
+          autoComplete="on"
+          placeholder="Yes (venue dependent)"
+        />
+      </FormRow>
+      <FormRow label={"Photo Video Included"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="photoVideoIncluded"
+          autoComplete="on"
+          placeholder="Yes (photographer) / No / Optional (drone add-on)"
+        />
+      </FormRow>
+      <FormRow label={"cancellation Policy"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="cancellationPolicy"
+          autoComplete="on"
+          placeholder="48-hour cancellation"
+        />
+      </FormRow>
+      <FormRow label={"optional Add Ons"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="optionalAddOns"
+          autoComplete="on"
+          placeholder="Lighting rig, MC host, smoke machine"
+        />
+      </FormRow>
+      <FormRow label={"core Inclusions"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="coreInclusions"
+          title="split by commas"
+          placeholder="Professional DJ for 2–3 hrs, full deck setup, curated playlist, sound system..."
+        />
+      </FormRow>
+      <FormRow label={"deposit Required"}>
+        <select
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          name="depositRequired"
+          id=""
+        >
+          <option selected value="">
+            Select deposit
+          </option>
+          <option value="yes">yes</option>
+          <option value="no">No</option>
+        </select>
+      </FormRow>
       <FormRow label={"Description"} className={"[grid-column:1/-1]"}>
         <textarea
           className="rounded bg-navyBlue p-2 outline-none placeholder:text-matalicGold/20 focus:outline-matalicGold"

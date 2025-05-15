@@ -1,4 +1,9 @@
-import { Cinzel, Playfair_Display, Poppins } from "next/font/google";
+import {
+  Cinzel,
+  Playfair_Display,
+  Poppins,
+  Bebas_Neue,
+} from "next/font/google";
 import ClientComponent from "./_components/ClientComponent";
 import Footer from "./_components/Footer";
 import Header from "./_components/Header";
@@ -24,6 +29,11 @@ export const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700", "800", "900"],
+});
+export const BebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["600", "700", "800", "900"],
 });
 // export const metadata = {
 //   title: {

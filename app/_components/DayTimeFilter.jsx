@@ -9,17 +9,18 @@ export default function SliderFilter() {
   const [show, setShow] = useState(false);
 
   return (
-    <div className="space-y-3 font-semibold">
-      <div className="flex w-full items-center justify-between fill-softGold">
-        <label className="block font-medium">Day Time</label>
-        <button onClick={() => setShow((show) => !show)}>
-          {show ? <UpSvg /> : <DownSvg />}
-        </button>
-      </div>
+    <div className="flex flex-col items-center justify-center space-y-3 font-semibold">
+      <button
+        onClick={() => setShow((show) => !show)}
+        className="flex min-h-12 w-full items-center justify-between rounded-md border border-gray-700 fill-softGold px-4"
+      >
+        <label className="block font-medium">Day / Night</label>
+        <span>{show ? <UpSvg /> : <DownSvg />}</span>
+      </button>
       <AnimatePresence>
         {show && (
           <motion.div
-            className="flex h-12 items-center gap-2 rounded-md bg-navyBlue px-4"
+            className="flex h-12 w-full items-center gap-2 rounded-md bg-navyBlue px-4"
             key="dayTime"
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}

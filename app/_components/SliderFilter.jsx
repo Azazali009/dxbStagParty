@@ -31,12 +31,13 @@ export default function SliderFilter({
 
   return (
     <div className="space-y-3 font-semibold">
-      <div className="flex w-full items-center justify-between fill-softGold">
+      <button
+        onClick={() => setShow((show) => !show)}
+        className="flex min-h-12 w-full items-center justify-between rounded-md border border-gray-700 fill-softGold px-4"
+      >
         <label className="block font-medium">Group Size</label>
-        <button onClick={() => setShow((show) => !show)}>
-          {show ? <UpSvg /> : <DownSvg />}
-        </button>
-      </div>
+        <span>{show ? <UpSvg /> : <DownSvg />}</span>
+      </button>
 
       <AnimatePresence>
         {show && (

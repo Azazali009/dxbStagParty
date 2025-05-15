@@ -34,6 +34,13 @@ export async function addActivityAction(formData) {
   const image = formData.get("image");
   const bannerImage = formData.get("bannerImage");
   const supplier = Number(formData.get("supplier"));
+  const dayTime = formData.get("dayTime");
+  const alcoholPermitted = formData.get("alcoholPermitted");
+  const photoVideoIncluded = formData.get("photoVideoIncluded");
+  const cancellationPolicy = formData.get("cancellationPolicy");
+  const optionalAddOns = formData.get("optionalAddOns");
+  const coreInclusions = formData.get("coreInclusions");
+  const depositRequired = formData.get("depositRequired");
 
   // empty fields
   if (
@@ -47,7 +54,14 @@ export async function addActivityAction(formData) {
     !name ||
     !minAge ||
     !price ||
-    !supplier
+    !supplier ||
+    !dayTime ||
+    !alcoholPermitted ||
+    !photoVideoIncluded ||
+    !cancellationPolicy ||
+    !optionalAddOns ||
+    !coreInclusions ||
+    !depositRequired
   )
     return { error: "Please fill required fields" };
 
@@ -79,6 +93,13 @@ export async function addActivityAction(formData) {
     image,
     bannerImage,
     supplier,
+    dayTime,
+    alcoholPermitted,
+    photoVideoIncluded,
+    cancellationPolicy,
+    optionalAddOns,
+    coreInclusions,
+    depositRequired,
   };
   await createActivity(newActivity);
 
