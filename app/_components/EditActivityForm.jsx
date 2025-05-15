@@ -152,24 +152,24 @@ export default function EditActivityForm({ activity }) {
         <FormRow label={"Link Supplier"}>
           <select
             name="supplier"
-            className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 text-softGold"
+            className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 capitalize text-softGold"
           >
             {supplier && supplier.id ? (
               <option selected value={supplier.id} defaultValue={supplier.name}>
                 {supplier.name}
               </option>
             ) : (
-              <option disabled selected value="">
+              <option selected value="">
                 Link supplier
               </option>
             )}
-            {suppliers?.map((supplier) => {
-              return (
-                <option key={supplier.value} value={supplier.value}>
-                  {supplier.name}
+            {suppliers
+              ?.filter((curSupplier) => supplier?.id !== curSupplier.value)
+              .map((curSupplier) => (
+                <option key={curSupplier.value} value={curSupplier.value}>
+                  {curSupplier.name}
                 </option>
-              );
-            })}
+              ))}
           </select>
         </FormRow>
       )}
