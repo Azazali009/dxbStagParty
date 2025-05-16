@@ -1,4 +1,3 @@
-import React from "react";
 import { playfairDisplay } from "../layout";
 
 export default function ActivitySupportSections({ activity }) {

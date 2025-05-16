@@ -22,10 +22,10 @@ export default async function AdrenalineActivities({ category }) {
                 key={activity.id}
                 className={`relative flex origin-top items-end overflow-hidden rounded-lg p-10 [transform:perspective(300px)_rotateY(-5deg)] ${
                   index === 1
-                    ? "z-10 h-[600px]"
+                    ? "z-10 h-[650px]"
                     : index === 2
-                      ? "h-[630px]"
-                      : "h-[500px]"
+                      ? "h-[700px]"
+                      : "h-[550px]"
                 }`}
               >
                 {/* overlay */}
