@@ -98,6 +98,18 @@ export async function getActivities() {
   }
   return data;
 }
+export async function getActivitiesByCategory(category) {
+  let { data, error } = await supabase
+    .from("activities")
+    .select("*")
+    .ilike("category", category);
+
+  if (error) {
+    console.log(error);
+    throw new Error("Error while getting Activities.😒");
+  }
+  return data;
+}
 export async function getActivity(id) {
   let { data, error } = await supabase
     .from("activities")
@@ -111,6 +123,7 @@ export async function getActivity(id) {
   }
   return data;
 }
+
 export async function addBooking(booking) {
   const { data: CurBooking, error } = await supabase
     .from("booking")

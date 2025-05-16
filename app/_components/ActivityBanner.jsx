@@ -87,7 +87,7 @@ export default async function ActivityBanner({ activity, user }) {
                 />
               </svg>
 
-              <p> 18+ At Badayer</p>
+              <p> {activity.destinations}</p>
             </div>
           </div>
           {/* cta */}

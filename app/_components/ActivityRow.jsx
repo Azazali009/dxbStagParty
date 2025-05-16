@@ -9,7 +9,7 @@ export default function ActivityRow({ activity }) {
       <p className="">{activity.name}</p>
       <p className="">{activity.price}</p>
       <p className="">{activity.duration}</p>
-      <p className="">{activity.destinations}</p>
+      <p className="">{activity.category}</p>
       <p className="">{activity.group_size}</p>
       <p className="capitalize">
         {activity.supplier ? (

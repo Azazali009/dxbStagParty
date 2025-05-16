@@ -9,7 +9,7 @@ export default function ActivityList({ Activities }) {
         <p>Name</p>
         <p>Price</p>
         <p>Duration</p>
-        <p>Destination</p>
+        <p>Type</p>
         <p>Group Size</p>
         <p>Supplier</p>
         <p className="col-span-2">Action</p>
