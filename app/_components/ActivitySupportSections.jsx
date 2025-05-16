@@ -2,7 +2,7 @@ import React from "react";
 import { playfairDisplay } from "../layout";
 
 export default function ActivitySupportSections({ activity }) {
-  const embedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyCGg508gzH4JEux2eWW2PH4NC1lpuGsbL0&q=${encodeURIComponent(activity.destinations)}`;
+  const embedUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY}&q=${encodeURIComponent(activity.destinations)}`;
 
   return (
     <div className="space-y-20 bg-[#1f1000] px-4 py-10">
