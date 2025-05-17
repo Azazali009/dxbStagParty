@@ -36,7 +36,7 @@ export default function CreateBlogForm({ isEdit = false, blog = {} }) {
       action={(formData) => handleSubmit(formData)}
       className="grid grid-cols-2 gap-x-16 gap-y-4 px-6 py-16"
     >
-      <FormRow label={"Blog Name"}>
+      <FormRow label={"Blog Title"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
           type="text"

@@ -3,6 +3,7 @@ import {
   Playfair_Display,
   Poppins,
   Bebas_Neue,
+  Noto_Serif_Georgian,
 } from "next/font/google";
 import ClientComponent from "./_components/ClientComponent";
 import Footer from "./_components/Footer";
@@ -34,6 +35,11 @@ export const BebasNeue = Bebas_Neue({
   subsets: ["latin"],
   display: "swap",
   weight: ["400"],
+});
+export const Georgia = Noto_Serif_Georgian({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 // export const metadata = {
 //   title: {

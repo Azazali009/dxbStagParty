@@ -11,10 +11,12 @@ import {
 } from "./data-services";
 
 import { extractImagePath } from "./helpers";
-import { supabase } from "./supabase";
+// import { supabase } from "./supabase";
 import { getCurrentUser } from "./getCurrentUser";
+import { createClient } from "../_utils/supabase/server";
 
 export async function addActivityAction(formData) {
+  const supabase = await createClient();
   // check if user is login and user is admin
   const user = await getCurrentUser();
   if (!user || user?.user_metadata.role !== "admin")
@@ -105,7 +107,54 @@ export async function addActivityAction(formData) {
     depositRequired,
     category,
   };
-  await createActivity(newActivity);
+  // await createActivity(newActivity);
+  const imageName = `card-image-${Math.random()}-${image?.name}`;
+  const bannerImageName = `banner-image-${Math.random()}-${bannerImage?.name}`;
+
+  const imagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${imageName}`;
+  const bannerImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${bannerImageName}`;
+
+  const { data, error } = await supabase
+    .from("activities")
+    .insert([
+      {
+        ...newActivity,
+        image: imagePath,
+        bannerImage: bannerImagePath,
+      },
+    ])
+    .select()
+    .single();
+
+  if (error) {
+    console.log(error);
+    return { error: "Error while creating Activity.😒" };
+  }
+
+  // upload images
+  const { error: imageUploadError } = await supabase.storage
+    .from("activity-images")
+    .upload(imageName, newActivity?.image);
+
+  if (imageUploadError) {
+    console.log(imageUploadError);
+    await supabase.from("activities").delete().eq("id", data.id);
+    return {
+      error: "Activity image could not be uploaded. Activity is not created.",
+    };
+  }
+
+  const { error: bannerUploadError } = await supabase.storage
+    .from("activity-images")
+    .upload(bannerImageName, newActivity?.bannerImage);
+
+  if (bannerUploadError) {
+    console.log(bannerUploadError);
+    await supabase.from("activities").delete().eq("id", data.id);
+    return {
+      error: "Banner image could not be uploaded. Activity is not created.",
+    };
+  }
 
   revalidatePath("/dashboard/activities");
 
@@ -113,6 +162,7 @@ export async function addActivityAction(formData) {
 }
 
 export async function editActivityAction(formData) {
+  const supabase = await createClient();
   const user = await getCurrentUser();
   if (!user || user?.user_metadata.role !== "admin")
     return { error: "You are not allowed to perform this action" };
@@ -259,6 +309,7 @@ export async function editActivityAction(formData) {
 }
 
 export async function deleteActivityAction(activityId) {
+  const supabase = await createClient();
   const user = await getCurrentUser();
   const activity = await getActivity(activityId);
   const imageUrl = activity?.image;

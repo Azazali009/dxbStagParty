@@ -7,9 +7,11 @@ import AdminHeader from "../_adminComponents/AdminHeader";
 import PendingBookingPopup from "../_adminComponents/PendingBookingPopup";
 import AdminBookingCalender from "../_adminComponents/AdminBookingCalendar";
 import { getBookings } from "../_lib/data-services";
+import { getCurrentUser } from "../_lib/getCurrentUser";
 
 export default async function page() {
   // const bookings = await getBookings();
+
   let bookings = [];
   let errorOccurred = false;
 
@@ -37,11 +39,11 @@ export default async function page() {
   return (
     <div className="relative space-y-10 p-4">
       <AdminHeader />
+      <AdminBookingCalender bookings={bookings} />
       <PendingBookingPopup />
       <div className="space-y-10">
         <Suspense fallback={<Spinner />}>
           <AdminStats />
-          <AdminBookingCalender bookings={bookings} />
           <RecentBookings />
           <RecentTopActivities />
         </Suspense>

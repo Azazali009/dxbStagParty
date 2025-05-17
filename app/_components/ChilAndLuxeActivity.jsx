@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { playfairDisplay } from "../layout";
+import { Georgia, playfairDisplay } from "../layout";
 import { getActivitiesByCategory } from "../_lib/data-services";
 
 export default async function ChilAndLuxeActivity({ category }) {
@@ -12,13 +12,13 @@ export default async function ChilAndLuxeActivity({ category }) {
 
   return (
     <section className="relative space-y-14 bg-red-100 p-4 py-20">
-      <div className="max-w-[50%] space-y-4 text-navyBlue">
+      <div className="space-y-4 text-navyBlue">
         <h2
-          className={`${playfairDisplay.className} text-4xl font-bold capitalize leading-[1.4]`}
+          className={`${Georgia.className} text-6xl font-bold capitalize leading-[1.4]`}
         >
           Chill & Luxe &mdash;{" "}
           <span className="font-light">
-            Because not everything has to be loud
+            Because not <br /> everything has to be loud
           </span>
         </h2>
         <p className="leading-[1.8]">
@@ -27,21 +27,19 @@ export default async function ChilAndLuxeActivity({ category }) {
         </p>
       </div>
       <div
-        className={`h-12 ${playfairDisplay.className} flex w-fit items-center rounded-md bg-[#e5cbcb] px-6 text-lg font-light italic text-[#b29e9e]`}
+        className={`h-12 ${Georgia.className} flex w-[50%] items-center rounded-md bg-[#e5cbcb] px-6 text-lg font-light italic text-[#766868]`}
       >
         <p>Not everything needs a shot and a strobe light</p>
       </div>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-2 gap-8 px-8">
         {/* Column 1 */}
-        <div className="space-y-6">
+        <div className="space-y-6 [transform:perspective(200px)_rotateX(-1deg)]">
           {leftCards.map((activity, index) => (
             <div
               key={activity.id}
               className={`relative flex ${
-                index === 0
-                  ? "h-[400px] [transform:perspective(300px)_rotateX(-2deg)]"
-                  : "h-[350px] origin-left [transform:perspective(300px)_rotateY(1deg)]"
-              } rotate-12 items-end overflow-hidden rounded-lg p-10`}
+                index === 0 ? "h-[500px]" : "h-[450px]"
+              } items-end overflow-hidden rounded-lg p-10`}
             >
               <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
               <Image
@@ -67,9 +65,9 @@ export default async function ChilAndLuxeActivity({ category }) {
         </div>
 
         {/* Column 2 */}
-        <div className="space-y-8">
+        <div className="-mt-16 space-y-8 [transform:perspective(200px)_rotateX(2deg)]">
           {/* Top big card */}
-          <div className="relative flex h-[300px] rotate-12 items-end overflow-hidden rounded-lg p-10 [transform:perspective(300px)_rotateX(2deg)]">
+          <div className="relative flex h-[400px] items-end overflow-hidden rounded-lg p-10">
             <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
             <Image
               src={rightTop?.bannerImage}
@@ -92,13 +90,11 @@ export default async function ChilAndLuxeActivity({ category }) {
           </div>
 
           {/* Grid 2 cards */}
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid origin-center grid-cols-2 gap-6">
             {rightBottom.map((activity, index) => (
               <div
                 key={activity.id}
-                className={`relative flex h-[400px] items-end overflow-hidden rounded-lg p-6 ${
-                  index === 0 && "[transform:perspective(300px)_rotateX(4deg)]"
-                }`}
+                className={`relative flex h-[500px] items-end overflow-hidden rounded-lg p-6`}
               >
                 {index === 1 && (
                   <p className="absolute left-4 top-4 z-20 rounded-full bg-black px-6 py-2">
@@ -133,12 +129,12 @@ export default async function ChilAndLuxeActivity({ category }) {
       <div className="flex flex-col items-center gap-4">
         <Link
           href="/activities/category/Chill & Luxe"
-          className="rounded-lg bg-[#e5cbcb] px-6 py-2 capitalize text-navyBlue duration-300 hover:bg-reddish hover:text-white"
+          className="rounded-lg border-2 border-[#70592f] bg-[#70592f] px-6 py-2 text-lg capitalize duration-300 hover:bg-reddish"
         >
           explore all chill & luxe
         </Link>
         <Link
-          className="text-sm text-navyBlue hover:underline"
+          className="text-lg text-navyBlue hover:underline"
           href={"/activities"}
         >
           Or view the full activity list

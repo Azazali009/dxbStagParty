@@ -79,10 +79,10 @@ export default async function AdrenalineActivities({ category }) {
             </div>
           </div>
           {/* card 5 */}
-          <div className="flex flex-col gap-6 self-center">
+          <div className="flex flex-col gap-6 self-center text-center">
             <Link
               href={`/activities/category/adrenaline`}
-              className="flex items-center rounded-2xl bg-orange-700 p-6 text-2xl font-medium capitalize"
+              className="flex items-center rounded-2xl bg-navyBlue p-6 text-2xl font-medium capitalize duration-300 hover:opacity-70"
             >
               explore all adrenaline activities
             </Link>

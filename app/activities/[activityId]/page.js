@@ -20,23 +20,6 @@ export default async function Page({ params }) {
 
   return (
     <div className="mx-auto -mt-[110px] max-w-full space-y-6 bg-[#3D1F00] text-navyBlue">
-      {/* <h1 className="text-xl font-bold sm:text-3xl">{name}</h1> */}
-      {/* <div className="relative grid h-full grid-cols-1 items-start gap-8 lg:grid-cols-[2fr_1.1fr]">
-        {/* Left Container */}
-      {/* <SinglePageBookingDetails
-        image={image}
-        duration={duration}
-        minAge={minAge}
-      />
-      {/* Right Container */}
-      {/* <SinglePageBookingSection
-        activityId={id}
-        price={price}
-        activityName={name}
-        destinations={destinations}
-        session={session}
-      />  */}
-      {/* </div> */}
       <ActivityDetails activity={activity} />
     </div>
   );

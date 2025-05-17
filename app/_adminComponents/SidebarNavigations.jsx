@@ -66,7 +66,7 @@ export default function SidebarNavigations() {
         <span> supplier</span>
       </Link>
       <Link
-        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/supplier" && "bg-indigo-600"} capitalize transition-all duration-300 hover:bg-indigo-600`}
+        className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/blog" && "bg-indigo-600"} capitalize transition-all duration-300 hover:bg-indigo-600`}
         href={"/dashboard/blog"}
       >
         <BlogIcon />

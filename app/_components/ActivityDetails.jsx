@@ -6,6 +6,7 @@ import { getCurrentUser } from "../_lib/getCurrentUser";
 import ActivityDetailSections from "./ActivityDetailSections";
 import ActivitySupportSections from "./ActivitySupportSections";
 import RelatedActivities from "./RelatedActivities";
+import SingleActivityCta from "./SingleActivityCta";
 
 export default async function ActivityDetails({ activity }) {
   const { id, category } = activity;
@@ -16,6 +17,7 @@ export default async function ActivityDetails({ activity }) {
       <ActivityDetailSections activity={activity} />
       <ActivitySupportSections activity={activity} />
       <RelatedActivities category={category} id={id} />
+      <SingleActivityCta />
     </div>
   );
 }

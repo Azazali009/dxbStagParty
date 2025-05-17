@@ -5,9 +5,10 @@ import { Suspense } from "react";
 import ActivityFilters from "../_components/ActivityFilters";
 import AdrenalineActivities from "../_components/AdrenalineActivities";
 import ChilAndLuxeActivity from "../_components/ChilAndLuxeActivity";
+import HomeAndVillaActivities from "../_components/HomeAndVillaActivities";
 import { getActivities, getActivity } from "../_lib/data-services";
 import Image from "next/image";
-import { playfairDisplay } from "../layout";
+import { BebasNeue, playfairDisplay } from "../layout";
 import Link from "next/link";
 
 export const revalidate = 0;
@@ -68,7 +69,9 @@ export default async function Page({ searchParams }) {
       {/* section 3 */}
       <section className="space-y-14 bg-reddish p-4 py-20">
         <div className="flex flex-col items-center gap-4">
-          <h2 className="text-3xl font-semibold uppercase">
+          <h2
+            className={`text-5xl ${BebasNeue.className} font-medium uppercase`}
+          >
             big energy day to night &mdash;{" "}
             <span className="capitalize">
               dubai&apos;s ultimate party line-up{" "}
@@ -84,22 +87,23 @@ export default async function Page({ searchParams }) {
           <div className="space-y-6">
             {ActivitiesArray.slice(0, 2).map((activity, index) => {
               return (
-                <div
+                <Link
+                  href={`/activities/${activity.id}`}
                   key={activity.id}
-                  className={`relative flex ${index === 0 ? "h-[400px] [transform:perspective(300px)_rotateY(-2deg)]" : "h-[300px] origin-left [transform:perspective(300px)_rotateY(2deg)]"} rotate-12 items-end overflow-hidden rounded-lg p-10`}
+                  className={`relative flex ${index === 0 ? "h-[500px] [transform:perspective(300px)_rotateY(-2deg)]" : "h-[450px] origin-left [transform:perspective(800px)_rotateY(3deg)]"} rotate-12 items-end overflow-hidden rounded-lg p-10`}
                 >
                   {/* overlay */}
-                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
+                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/40"></div>
                   <Image
                     src={activity.image}
                     fill
                     alt={activity.name}
                     className="object-cover"
                   />
-                  <h2 className="relative z-20 text-4xl font-medium">
+                  <h2 className="relative z-20 text-3xl font-medium">
                     {activity.name}
                   </h2>
-                </div>
+                </Link>
               );
             })}
           </div>
@@ -122,9 +126,10 @@ export default async function Page({ searchParams }) {
             <div className="grid grid-cols-2 gap-6">
               {ActivitiesArray.slice(0, 2).map((activity, index) => {
                 return (
-                  <div
+                  <Link
+                    href={`/activities/${activity.id}`}
                     key={activity.id}
-                    className="relative flex h-[400px] origin-top items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(-3deg)]"
+                    className="relative flex h-[500px] items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateX(1.5deg)_rotateY(-2deg)]"
                   >
                     {index === 1 && (
                       <p className="absolute left-4 top-4 z-20 rounded-full bg-black px-6 py-2">
@@ -142,35 +147,43 @@ export default async function Page({ searchParams }) {
                     <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
                       {activity.name}
                     </h2>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
             {/* 3 */}
             {ActivitiesArray.slice(0, 1).map((activity) => {
               return (
-                <div
+                <Link
+                  href={`/activities/${activity.id}`}
                   key={activity.id}
-                  className="relative flex h-[250px] origin-right items-center overflow-hidden rounded-lg p-6 [transform:perspective(800px)_rotateY(-3deg)]"
+                  className="relative !mt-16 block h-[250px] w-full origin-right overflow-visible [transform:perspective(200px)_rotateY(-5deg)_scale(1.4)_translateX(-1%)_rotateZ(4deg)]"
+                  style={{
+                    transformStyle: "preserve-3d",
+                    backfaceVisibility: "hidden",
+                  }}
                 >
-                  {/* overlay */}
-                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
-                  <Image
-                    src={activity.image}
-                    fill
-                    alt={activity.name}
-                    className="object-cover"
-                  />
-                  <h2 className="relative z-20 text-4xl font-medium leading-[1.5]">
-                    {activity.name}
-                  </h2>
-                </div>
+                  <div className="mt-10 h-full w-full">
+                    <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                      <Image
+                        src={activity.image}
+                        alt={activity.name}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/80 to-transparent" />
+                      <h2 className="absolute left-6 top-1/2 z-20 -translate-y-1/2 text-4xl font-bold leading-snug text-white">
+                        {activity.name}
+                      </h2>
+                    </div>
+                  </div>
+                </Link>
               );
             })}
           </div>
         </div>
         <div className="flex justify-center">
-          <button className="rounded-lg border-2 border-orange-700 bg-orange-700 px-6 py-2 capitalize duration-300 hover:bg-reddish">
+          <button className="rounded-lg border-2 border-[#70592f] bg-[#70592f] px-6 py-2 text-lg capitalize duration-300 hover:bg-reddish">
             explore all party experience
           </button>
         </div>
@@ -178,110 +191,7 @@ export default async function Page({ searchParams }) {
       {/* section 4 */}
       <ChilAndLuxeActivity category={"Chill & Luxe"} />
       {/* section 5 */}
-      <section className="relative space-y-14 bg-red-100 p-4 py-20">
-        <div className="mx-auto max-w-[50%] space-y-4 text-center text-navyBlue">
-          <h2
-            className={`${playfairDisplay.className} text-4xl font-bold uppercase leading-[1.4]`}
-          >
-            Home & Villa Friendly
-          </h2>
-          <h3 className="text-xl font-medium">
-            Turn Your Crib Into the Main Event
-          </h3>
-          <p className="leading-[1.8]">
-            Private chefs,cocktail masters, game nights, and more all brought
-            straight to you
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 gap-8">
-          {/* column 1 */}
-
-          <div className="space-y-2">
-            {ActivitiesArray.slice(0, 2).map((activity, index) => {
-              return (
-                <div
-                  key={activity.id}
-                  className={`relative flex ${index === 0 ? "h-[500px] [transform:perspective(600px)_rotateY(-3deg)]" : "h-[500px] origin-left [transform:perspective(600px)_rotateY(3deg)]"} rotate-12 items-end overflow-hidden rounded-xl p-10`}
-                >
-                  {/* overlay */}
-                  <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
-                  <Image
-                    src={activity.image}
-                    fill
-                    alt={activity.name}
-                    className="object-cover"
-                  />
-                  <h2 className="relative z-20 text-4xl font-medium">
-                    {activity.name}
-                  </h2>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* column 2 */}
-          <div className="space-y-8">
-            <div className="relative flex h-[400px] origin-right items-end overflow-hidden rounded-lg p-10 [transform:perspective(600px)_rotateY(-4deg)]">
-              {/* overlay */}
-              <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
-              <Image
-                src={activity.image}
-                fill
-                alt={activity.name}
-                className="object-cover"
-              />
-              <h2 className="relative z-20 text-lg font-semibold capitalize">
-                {activity.name}
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-2 gap-6">
-              {ActivitiesArray.slice(0, 2).map((activity, index) => {
-                return (
-                  <div
-                    key={activity.id}
-                    className={`relative flex h-[400px] origin-top items-end overflow-hidden rounded-lg p-6 ${index === 0 ? "[transform:perspective(300px)_rotateX(4deg)_rotateY(4deg)]" : "[transform:perspective(500px)_rotateX(5deg)]"}`}
-                  >
-                    {index === 1 && (
-                      <p className="absolute left-4 top-4 z-20 rounded-full bg-black px-6 py-2">
-                        Best for Day Drinking
-                      </p>
-                    )}
-                    {/* overlay */}
-                    <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
-                    <Image
-                      src={activity.image}
-                      fill
-                      alt={activity.name}
-                      className="object-cover"
-                    />
-                    <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
-                      {activity.name}
-                    </h2>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-4">
-          <button className="rounded-lg bg-orange-700 px-6 py-2 capitalize text-softGold duration-300 hover:bg-reddish hover:text-white">
-            see all Villa - Friendly Ideas
-          </button>
-          <Link className="text-sm text-navyBlue hover:underline" href={"#"}>
-            Or view the full activity list
-          </Link>
-        </div>
-        <div className="absolute bottom-0 left-0 z-50 h-12 w-full bg-red-100"></div>
-      </section>
-      {/* <Suspense fallback={<Spinner />} key={groupSize}>
-        <Activities
-          ActivitiesArray={ActivitiesArray}
-          searchQuery={searchQuery}
-          groupSize={groupSize}
-        />
-      </Suspense> */}
+      <HomeAndVillaActivities ActivitiesArray={ActivitiesArray} />
     </div>
   );
 }
