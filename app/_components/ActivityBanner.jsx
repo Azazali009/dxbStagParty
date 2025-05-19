@@ -27,7 +27,7 @@ export default async function ActivityBanner({ activity, user }) {
           </h1>
           <p className="text-center leading-[1.6]">{description}</p>
         </div>
-        {/* <BookingWindowAndButton user={user} activity={activity} /> */}
+
         <div className="mt-auto space-y-6">
           {/* icons */}
           <div className="flex items-center justify-between gap-6">
@@ -92,9 +92,10 @@ export default async function ActivityBanner({ activity, user }) {
           </div>
           {/* cta */}
           <div className="grid grid-cols-3 gap-7">
-            <button className="block rounded-md border border-[#947a27] bg-[#947a27] px-6 py-2.5 capitalize hover:bg-opacity-70">
+            {/* <button className="block rounded-md border border-[#947a27] bg-[#947a27] px-6 py-2.5 capitalize hover:bg-opacity-70">
               add to my weekend
-            </button>
+              </button> */}
+            <BookingWindowAndButton user={user} activity={activity} />
             <button className="rounded border border-white bg-black px-6 py-2.5 capitalize hover:bg-opacity-70">
               get a quote
             </button>

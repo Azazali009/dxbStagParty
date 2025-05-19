@@ -10,8 +10,8 @@ export function AuthProvider({ children }) {
 
   async function getUser() {
     const supabase = createClient();
-    const { data } = await supabase.auth.getSession();
-    console.log(data);
+    // const { data } = await supabase.auth.getSession();
+
     const {
       data: { user },
     } = await supabase.auth.getUser();

@@ -59,19 +59,12 @@ export default function PendingBookingAlert() {
           >
             &times;
           </button>
-          {/* <motion.div
-          key="pending-alert"
-          initial={{ x: "100%", opacity: 0, scale: 0 }}
-          animate={{ x: 0, opacity: 1, scale: 1 }}
-          exit={{ x: "100%", opacity: 0, scale: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="absolute right-0 top-0 z-[999] max-w-xl space-y-3 rounded-md border-l-4 border-yellow-500 bg-yellow-100 px-4 py-8 shadow-md"
-        > */}
+
           <h2 className="text-xl font-bold text-yellow-800">
             🚨 You have {pendingCount} pending booking
             {pendingCount > 1 ? "s" : ""}!
           </h2>
-          <p className="leading-[1.6] text-yellow-700">
+          <div className="leading-[1.6] text-yellow-700">
             Please review the pending bookings in your dashboard.{" "}
             <Link
               className="inline-block capitalize text-indigo-600 underline hover:no-underline"
@@ -86,7 +79,7 @@ export default function PendingBookingAlert() {
                 </span>
               </div>
             )}
-          </p>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

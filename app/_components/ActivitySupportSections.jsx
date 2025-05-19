@@ -11,13 +11,19 @@ export default function ActivitySupportSections({ activity }) {
         Optional add ons
       </h2>
       <div className="flex items-center justify-center gap-4">
-        {activity?.optionalAddOns.map((addon) => {
-          return (
-            <div key={addon}>
-              <span className="inline-block capitalize">{addon}</span>
-            </div>
-          );
-        })}
+        {!activity?.optionalAddOns ? (
+          <p className="italic text-gray-500">
+            No add-ons have been added yet!
+          </p>
+        ) : (
+          activity?.optionalAddOns?.map((addon) => {
+            return (
+              <div key={addon}>
+                <span className="inline-block capitalize">{addon}</span>
+              </div>
+            );
+          })
+        )}
       </div>
       {/* map section */}
       <div className="!mt-24 grid grid-cols-2 gap-12">

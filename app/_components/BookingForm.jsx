@@ -10,7 +10,7 @@ import Button from "./Button";
 import Summary from "./Summary";
 import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
 
-export default function BookingPage({
+export default function BookingForm({
   id,
   price,
   activityName,
@@ -28,8 +28,8 @@ export default function BookingPage({
   const [selectedPackages, setSelectedPackages] = useState([]);
   const [totalPrice, setTotalPrice] = useState(price);
   const [minDate, setMinDate] = useState("");
+  const [bookingNotes, setBookingNotes] = useState("");
 
-  // const [links, setLinks] = useState([]);
   // add email function
   const addEmail = () => {
     setEmails([...emails, ""]);
@@ -67,80 +67,6 @@ export default function BookingPage({
     setTotalPrice(totalPrice);
   }, [price, selectedActivities, selectedPackages]);
 
-  // const handleBooking = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   try {
-  //     if (!emails || !organizerEmail) return;
-  //     // Combine Emails (Organizer + Attendees)
-  //     const allEmails = [...emails, organizerEmail];
-
-  //     // ✅ 2. Check for Duplicate Emails
-  //     const uniqueEmails = new Set(allEmails); // Set stores only unique values
-  //     if (uniqueEmails.size !== allEmails.length) {
-  //       alert("❌ Duplicate emails are not allowed!");
-  //       setLoading(false);
-  //       return;
-  //     }
-  //     // ✅ 1. Generate Payment Links from Stripe
-  //     const res = await fetch("/api/create-payment-links", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         emails: allEmails,
-  //         totalPrice: price,
-  //         activityName,
-  //       }),
-  //     });
-
-  //     const data = await res.json();
-
-  //     if (!data.success) {
-  //       alert("Error generating payment links");
-  //       return;
-  //     }
-
-  //     // ✅ 2. Create Booking Entry
-  //     const booking = await addBooking({
-  //       activityID: id,
-  //       totalPrice: price,
-  //       attendeeEmails: allEmails,
-  //       organizerEmail,
-  //       destination,
-  //       activityName,
-  //       bookingDate,
-  //     });
-
-  //     // ✅ 3. Map Correct Payment Links to Each Attendee
-  //     const attendeesData = allEmails.map((email) => {
-  //       const paymentLink =
-  //         data.paymentLinks.find((link) => link.email === email)?.link || "";
-  //       return {
-  //         bookingID: booking.id,
-  //         email,
-  //         amountPaid: splitAmount,
-  //         status: "unpaid",
-  //         paymentLink, // ✅ Store actual Stripe link
-  //         expires_at: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // ✅ 12 days expiry
-  //       };
-  //     });
-
-  //     // ✅ 4. Insert Attendees with Payment Links
-  //     await addAttendees(attendeesData);
-
-  //     // ✅ 5. Show Links in UI
-  //     setLinks(data.paymentLinks);
-
-  //     alert("Booking added successfully ✅");
-  //     router.push(`/bookings/${booking.id}`);
-  //   } catch (error) {
-  //     console.error("❌ Error:", error);
-  //     alert("Error generating payment links");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const handleBooking = async (e) => {
     const toastId = toast.loading("Processing...");
     e.preventDefault();
@@ -189,6 +115,7 @@ export default function BookingPage({
           bookingDate,
           paidAmount: organizerAmount,
           destinations,
+          booking_notes: bookingNotes,
         }),
       );
 
@@ -275,7 +202,7 @@ export default function BookingPage({
               value={bookingDate}
               placeholder="yyyy-MM-DD"
               onChange={(e) => setBookingDate(e.target.value)}
-              className="h-10 w-full rounded-md border-none bg-primary px-2 text-xs placeholder:text-sm focus:outline-none focus:outline-blue-600"
+              className="h-10 w-full rounded-md border-none bg-primary px-2 placeholder:text-sm focus:outline-none focus:outline-blue-600"
               required
             />
             <button
@@ -286,6 +213,17 @@ export default function BookingPage({
               <CalenderDaysIcon />
             </button>
           </div>
+        </FormRow>
+        <FormRow label={"Booking Notes:"}>
+          <input
+            type="text"
+            id="booking_notes"
+            value={bookingNotes}
+            placeholder="important notes"
+            onChange={(e) => setBookingNotes(e.target.value)}
+            className="h-10 w-full rounded-md border-none bg-primary px-2 placeholder:text-sm focus:outline-none focus:outline-blue-600"
+            required
+          />
         </FormRow>
 
         <AttendeeEmailInputFields

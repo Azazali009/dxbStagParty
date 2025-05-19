@@ -28,7 +28,15 @@ export default async function page({ params }) {
         bookingPaymentStatus={booking.paymentStatus}
         attendee={attendees}
       />
-      <BookingTable booking={booking} attendee={attendees} user={user} />
+      <div className="space-y-4">
+        <BookingTable booking={booking} attendee={attendees} user={user} />
+        {booking.booking_notes && (
+          <div className="w-fit space-x-4 rounded-md bg-yellow-100 p-4 text-yellow-600">
+            <strong>Booking Notes:</strong>
+            <span>{booking.booking_notes}</span>
+          </div>
+        )}
+      </div>
 
       <AttendeeDetail
         bookingPaymentStatus={booking.paymentStatus}

@@ -1,17 +1,14 @@
 import { Suspense } from "react";
+import AdminBookingCalender from "../_adminComponents/AdminBookingCalendar";
+import AdminHero from "../_adminComponents/AdminHero";
+import PendingBookingPopup from "../_adminComponents/PendingBookingPopup";
 import AdminStats from "../_components/AdminStats";
-import Spinner from "../_components/Spinner";
 import RecentBookings from "../_components/RecentBookings";
 import RecentTopActivities from "../_components/RecentTopActivities";
-import AdminHeader from "../_adminComponents/AdminHeader";
-import PendingBookingPopup from "../_adminComponents/PendingBookingPopup";
-import AdminBookingCalender from "../_adminComponents/AdminBookingCalendar";
+import Spinner from "../_components/Spinner";
 import { getBookings } from "../_lib/data-services";
-import { getCurrentUser } from "../_lib/getCurrentUser";
 
 export default async function page() {
-  // const bookings = await getBookings();
-
   let bookings = [];
   let errorOccurred = false;
 
@@ -38,7 +35,7 @@ export default async function page() {
   }
   return (
     <div className="relative space-y-10 p-4">
-      <AdminHeader />
+      <AdminHero />
       <AdminBookingCalender bookings={bookings} />
       <PendingBookingPopup />
       <div className="space-y-10">

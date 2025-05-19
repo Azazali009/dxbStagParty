@@ -13,16 +13,6 @@ export default function ActivityHeroSection() {
         </AnimatedHeading>
         <p className="">60+ curated activities. One unforgettable weekend.</p>
       </div>
-      {/* <div className="relative z-10 mx-auto flex max-w-[50%] items-center gap-6 rounded-md bg-neutral-800/80 p-4">
-        <button>Group Size</button>
-        <select className="bg-transparent" name="">
-          <option value="">Day Time</option>
-        </select>
-        <button>Activity Type</button>
-        <select className="bg-transparent" name="">
-          <option value="">Budget</option>
-        </select>
-      </div> */}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import dashboardIcon from "../svgIcons/dashboard.png";
 
 import Image from "next/image";
 import { getCurrentUser } from "../_lib/getCurrentUser";
-export default async function AdminHeader() {
+export default async function AdminHero() {
   const user = await getCurrentUser();
 
   return (
@@ -17,7 +17,7 @@ export default async function AdminHeader() {
           <span className="capitalize text-yellow-300">
             {user?.user_metadata?.full_name?.split(" ")[0]}
           </span>{" "}
-          <span className="animate-wave inline-block">👋</span>
+          <span className="inline-block animate-wave">👋</span>
         </h1>
       </div>
       <p className="text-white/80">

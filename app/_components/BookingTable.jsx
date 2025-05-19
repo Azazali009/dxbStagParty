@@ -2,7 +2,7 @@ import BookingTableHeader from "./BookingTableHeader";
 
 export default function BookingTable({ booking, attendee }) {
   return (
-    <div className="!my-20">
+    <div className="">
       <h1 className="mb-4 text-3xl font-bold capitalize text-secondary">
         Payment:{" "}
         <span

@@ -34,6 +34,7 @@ export default function CompleteBooking() {
           packages,
           paidAmount,
           userId,
+          booking_notes,
         } = bookingData;
 
         // ✅ Generate Attendee Payment Links
@@ -72,6 +73,7 @@ export default function CompleteBooking() {
           packages,
           paidAmount,
           userId,
+          booking_notes,
         };
 
         const { CurBooking, error } = await addBooking(sanitizedBooking);
@@ -107,7 +109,7 @@ export default function CompleteBooking() {
           "Booking complete! Attendees will receive payment links through emails 📩.",
           { id: toastId },
         );
-        router.push(`/bookings/${CurBooking.id}`); // Redirect to bookings page
+        router.push(`/account/bookings/${CurBooking.id}`); // Redirect to bookings page
         localStorage.removeItem("bookingData");
       } catch (error) {
         console.log(error);

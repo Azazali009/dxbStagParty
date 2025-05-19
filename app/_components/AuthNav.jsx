@@ -9,13 +9,18 @@ import SpinnerMini from "./SpinnerMini";
 export default function AuthNav() {
   const { user, loading } = useAuth();
 
-  if (loading) return <SpinnerMini />;
+  if (loading)
+    return (
+      <div className="flex items-center justify-end gap-4 px-8">
+        <SpinnerMini />
+      </div>
+    );
 
   return (
-    <div>
+    <div className="flex items-center justify-end gap-4 px-8">
       {user ? (
         <div className="flex items-center gap-4">
-          <Link href={"/account"} title="Account">
+          <Link href={"/verify-profile-click"} title="Account">
             <Image
               src={user?.user_metadata?.avatar_url || "/images/defaultUser.png"}
               width={100}

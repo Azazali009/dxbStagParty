@@ -19,8 +19,11 @@ export default function UpdateProfile({ user }) {
     });
   }
   return (
-    <div className="space-y-10">
-      <h1 className={`text-2xl font-semibold`}>Your(Organiser) Area</h1>
+    <div className="space-y-20">
+      <h1 className="text-gradient bg-gradient-to-r from-matalicGold via-secondary to-matalicGold bg-clip-text text-4xl font-bold tracking-tight text-transparent drop-shadow-lg">
+        Let’s freshen up your profile ✨
+      </h1>
+
       <form
         action={async (formData) => handleSubmit(formData)}
         className="grid grid-cols-2 gap-6"
@@ -65,7 +68,7 @@ export default function UpdateProfile({ user }) {
         <div>
           <button
             disabled={isPending}
-            className="mt-4 w-fit self-end rounded bg-sky-600 px-6 py-2 capitalize duration-300 hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-4 w-fit self-end rounded bg-indigo-600 px-6 py-2 capitalize duration-300 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? (
               <div className="flex items-center justify-center gap-2">

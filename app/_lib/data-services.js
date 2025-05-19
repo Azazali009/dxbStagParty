@@ -101,7 +101,7 @@ export async function getActivities() {
 export async function getActivitiesByCategory(category) {
   let { data, error } = await supabase
     .from("activities")
-    .select("*")
+    .select(`*,category(image,name)`)
     .ilike("category", category);
 
   if (error) {
@@ -196,11 +196,12 @@ export async function getRecentBookings() {
   const { data, error } = await supabase
     .from("booking")
     .select(
-      `*,users (
-      email
-    )`,
+      `*, users (
+        email
+      )`,
     )
-    .order("created_at", { ascending: false })
+    .order("paymentStatus", { ascending: false }) // status alphabetically: pending → confirmed → etc.
+    .order("created_at", { ascending: false }) // latest first within each status
     .limit(10);
 
   if (error) {
@@ -209,6 +210,7 @@ export async function getRecentBookings() {
 
   return data;
 }
+
 export async function getRecentTopActivities() {
   const { data, error } = await supabase
     .from("activities")
