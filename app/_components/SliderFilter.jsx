@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useActivity } from "../_context/ActivityProvider";
 import DownSvg from "../svgIcons/DownSvg";
 import UpSvg from "../svgIcons/UpSvg";
@@ -9,18 +9,25 @@ import { AnimatePresence, motion } from "framer-motion";
 
 export default function SliderFilter() {
   const { groupSize, minGroupSize, maxGroupSize } = useActivity();
+  const [value, setValue] = useState(minGroupSize);
   const [show, setShow] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleChange = (e) => {
-    const value = Number(e.target.value);
+  // const handleChange = (e) => {
+  //   const value = Number(e.target.value);
+  //   const params = new URLSearchParams(searchParams);
+  //   params.set("groupSize", value);
+  //   router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  // };
+
+  useEffect(() => {
     const params = new URLSearchParams(searchParams);
     params.set("groupSize", value);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  };
-
+    value !== 1 &&
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [pathname, value, searchParams, router]);
   const rangePercent =
     ((groupSize - minGroupSize) / (maxGroupSize - minGroupSize)) * 100 || 0;
 
@@ -51,9 +58,9 @@ export default function SliderFilter() {
               type="range"
               min={minGroupSize}
               max={maxGroupSize}
-              value={groupSize}
+              value={value}
               step={1}
-              onChange={handleChange}
+              onChange={(e) => setValue(e.target.value)}
               className="h-2 w-full cursor-pointer appearance-none rounded-lg"
               style={{
                 background: `linear-gradient(to right, #bf9b30 ${rangePercent}%, white ${rangePercent}%)`,
