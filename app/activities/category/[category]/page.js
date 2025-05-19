@@ -5,7 +5,7 @@ import {
 } from "../../../_lib/data-services";
 import ActivityCard from "../../../_components/ActivityCard";
 import Empty from "../../../_components/Empty";
-import { cinzel } from "../../../layout";
+import { BebasNeue, cinzel } from "../../../layout";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,9 +32,9 @@ export default async function Page({ params }) {
 
   if (!activities.length) return <Empty name={"Activities"} />;
   return (
-    <section className="-mt-[170px]">
+    <section className="-mt-[110px]">
       <div
-        className="relative flex h-[900px] items-center justify-center gap-14 bg-cover bg-no-repeat px-8 py-20"
+        className="relative flex h-[400px] items-end gap-14 bg-cover bg-no-repeat px-8 pb-10 pt-20"
         style={{
           backgroundImage: `url(${categoryImage})`,
         }}
@@ -42,7 +42,7 @@ export default async function Page({ params }) {
         {/* overlay */}
         <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-black/60 to-transparent"></div>
         <h2
-          className={`relative z-20 text-9xl font-bold capitalize text-softGold ${cinzel.className} `}
+          className={`relative z-20 text-7xl font-bold capitalize text-softGold ${BebasNeue.className} `}
         >
           {categoryName}
         </h2>

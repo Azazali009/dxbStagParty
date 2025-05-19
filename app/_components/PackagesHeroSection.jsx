@@ -1,22 +1,25 @@
-"use client";
-import Image from "next/image";
-import { BackgroundLines } from "./ui/background-lines";
-import Button from "../_components/Button";
+import { getPackages } from "../_lib/packagesApi";
+import { BebasNeue } from "../layout";
 import AnimatedHeading from "./AnimatedHeading";
 
-export default function PackagesHeroSection() {
+export default async function PackageHeroSection() {
+  const packages = await getPackages();
+
   return (
-    <BackgroundLines className="border-tertiary/40 relative -z-10 flex w-full flex-col items-center justify-center gap-8 border-b py-8">
-      <AnimatedHeading>Ready Made Stag Do Packages</AnimatedHeading>
-      <p className="mx-auto max-w-xl text-center text-sm text-neutral-400 md:text-lg">
-        Book an epic Stag Party Package, including the top Stag Party
-        activities, accommodation, nightlife & ideas to suit all groups & every
-        budget.
-      </p>
-      <div className="relative z-20 flex flex-wrap items-center justify-center gap-2 sm:gap-8">
-        <Button>choose your destinations</Button>
-        <Button>Search by dates</Button>
+    <div className="relative -mt-[110px] flex h-[800px] min-h-screen items-center gap-14 bg-[url('/images/packages-bg.webp')] bg-cover bg-no-repeat px-8 py-20">
+      {/* overlay */}
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-black/60 to-transparent"></div>
+      <div className="relative z-10 space-y-6">
+        <AnimatedHeading
+          className={`text-balance pt-16 text-left text-xl !font-normal uppercase !leading-[1.1] text-softGold ${BebasNeue.className} sm:text-wrap md:text-7xl`}
+        >
+          {" "}
+          Dubai&apos;s most legendary <br /> stag party packages
+        </AnimatedHeading>
+        <p className="">
+          {packages.length} curated packages. One unforgettable weekend.
+        </p>
       </div>
-    </BackgroundLines>
+    </div>
   );
 }

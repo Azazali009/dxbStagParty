@@ -1,6 +1,7 @@
 import PackagesHeroSection from "../_components/PackagesHeroSection";
 import StagPartyPackages from "../_components/StagPartyPackages";
 import Testimonilas from "../_components/Testimonials";
+import ActivityFilters from "../_components/ActivityFilters";
 
 export const revalidate = 0;
 
@@ -9,7 +10,8 @@ export default async function Page({ searchParams }) {
   return (
     <div className="mx-auto max-w-7xl">
       <PackagesHeroSection />
-      <StagPartyPackages filter={filter} />
+      <ActivityFilters />
+      {/* <StagPartyPackages filter={filter} /> */}
       <Testimonilas />
     </div>
   );

@@ -21,7 +21,7 @@ export default async function Page({ searchParams }) {
     return { min, max };
   };
   const ActivitiesArray = await getActivities();
-  const activity = await getActivity(66);
+
   // Get min & max across all activities
   const allSizes = ActivitiesArray.map((activity) =>
     extractMinMax(activity.group_size),
@@ -65,7 +65,7 @@ export default async function Page({ searchParams }) {
         </div>
       </section>
       {/* section 2 */}
-      <AdrenalineActivities category={"adrenaline"} />
+      <AdrenalineActivities category={"Adrenaline"} />
       {/* section 3 */}
       <section className="space-y-14 bg-reddish p-4 py-20">
         <div className="flex flex-col items-center gap-4">
@@ -195,31 +195,3 @@ export default async function Page({ searchParams }) {
     </div>
   );
 }
-
-// <div className="relative z-30 -mt-6 flex h-[600px] items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(-3deg)]">
-//             {/* overlay */}
-//             <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
-//             <Image
-//               src={"/images/home-hero-bg.webp"}
-//               fill
-//               alt="image"
-//               className="object-cover"
-//             />
-//             <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
-//               Speed battles at Dubai&apos;s premier indoor karting arena
-//             </h2>
-//           </div>
-//           {/* card 3 */}
-//           <div className="relative -mt-14 flex h-[630px] origin-center items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateX(5deg)]">
-//             {/* overlay */}
-//             <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
-//             <Image
-//               src={"/images/home-hero-bg.webp"}
-//               fill
-//               alt="image"
-//               className="object-cover"
-//             />
-//             <h2 className="relative z-20 text-2xl font-medium leading-[1.5]">
-//               View all adrenaline
-//             </h2>
-//           </div>

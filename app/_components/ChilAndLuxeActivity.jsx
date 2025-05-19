@@ -1,15 +1,23 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Georgia, playfairDisplay } from "../layout";
 import { getActivitiesByCategory } from "../_lib/data-services";
+import { useActivity } from "../_context/ActivityProvider";
 
-export default async function ChilAndLuxeActivity({ category }) {
-  const ActivitiesArray = await getActivitiesByCategory(category);
-  const leftCards = ActivitiesArray.slice(0, 2);
-  const rightTop = ActivitiesArray[2];
-  const rightBottom = ActivitiesArray.slice(3, 5);
+export default function ChilAndLuxeActivity({ category }) {
+  const { filteredActivities } = useActivity();
 
+  const filteredByCategoryArr = filteredActivities.filter(
+    (activity) => activity?.category === category,
+  );
+
+  const leftCards = filteredByCategoryArr?.slice(0, 2);
+  const rightTop = filteredByCategoryArr?.[2];
+  const rightBottom = filteredByCategoryArr?.slice(3, 5);
+
+  if (!filteredByCategoryArr?.length) return null;
   return (
     <section className="relative space-y-14 bg-red-100 p-4 py-20">
       <div className="space-y-4 text-navyBlue">
@@ -82,7 +90,7 @@ export default async function ChilAndLuxeActivity({ category }) {
               {" "}
               <Link
                 className="pointer-events-none invisible translate-y-full rounded-md bg-white px-6 py-2 capitalize text-navyBlue opacity-0 shadow-2xl duration-500 active:translate-y-2 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
-                href={`/activities/${rightTop.id}`}
+                href={`/activities/${rightTop?.id}`}
               >
                 Book your slot
               </Link>
