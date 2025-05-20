@@ -9,9 +9,8 @@ export default function AdrenalineActivities({ category }) {
   const { filteredActivities } = useActivity();
 
   const filteredByCategoryArr = filteredActivities.filter(
-    (activity) => activity.category === category,
+    (activity) => activity?.category?.name === category,
   );
-  const tildCard = filteredByCategoryArr[filteredByCategoryArr?.length - 1];
 
   if (!filteredByCategoryArr.length) return null;
   return (
@@ -90,23 +89,25 @@ export default function AdrenalineActivities({ category }) {
             );
           })}
 
-          {/* card 5 */}
-          <div
-            className="flex flex-col gap-6 self-center text-center"
-            style={{
-              gridColumn: filteredByCategoryArr.length === 3 && "1/-1",
-              justifySelf: "center",
-              marginTop: "60px",
-            }}
-          >
-            <Link
-              href={`/activities/category/adrenaline`}
-              className="flex items-center rounded-2xl bg-navyBlue p-6 text-2xl font-medium capitalize duration-300 hover:opacity-70"
+          {/* cta column 5 */}
+          {filteredByCategoryArr.length >= 3 && (
+            <div
+              className="flex flex-col gap-6 self-center text-center"
+              style={{
+                gridColumn: filteredByCategoryArr.length === 3 && "1/-1",
+                justifySelf: "center",
+                marginTop: "60px",
+              }}
             >
-              explore all adrenaline activities
-            </Link>
-            <p className="text-xl">or browse all 60+ stag activities</p>
-          </div>
+              <Link
+                href={`/activities/category/${filteredByCategoryArr[0]?.category?.name}`}
+                className="flex items-center rounded-2xl bg-navyBlue p-6 text-2xl font-medium capitalize duration-300 hover:opacity-70"
+              >
+                explore all adrenaline activities
+              </Link>
+              <p className="text-xl">or browse all 60+ stag activities</p>
+            </div>
+          )}
         </div>
       </div>
     </section>

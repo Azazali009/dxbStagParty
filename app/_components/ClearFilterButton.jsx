@@ -1,18 +1,22 @@
 "use client";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import XMarkIcon from "../svgIcons/XMarkIcon";
+import { useActivity } from "../_context/ActivityProvider";
 
 export default function ClearFilterButton() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-
+  const { groupSize, dayTime, category } = useActivity();
   function handleClear() {
     const params = new URLSearchParams(searchParams);
-    params.delete("search");
+    // params.delete("search");
     params.delete("groupSize");
+    params.delete("timing");
+    params.delete("category");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
+  if (!dayTime && !groupSize && !category) return null;
   return (
     <button
       className="flex items-center gap-1 self-center capitalize text-red-500 underline decoration-red-500 decoration-[2px] underline-offset-4 hover:no-underline"

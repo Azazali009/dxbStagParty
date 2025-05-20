@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
 import { createClient } from "../_utils/supabase/client";
+import { getCategoryByName } from "./categoryApi";
 
 // export async function createActivity(newActivity) {
 //   const imageName = `card-image-${Math.random()}-${newActivity?.image?.name}`;
@@ -90,30 +91,32 @@ import { createClient } from "../_utils/supabase/client";
 export async function getActivities() {
   let { data, error } = await supabase
     .from("activities")
-    .select(`*,supplier(name)`);
+    .select(`*,supplier(name),category(id,name)`);
 
   if (error) {
     console.log(error);
-    throw new Error("Error while getting Activities.😒");
+    return { error: "Error while getting Activities.😒" };
   }
   return data;
 }
-export async function getActivitiesByCategory(category) {
+export async function getActivitiesByCategory(categoryName) {
+  const category = await getCategoryByName(categoryName);
+
   let { data, error } = await supabase
     .from("activities")
     .select(`*,category(image,name)`)
-    .ilike("category", category);
+    .eq("categoryId", category.id);
 
   if (error) {
     console.log(error);
-    throw new Error("Error while getting Activities.😒");
+    return { error: "Error while getting Activities.😒" };
   }
   return data;
 }
 export async function getActivity(id) {
   let { data, error } = await supabase
     .from("activities")
-    .select(`*,supplier(id,name)`)
+    .select(`*,supplier(id,name),category(id,name)`)
     .eq("id", id)
     .single();
 

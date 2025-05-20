@@ -5,6 +5,7 @@ import { editActivityAction } from "../_lib/actions";
 import FormRow from "./FormRow";
 import SpinnerMini from "./SpinnerMini";
 import { getSuppliers } from "../_lib/apiSupplier";
+import { getCategories } from "../_lib/categoryApi";
 
 export default function EditActivityForm({ activity }) {
   const {
@@ -32,6 +33,7 @@ export default function EditActivityForm({ activity }) {
 
   const [loading, setLoading] = useState(false);
   const [suppliers, setSuppliers] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isPending, startTransition] = useTransition();
   const editFormRef = useRef();
   const handleSubmit = (formData) => {
@@ -55,6 +57,15 @@ export default function EditActivityForm({ activity }) {
           value: sup.id,
         })),
       );
+
+      const fetchedCategories = await getCategories();
+      setCategories(
+        fetchedCategories.map((cat) => ({
+          name: cat.name,
+          value: cat.id,
+        })),
+      );
+
       setLoading(false);
     }
     fetchSuppliers();
@@ -252,16 +263,46 @@ export default function EditActivityForm({ activity }) {
           <option value="no">No</option>
         </select>
       </FormRow>
-      <FormRow label={"category"}>
+      {/* <FormRow label={"category"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
           type="text"
           name="category"
           autoComplete="on"
-          defaultValue={category}
+          defaultValue={"test"}
           placeholder="Vip / Adrenalin / Competitive etc..."
         />
-      </FormRow>
+      </FormRow> */}
+      {loading ? (
+        <div className="my-4 flex flex-col gap-4">
+          <div className="h-4 w-[50%] animate-pulse rounded-xl bg-navyBlue"></div>
+          <div className="h-4 w-full animate-pulse rounded-xl bg-navyBlue"></div>
+        </div>
+      ) : (
+        <FormRow label={"add category"}>
+          <select
+            name="categoryId"
+            className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 capitalize text-softGold"
+          >
+            {category && category.id ? (
+              <option selected value={category.id} defaultValue={category.name}>
+                {category.name}
+              </option>
+            ) : (
+              <option selected value="">
+                add category
+              </option>
+            )}
+            {categories
+              ?.filter((curCategory) => category?.id !== curCategory.value)
+              .map((curCategory) => (
+                <option key={curCategory.value} value={curCategory.value}>
+                  {curCategory.name}
+                </option>
+              ))}
+          </select>
+        </FormRow>
+      )}
       <FormRow label={"Description"} className={"[grid-column:1/-1]"}>
         <textarea
           className="rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"

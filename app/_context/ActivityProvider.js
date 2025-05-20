@@ -13,12 +13,30 @@ export function ActivityProvider({ children }) {
 
   const [allActivities, setAllActivities] = useState([]);
   const [filteredActivities, setFilteredActivities] = useState([]);
-  const [groupSize, setGroupSize] = useState(0); // ✅ added
+  const [groupSize, setGroupSize] = useState(0);
+  const [dayTimeOptions, setDayTimeOptions] = useState([]);
+  const [dayTime, setDayTime] = useState("");
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [category, setCategory] = useState("");
 
+  const [visibleChunks, setVisibleChunks] = useState(1);
+
+  const loadMore = () => {
+    setVisibleChunks((prev) => prev + 1);
+  };
+  // Reset chunks on mount (important when navigating back)(for category page)
+  useEffect(() => {
+    setVisibleChunks(1);
+  }, []);
   // ✅ Sync with URL on mount
   useEffect(() => {
     const sizeFromUrl = Number(searchParams.get("groupSize")) || 0;
+    const dayTimeFromUrl = searchParams.get("timing") || "";
+    const categoryFromUrl = searchParams.get("category") || "";
+
     setGroupSize(sizeFromUrl);
+    setDayTime(dayTimeFromUrl);
+    setCategory(categoryFromUrl); // ✅ NEW
   }, [searchParams]);
 
   // ✅ Sync to URL when value changes (from UI)
@@ -36,8 +54,18 @@ export function ActivityProvider({ children }) {
   useEffect(() => {
     async function fetchData() {
       const data = await getActivities();
-      console.log(data);
       setAllActivities(data);
+
+      // ✅ Extract unique dayTime values
+      const uniqueDayTimes = Array.from(
+        new Set(data.map((a) => a.dayTime).filter(Boolean)),
+      );
+      setDayTimeOptions(uniqueDayTimes);
+      // ✅ Extract unique categories(activity type) values
+      const uniqueCategories = Array.from(
+        new Set(data.map((a) => a.category?.name).filter(Boolean)),
+      );
+      setCategoryOptions(uniqueCategories);
     }
     fetchData();
   }, []);
@@ -45,11 +73,25 @@ export function ActivityProvider({ children }) {
   // Apply filter
   useEffect(() => {
     const filtered = allActivities.filter((activity) => {
+      // Group size logic
       const [min, max] = activity.group_size?.split("-").map(Number);
-      return groupSize === 0 || (groupSize >= min && groupSize <= max);
+      const groupSizeMatch =
+        groupSize === 0 || (groupSize >= min && groupSize <= max);
+
+      // Daytime logic
+      const dayTimeMatch =
+        !dayTime || activity.dayTime?.toLowerCase() === dayTime.toLowerCase();
+
+      // ✅ Category logic
+      const categoryMatch =
+        !category ||
+        activity.category?.name?.toLowerCase() === category.toLowerCase();
+
+      return groupSizeMatch && dayTimeMatch && categoryMatch;
     });
+
     setFilteredActivities(filtered);
-  }, [groupSize, allActivities]);
+  }, [groupSize, dayTime, allActivities, category]);
 
   // Min/max values
 
@@ -81,6 +123,14 @@ export function ActivityProvider({ children }) {
         setGroupSize, // ✅ make available to context
         minGroupSize,
         maxGroupSize,
+        dayTimeOptions,
+        dayTime,
+        setDayTime,
+        categoryOptions,
+        category,
+        setCategory,
+        loadMore,
+        visibleChunks,
       }}
     >
       {children}

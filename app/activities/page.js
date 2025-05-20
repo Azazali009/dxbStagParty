@@ -16,29 +16,24 @@ export const revalidate = 0;
 export default async function Page({ searchParams }) {
   const searchQuery = searchParams?.search ?? "all";
   const groupSize = Number(searchParams?.groupSize ?? 0);
-  const extractMinMax = (groupSize) => {
-    const [min, max] = groupSize.split("-").map(Number);
-    return { min, max };
-  };
+  // const extractMinMax = (groupSize) => {
+  //   const [min, max] = groupSize.split("-").map(Number);
+  //   return { min, max };
+  // };
   const ActivitiesArray = await getActivities();
 
   // Get min & max across all activities
-  const allSizes = ActivitiesArray.map((activity) =>
-    extractMinMax(activity.group_size),
-  );
-  const minGroupSize = Math.min(...allSizes.map((size) => size.min));
-  const maxGroupSize = Math.max(...allSizes.map((size) => size.max));
+  // const allSizes = ActivitiesArray.map((activity) =>
+  //   extractMinMax(activity.group_size),
+  // );
+  // const minGroupSize = Math.min(...allSizes.map((size) => size.min));
+  // const maxGroupSize = Math.max(...allSizes.map((size) => size.max));
 
   return (
     <div className="mx-auto min-h-screen max-w-full antialiased">
       <ActivityHeroSection />
       {/* <SearchBar searchQuery={searchQuery} /> */}
-      <ActivityFilters
-        minGroupSize={minGroupSize}
-        maxGroupSize={maxGroupSize}
-        searchQuery={searchQuery}
-        groupSize={groupSize}
-      />
+      <ActivityFilters searchQuery={searchQuery} groupSize={groupSize} />
       {/* section 1 */}
       <section className="bg-red-100 py-20 text-navyBlue">
         <div className="space-y-6">

@@ -44,7 +44,7 @@ export async function addActivityAction(formData) {
   const optionalAddOns = formData.get("optionalAddOns")?.split(",");
   const coreInclusions = formData.get("coreInclusions")?.split(",");
   const depositRequired = formData.get("depositRequired");
-  const category = formData.get("category");
+  const categoryId = formData.get("categoryId");
 
   // empty fields
   if (
@@ -66,7 +66,7 @@ export async function addActivityAction(formData) {
     !optionalAddOns ||
     !coreInclusions ||
     !depositRequired ||
-    !category
+    !categoryId
   )
     return { error: "Please fill required fields" };
 
@@ -105,7 +105,7 @@ export async function addActivityAction(formData) {
     optionalAddOns,
     coreInclusions,
     depositRequired,
-    category,
+    categoryId,
   };
   // await createActivity(newActivity);
   const imageName = `card-image-${Math.random()}-${image?.name}`;
@@ -192,7 +192,7 @@ export async function editActivityAction(formData) {
   const optionalAddOns = formData.get("optionalAddOns")?.split(",");
   const coreInclusions = formData.get("coreInclusions")?.split(",");
   const depositRequired = formData.get("depositRequired");
-  const category = formData.get("category");
+  const categoryId = formData.get("categoryId");
   // Check validity
   const isValidImage = image && image.size > 0 && image.name !== "undefined";
   const isValidBanner =
@@ -220,7 +220,7 @@ export async function editActivityAction(formData) {
     !optionalAddOns ||
     !coreInclusions ||
     !depositRequired ||
-    !category
+    !categoryId
   )
     return { error: "Please fill required fields" };
 
@@ -269,7 +269,7 @@ export async function editActivityAction(formData) {
     optionalAddOns,
     coreInclusions,
     depositRequired,
-    category,
+    categoryId,
   };
 
   const { error } = await supabase
