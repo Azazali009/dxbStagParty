@@ -11,7 +11,7 @@ export const revalidate = 0;
 export async function generateStaticParams() {
   const activities = await getActivities();
   const uniqueCategories = [
-    ...new Set(activities.map((a) => String(a.category))),
+    ...new Set(activities.map((a) => String(a.category.name))),
   ];
   return uniqueCategories.map((category) => ({ category }));
 }
