@@ -20,7 +20,12 @@ export default function AuthNav() {
     <div className="flex items-center justify-end gap-4 px-8">
       {user ? (
         <div className="flex items-center gap-4">
-          <Link href={"/verify-profile-click"} title="Account">
+          <Link
+            href={
+              user?.user_metadata?.role === "admin" ? "/dashboard" : "/account"
+            }
+            title="Account"
+          >
             <Image
               src={user?.user_metadata?.avatar_url || "/images/defaultUser.png"}
               width={100}

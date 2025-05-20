@@ -21,7 +21,7 @@ export default async function AdrenalineActivities() {
           {/* card 1 */}
           {packages.map((pack, index) => {
             return (
-              <>
+              <div key={pack.id}>
                 {index === 3 ? (
                   <div className="relative col-span-2 -mt-16 flex h-[350px] origin-left items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(5deg)_scale(1.4)_rotateZ(4deg)]">
                     {/* titl design */}
@@ -82,7 +82,7 @@ export default async function AdrenalineActivities() {
                     </h2>
                   </div>
                 )}
-              </>
+              </div>
             );
           })}
 
