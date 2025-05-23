@@ -14,19 +14,19 @@ export default function AdrenalineActivities({ category }) {
 
   if (!filteredByCategoryArr.length) return null;
   return (
-    <section className="bg-[#694621] py-40">
+    <section className="bg-[url('/images/adrenaline-bg.webp')] bg-cover bg-no-repeat py-40">
       <div className="mx-auto w-[95%]">
         <div className="flex flex-col items-center gap-4">
           <h2 className="text-3xl font-semibold uppercase">adrenaline hits</h2>
           <p>Thrills that will make your stag legendary</p>
         </div>
-        <div className="!mt-20 grid grid-cols-[1fr_1fr_1fr] items-start gap-x-12">
+        <div className="mx-auto !mt-20 grid max-w-7xl grid-cols-[1fr_1fr_1fr] gap-x-10">
           {/* card 1 */}
           {filteredByCategoryArr.map((activity, index) => {
             return (
               <>
                 {index === 3 ? (
-                  <div className="relative col-span-2 -mt-16 flex h-[350px] origin-left items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(5deg)_scale(1.4)_rotateZ(4deg)]">
+                  <div className="relative col-span-2 flex h-[400px] origin-left items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(5deg)_scale(1.3)_rotateZ(0.5deg)]">
                     {/* titl design */}
                     <div className="absolute right-0 top-0 z-20 h-6 w-[60%] rounded-b-3xl rounded-r-none bg-[#694621]"></div>
                     {/* overlay */}
@@ -53,36 +53,46 @@ export default function AdrenalineActivities({ category }) {
                   </div>
                 ) : (
                   <div
-                    key={activity.id}
-                    className={`relative flex origin-top items-end overflow-hidden rounded-lg p-10 [transform:perspective(300px)_rotateY(-5deg)] ${
-                      index === 1
-                        ? "z-10 h-[650px]"
-                        : index === 2
-                          ? "h-[700px]"
-                          : "h-[550px]"
-                    }`}
+                    className={`relative z-20 w-full [transform:rotateZ(1deg)] ${index === 0 && "h-[700px]"} ${index === 1 && "-mt-6 h-[800px]"} ${index === 2 && "-rotateY[1deg] h-[800px]"} `}
                   >
-                    {/* overlay */}
-                    <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
-                    {/* book button */}
-                    <div className="group absolute left-0 top-0 z-20 flex h-full w-full items-center justify-center duration-300 hover:bg-navyBlue/60">
-                      {" "}
-                      <Link
-                        className="pointer-events-none invisible translate-y-full rounded-md bg-white px-6 py-2 capitalize text-navyBlue opacity-0 shadow-2xl duration-500 active:translate-y-2 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
-                        href={`/activities/${activity.id}`}
-                      >
-                        Book your slot
-                      </Link>
+                    {" "}
+                    {/* Outer container controls spacing */}
+                    <div
+                      key={activity.id}
+                      className={`absolute inset-0 flex items-end overflow-hidden rounded-2xl p-10 [transform-style:preserve-3d] ${
+                        index === 1
+                          ? "[transform:perspective(400px)_rotateX(2deg)_rotateY(-2deg)]"
+                          : index === 2
+                            ? "origin-top-left [transform:perspective(400px)_rotateX(3deg)_rotateY(1deg)]"
+                            : "origin-top [transform:perspective(400px)_rotateY(-4deg)]"
+                      }`}
+                    >
+                      {/* overlay */}
+                      <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
+
+                      {/* button (reverse tilt) */}
+                      <div className="group absolute left-0 top-0 z-20 flex h-full w-full items-center justify-center duration-300 [transform:rotateY(2deg)_rotateX(-2deg)] hover:bg-navyBlue/60">
+                        <Link
+                          className="pointer-events-none invisible translate-y-full rounded-md bg-white px-6 py-2 capitalize text-navyBlue opacity-0 shadow-2xl duration-500 active:translate-y-2 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+                          href={`/activities/${activity.id}`}
+                        >
+                          Book your slot
+                        </Link>
+                      </div>
+
+                      {/* image */}
+                      <Image
+                        src={activity.image}
+                        fill
+                        alt={activity.name}
+                        className="object-cover"
+                      />
+
+                      {/* heading (reverse tilt) */}
+                      <h2 className="absolute bottom-10 left-10 z-30 text-xl font-medium text-white [transform:rotateY(2deg)_rotateX(-2deg)]">
+                        {activity.name}
+                      </h2>
                     </div>
-                    <Image
-                      src={activity.image}
-                      fill
-                      alt={activity.name}
-                      className="object-cover"
-                    />
-                    <h2 className="relative z-20 text-xl font-medium">
-                      {activity.name}
-                    </h2>
                   </div>
                 )}
               </>
