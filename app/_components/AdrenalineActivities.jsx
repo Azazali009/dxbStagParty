@@ -14,10 +14,10 @@ export default function AdrenalineActivities({ category }) {
 
   if (!filteredByCategoryArr.length) return null;
   return (
-    <section className="bg-[url('/images/adrenaline-bg.webp')] bg-cover bg-no-repeat py-40">
+    <section className="bg-[url('/images/adrenaline-bg.webp')] bg-cover bg-no-repeat pb-40 pt-20">
       <div className="mx-auto w-[95%]">
         <div className="flex flex-col items-center gap-4">
-          <h2 className="text-3xl font-semibold uppercase">adrenaline hits</h2>
+          <h2 className="text-5xl font-semibold uppercase">adrenaline hits</h2>
           <p>Thrills that will make your stag legendary</p>
         </div>
         <div className="mx-auto !mt-20 grid max-w-7xl grid-cols-[1fr_1fr_1fr] gap-x-10">
