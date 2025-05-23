@@ -32,8 +32,8 @@ export const navbar = [
   },
   {
     id: 8,
-    navItem: "FAQ",
-    href: "/faq",
+    navItem: "FAQs",
+    href: "/faqs",
   },
   {
     id: 9,
