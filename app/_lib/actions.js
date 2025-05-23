@@ -345,7 +345,7 @@ export async function deleteActivityAction(activityId) {
 export async function deleteUserAction(userId) {
   // check if user is login and user is admin
   const user = await getCurrentUser();
-
+  const supabase = await createClient();
   if (!user || user?.user_metadata?.role !== "admin")
     return { error: "You are not allowed to perform this action" };
 
@@ -395,9 +395,10 @@ export async function deleteUserAction(userId) {
 
 export async function createUserByAdmin(formData) {
   // const session = await auth();
+  const supabase = await createClient();
   const user = await getCurrentUser();
   if (!user || user?.user_metadata.role !== "admin")
-    throw new Error("You are not allowed to perform this action");
+    return { error: "You are not allowed to perform this action" };
 
   const name = formData.get("name");
   const email = formData.get("email");

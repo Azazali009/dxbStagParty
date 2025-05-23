@@ -42,7 +42,7 @@ export default function ActivitySupportSections({ activity }) {
               referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
             <div class="flex flex-col gap-2 text-lg font-light">
-              <span>{activity.destinations}</span>
+              <span>{activity?.destinations}</span>
               {/* <span>~45 min drive from Dubai Marina</span> */}
             </div>
           </div>
