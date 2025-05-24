@@ -6,7 +6,7 @@ import whatsapp from "../svgIcons/whatsapp.svg";
 import PreFooter from "./PreFooter";
 export default function Footer() {
   return (
-    <>
+    <div className="mx-auto max-w-[1400px]">
       <PreFooter />
       <footer className="relative space-y-14 bg-navyBlue px-8 py-16">
         <div className="flex justify-center">
@@ -31,10 +31,10 @@ export default function Footer() {
             <Link href={"#"}>faqs</Link>
           </li>
           <li className="text-lg font-medium uppercase">
-            <Link href={"#"}>terms and conditions</Link>
+            <Link href={"/terms-conditions"}>terms and conditions</Link>
           </li>
           <li className="text-lg font-medium uppercase">
-            <Link href={"#"}>privacy policy</Link>
+            <Link href={"/privacy-policy"}>privacy policy</Link>
           </li>
           <li className="text-lg font-medium uppercase">
             <Link href={"#"}>careers</Link>
@@ -65,6 +65,6 @@ export default function Footer() {
           />
         </div>
       </footer>
-    </>
+    </div>
   );
 }

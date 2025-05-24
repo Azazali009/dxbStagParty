@@ -56,7 +56,9 @@ export default function SliderFilter() {
         onClick={() => setShow((s) => !s)}
         className="flex min-h-12 w-full items-center justify-between rounded-md border border-gray-700 fill-softGold px-4"
       >
-        <label className="block font-medium">Group Size</label>
+        <label className="block text-xs font-medium sm:text-base">
+          Group Size
+        </label>
         <span>{show ? <UpSvg /> : <DownSvg />}</span>
       </button>
 

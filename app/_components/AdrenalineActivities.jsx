@@ -14,8 +14,9 @@ export default function AdrenalineActivities({ category }) {
 
   if (!filteredByCategoryArr.length) return null;
   return (
+    // bg-[#694621]
     <section className="bg-[url('/images/adrenaline-bg.webp')] bg-cover bg-no-repeat pb-40 pt-20">
-      <div className="mx-auto w-[95%]">
+      <div className="mx-auto w-[90%]">
         <div className="flex flex-col items-center gap-4">
           <h2 className="text-5xl font-semibold uppercase">adrenaline hits</h2>
           <p>Thrills that will make your stag legendary</p>
@@ -28,7 +29,7 @@ export default function AdrenalineActivities({ category }) {
                 {index === 3 ? (
                   <div className="relative col-span-2 flex h-[400px] origin-left items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(5deg)_scale(1.3)_rotateZ(0.5deg)]">
                     {/* titl design */}
-                    <div className="absolute right-0 top-0 z-20 h-6 w-[60%] rounded-b-3xl rounded-r-none bg-[#694621]"></div>
+                    <div className="absolute right-0 top-0 z-20 h-6 w-[60%] rounded-b-3xl rounded-r-none bg-[#814103]"></div>
                     {/* overlay */}
                     <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
                     <Image
@@ -53,7 +54,7 @@ export default function AdrenalineActivities({ category }) {
                   </div>
                 ) : (
                   <div
-                    className={`relative z-20 w-full [transform:rotateZ(1deg)] ${index === 0 && "h-[700px]"} ${index === 1 && "-mt-6 h-[800px]"} ${index === 2 && "-rotateY[1deg] h-[800px]"} `}
+                    className={`relative z-20 w-full [transform:rotateZ(1deg)] ${index === 0 && "h-[600px]"} ${index === 1 && "-mt-6 h-[700px]"} ${index === 2 && "-rotateY[1deg] h-[700px]"} `}
                   >
                     {" "}
                     {/* Outer container controls spacing */}

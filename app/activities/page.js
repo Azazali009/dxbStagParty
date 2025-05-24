@@ -30,22 +30,22 @@ export default async function Page({ searchParams }) {
   // const maxGroupSize = Math.max(...allSizes.map((size) => size.max));
 
   return (
-    <div className="mx-auto min-h-screen max-w-full antialiased">
+    <div className="mx-auto min-h-screen max-w-[1400px] antialiased">
       <ActivityHeroSection />
       {/* <SearchBar searchQuery={searchQuery} /> */}
       <ActivityFilters searchQuery={searchQuery} groupSize={groupSize} />
       {/* section 1 */}
       <section className="bg-red-100 text-navyBlue">
         <div className="space-y-6">
-          <div className="w-1/2 p-6">
-            <h2 className="text-4xl font-semibold uppercase leading-[1.3]">
+          <div className="p-6 md:w-1/2">
+            <h2 className="text-xl font-semibold uppercase leading-[1.3] sm:text-4xl">
               vip spotlight &mdash; the experience everyone talks about
             </h2>
           </div>
-          <div className="relative flex h-[800px] flex-col items-start justify-end gap-4 bg-[url('/images/activity-vip-bg.webp')] bg-cover bg-no-repeat p-8 text-softGold">
+          <div className="relative flex h-[400px] flex-col items-start justify-end gap-4 bg-[url('/images/activity-vip-bg.webp')] bg-cover bg-no-repeat px-3 py-8 text-softGold sm:p-8 md:h-[800px]">
             {/* overlay */}
             <div className="absolute right-0 top-0 h-full w-full bg-gradient-to-r from-black/40 to-transparent"></div>
-            <h2 className="relative z-10 w-[60%] text-xl leading-[1.7]">
+            <h2 className="relative z-10 text-lg sm:w-[60%] sm:text-xl sm:leading-[1.7]">
               Cruise dubai&apos;s coastline on your own private yacht-free-flow
               drinks, onboard tunes, and epic skyline views
             </h2>

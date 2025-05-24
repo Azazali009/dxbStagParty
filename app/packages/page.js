@@ -10,7 +10,7 @@ export const revalidate = 0;
 export default async function Page({ searchParams }) {
   const filter = searchParams.groupSize ?? "all";
   return (
-    <div className="mx-auto max-w-7xl">
+    <div className="mx-auto max-w-[1400px]">
       <PackagesHeroSection />
       <div className="relative z-20 mx-auto w-[95%] py-14 [grid-column:1/-1]">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-start gap-10 rounded-md p-4 shadow-xl transition-all duration-300">

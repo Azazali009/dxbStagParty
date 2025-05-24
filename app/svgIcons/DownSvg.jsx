@@ -6,7 +6,7 @@ export default function DownSvg() {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className="size-5 fill-inherit"
+      className="size-3 fill-inherit sm:size-5"
     >
       <path
         fillRule="evenodd"

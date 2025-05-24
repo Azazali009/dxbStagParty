@@ -37,7 +37,9 @@ export default function DayTimeFilter() {
         onClick={() => setShow((show) => !show)}
         className="flex min-h-12 w-full items-center justify-between rounded-md border border-gray-700 fill-softGold px-4"
       >
-        <label className="block font-medium">Day / Night</label>
+        <label className="block text-xs font-medium sm:text-base">
+          Day / Night
+        </label>
         <span>{show ? <UpSvg /> : <DownSvg />}</span>
       </button>
 
@@ -52,7 +54,7 @@ export default function DayTimeFilter() {
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
             <select
-              className="w-full border-none bg-navyBlue p-2 font-normal capitalize text-white outline-none"
+              className="w-full border-none bg-navyBlue p-2 text-xs font-normal capitalize text-white outline-none sm:text-base"
               value={selectedDayTime || "default"}
               onChange={handleChange}
             >
