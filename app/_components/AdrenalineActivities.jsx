@@ -54,7 +54,7 @@ export default function AdrenalineActivities({ category }) {
                   </div>
                 ) : (
                   <div
-                    className={`relative z-20 w-full [transform:rotateZ(1deg)] ${index === 0 && "h-[600px]"} ${index === 1 && "-mt-6 h-[700px]"} ${index === 2 && "-rotateY[1deg] h-[700px]"} `}
+                    className={`relative z-20 w-full [transform:rotateZ(1deg)] ${index === 0 && "h-[600px]"} ${index === 1 && "-mt-4 h-[700px]"} ${index === 2 && "-rotateY[1deg] h-[700px]"} `}
                   >
                     {" "}
                     {/* Outer container controls spacing */}
