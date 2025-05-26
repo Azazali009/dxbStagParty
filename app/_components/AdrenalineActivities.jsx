@@ -55,7 +55,7 @@ export default function AdrenalineActivities({ category }) {
                   <div className="relative z-20 rotate-1">
                     <Link
                       href={`/activities/${activity.id}`}
-                      className={`group relative block origin-top overflow-hidden rounded-2xl ${index === 0 && "h-[550px] ![transform:perspective(300px)_rotateY(-5deg)]"} ${index === 1 && "h-[600px] ![transform:perspective(300px)_rotateY(-5deg)_rotateX(2deg)]"} ${index === 2 && "h-[620px] ![transform:perspective(400px)_rotateX(4deg)_rotateY(1deg)_rotateZ(-2deg)]"} `}
+                      className={`group relative block origin-top overflow-hidden rounded-2xl ${index === 0 && "h-[550px] ![transform:perspective(300px)_rotateY(-5deg)]"} ${index === 1 && "h-[600px] ![transform:perspective(300px)_rotateY(-5deg)_rotateX(2deg)]"} ${index === 2 && "h-[620px] ![transform:perspective(400px)_rotateX(5deg)_rotateY(1deg)_rotateZ(-2deg)]"} `}
                     >
                       {/* overlay */}
                       <div className="absolute left-0 top-0 z-20 flex h-full w-full items-end bg-black/40 p-4"></div>
