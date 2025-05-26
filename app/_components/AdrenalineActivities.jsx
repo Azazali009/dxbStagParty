@@ -21,14 +21,14 @@ export default function AdrenalineActivities({ category }) {
           <h2 className="text-5xl font-semibold uppercase">adrenaline hits</h2>
           <p>Thrills that will make your stag legendary</p>
         </div>
-        <div className="mx-auto !mt-20 grid max-w-7xl grid-cols-[1fr_.8fr_0.8fr] gap-x-10">
+        <div className="mx-auto !mt-20 grid max-w-7xl grid-cols-[250px_250px_250px] justify-center justify-items-center gap-x-10">
           {filteredByCategoryArr.map((activity, index) => {
             return (
               <>
                 {index === 3 ? (
-                  <div className="relative col-span-2 -mt-2 flex h-[400px] origin-left items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(5deg)_scale(1.3)_rotateZ(4.5deg)]">
+                  <div className="relative col-span-2 -ml-16 -mt-6 flex h-[300px] origin-left items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(5deg)_scale(1.3)_rotateZ(8deg)]">
                     {/* titl design */}
-                    <div className="absolute right-0 top-0 z-20 h-6 w-[60%] rounded-b-3xl rounded-r-none bg-[#814103]"></div>
+                    <div className="absolute right-0 top-0 z-20 h-6 w-[55%] rounded-b-3xl rounded-r-none bg-[#814103]"></div>
                     {/* overlay */}
                     <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
                     <Image
@@ -52,10 +52,10 @@ export default function AdrenalineActivities({ category }) {
                     </div>
                   </div>
                 ) : (
-                  <div className="relative z-20 rotate-1">
+                  <div className="relative z-20">
                     <Link
                       href={`/activities/${activity.id}`}
-                      className={`group relative block origin-top overflow-hidden rounded-2xl ${index === 0 && "h-[550px] ![transform:perspective(300px)_rotateY(-5deg)_rotateZ(.5deg)]"} ${index === 1 && "h-[600px] ![transform:perspective(300px)_rotateY(-5deg)_rotateX(2deg)_rotateZ(0.5deg)]"} ${index === 2 && "h-[620px] ![transform:perspective(400px)_rotateX(5deg)_rotateY(1deg)_rotateZ(-2deg)]"} `}
+                      className={`group relative block origin-top overflow-hidden rounded-2xl ${index === 0 && "h-[450px] ![transform:perspective(300px)_rotateY(-5deg)]"} ${index === 1 && "h-[500px] ![transform:perspective(400px)_rotateY(-10deg)_rotateZ(-0.4deg)_rotateX(3deg)]"} ${index === 2 && "h-[520px] ![transform:perspective(400px)_rotateX(5deg)_rotateY(1deg)_rotateZ(-1deg)]"} `}
                     >
                       {/* overlay */}
                       <div className="absolute left-0 top-0 z-20 flex h-full w-full items-end bg-black/40 p-4"></div>
@@ -85,12 +85,12 @@ export default function AdrenalineActivities({ category }) {
               style={{
                 gridColumn: filteredByCategoryArr.length === 3 && "1/-1",
                 justifySelf: "center",
-                marginTop: "60px",
+                marginTop: "120px",
               }}
             >
               <Link
                 href={`/activities/category/${filteredByCategoryArr[0]?.category?.name}`}
-                className="flex items-center rounded-2xl bg-navyBlue p-6 text-2xl font-medium capitalize duration-300 hover:opacity-70"
+                className="flex items-center rounded-2xl bg-navyBlue p-6 text-lg font-medium capitalize duration-300 hover:opacity-70"
               >
                 explore all adrenaline activities
               </Link>
