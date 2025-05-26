@@ -183,45 +183,6 @@ export default function Page() {
           </a>
         </p>
       </div>
-
-      <div className="mx-auto max-w-6xl p-6">
-        <h2 className="mb-4 text-2xl font-bold">T&amp;C’s Assessment:</h2>
-        <div className="overflow-auto">
-          <table className="min-w-full border border-gray-300 text-left text-sm">
-            <thead className="bg-gray-100 text-gray-500">
-              <tr>
-                <th className="border border-gray-300 px-4 py-2 font-semibold">
-                  Topic
-                </th>
-                <th className="border border-gray-300 px-4 py-2 font-semibold">
-                  Status
-                </th>
-                <th className="border border-gray-300 px-4 py-2 font-semibold">
-                  Notes
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableData.map((item, index) => (
-                <tr
-                  key={index}
-                  className="hover:bg-gray-100 hover:text-gray-500"
-                >
-                  <td className="border border-gray-300 px-4 py-2">
-                    {item.topic}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2 font-semibold text-green-600">
-                    {item.status}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {item.notes}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   );
 }

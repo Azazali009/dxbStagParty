@@ -234,40 +234,6 @@ export default function Page() {
           Email: pp@dxbstagparties.com
         </Link>
       </div>
-      <div className="space-y-6">
-        <h2 className="text-center text-4xl font-semibold">
-          Privacy Policy must cover to protect DXB Stag Parties properly:
-        </h2>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-300 text-left text-sm text-gray-500">
-          <thead className="bg-gray-100 text-gray-700">
-            <tr>
-              <th className="border border-gray-300 px-4 py-2 font-semibold">
-                Section
-              </th>
-              <th className="border border-gray-300 px-4 py-2 font-semibold">
-                Purpose
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => (
-              <tr
-                key={index}
-                className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-              >
-                <td className="border border-gray-300 px-4 py-3 font-medium">
-                  {row.section}
-                </td>
-                <td className="border border-gray-300 px-4 py-3">
-                  {row.purpose}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 }
