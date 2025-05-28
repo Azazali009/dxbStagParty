@@ -79,7 +79,7 @@ export default function AdrenalineActivities({ category }) {
           })}
 
           {/* cta column 5 */}
-          {/* {filteredByCategoryArr.length >= 3 && (
+          {filteredByCategoryArr.length >= 3 && (
             <div
               className="flex flex-col gap-6 self-center text-center"
               style={{
@@ -96,7 +96,7 @@ export default function AdrenalineActivities({ category }) {
               </Link>
               <p className="text-xl">or browse all 60+ stag activities</p>
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </section>
