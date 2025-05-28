@@ -4,11 +4,14 @@ import DisplayPackages from "../_components/DisplayPackages";
 import PackagesHeroSection from "../_components/PackagesHeroSection";
 import SliderFilter from "../_components/SliderFilter";
 import Testimonilas from "../_components/Testimonials";
+import { getPackages } from "../_lib/packagesApi";
 
 export const revalidate = 0;
 
 export default async function Page({ searchParams }) {
+  const packages = await getPackages();
   const filter = searchParams.groupSize ?? "all";
+
   return (
     <div className="mx-auto max-w-[1400px]">
       <PackagesHeroSection />
@@ -19,7 +22,7 @@ export default async function Page({ searchParams }) {
           <ClearFilterButton />
         </div>
       </div>
-      <DisplayPackages />
+      <DisplayPackages packages={packages} />
       {/* <StagPartyPackages filter={filter} /> */}
       <Testimonilas />
     </div>

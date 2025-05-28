@@ -46,6 +46,15 @@ export default function CreateBlogForm({ isEdit = false, blog = {} }) {
         />
       </FormRow>
 
+      <FormRow label={"description"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="description"
+          placeholder="description"
+          defaultValue={blog?.description || ""}
+        />
+      </FormRow>
       <FormRow label={"Category"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"

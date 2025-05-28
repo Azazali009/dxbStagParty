@@ -4,7 +4,7 @@ import Blogs from "../_components/Blogs";
 import { cinzel, playfairDisplay } from "../layout";
 export default function Page() {
   return (
-    <div className="space-y-10 py-6">
+    <div className="space-y-10 px-8 py-6">
       <div className="flex flex-col items-center justify-center gap-6">
         <h1
           className={`${cinzel.className} text-5xl font-semibold text-matalicGold`}

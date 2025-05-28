@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function BlogHero() {
   return (
-    <div className="relative min-h-[800px] bg-[url(/images/blog-bg.webp)] bg-cover bg-no-repeat">
+    <div className="relative h-[700px] overflow-hidden rounded-xl bg-[url(/images/blog-bg.jpg)] bg-cover bg-no-repeat">
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-navyBlue/70 to-transparent"></div>
       <div className="relative z-10 flex min-h-[800px] w-[50%] flex-col justify-center gap-6 p-6">

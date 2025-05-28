@@ -1,10 +1,11 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { getPackages } from "../_lib/packagesApi";
+import { motion } from "framer-motion";
 
-export default async function AdrenalineActivities() {
-  const packages = await getPackages();
+export default function DisplayPackages({ packages }) {
   return (
     <section className="bg-[#694621] py-40">
       <div className="mx-auto w-[95%]">
@@ -17,72 +18,40 @@ export default async function AdrenalineActivities() {
           </p>
         </div>
 
-        <div className="!mt-20 grid grid-cols-[1fr_1fr_1fr] items-start gap-x-12">
+        <div className="!mt-20 grid grid-cols-1 items-start gap-8">
           {/* card 1 */}
           {packages.map((pack, index) => {
             return (
-              <div key={pack.id}>
-                {index === 3 ? (
-                  <div className="relative col-span-2 -mt-16 flex h-[350px] origin-left items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(5deg)_scale(1.4)_rotateZ(4deg)]">
-                    {/* titl design */}
-                    <div className="absolute right-0 top-0 z-20 h-6 w-[60%] rounded-b-3xl rounded-r-none bg-[#694621]"></div>
-                    {/* overlay */}
-                    <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
-                    <Image
-                      src={pack?.image}
-                      fill
-                      alt="image"
-                      className="object-cover"
-                    />
-                    <h2 className="relative z-10 text-4xl font-medium">
-                      {pack?.name}
-                    </h2>
-                    {/* book button */}
-                    <div className="group absolute left-0 top-0 z-10 flex h-full w-full items-center justify-center duration-300 hover:bg-navyBlue/60">
-                      {" "}
-                      <Link
-                        className="pointer-events-none invisible translate-y-full rounded-md bg-white px-6 py-2 capitalize text-navyBlue opacity-0 shadow-2xl duration-500 active:translate-y-2 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
-                        href={`/activities/${pack?.id}`}
-                      >
-                        Book your slot
-                      </Link>
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    key={pack.id}
-                    className={`relative flex origin-top items-end overflow-hidden rounded-lg p-10 [transform:perspective(300px)_rotateY(-5deg)] ${
-                      index === 1
-                        ? "z-10 h-[650px]"
-                        : index === 2
-                          ? "h-[700px]"
-                          : "h-[550px]"
-                    }`}
-                  >
-                    {/* overlay */}
-                    <div className="absolute left-0 top-0 z-10 h-full w-full bg-[#694621]/20"></div>
-                    {/* book button */}
-                    <div className="group absolute left-0 top-0 z-20 flex h-full w-full items-center justify-center duration-300 hover:bg-navyBlue/60">
-                      {" "}
-                      <Link
-                        className="pointer-events-none invisible translate-y-full rounded-md bg-white px-6 py-2 capitalize text-navyBlue opacity-0 shadow-2xl duration-500 active:translate-y-2 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
-                        href={`/activities/${pack.id}`}
-                      >
-                        Book your slot
-                      </Link>
-                    </div>
-                    <Image
-                      src={pack.image}
-                      fill
-                      alt={pack.name}
-                      className="object-cover"
-                    />
-                    <h2 className="relative z-20 text-xl font-medium">
-                      {pack.name}
-                    </h2>
-                  </div>
-                )}
-              </div>
+              <motion.div
+                key={pack.id}
+                className={`relative flex min-h-80 items-center ${index % 2 === 0 ? "justify-end" : "justify-start"} object-cover p-6`}
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.5,
+                }}
+              >
+                <Image
+                  src={pack.image}
+                  fill
+                  alt={pack.name}
+                  className="object-cover"
+                />
+                {/* overlay */}
+                <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-r from-transparent to-primary/60"></div>
+                {/* <div className="absolute left-4 top-4 flex h-10 w-32 items-center justify-center bg-red-600 text-white">
+                  <span className="block capitalize">Editor&apos;s pick</span>
+                </div> */}
+                <div
+                  className={`relative z-20 max-w-[400px] space-y-3 text-right`}
+                >
+                  <h3 className="text-2xl font-bold capitalize !leading-[1.3] text-matalicGold sm:text-5xl">
+                    {pack.name}
+                  </h3>
+                  <p className="text-lg leading-[1.5]">{pack.blurb}</p>
+                </div>
+              </motion.div>
             );
           })}
 

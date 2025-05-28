@@ -22,11 +22,12 @@ export async function addBlog(bolgBody, formData) {
   // get form data
   const name = formData.get("name")?.slice(0, 100);
   const category = formData.get("category")?.slice(0, 100);
+  const description = formData.get("description")?.slice(0, 100);
   const image = formData.get("image");
   const blogContent = bolgBody.value;
 
   //   check for empty fields
-  if (!name || !category || !image)
+  if (!name || !category || !image || !description)
     return { error: "Please fill required fields" };
 
   //   check image type and size
@@ -50,11 +51,16 @@ export async function addBlog(bolgBody, formData) {
     imagePath = resUpload?.publicUrl;
   }
   //   insert data to the database
-  const { error: insertError } = await supabase
-    .from("blog")
-    .insert([
-      { name, category, blogContent, image: imagePath, userId: user.id },
-    ]);
+  const { error: insertError } = await supabase.from("blog").insert([
+    {
+      name,
+      category,
+      blogContent,
+      image: imagePath,
+      userId: user.id,
+      description,
+    },
+  ]);
 
   if (insertError) {
     // Rollback uploaded image if DB insert fails
@@ -76,12 +82,13 @@ export async function editBlog(blogBody, formData) {
 
   const name = formData.get("name")?.slice(0, 100);
   const category = formData.get("category")?.slice(0, 100);
+  const description = formData.get("description")?.slice(0, 1000);
   const image = formData.get("image");
   const existingImage = formData.get("existingImage");
   const blogContent = blogBody.value;
   const blogId = blogBody.blogId;
 
-  if (!name || !category || !blogContent)
+  if (!name || !category || !blogContent || !description)
     return { error: "Please fill required fields" };
 
   //   check image type and size
@@ -116,6 +123,7 @@ export async function editBlog(blogBody, formData) {
       name,
       category,
       blogContent,
+      description,
       image: image.size > 0 ? imagePath : existingImage,
     })
     .eq("id", blogId);
