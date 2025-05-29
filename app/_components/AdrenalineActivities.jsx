@@ -26,7 +26,8 @@ export default function AdrenalineActivities({ category }) {
             return (
               <>
                 {index === 3 ? (
-                  <div className="relative col-span-2 -ml-16 -mt-6 flex h-[300px] origin-left items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateY(5deg)_scale(1.3)_rotateZ(8deg)]">
+                  // [transform:perspective(300px)_rotateY(5deg)_scale(1.3)]
+                  <div className="path relative col-span-2 -mt-16 flex h-[300px] items-end overflow-hidden rounded-lg p-6">
                     {/* titl design */}
                     <div className="absolute right-0 top-0 z-20 h-6 w-[55%] rounded-b-3xl rounded-r-none bg-[#814103]"></div>
                     {/* overlay */}
@@ -37,7 +38,7 @@ export default function AdrenalineActivities({ category }) {
                       alt="image"
                       className="object-cover"
                     />
-                    <h2 className="relative z-10 text-4xl font-medium">
+                    <h2 className="relative z-10 py-8 text-4xl font-medium">
                       {activity?.name}
                     </h2>
                     {/* book button */}
@@ -55,18 +56,18 @@ export default function AdrenalineActivities({ category }) {
                   <div className="relative z-20">
                     <Link
                       href={`/activities/${activity.id}`}
-                      className={`group relative block origin-top overflow-hidden rounded-2xl ${index === 0 && "h-[450px] ![transform:perspective(300px)_rotateY(-5deg)]"} ${index === 1 && "h-[500px] ![transform:perspective(400px)_rotateY(-10deg)_rotateZ(-0.4deg)_rotateX(3deg)]"} ${index === 2 && "h-[520px] ![transform:perspective(400px)_rotateX(5deg)_rotateY(1deg)_rotateZ(-1deg)]"} `}
+                      className={`group relative block origin-top overflow-hidden rounded-2xl ${index === 0 && "slanted-rectangle h-[450px] ![transform:perspective(300px)_rotateY(-5deg)]"} ${index === 1 && "middle-card"} ${index === 2 && "third-card h-[500px] ![transform:perspective(400px)_rotateX(5deg)_rotateY(1deg)_rotateZ(-1deg)_skewX(-2deg)]"} `}
                     >
                       {/* overlay */}
                       <div className="absolute left-0 top-0 z-20 flex h-full w-full items-end bg-black/40 p-4"></div>
-                      <div className="relative z-30 flex h-full w-full items-end p-6">
+                      <div className="content relative z-30 flex h-full w-full items-end p-6">
                         {" "}
-                        <h1 className={`text-3xl font-semibold`}>
+                        <h1 className={`text-3xl font-medium`}>
                           {activity.name}
                         </h1>
                       </div>
                       <Image
-                        className="duration-300 group-hover:scale-105"
+                        className="object-cover duration-300 group-hover:scale-105"
                         src={activity.image}
                         fill
                         alt="image"

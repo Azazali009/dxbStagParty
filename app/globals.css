@@ -8,13 +8,72 @@
   border: 1px solid #1f2937 !important;
 }
 .slanted-rectangle {
-  width: 300px;
-  height: 150px;
+  width: 270px;
+  height: 440px;
   background-color: crimson;
-  clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 230%, 0% 100%) !important;
   /* Top-left, Top-right, Bottom-right, Bottom-left (slanted) */
 }
+.slanted-rectangle .content {
+  transform: perspective(300px) rotateY(4deg) rotateZ(-4deg) skewX(-3deg);
+}
+.third-card .content {
+  transform: perspective(400px) rotateX(-11deg);
+}
+.middle-card {
+  height: 550px;
+  /* transform: skew(-2deg) !important; */
+  /* clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%) !important; */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 96%) !important;
+  clip-path: inset(0 0 0 0 round 20px) !important;
+  transform: perspective(300px) rotateY(-6deg) rotateX(-3deg) skewX(-2deg) !important;
+}
 
+.middle-card .content {
+  transform: perspective(300px) rotateY(8deg) rotateX(5deg) skew(0) !important;
+}
+.middle-card .content h1 {
+  transform: perspective(300px) skewY(-2deg) rotateY(5deg);
+  margin-bottom: 20px;
+}
+.path {
+  width: 100%;
+  height: 400px;
+  /* clip-path: polygon(
+    50% 0,
+    50% 8%,
+    100% 8%,
+    100% 70%,
+    100% 100%,
+    30% 100%,
+    0 100%,
+    0 0
+  ); */
+
+  /* clip-path: path(
+    "M 10 40 L 70 40 A 10 10 0 0 0 80 30 L 80 10 A 10 10 0 0 1 90 0 L 140 0 A 10 10 0 0 1 150 10 L 150 190 A 10 10 0 0 1 150 190 Z"
+  ); */
+
+  /* clip-path: path("M 10,40 L 70,40
+А 10,10
+0,0,0
+80,30 L
+80,10
+A 10,10
+0,0,1 90,0 L 140,0
+А 10,10
+0,0,1
+150,10 L
+150, 190
+A 10,10
+10,40
+Z"); */
+  border-radius: 20px;
+  transform: perspective(300px) skewY(4deg) rotateY(4deg) rotateZ(1deg) !important;
+}
+.path h2 {
+  transform: skewY(-3deg);
+}
 .rbc-toolbar button:active,
 .rbc-toolbar button.rbc-active {
   background: #1f2937 !important;
