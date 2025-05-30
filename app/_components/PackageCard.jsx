@@ -1,53 +1,34 @@
+"use client";
 import Image from "next/image";
 import LinkButton from "./LinkButton";
+import { motion } from "framer-motion";
 
-export default function PackageCard({ pack }) {
+export default function PackageCard({ pack, index }) {
   return (
-    <div
+    <motion.div
       key={pack.id}
-      className="flex h-full flex-col items-start overflow-hidden rounded-[22px] border-2 border-secondary bg-white text-neutral-700 shadow-md"
+      className={`relative flex min-h-80 items-center ${index % 2 === 0 ? "justify-end" : "justify-start"} object-cover p-6`}
+      initial={{ opacity: 0, x: -40 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{
+        duration: 0.8,
+        delay: 0.5,
+      }}
     >
-      {/* Image */}
-
-      <div className="relative h-60 object-cover">
-        <Image
-          src={pack?.image || "/default-activity-image.jpg"}
-          alt={pack?.name}
-          width={500}
-          className="h-full rounded object-cover"
-          height={500}
-        />
-      </div>
-      <div className="flex flex-col items-start gap-4 p-4">
-        <h3 className="mb-2 mt-4 text-balance font-semibold leading-[1.5]">
+      <Image src={pack.image} fill alt={pack.name} className="object-cover" />
+      {/* overlay */}
+      <div
+        className={`absolute left-0 top-0 z-10 h-full w-full ${index % 2 === 0 ? "bg-gradient-to-r" : "bg-gradient-to-l"} from-transparent to-primary/80`}
+      ></div>
+      {/* <div className="absolute left-4 top-4 flex h-10 w-32 items-center justify-center bg-red-600 text-white">
+                  <span className="block capitalize">Editor&apos;s pick</span>
+                </div> */}
+      <div className={`relative z-20 max-w-[400px] space-y-3 text-right`}>
+        <h3 className="text-2xl font-bold capitalize !leading-[1.3] text-matalicGold sm:text-5xl">
           {pack.name}
         </h3>
-        {/* blurb */}
-        <div className="space-x-2 text-sm">
-          <span>{pack?.blurb}</span>
-        </div>
-
-        <div className="space-x-2 text-sm">
-          <strong className="text-secondary">Group Size:</strong>{" "}
-          <span>{pack?.group_size} Guests</span>
-        </div>
-
-        {/* inclusions */}
-        <div className="space-x-2 text-sm">
-          <strong className="text-secondary">Inclusions:</strong>{" "}
-          <span>{pack?.inclusions?.join(", ")}</span>
-        </div>
-
-        <LinkButton
-          href={`/packages/${pack.id}`}
-          className={"flex items-center gap-2"}
-        >
-          <span>Buy now</span>
-          <span className="rounded-full bg-gray-200 px-1 text-sm">
-            {pack?.price_band}
-          </span>
-        </LinkButton>
+        <p className="text-lg leading-[1.5]">{pack.blurb}</p>
       </div>
-    </div>
+    </motion.div>
   );
 }

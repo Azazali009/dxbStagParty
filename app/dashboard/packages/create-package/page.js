@@ -19,7 +19,6 @@ export default function CreatePackage() {
       const res = await createPackageWithData(formData);
       if (res?.error) return toast.error(res?.error);
       toast.success("Package created successfully!");
-      //   ref.current?.reset();
     });
   };
 
@@ -99,6 +98,22 @@ export default function CreatePackage() {
           type="text"
           name="group_size"
           placeholder="4-10"
+        />
+      </FormRow>
+      <FormRow label={"duration"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="duration"
+          placeholder="2-4 hr"
+        />
+      </FormRow>
+      <FormRow label={"recommended Time"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="recommended_Time"
+          placeholder="day Time, Evening, Night"
         />
       </FormRow>
       <FormRow label={"Tags"}>

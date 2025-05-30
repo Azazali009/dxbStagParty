@@ -46,15 +46,6 @@ export default function CreateBlogForm({ isEdit = false, blog = {} }) {
         />
       </FormRow>
 
-      <FormRow label={"description"}>
-        <input
-          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
-          type="text"
-          name="description"
-          placeholder="description"
-          defaultValue={blog?.description || ""}
-        />
-      </FormRow>
       <FormRow label={"Category"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
@@ -72,6 +63,18 @@ export default function CreateBlogForm({ isEdit = false, blog = {} }) {
         />
         <input type="hidden" name="existingImage" value={blog.image} />
       </FormRow>
+
+      <FormRow label={"description"}>
+        <textarea
+          cols="30"
+          rows="5"
+          placeholder="description"
+          className="rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          name="description"
+          id="description"
+          defaultValue={blog?.description || ""}
+        ></textarea>
+      </FormRow>
       <FormRow label={"Blog Content"} className={"[grid-column:1/-1]"}>
         <ReactQuill
           modules={modules}
@@ -82,6 +85,7 @@ export default function CreateBlogForm({ isEdit = false, blog = {} }) {
           defaultValue={blog.blogContent}
         />
       </FormRow>
+
       <div className="[grid-column:1/-1]">
         <SubmitButton>
           <span className="text-lg">{!isEdit ? "+" : ""}</span>

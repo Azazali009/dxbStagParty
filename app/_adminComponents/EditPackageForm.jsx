@@ -112,6 +112,24 @@ export default function EditPackage({ Package }) {
           defaultValue={Package.group_size}
         />
       </FormRow>
+      <FormRow label={"duration"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="duration"
+          placeholder="2-4 hr"
+          defaultValue={Package.duration}
+        />
+      </FormRow>
+      <FormRow label={"recommended Time"}>
+        <input
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+          type="text"
+          name="recommended_Time"
+          placeholder="day Time, Evening, Night"
+          defaultValue={Package.recommended_Time}
+        />
+      </FormRow>
       <FormRow label={"Tags"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"

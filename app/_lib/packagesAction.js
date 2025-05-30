@@ -25,17 +25,21 @@ export async function createPackage(packageData, formData) {
   const image = formData.get("image");
   const blurb = formData.get("blurb")?.slice(0, 1000);
   const group_size = formData.get("group_size");
+  const duration = formData.get("duration");
+  const recommended_Time = formData.get("recommended_Time");
   const inclusions = packageData.selected.map((cur) => cur.label);
 
   //   check for empty fields
   if (
     !name ||
     !price_band ||
-    !tags ||
+    // !tags ||
     !blurb ||
     !inclusions ||
-    !add_ons ||
+    // !add_ons ||
     !group_size ||
+    !duration ||
+    !recommended_Time ||
     !image
   )
     return { error: "Please fill required fields." };
@@ -70,6 +74,8 @@ export async function createPackage(packageData, formData) {
     tags,
     inclusions,
     blurb,
+    duration,
+    recommended_Time,
     image: imagePath,
   };
   //   add package and check possible error
@@ -137,6 +143,8 @@ export async function updatePackage(updatedPackageData, formData) {
   const image = formData.get("image");
   const blurb = formData.get("blurb")?.slice(0, 1000);
   const group_size = formData.get("group_size");
+  const duration = formData.get("duration");
+  const recommended_Time = formData.get("recommended_Time");
   const oldImage = formData.get("oldImage");
   const packageId = updatedPackageData.packageId;
   const inclusions = updatedPackageData.selected.map((cur) => cur.label);
@@ -145,11 +153,13 @@ export async function updatePackage(updatedPackageData, formData) {
   if (
     !name ||
     !price_band ||
-    !tags ||
+    // !tags ||
     !blurb ||
     !inclusions ||
-    !add_ons ||
-    !group_size
+    // !add_ons ||
+    !group_size ||
+    !duration ||
+    !recommended_Time
   )
     return { error: "Please fill required fields." };
 
@@ -197,6 +207,8 @@ export async function updatePackage(updatedPackageData, formData) {
     image: imagePath,
     blurb,
     group_size,
+    duration,
+    recommended_Time,
   };
   const { error } = await supabase
     .from("Packages")
@@ -206,7 +218,7 @@ export async function updatePackage(updatedPackageData, formData) {
   if (error) return { error: "Unable to update package. Please try again" };
 
   // Revalidation
-  revalidatePath("/dashboard/packages/edit-package/24");
+  revalidatePath(`/dashboard/packages/edit-package/${packageId}`);
   revalidatePath("/dashboard/packages");
   // Redirection
   redirect("/dashboard/packages");

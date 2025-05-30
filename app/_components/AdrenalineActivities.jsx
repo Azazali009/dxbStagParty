@@ -91,7 +91,7 @@ export default function AdrenalineActivities({ category }) {
             >
               <Link
                 href={`/activities/category/${filteredByCategoryArr[0]?.category?.name}`}
-                className="flex items-center rounded-2xl bg-navyBlue p-6 text-lg font-medium capitalize duration-300 hover:opacity-70"
+                className="flex items-center rounded-2xl bg-navyBlue p-6 text-xl font-medium capitalize duration-300 hover:opacity-70"
               >
                 explore all adrenaline activities
               </Link>
