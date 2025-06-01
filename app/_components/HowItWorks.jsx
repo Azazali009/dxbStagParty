@@ -7,7 +7,7 @@ export default function HowItWorks() {
       <div className="absolute left-0 top-0 z-20 h-full w-full bg-gradient-to-r from-primary via-navyBlue to-black/50"></div>
       <div className="relative z-20 space-y-10 px-8 py-24">
         <h2
-          className={`text-2xl ${cinzel.className} font-semibold text-matalicGold sm:text-6xl`}
+          className={`text-2xl ${cinzel.className} font-semibold text-matalicGold sm:text-4xl md:text-6xl`}
         >
           How it works
         </h2>

@@ -24,7 +24,7 @@ export default function ActivityCarousel({ Activities }) {
 
   return (
     <Carousel
-      swipeable={false}
+      swipeable={true}
       draggable={false}
       showDots={false}
       responsive={responsive}

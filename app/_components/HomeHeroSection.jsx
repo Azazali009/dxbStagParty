@@ -3,17 +3,17 @@ import AnimatedHeading from "./AnimatedHeading";
 
 export default function HomeHeroSection() {
   return (
-    <section className="relative -mt-[110px] flex items-end justify-center gap-10 bg-[url('/images/home-hero-bg.webp')] bg-cover bg-no-repeat p-4 pb-10 pt-32 sm:min-h-[650px]">
+    <section className="relative -mt-[110px] flex min-h-screen items-end justify-center gap-10 bg-[url('/images/home-hero-bg.webp')] bg-cover bg-center bg-no-repeat p-4 pb-10 pt-32 sm:min-h-[650px]">
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
 
-      <div className="relative z-10 ml-12 flex flex-col items-center gap-2 text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center gap-2 text-center sm:ml-12">
         <AnimatedHeading
-          className={`text-left font-semibold md:text-6xl ${cinzel.className} uppercase !leading-[1.2] text-matalicGold`}
+          className={`text-center font-semibold md:text-6xl ${cinzel.className} text-2xl uppercase !leading-[1.2] text-matalicGold`}
         >
           Where legends celebrate
         </AnimatedHeading>
-        <p className="text-lg">
+        <p className="text-sm sm:text-lg">
           Dubai most elite stag party experiences &mdash;
           bold,bespoke,unforgetable
         </p>
