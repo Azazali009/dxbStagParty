@@ -95,14 +95,15 @@ export async function updateAttendeeStatus(email, amount) {
     .from("attendee")
     .update({ status: "paid" })
     .eq("email", email)
-    .select("bookingID");
+    .select("bookingID")
+    .single();
 
   if (error) {
     console.error("❌ Error updating attendee status:", error);
     return { error: "Error while updating attendee status" };
   }
 
-  const bookingID = data[0]?.bookingID;
+  const bookingID = data?.bookingID;
   if (!bookingID) return;
 
   // Fetch current paidAmount
