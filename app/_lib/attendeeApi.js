@@ -51,19 +51,22 @@ export async function checkAndUpdateBookingStatus(bookingID) {
   // Check if all attendees are "paid"
   const allPaid = attendees.every((attendee) => attendee.status === "paid");
 
-  // ✅ If all attendees are paid, update `bookings.payment_status` to "completed"
+  // ✅ If all attendees are paid, update `paymentStatus` to "completed"
   if (allPaid) {
     const { data: booking, error: updateError } = await supabase
       .from("booking")
       .update({ paymentStatus: "completed" })
-      .eq("id", bookingID)
-      .select("organizerEmail");
+      .eq("id", bookingID).select(`*
+      ,users (
+      fullName,
+      email
+    )`);
 
     if (updateError) {
       console.error("❌ Error updating booking status:", updateError);
       throw new Error("Error while updating booking status");
     }
-    const organizerEmail = booking[0]?.organizerEmail;
+    const organizerEmail = booking[0]?.users.email;
 
     if (organizerEmail) {
       // ✅ Send Confirmation Email to Organizer
@@ -88,7 +91,6 @@ export async function checkAndUpdateBookingStatus(bookingID) {
 }
 // ✅4️⃣  Update Payment Status of a Specific Attendee
 export async function updateAttendeeStatus(email, amount) {
-  console.log(email, amount);
   const { data, error } = await supabase
     .from("attendee")
     .update({ status: "paid" })
@@ -97,7 +99,7 @@ export async function updateAttendeeStatus(email, amount) {
 
   if (error) {
     console.error("❌ Error updating attendee status:", error);
-    throw new Error("Error while updating attendee status");
+    return { error: "Error while updating attendee status" };
   }
 
   const bookingID = data[0]?.bookingID;
@@ -114,7 +116,7 @@ export async function updateAttendeeStatus(email, amount) {
     console.error("❌ Error fetching booking:", fetchError);
     throw new Error("Error while fetching booking");
   }
-  const currentPaid = bookingData?.paidAmount || 0;
+  const currentPaid = bookingData?.paidAmount;
   const updatedPaidAmount = Number(currentPaid) + Number(amount);
 
   // Step 3: Update booking paidAmount
@@ -125,7 +127,7 @@ export async function updateAttendeeStatus(email, amount) {
 
   if (updateError) {
     console.error("❌ Error updating booking paidAmount:", updateError);
-    throw new Error("Error while updating paid amount");
+    return { error: "Error while updating paid amount" };
   }
   // 🔄 Step 4: Check if All Attendees Have Paid
   await checkAndUpdateBookingStatus(bookingID);

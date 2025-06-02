@@ -24,7 +24,8 @@ export async function POST(req) {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/payment-success?email=${email}`,
+      // success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/payment-success?email=${email}`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/complete-booking`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/booking-failed`,
     });
 

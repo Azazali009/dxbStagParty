@@ -16,15 +16,6 @@ export default function PaymentSuccessPage() {
         return;
       }
 
-      // ✅ Call API to Confirm Payment
-      // const confirmRes = await fetch(`/api/confirm-payment?email=${email}`);
-      // const confirmData = await confirmRes.json();
-      // if (!confirmData.success) {
-      //   alert("❌ Payment confirmation failed.");
-      //   router.push("/");
-      //   return;
-      // }
-
       // ✅ Redirect to Complete Booking Page
       router.push("/complete-booking");
     };

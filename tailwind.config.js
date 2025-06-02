@@ -9,6 +9,9 @@ export const theme = {
   // darkMode: "class",
 
   extend: {
+    screens: {
+      xs: "480px",
+    },
     keyframes: {
       wave: {
         "0%": { transform: "rotate(0deg)" },

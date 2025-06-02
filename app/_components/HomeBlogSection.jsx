@@ -13,16 +13,18 @@ import InterestImageBox from "./InterestImageBox";
 export default function HomeBlogSection() {
   return (
     <div className="mx-auto max-w-6xl space-y-12 py-14">
-      <div className="space-y-4">
+      <div className="xs:space-y-4 space-y-2">
         <h2
-          className={`${cinzel.className} text-center text-5xl font-semibold text-matalicGold`}
+          className={`${cinzel.className} xs:text-5xl text-center text-4xl font-semibold text-matalicGold`}
         >
           plan like a pro
         </h2>
-        <p className="text-center">Everything we know. All for your crew.</p>
+        <p className="xs:text-base text-center text-sm">
+          Everything we know. All for your crew.
+        </p>
       </div>
-      <div className="grid grid-cols-2 items-center gap-12 p-12">
-        <div className="relative flex h-[500px] items-end overflow-hidden rounded-lg p-6">
+      <div className="grid grid-cols-1 items-center gap-12 p-6 md:grid-cols-2 md:p-12">
+        <div className="relative flex h-[300px] items-end overflow-hidden rounded-lg p-6 sm:h-[500px]">
           <Image
             src={"/images/planLikeApro.webp"}
             className="object-cover"
@@ -31,9 +33,9 @@ export default function HomeBlogSection() {
           />
           {/* overlay */}
           <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
-          <div className="relative z-20 space-y-6">
+          <div className="xs:space-y-6 relative z-20 space-y-3">
             <h2
-              className={`${playfairDisplay.className} text-5xl font-bold capitalize`}
+              className={`${playfairDisplay.className} xs:text-5xl text-3xl font-bold capitalize`}
             >
               your dubai <br />
               stag blueprint
@@ -48,7 +50,7 @@ export default function HomeBlogSection() {
         </div>
         <div className="space-y-12">
           <h3
-            className={` ${cinzel.className} text-center text-2xl font-semibold`}
+            className={` ${cinzel.className} xs:text-2xl text-center text-xl font-semibold`}
           >
             browse topics by interest
           </h3>

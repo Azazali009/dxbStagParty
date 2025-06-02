@@ -3,11 +3,13 @@ import { cinzel } from "../layout";
 import HowItWorkIconBox from "./HowItWorkIconBox";
 export default function HowItWorks() {
   return (
-    <section className={`relative grid grid-cols-2 overflow-hidden p-4`}>
-      <div className="absolute left-0 top-0 z-20 h-full w-full bg-gradient-to-r from-primary via-navyBlue to-black/50"></div>
+    <section
+      className={`relative grid grid-cols-1 overflow-hidden md:grid-cols-2 md:p-4`}
+    >
+      <div className="absolute left-0 top-0 z-20 h-full w-full bg-gradient-to-b from-primary via-navyBlue to-black/50 md:bg-gradient-to-r"></div>
       <div className="relative z-20 space-y-10 px-8 py-24">
         <h2
-          className={`text-2xl ${cinzel.className} font-semibold text-matalicGold sm:text-4xl md:text-6xl`}
+          className={`text-nowrap text-4xl ${cinzel.className} font-semibold text-matalicGold md:text-6xl`}
         >
           How it works
         </h2>
@@ -35,10 +37,10 @@ export default function HowItWorks() {
           />
         </div>
       </div>
-      <div className="relative -z-10 h-full">
+      <div className="relative -z-10 h-[500px] md:h-full">
         <Image
           src={"/images/how-it-work.webp"}
-          className="h-full object-contain object-center"
+          className="h-full object-cover object-center md:object-contain"
           fill
           alt="image"
         />

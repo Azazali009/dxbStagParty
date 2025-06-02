@@ -7,17 +7,17 @@ export default function HomeHeroSection() {
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center gap-2 text-center sm:ml-12">
+      <div className="relative z-10 flex flex-col items-center justify-center gap-4 text-center sm:ml-12">
         <AnimatedHeading
           className={`text-center font-semibold md:text-6xl ${cinzel.className} text-2xl uppercase !leading-[1.2] text-matalicGold`}
         >
           Where legends celebrate
         </AnimatedHeading>
-        <p className="text-sm sm:text-lg">
+        <p className="xs:text-sm text-xs sm:text-lg">
           Dubai most elite stag party experiences &mdash;
           bold,bespoke,unforgetable
         </p>
-        <button className="mt-8 rounded border border-matalicGold bg-matalicGold px-6 py-2 font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80">
+        <button className="xs:text-sm rounded border border-matalicGold bg-matalicGold px-6 py-2 text-xs font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80 sm:mt-8 sm:text-base">
           plan your party
         </button>
       </div>

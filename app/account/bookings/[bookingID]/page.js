@@ -20,6 +20,8 @@ export async function generateStaticParams() {
 export default async function page({ params }) {
   const curAuthUser = await getCurrentUser();
   const booking = await getBooking(params.bookingID);
+  if (!booking)
+    return <p className="text-center text-red-500">Booking not found.</p>;
   // Check the right user could see only his own bookings
   if (booking.userId !== curAuthUser.id) return notFound();
   const { attendees, user } = await getAttendees(booking?.id);

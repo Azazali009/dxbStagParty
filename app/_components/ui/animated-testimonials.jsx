@@ -23,20 +23,13 @@ export const AnimatedTestimonials = ({
     return index === active;
   };
 
-  // useEffect(() => {
-  //   if (autoplay) {
-  //     const interval = setInterval(handleNext, 5000);
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [autoplay]);
-
   const randomRotateY = () => {
     return Math.floor(Math.random() * 21) - 10;
   };
   return (
-    <section className="mx-auto w-[90%] py-20 font-sans antialiased">
+    <section className="mx-auto w-[90%] py-10 font-sans antialiased sm:py-20">
       <h3
-        className={`mb-10 text-2xl ${cinzel.className} font-bold text-matalicGold sm:text-4xl`}
+        className={`xs:text-2xl mb-10 text-xl ${cinzel.className} font-bold text-matalicGold sm:text-4xl`}
       >
         What our client says
       </h3>
@@ -72,7 +65,7 @@ export const AnimatedTestimonials = ({
                   duration: 0.4,
                   ease: "easeInOut",
                 }}
-                className="absolute inset-0 h-[400px] origin-bottom rounded-lg bg-softGold p-4 pb-20"
+                className="absolute inset-0 h-[400px] origin-bottom rounded-lg bg-softGold p-4 pb-10 sm:pb-20"
               >
                 <Image
                   src={testimonial.src}
@@ -143,14 +136,14 @@ export const AnimatedTestimonials = ({
           <div className="flex gap-4 pt-12 md:pt-0">
             <button
               onClick={handlePrev}
-              className="rounded-md bg-reddish px-6 py-2.5 font-semibold capitalize duration-300 hover:scale-95"
+              className="rounded-md bg-reddish px-4 py-2.5 text-sm font-semibold capitalize duration-300 hover:scale-95 sm:px-6 sm:text-base"
             >
               previous legend
               {/* <IconArrowLeft className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:rotate-12 dark:text-neutral-400" /> */}
             </button>
             <button
               onClick={handleNext}
-              className="rounded-md bg-reddish px-6 py-2.5 font-semibold capitalize duration-300 hover:scale-95"
+              className="rounded-md bg-reddish px-4 py-2.5 text-sm font-semibold capitalize duration-300 hover:scale-95 sm:px-6 sm:text-base"
             >
               {/* <IconArrowRight className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:-rotate-12 dark:text-neutral-400" /> */}
               Next legend

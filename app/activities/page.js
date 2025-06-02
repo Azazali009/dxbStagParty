@@ -1,38 +1,25 @@
-import Activities from "../_components/Activities";
-import Spinner from "../_components/Spinner";
-import ActivityHeroSection from "../_components/ActivityHeroSection";
-import { Suspense } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import ActivityFilters from "../_components/ActivityFilters";
+import ActivityHeroSection from "../_components/ActivityHeroSection";
 import AdrenalineActivities from "../_components/AdrenalineActivities";
 import ChilAndLuxeActivity from "../_components/ChilAndLuxeActivity";
 import HomeAndVillaActivities from "../_components/HomeAndVillaActivities";
-import { getActivities, getActivity } from "../_lib/data-services";
-import Image from "next/image";
-import { BebasNeue, playfairDisplay } from "../layout";
-import Link from "next/link";
+import { getActivities } from "../_lib/data-services";
+import { BebasNeue } from "../layout";
 
 export const revalidate = 0;
 
 export default async function Page({ searchParams }) {
   const searchQuery = searchParams?.search ?? "all";
   const groupSize = Number(searchParams?.groupSize ?? 0);
-  // const extractMinMax = (groupSize) => {
-  //   const [min, max] = groupSize.split("-").map(Number);
-  //   return { min, max };
-  // };
-  const ActivitiesArray = await getActivities();
 
-  // Get min & max across all activities
-  // const allSizes = ActivitiesArray.map((activity) =>
-  //   extractMinMax(activity.group_size),
-  // );
-  // const minGroupSize = Math.min(...allSizes.map((size) => size.min));
-  // const maxGroupSize = Math.max(...allSizes.map((size) => size.max));
+  const ActivitiesArray = await getActivities();
 
   return (
     <div className="mx-auto min-h-screen max-w-[1400px] antialiased">
       <ActivityHeroSection />
-      {/* <SearchBar searchQuery={searchQuery} /> */}
+
       <ActivityFilters searchQuery={searchQuery} groupSize={groupSize} />
       {/* section 1 */}
       <section className="bg-red-100 p-4 text-navyBlue">
@@ -185,7 +172,6 @@ export default async function Page({ searchParams }) {
       </section>
       {/* section 4 */}
       <ChilAndLuxeActivity category={"Chill & Luxe"} />
-      {/* section 5 */}
       <HomeAndVillaActivities ActivitiesArray={ActivitiesArray} />
     </div>
   );
