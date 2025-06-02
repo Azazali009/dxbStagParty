@@ -10,7 +10,7 @@ export default function Notification() {
     // Check if the booking was recently completed (don't show notification if so)
     const bookingInProgress =
       localStorage.getItem("bookingInProgress") === "true";
-    console.log(bookingInProgress);
+
     if (bookingData && !bookingInProgress) {
       toast.error(
         (t) => (

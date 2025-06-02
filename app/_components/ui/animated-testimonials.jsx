@@ -1,8 +1,7 @@
 "use client";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
-import { motion, AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const AnimatedTestimonials = ({
   testimonials,
@@ -29,7 +28,7 @@ export const AnimatedTestimonials = ({
   return (
     <section className="mx-auto w-[90%] py-10 font-sans antialiased sm:py-20">
       <h3
-        className={`xs:text-2xl mb-10 text-xl ${cinzel.className} font-bold text-matalicGold sm:text-4xl`}
+        className={`mb-10 text-xl xs:text-2xl ${cinzel.className} font-bold text-matalicGold sm:text-4xl`}
       >
         What our client says
       </h3>

@@ -9,7 +9,7 @@ import HomePackageIncludes from "./HomePackageIncludes";
 export const revalidate = 0;
 export default async function HomeFeaturedPackage() {
   const Package = await getPackageById(1);
-  const { id, name, inclusions, price_band, image } = Package;
+  const { name, inclusions } = Package;
   return (
     <section className="relative">
       <div className="absolute left-0 top-0 z-30 h-[200px] w-full bg-gradient-to-b from-primary via-transparent to-transparent"></div>
@@ -30,10 +30,10 @@ export default async function HomeFeaturedPackage() {
           >
             {name}
           </AnimatedHeading>
-          <p className="xs:text-2xl text-sm text-matalicGold">
+          <p className="text-sm text-matalicGold xs:text-2xl">
             Command the coast rule the night.
           </p>
-          <p className="xs:text-base text-sm font-extralight leading-[1.8]">
+          <p className="text-sm font-extralight leading-[1.8] xs:text-base">
             No shoes, No rules, Just pure superyacht swagger. A 3-hour private
             takeover of Dubai&apos;s sleekest vessel - because this isn&apos;t
             just a party, it&apos;s a statement. Set sail from Dubai Harbour

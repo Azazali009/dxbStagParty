@@ -41,46 +41,4 @@ export default function Testimonilas() {
     },
   ];
   return <AnimatedTestimonials testimonials={testimonials} cinzel={cinzel} />;
-  // return (
-  //   <div className="mx-auto max-w-6xl space-y-4 px-4 py-20">
-  //     <h2 className={`text-2xl ${cinzel.className} font-bold sm:text-4xl`}>
-  //       Social proofs
-  //     </h2>
-  //     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-  //       <div className="flex flex-col gap-3">
-  //         <Image
-  //           src={"/images/client.png"}
-  //           width={500}
-  //           height={500}
-  //           alt="reviews"
-  //         />
-  //         <p>These guyss know how to throw your own.</p>
-  //         <p>⭐⭐⭐⭐⭐</p>
-  //       </div>
-  //       <div className="flex flex-col gap-3">
-  //         {/* <div className="relative h-full w-44 object-fill">
-  //           <Image src={"/images/client.png"} fill alt="reviews" />
-  //         </div> */}
-  //         <Image
-  //           src={"/images/client.png"}
-  //           width={500}
-  //           height={500}
-  //           alt="reviews"
-  //         />
-  //         <p>Incredible time no hassie for</p>
-  //         <p>⭐⭐⭐⭐⭐</p>
-  //       </div>
-  //       <div className="flex flex-col gap-3">
-  //         <Image
-  //           src={"/images/client.png"}
-  //           width={500}
-  //           height={500}
-  //           alt="reviews"
-  //         />
-  //         <p>Couldn&apos;t have been better!</p>
-  //         <p>⭐⭐⭐⭐⭐</p>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 }
