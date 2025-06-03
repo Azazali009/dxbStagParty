@@ -35,9 +35,9 @@ export default function DayTimeFilter() {
     <div className="flex flex-col items-center justify-center space-y-3 font-semibold">
       <button
         onClick={() => setShow((show) => !show)}
-        className="flex min-h-12 w-full items-center justify-between rounded-md border border-gray-700 fill-softGold px-4"
+        className="flex min-h-8 w-full items-center justify-between rounded-md border border-gray-700 fill-softGold px-2 xs:min-h-12 sm:px-4"
       >
-        <label className="block text-xs font-medium sm:text-base">
+        <label className="block text-[9px] font-medium sm:text-base">
           Day / Night
         </label>
         <span>{show ? <UpSvg /> : <DownSvg />}</span>
@@ -46,7 +46,7 @@ export default function DayTimeFilter() {
       <AnimatePresence>
         {show && (
           <motion.div
-            className="flex h-12 w-full items-center gap-2 rounded-md bg-navyBlue px-4"
+            className="flex h-8 w-full items-center gap-2 rounded-md bg-navyBlue px-2 sm:h-12 sm:px-4"
             key="dayTime"
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -54,7 +54,7 @@ export default function DayTimeFilter() {
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
             <select
-              className="w-full border-none bg-navyBlue p-2 text-xs font-normal capitalize text-white outline-none sm:text-base"
+              className="w-full border-none bg-navyBlue p-2 text-[9px] font-normal capitalize text-white outline-none sm:text-base"
               value={selectedDayTime || "default"}
               onChange={handleChange}
             >

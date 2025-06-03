@@ -17,7 +17,7 @@ export default function AuthNav() {
     );
 
   return (
-    <div className="flex items-center justify-end gap-4 px-8">
+    <div className="flex items-center justify-end gap-4 px-4 py-2 xs:px-8 sm:py-0">
       {user ? (
         <div className="flex items-center gap-4">
           <Link

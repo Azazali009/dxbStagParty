@@ -19,7 +19,7 @@ export default function ClearFilterButton() {
   if (!dayTime && !groupSize && !category) return null;
   return (
     <button
-      className="flex items-center gap-1 self-center capitalize text-red-500 underline decoration-red-500 decoration-[2px] underline-offset-4 hover:no-underline"
+      className="flex items-center gap-1 self-center justify-self-center text-[8px] capitalize text-red-500 underline decoration-red-500 decoration-[2px] underline-offset-4 [grid-column:1/-1] hover:no-underline xs:col-span-1 sm:justify-self-start sm:text-base"
       onClick={handleClear}
     >
       <span>Clear filters X</span>{" "}

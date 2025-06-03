@@ -17,13 +17,6 @@ export default function SliderFilter() {
   const router = useRouter();
   const pathname = usePathname();
 
-  // const handleChange = (e) => {
-  //   const value = Number(e.target.value);
-  //   const params = new URLSearchParams(searchParams);
-  //   params.set("groupSize", value);
-  //   router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  // };
-
   useEffect(() => {
     setLoading(true); // not working --> will check
     const params = new URLSearchParams(searchParams);
@@ -54,9 +47,9 @@ export default function SliderFilter() {
     <div className="space-y-3 font-semibold">
       <button
         onClick={() => setShow((s) => !s)}
-        className="flex min-h-12 w-full items-center justify-between rounded-md border border-gray-700 fill-softGold px-4"
+        className="flex min-h-8 w-full items-center justify-between rounded-md border border-gray-700 fill-softGold px-2 sm:min-h-12 sm:px-4"
       >
-        <label className="block text-xs font-medium sm:text-base">
+        <label className="block text-[9px] font-medium sm:text-base">
           Group Size
         </label>
         <span>{show ? <UpSvg /> : <DownSvg />}</span>
@@ -66,14 +59,14 @@ export default function SliderFilter() {
         {show && (
           <motion.div
             ref={ref}
-            className={`flex ${loading && "cursor-not-allowed !opacity-40"} h-12 items-center gap-2 rounded-md bg-navyBlue px-4`}
+            className={`flex ${loading && "cursor-not-allowed !opacity-40"} h-8 items-center gap-2 rounded-md bg-navyBlue px-2 sm:h-12 sm:px-4`}
             key="slider"
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 10, opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <span className={`text-nowrap text-sm font-normal`}>
+            <span className={`text-nowrap text-[7px] font-normal sm:text-sm`}>
               {minGroupSize} guest
             </span>
             <input
@@ -89,7 +82,7 @@ export default function SliderFilter() {
                 background: `linear-gradient(to right, #bf9b30 ${rangePercent}%, white ${rangePercent}%)`,
               }}
             />
-            <span className="text-sm">{maxGroupSize}</span>
+            <span className="text-[7px] sm:text-sm">{maxGroupSize}</span>
           </motion.div>
         )}
       </AnimatePresence>

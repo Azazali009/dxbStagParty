@@ -37,7 +37,7 @@ export default function HowItWorks() {
           />
         </div>
       </div>
-      <div className="relative -z-10 h-[500px] md:h-full">
+      <div className="relative -z-10 h-[200px] xs:h-[500px] md:h-full">
         <Image
           src={"/images/how-it-work.webp"}
           className="h-full object-cover object-center md:object-contain"

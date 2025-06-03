@@ -1,23 +1,29 @@
 import { cinzel } from "../layout";
 import AnimatedHeading from "./AnimatedHeading";
-
+import bgImage from "../../public/images/home-hero-bg.webp";
+import Image from "next/image";
 export default function HomeHeroSection() {
   return (
-    <section className="relative -mt-[110px] flex min-h-screen items-end justify-center gap-10 bg-[url('/images/home-hero-bg.webp')] bg-cover bg-center bg-no-repeat p-4 pb-10 pt-32 sm:min-h-[650px]">
+    <section className="relative -mt-[110px] flex items-end justify-center gap-10 p-4 pb-10 pt-32 sm:min-h-[650px]">
       {/* overlay */}
-      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
-
+      <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
+      <Image
+        src={bgImage}
+        fill
+        alt="home hero image"
+        className="object-cover"
+      />
       <div className="relative z-10 flex flex-col items-center justify-center gap-4 text-center sm:ml-12">
         <AnimatedHeading
           className={`text-center font-semibold md:text-6xl ${cinzel.className} text-2xl uppercase !leading-[1.2] text-matalicGold`}
         >
           Where legends celebrate
         </AnimatedHeading>
-        <p className="xs:text-sm text-xs sm:text-lg">
+        <p className="text-xs xs:text-sm sm:text-lg">
           Dubai most elite stag party experiences &mdash;
           bold,bespoke,unforgetable
         </p>
-        <button className="xs:text-sm rounded border border-matalicGold bg-matalicGold px-6 py-2 text-xs font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80 sm:mt-8 sm:text-base">
+        <button className="rounded border border-matalicGold bg-matalicGold px-6 py-2 text-xs font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80 xs:text-sm sm:mt-8 sm:text-base">
           plan your party
         </button>
       </div>
