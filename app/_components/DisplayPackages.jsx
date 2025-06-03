@@ -19,7 +19,7 @@ export default function DisplayPackages({ packages }) {
           </p>
         </div>
 
-        <div className="!mt-20 grid grid-cols-1 items-start gap-8">
+        <div className="!mt-10 grid grid-cols-1 items-start gap-8 sm:!mt-20">
           {/* card 1 */}
           {packages.map((pack, index) => {
             return <PackageCard key={pack.id} pack={pack} index={index} />;
