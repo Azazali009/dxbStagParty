@@ -154,9 +154,9 @@ export default function BookingForm({
   if (!user) return <LoggedInMessage />;
 
   return (
-    <div className="relative w-full px-3 pt-20 text-neutral-200">
-      <h1 className="mb-8 text-center text-base font-bold text-secondary md:text-3xl dark:text-neutral-100">
-        Level up your party with{" "}
+    <div className="relative w-full space-y-6 px-3 py-10 text-neutral-200">
+      <h1 className="text-center text-base font-bold text-secondary md:text-3xl dark:text-neutral-100">
+        Level up your party with
         <span className="rounded-md border border-gray-200 bg-gray-100 px-1 py-0.5 dark:border-neutral-700 dark:bg-secondary">
           DXB Stag
         </span>{" "}
@@ -165,7 +165,7 @@ export default function BookingForm({
 
       <form
         onSubmit={handleBooking}
-        className="mt-20 grid grid-cols-1 gap-x-10 gap-y-6 p-4 md:grid-cols-2"
+        className="grid grid-cols-1 gap-x-10 gap-y-6 p-4 md:grid-cols-2"
       >
         <FormRow label={"Organizer Email:"}>
           <input

@@ -1,9 +1,4 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { getPackages } from "../_lib/packagesApi";
-import { motion } from "framer-motion";
 import PackageCard from "./PackageCard";
 
 export default function DisplayPackages({ packages }) {
