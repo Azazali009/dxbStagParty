@@ -1,9 +1,9 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import LoggedInMeesage from "./LoggedInMeesage";
-
+import { createPortal } from "react-dom";
 export default function ModalWindow({ children, onClose, user }) {
-  return (
+  return createPortal(
     <AnimatePresence mode="wait">
       {
         <motion.div
@@ -18,13 +18,13 @@ export default function ModalWindow({ children, onClose, user }) {
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className={`fixed inset-0 z-50 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]`}
+          className={`fixed inset-0 !z-[9999] flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]`}
         >
           <Overlay />
 
           <motion.div
             className={
-              "no-scrollbar relative !z-[9999] flex max-h-[calc(100vh-5em)] flex-1 flex-col items-center justify-start overflow-y-scroll bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
+              "no-scrollbar relative z-50 flex max-h-[calc(100vh-5em)] flex-1 flex-col items-center justify-start overflow-y-scroll bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
             }
             key="modal"
             initial={{
@@ -55,7 +55,8 @@ export default function ModalWindow({ children, onClose, user }) {
           </motion.div>
         </motion.div>
       }
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }
 
