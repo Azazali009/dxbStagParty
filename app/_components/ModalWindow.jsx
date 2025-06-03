@@ -18,7 +18,7 @@ export default function ModalWindow({ children, onClose, user }) {
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className={`fixed inset-0 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]`}
+          className={`fixed inset-0 z-50 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]`}
         >
           <Overlay />
 

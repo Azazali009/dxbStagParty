@@ -1,8 +1,9 @@
 import React from "react";
 import { playfairDisplay } from "../layout";
 import Image from "next/image";
+import BookingWindowAndButton from "./BookingWindowAndButton";
 
-export default function ActivityDetailSections({ activity }) {
+export default function ActivityDetailSections({ activity, user }) {
   return (
     <section className="space-y-10 bg-[#3D1F00] px-4 py-10">
       <h2
@@ -98,9 +99,7 @@ export default function ActivityDetailSections({ activity }) {
       <div className="flex flex-col items-center justify-center gap-8 rounded-xl bg-[#1f1000] p-12">
         <h2 className="text-2xl">Lock It In or Loop the Lads</h2>
         <div className="grid grid-cols-2 gap-7">
-          <button className="block rounded-md border border-[#947a27] bg-[#947a27] px-6 py-2.5 capitalize hover:bg-opacity-70">
-            add to my weekend
-          </button>
+          <BookingWindowAndButton user={user} activity={activity} />
           <button className="rounded border border-white bg-black px-6 py-2.5 capitalize hover:bg-opacity-70">
             get a quote
           </button>

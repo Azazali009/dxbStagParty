@@ -14,7 +14,7 @@ export default async function ActivityDetails({ activity }) {
   return (
     <div className="space-y-12 text-softGold">
       <ActivityBanner activity={activity} user={user} />
-      <ActivityDetailSections activity={activity} />
+      <ActivityDetailSections activity={activity} user={user} />
       <ActivitySupportSections activity={activity} />
       <RelatedActivities category={category?.name} id={id} />
       <SingleActivityCta />
