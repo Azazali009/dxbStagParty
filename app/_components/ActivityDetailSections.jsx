@@ -2,7 +2,7 @@ import React from "react";
 import { playfairDisplay } from "../layout";
 import Image from "next/image";
 import BookingWindowAndButton from "./BookingWindowAndButton";
-import SendTogroup from "./SendTogroup";
+import SendToGroup from "./SendToGroup";
 
 export default function ActivityDetailSections({ activity, user }) {
   return (
@@ -106,7 +106,7 @@ export default function ActivityDetailSections({ activity, user }) {
             get a quote
           </button>
         </div>
-        <SendTogroup activity={activity} />
+        <SendToGroup activity={activity} />
       </div>
 
       <div className="relative space-y-7">

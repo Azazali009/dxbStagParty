@@ -12,7 +12,6 @@ export default function SendToGroup({ activity }) {
         .then(() => console.log("Shared successfully"))
         .catch((error) => console.error("Sharing failed", error));
     } else {
-      // fallback if share not supported
       navigator.clipboard.writeText(window.location.href);
       alert("Link copied to clipboard!");
     }
