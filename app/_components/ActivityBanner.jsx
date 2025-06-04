@@ -5,23 +5,23 @@ import Link from "next/link";
 import whiteWhatsapp from "../svgIcons/whiteWhatsapp.svg";
 
 export default async function ActivityBanner({ activity, user }) {
-  const { name, description, image, bannerImage } = activity;
+  const { name, description, bannerImage } = activity;
 
   return (
-    <section className="relative flex min-h-[900px] items-center justify-center gap-4 object-cover p-4 text-white">
+    <section className="relative flex h-[450px] items-center justify-center gap-4 object-cover p-2 text-white xs:h-[600px] xs:p-4 sm:h-[700px] md:min-h-[900px]">
       <Image
         src={bannerImage}
         fill
         alt={name}
         quality={100}
-        className="object-cover"
+        className="bg-center object-cover"
       />
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-[#120900]/20 to-[#3D1F00]"></div>
-      <div className="relative z-10 flex max-w-3xl flex-col gap-12">
-        <div>
+      <div className="relative z-10 mt-28 flex max-w-3xl flex-col gap-12 md:mt-0">
+        <div className="space-y-4">
           <h1
-            className={`text-center text-7xl font-bold tracking-tight text-matalicGold ${cinzel.className}`}
+            className={`text-center text-3xl font-bold tracking-tight text-matalicGold xs:text-5xl sm:text-6xl md:text-7xl ${cinzel.className}`}
           >
             {name}
           </h1>
@@ -30,7 +30,7 @@ export default async function ActivityBanner({ activity, user }) {
 
         <div className="mt-auto space-y-6">
           {/* icons */}
-          <div className="flex items-center justify-between gap-6">
+          <div className="flex items-center justify-between gap-6 text-[9px] xs:text-sm md:text-base">
             <div className="flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -91,16 +91,13 @@ export default async function ActivityBanner({ activity, user }) {
             </div>
           </div>
           {/* cta */}
-          <div className="grid grid-cols-3 gap-7">
-            {/* <button className="block rounded-md border border-[#947a27] bg-[#947a27] px-6 py-2.5 capitalize hover:bg-opacity-70">
-              add to my weekend
-              </button> */}
+          <div className="grid grid-cols-3 gap-3 text-[9px] xs:text-xs md:gap-7 md:text-base">
             <BookingWindowAndButton user={user} activity={activity} />
-            <button className="rounded border border-white bg-black px-6 py-2.5 capitalize hover:bg-opacity-70">
+            <button className="h-8 w-full rounded border border-white bg-black capitalize hover:bg-opacity-70 xs:h-10">
               get a quote
             </button>
             <Link
-              className="flex h-10 items-center justify-center gap-2 rounded-md border border-emerald-800 bg-emerald-800 px-6 capitalize duration-300 hover:bg-emerald-950"
+              className="flex h-8 w-full items-center justify-center gap-[2px] rounded-md border border-emerald-800 bg-emerald-800 capitalize duration-300 hover:bg-emerald-950 xs:h-10 xs:gap-2"
               href={"https://wa.me/+971568347487"}
             >
               <Image
@@ -108,6 +105,7 @@ export default async function ActivityBanner({ activity, user }) {
                 width={25}
                 height={25}
                 alt="whatsapp"
+                className="size-3 xs:size-5"
               />
               <span>send to group</span>
             </Link>

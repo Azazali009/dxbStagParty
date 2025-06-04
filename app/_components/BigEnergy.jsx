@@ -35,6 +35,7 @@ export default function BigEnergy({ ActivitiesArray }) {
                 <Image
                   src={activity.image}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   alt={activity.name}
                   className="object-cover"
                 />
@@ -54,6 +55,7 @@ export default function BigEnergy({ ActivitiesArray }) {
             <Image
               src={"/images/home-hero-bg.webp"}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               alt="image"
               className="object-cover"
             />
@@ -79,6 +81,7 @@ export default function BigEnergy({ ActivitiesArray }) {
                   <Image
                     src={activity.image}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     alt={activity.name}
                     className="object-cover"
                   />
@@ -107,6 +110,7 @@ export default function BigEnergy({ ActivitiesArray }) {
                       src={activity.image}
                       alt={activity.name}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover"
                     />
                     <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/80 to-transparent" />

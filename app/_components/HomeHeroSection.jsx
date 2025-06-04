@@ -10,6 +10,7 @@ export default function HomeHeroSection() {
       <Image
         src={bgImage}
         fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         alt="home hero image"
         className="object-cover"
       />

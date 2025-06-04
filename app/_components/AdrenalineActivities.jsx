@@ -1,8 +1,8 @@
 "use client";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useActivity } from "../_context/ActivityProvider";
-
 export default function AdrenalineActivities({ category }) {
   const { filteredActivities } = useActivity();
 
@@ -25,7 +25,7 @@ export default function AdrenalineActivities({ category }) {
         <div className="mx-auto mt-10 flex max-w-full flex-col items-center justify-center justify-items-center gap-x-6 gap-y-10 px-4 sm:!mt-20 sm:grid sm:items-start sm:[grid-template-columns:repeat(2,250px)] md:max-w-7xl md:px-0 md:[grid-template-columns:repeat(3,250px)]">
           {filteredByCategoryArr.map((activity, index) => {
             return (
-              <>
+              <React.Fragment key={activity.id}>
                 {index === 3 ? (
                   <div className="path relative col-span-2 mt-14 flex h-[200px] items-end overflow-hidden rounded-lg p-2 xs:mt-20 xs:h-[300px] xs:p-6 sm:h-[400px] md:-mt-16">
                     {/* titl design */}
@@ -35,6 +35,7 @@ export default function AdrenalineActivities({ category }) {
                     <Image
                       src={activity?.bannerImage}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       alt="image"
                       className="object-cover"
                     />
@@ -77,7 +78,7 @@ export default function AdrenalineActivities({ category }) {
                     </Link>
                   </div>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
 

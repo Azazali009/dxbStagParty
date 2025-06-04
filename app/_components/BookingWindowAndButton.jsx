@@ -31,7 +31,7 @@ export default function BookingWindowAndButton({ user, activity }) {
         // </button>
         <button
           onClick={open}
-          className="block w-full rounded-md border border-[#947a27] bg-[#947a27] py-2.5 text-white duration-300 hover:bg-[#6c591b]"
+          className="block h-8 w-full rounded-md border border-[#947a27] bg-[#947a27] capitalize text-white duration-300 hover:!bg-transparent xs:h-10"
         >
           book now
         </button>

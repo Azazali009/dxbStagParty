@@ -16,10 +16,10 @@ export default async function RelatedActivities({ category, id }) {
   }
   return (
     <div className="space-y-6 py-14">
-      <h2 className="text-center text-5xl font-semibold capitalize text-matalicGold">
+      <h2 className="text-center text-3xl font-semibold capitalize text-matalicGold xs:text-5xl">
         Related activities
       </h2>
-      <div className="grid grid-cols-4 gap-4 p-8">
+      <div className="grid grid-cols-1 gap-4 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {activities?.map((activity) => {
           return <ActivityCard key={activity.id} activity={activity} />;
         })}

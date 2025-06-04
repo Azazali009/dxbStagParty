@@ -6,24 +6,25 @@ import BookingWindowAndButton from "./BookingWindowAndButton";
 export default function ActivityDetailSections({ activity, user }) {
   return (
     <section className="space-y-10 bg-[#3D1F00] px-4 py-10">
-      <h2
-        className={`${playfairDisplay.className} text-3xl font-semibold !italic`}
-      >
-        Not your average desert ride.
-      </h2>
-      <p className="w-full leading-[1.7] sm:w-[60%]">
-        You’re in control of a beast. Kick up sand, fly over dunes, and turn the
-        desert into your personal racetrack. This is full-throttle fun, DXB
-        style.
-      </p>
-      <div className="grid grid-cols-4 gap-6">
+      <div className="space-y-5">
+        <h2
+          className={`${playfairDisplay.className} text-xl font-semibold !italic xs:text-3xl`}
+        >
+          Not your average desert ride.
+        </h2>
+        <p className="w-full text-xs leading-[1.7] xs:text-base sm:w-[60%]">
+          You’re in control of a beast. Kick up sand, fly over dunes, and turn
+          the desert into your personal racetrack. This is full-throttle fun,
+          DXB style.
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-6 text-[9px] xs:text-xs sm:grid-cols-4 sm:text-sm md:text-base">
         <div className="flex items-center gap-2">
           <svg
             fill="white"
-            height="24"
             viewBox="0 0 24 24"
-            width="24"
             xmlns="http://www.w3.org/2000/svg"
+            className="size-4 sm:size-6"
           >
             <path
               clipRule="evenodd"
@@ -45,9 +46,9 @@ export default function ActivityDetailSections({ activity, user }) {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             stroke="currentColor"
-            className="size-6"
+            className="size-4 sm:size-6"
           >
             <path
               strokeLinecap="round"
@@ -63,9 +64,9 @@ export default function ActivityDetailSections({ activity, user }) {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             stroke="currentColor"
-            className="size-6"
+            className="size-4 sm:size-6"
           >
             <path
               strokeLinecap="round"
@@ -83,7 +84,7 @@ export default function ActivityDetailSections({ activity, user }) {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="size-6"
+            className="size-4 sm:size-6"
           >
             <path
               strokeLinecap="round"
@@ -96,15 +97,15 @@ export default function ActivityDetailSections({ activity, user }) {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-8 rounded-xl bg-[#1f1000] p-12">
-        <h2 className="text-2xl">Lock It In or Loop the Lads</h2>
-        <div className="grid grid-cols-2 gap-7">
+      <div className="flex flex-col items-center justify-center gap-8 rounded-xl bg-[#1f1000] p-6 xs:p-12">
+        <h2 className="text-lg xs:text-2xl">Lock It In or Loop the Lads</h2>
+        <div className="grid w-full grid-cols-2 gap-3 text-xs xs:max-w-xl xs:gap-7 xs:text-base">
           <BookingWindowAndButton user={user} activity={activity} />
-          <button className="rounded border border-white bg-black px-6 py-2.5 capitalize hover:bg-opacity-70">
+          <button className="h-8 w-full rounded border border-white bg-black capitalize hover:bg-opacity-70 xs:h-10">
             get a quote
           </button>
         </div>
-        <p className="flex items-center gap-2">
+        <p className="flex items-center gap-2 text-sm xs:text-base">
           {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -125,28 +126,31 @@ export default function ActivityDetailSections({ activity, user }) {
       </div>
 
       <div className="relative space-y-7">
-        <h2 className="text-3xl font-semibold uppercase">What to Expect</h2>
-        <div className="grid grid-cols-2 items-center gap-12">
-          <div className="relative h-[600px] overflow-hidden rounded-xl">
+        <h2 className="text-2xl font-semibold uppercase xs:text-3xl">
+          What to Expect
+        </h2>
+        <div className="grid grid-cols-1 items-center gap-12 sm:grid-cols-2">
+          <div className="relative h-[400px] overflow-hidden rounded-xl xs:h-[800px] sm:h-[600px]">
             <Image
               className="object-cover"
               src={activity.image}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               alt={activity.name}
             />
           </div>
           <div className="space-y-4">
             <h4
-              className={`text-3xl ${playfairDisplay.className} font-semibold`}
+              className={`text-2xl xs:text-3xl ${playfairDisplay.className} font-semibold`}
             >
               Adrenaline? Mate, there’s plenty of it.
             </h4>
-            <p className="leading-[1.7]">
+            <p className="text-xs leading-[1.7] xs:text-base">
               {" "}
               Start with a safety briefing, then it’s go-time. Power over dunes,
               whip around sand bowls, and catch air like a desert beast.
             </p>
-            <ul className="list-inside space-y-4">
+            <ul className="list-inside space-y-4 text-xs xs:text-base">
               {activity?.coreInclusions?.map((inclusion) => {
                 return (
                   <li key={inclusion} className="flex items-center gap-2">
@@ -159,8 +163,8 @@ export default function ActivityDetailSections({ activity, user }) {
                       className="size-4"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="m4.5 12.75 6 6 9-13.5"
                       />
                     </svg>

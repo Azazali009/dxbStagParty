@@ -56,6 +56,7 @@ export default function ChilAndLuxeActivity({ category }) {
                   <Image
                     src={activity.bannerImage}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     alt={activity.name}
                     className="object-cover"
                   />
@@ -89,6 +90,7 @@ export default function ChilAndLuxeActivity({ category }) {
               <Image
                 src={filteredByCategoryArr[2].bannerImage}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 alt={filteredByCategoryArr[2].name}
                 className="object-cover"
               />
@@ -124,6 +126,7 @@ export default function ChilAndLuxeActivity({ category }) {
                     <Image
                       src={activity.image}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       alt={activity.name}
                       className="object-cover"
                     />

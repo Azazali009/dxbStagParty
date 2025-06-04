@@ -41,6 +41,7 @@ export default function HomeAndVillaActivities({ ActivitiesArray }) {
                 <Image
                   src={activity.image}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   alt={activity.name}
                   className="object-cover"
                 />
@@ -60,6 +61,7 @@ export default function HomeAndVillaActivities({ ActivitiesArray }) {
               src={rightTop.image}
               alt={rightTop.name}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover"
             />
 
@@ -89,6 +91,7 @@ export default function HomeAndVillaActivities({ ActivitiesArray }) {
                   <Image
                     src={activity.image}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     alt={activity.name}
                     className="object-cover"
                   />
