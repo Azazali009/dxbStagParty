@@ -26,14 +26,14 @@ export const AnimatedTestimonials = ({
     return Math.floor(Math.random() * 21) - 10;
   };
   return (
-    <section className="mx-auto w-[90%] py-10 font-sans antialiased sm:py-20">
+    <section className="mx-auto w-[90%] p-8 py-10 font-sans antialiased sm:p-3 sm:py-20">
       <h3
-        className={`mb-10 text-xl xs:text-2xl ${cinzel.className} font-bold text-matalicGold sm:text-4xl`}
+        className={`mb-10 text-xl capitalize xs:text-2xl ${cinzel.className} font-bold text-matalicGold sm:text-4xl`}
       >
-        What our client says
+        What Our Clients Say
       </h3>
-      <div className="relative grid grid-cols-1 gap-28 md:grid-cols-2">
-        <div className="relative min-h-96 w-full">
+      <div className="relative grid grid-cols-1 gap-20 sm:gap-20 md:grid-cols-2 lg:gap-28">
+        <div className="relative min-h-96 w-full 2xl:h-[700px]">
           <AnimatePresence>
             {testimonials.map((testimonial, index) => (
               <motion.div
@@ -64,7 +64,7 @@ export const AnimatedTestimonials = ({
                   duration: 0.4,
                   ease: "easeInOut",
                 }}
-                className="absolute inset-0 h-[400px] origin-bottom rounded-lg bg-softGold p-4 pb-10 sm:pb-20"
+                className="absolute inset-0 h-[400px] origin-bottom rounded-lg bg-softGold p-4 pb-10 sm:pb-20 2xl:h-[500px]"
               >
                 <Image
                   src={testimonial.src}
@@ -72,14 +72,14 @@ export const AnimatedTestimonials = ({
                   width={500}
                   height={500}
                   draggable={false}
-                  className="h-[300px] w-full rounded-sm object-cover object-center"
+                  className="h-[300px] w-full rounded-lg object-cover object-center 2xl:h-[400px]"
                 />
               </motion.div>
             ))}
           </AnimatePresence>
         </div>
 
-        <div className="flex flex-col justify-between py-4">
+        <div className="flex flex-col gap-6 py-4">
           <motion.div
             key={active}
             initial={{
@@ -132,7 +132,7 @@ export const AnimatedTestimonials = ({
               ))}
             </motion.p>
           </motion.div>
-          <div className="flex gap-4 pt-12 md:pt-0">
+          <div className="mt-auto flex gap-4 xs:pt-12 md:pt-0 2xl:mt-10">
             <button
               onClick={handlePrev}
               className="rounded-md bg-reddish px-4 py-2.5 text-sm font-semibold capitalize duration-300 hover:scale-95 sm:px-6 sm:text-base"

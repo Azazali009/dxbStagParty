@@ -4,7 +4,7 @@ import bgImage from "../../public/images/home-hero-bg.webp";
 import Image from "next/image";
 export default function HomeHeroSection() {
   return (
-    <section className="relative -mt-[110px] flex items-end justify-center gap-10 p-4 pb-10 pt-32 sm:min-h-[650px]">
+    <section className="vl:min-h-[1000px] relative -mt-[110px] flex items-end justify-center gap-10 p-4 pb-10 pt-32 sm:min-h-[650px] 2xl:min-h-[800px]">
       {/* overlay */}
       <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
       <Image
@@ -21,8 +21,8 @@ export default function HomeHeroSection() {
           Where legends celebrate
         </AnimatedHeading>
         <p className="text-xs xs:text-sm sm:text-lg">
-          Dubai most elite stag party experiences &mdash;
-          bold,bespoke,unforgetable
+          Dubai&apos;s most elite stag party experiences &mdash; bold, bespoke,
+          unforgettable
         </p>
         <button className="rounded border border-matalicGold bg-matalicGold px-6 py-2 text-xs font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80 xs:text-sm sm:mt-8 sm:text-base">
           plan your party

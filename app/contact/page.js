@@ -4,10 +4,10 @@ import HomeCTA from "../_components/PreFooter";
 import StagConfidenceSection from "../_components/StagConfidenceSection";
 export default function Page() {
   return (
-    <>
+    <div>
       <ContactHero />
       <ContactSection />
       <StagConfidenceSection />
-    </>
+    </div>
   );
 }

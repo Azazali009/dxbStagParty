@@ -6,7 +6,7 @@ import whatsapp from "../svgIcons/whatsapp.svg";
 import PreFooter from "./PreFooter";
 export default function Footer() {
   return (
-    <footer className="mx-auto max-w-[1400px]">
+    <footer className="">
       <PreFooter />
       <div className="relative space-y-14 bg-navyBlue px-8 py-16">
         <div className="flex justify-center">
@@ -21,28 +21,28 @@ export default function Footer() {
         <div className="h-[2px] w-full bg-neutral-700"></div>
 
         <ul className="mx-auto flex max-w-2xl flex-wrap gap-8">
-          <li className="xs:text-lg text-sm font-medium uppercase">
-            <Link href={"#"}>experiences</Link>
+          <li className="text-sm font-medium uppercase xs:text-lg">
+            <Link href={"/activities"}>experiences</Link>
           </li>
-          <li className="xs:text-lg text-sm font-medium uppercase">
-            <Link href={"#"}>Packages</Link>
+          <li className="text-sm font-medium uppercase xs:text-lg">
+            <Link href={"/packages"}>Packages</Link>
           </li>
-          <li className="xs:text-lg text-sm font-medium uppercase">
+          <li className="text-sm font-medium uppercase xs:text-lg">
             <Link href={"#"}>dxb hen parties</Link>
           </li>
-          <li className="xs:text-lg text-sm font-medium uppercase">
+          <li className="text-sm font-medium uppercase xs:text-lg">
             <Link href={"#"}>become a supplier</Link>
           </li>
-          <li className="xs:text-lg text-sm font-medium uppercase">
+          <li className="text-sm font-medium uppercase xs:text-lg">
             <Link href={"#"}>faqs</Link>
           </li>
-          <li className="xs:text-lg text-sm font-medium uppercase">
+          <li className="text-sm font-medium uppercase xs:text-lg">
             <Link href={"/terms-conditions"}>terms and conditions</Link>
           </li>
-          <li className="xs:text-lg text-sm font-medium uppercase">
+          <li className="text-sm font-medium uppercase xs:text-lg">
             <Link href={"/privacy-policy"}>privacy policy</Link>
           </li>
-          <li className="xs:text-lg text-sm font-medium uppercase">
+          <li className="text-sm font-medium uppercase xs:text-lg">
             <Link href={"#"}>careers</Link>
           </li>
         </ul>

@@ -11,6 +11,7 @@ export const theme = {
   extend: {
     screens: {
       xs: "480px",
+      vl: "2000px",
     },
     keyframes: {
       wave: {

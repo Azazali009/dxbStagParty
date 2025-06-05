@@ -4,7 +4,7 @@ import HowItWorkIconBox from "./HowItWorkIconBox";
 export default function HowItWorks() {
   return (
     <section
-      className={`relative grid grid-cols-1 overflow-hidden md:grid-cols-2 md:p-4`}
+      className={`relative grid grid-cols-1 overflow-hidden md:grid-cols-2`}
     >
       <div className="absolute left-0 top-0 z-20 h-full w-full bg-gradient-to-b from-primary via-navyBlue to-black/50 md:bg-gradient-to-r"></div>
       <div className="relative z-20 space-y-10 px-8 py-24">
@@ -18,17 +18,17 @@ export default function HowItWorks() {
           <HowItWorkIconBox
             image="/images/packageIcon.png"
             title="Choose Package"
-            desc="Pick from our cinematic packages-or build your own. You're in charge."
+            desc="Pick from our cinematic packages — or build your own."
           />
           <HowItWorkIconBox
             image="/images/Customize.png"
             title="Customize"
-            desc="Tailor it all-dinner, DJs,dune buggies, and a few widcarrs."
+            desc="Tailor it all — dinner, DJs, dune buggies, and a few wildcards."
           />
           <HowItWorkIconBox
             image="/images/Split-Payment.png"
             title="Split Payment"
-            desc="Each guest pays their share.No stress for the best man."
+            desc="Each guest pays their share. No stress for the best man."
           />
           <HowItWorkIconBox
             image="/images/party.png"

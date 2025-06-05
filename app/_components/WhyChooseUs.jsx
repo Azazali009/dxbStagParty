@@ -43,51 +43,51 @@ export default function WhyChooseUs() {
                 height={20}
                 alt="experience"
               />
-              <h4 className="xs:text-base text-sm font-medium">
+              <h4 className="text-sm font-medium xs:text-base">
                 Tailored Experiences
               </h4>
             </div>
-            <p className="xs:text-base text-xs font-extralight">
+            <p className="text-xs font-extralight xs:text-base">
               Every party is customized to your group.
             </p>
           </div>
           <div className="grid grid-cols-2">
             <div className="flex items-center gap-4">
               <Image src={trustSvg} width={20} height={20} alt="experience" />
-              <h4 className="xs:text-base text-sm font-medium">
+              <h4 className="text-sm font-medium xs:text-base">
                 Exclusive Access
               </h4>
             </div>
-            <p className="xs:text-base text-xs font-extralight">
-              Entry to Dubai&apos;s top venues and notspots..
+            <p className="text-xs font-extralight xs:text-base">
+              Entry to Dubai&apos;s top venues and hotspots.
             </p>
           </div>
           <div className="grid grid-cols-2">
             <div className="flex items-center gap-4">
               <Image src={trustSvg} width={20} height={20} alt="experience" />
-              <h4 className="xs:text-base text-sm font-medium">
+              <h4 className="text-sm font-medium xs:text-base">
                 Comprehensive Planning
               </h4>
             </div>
-            <p className="xs:text-base text-xs font-extralight">
+            <p className="text-xs font-extralight xs:text-base">
               We handle all logistics from start to finish.
             </p>
           </div>
           <div className="grid grid-cols-2">
             <div className="flex items-center gap-4">
               <Image src={trustSvg} width={20} height={20} alt="experience" />
-              <h4 className="xs:text-base text-sm font-medium">
+              <h4 className="text-sm font-medium xs:text-base">
                 Local Expertise
               </h4>
             </div>
-            <p className="xs:text-base text-xs font-extralight">
+            <p className="text-xs font-extralight xs:text-base">
               Your well-being is our top priority.
             </p>
           </div>
         </div>
         <div className="space-y-4 !py-6">
           <p
-            className={`xs:text-xl text-base ${playfairDisplay.className} font-light !italic tracking-wider`}
+            className={`text-base xs:text-xl ${playfairDisplay.className} font-light !italic tracking-wider`}
           >
             &quot;DXB Stag Parties turned our celebration into an epic
             adventure. <br />
@@ -96,7 +96,7 @@ export default function WhyChooseUs() {
           <p className="font-light">- James 1, London</p>
         </div>
         <p
-          className={`xs:text-xl text-base ${playfairDisplay.className} font-light !italic tracking-wider`}
+          className={`text-base xs:text-xl ${playfairDisplay.className} font-light !italic tracking-wider`}
         >
           &quot;From the yacht party to the VIP club access, everything <br />{" "}
           exceeded our expectations.&quot;

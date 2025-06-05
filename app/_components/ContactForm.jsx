@@ -4,16 +4,19 @@ import FormRow from "./FormRow";
 import { preferredDatesArr } from "../_lib/helpers";
 export default function ContactForm() {
   return (
-    <div className="mx-auto flex max-w-[70%] flex-col items-center justify-center gap-6">
+    <div className="relative z-30 mx-auto flex flex-col items-center justify-center gap-3 px-4 py-10 sm:max-w-[70%] sm:gap-6 md:px-0 md:py-0">
       <h2
-        className={`${playfairDisplay.className} text-center text-4xl font-semibold capitalize`}
+        className={`${playfairDisplay.className} text-center text-3xl font-semibold capitalize xs:text-4xl`}
       >
         send an enquiry
       </h2>
-      <p className="w-[60%] text-center font-light leading-[1.5]">
+      <p className="text-center text-xs font-light leading-[1.5] xs:text-base sm:w-[60%]">
         Tell us a little about your dream stag - we will get back fast.
       </p>
-      <form action="" className="grid grid-cols-2 gap-x-10 gap-y-4 text-sm">
+      <form
+        action=""
+        className="mt-10 grid grid-cols-2 gap-x-4 gap-y-4 text-sm sm:gap-x-10 md:mt-0"
+      >
         <FormRow label="First Name">
           <input
             type="text"

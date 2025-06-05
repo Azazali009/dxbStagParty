@@ -160,7 +160,7 @@ export default function BookingForm({
         <span className="rounded-md border border-gray-200 bg-gray-100 px-1 py-0.5 dark:border-neutral-700 dark:bg-secondary">
           DXB Stag
         </span>{" "}
-        Activities
+        Party
       </h1>
 
       <form

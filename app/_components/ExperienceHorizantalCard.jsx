@@ -49,7 +49,7 @@ export default function ExperienceHorizantalCard({
         return (
           <motion.div
             key={card.id}
-            className={`relative flex min-h-60 items-center ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"} justify-center object-cover p-6 sm:min-h-72`}
+            className={`relative flex min-h-60 items-center ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"} justify-center object-cover p-6 sm:min-h-72 2xl:min-h-[450px]`}
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{
@@ -73,10 +73,10 @@ export default function ExperienceHorizantalCard({
             <div
               className={`relative z-10 space-y-3 text-center md:max-w-[60%] md:space-y-6 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}
             >
-              <h3 className="xs:text-2xl text-lg font-bold capitalize !leading-[1.3] text-matalicGold sm:text-3xl md:text-3xl lg:text-5xl">
+              <h3 className="text-lg font-bold capitalize !leading-[1.3] text-matalicGold xs:text-2xl sm:text-3xl md:text-3xl lg:text-5xl">
                 {card.name}
               </h3>
-              <p className="xs:text-sm text-xs leading-[1.5] md:text-lg">
+              <p className="text-xs leading-[1.5] xs:text-sm md:text-lg">
                 {card.description}
               </p>
               <Link

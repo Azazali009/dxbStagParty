@@ -11,10 +11,10 @@ export default function PreFooter() {
         <h1
           className={`${cinzel.className} text-xl font-black text-matalicGold xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl`}
         >
-          Ready to start your <br /> dubai stag adventures?
+          Ready to start your <br /> Dubai stag adventures?
         </h1>
         <p className="text-sm xs:text-xl">
-          Build your weekend. Rally the crew.Lock the memories in.
+          Build your weekend. Rally the crew. Lock the memories in.
         </p>
         <button className="block rounded bg-matalicGold px-4 py-2 text-xs capitalize text-navyBlue duration-300 hover:opacity-80 xs:text-sm sm:px-6 sm:py-2.5 sm:text-lg">
           start building your weekend

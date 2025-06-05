@@ -10,6 +10,10 @@ import { BebasNeue } from "../layout";
 import VipSpotLight from "../_components/VipSpotLight";
 import BigEnergy from "../_components/BigEnergy";
 
+export const metadata = {
+  title: "Activities | DXB Stag party",
+};
+
 export const revalidate = 0;
 
 export default async function Page({ searchParams }) {
