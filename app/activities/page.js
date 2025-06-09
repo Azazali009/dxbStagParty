@@ -23,7 +23,7 @@ export default async function Page({ searchParams }) {
   const ActivitiesArray = await getActivities();
 
   return (
-    <div className="mx-auto min-h-screen max-w-[1400px] antialiased">
+    <div className="mx-auto min-h-screen w-full antialiased">
       <ActivityHeroSection />
 
       <ActivityFilters searchQuery={searchQuery} groupSize={groupSize} />
