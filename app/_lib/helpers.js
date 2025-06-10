@@ -167,3 +167,167 @@ export function sanitizeHtml(dirty) {
 
 export const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
 export const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+export const faqs = [
+  {
+    id: 111,
+    question: "How do I book a stag party with DXB Stag Parties?",
+    answer:
+      "Our platform is designed for easy online booking. Browse experiences or packages, select your preferences, and book everything directly through the website — no waiting, no back-and-forth. If you have questions or need help, our team is available via WhatsApp or email, and a concierge can assist you. For a next-level service, you can book a dedicated stag concierge or chaperone who will act as your on-site fixer and personal planner. This premium service comes at an additional cost but guarantees a stress-free weekend.",
+    type: "Booking & Planning",
+  },
+  {
+    id: 222,
+    question: "Can I customise a package or build my own itinerary?",
+    answer:
+      "Yes. You can either start with a themed package and tweak it, or build your own lineup from scratch using our activities. Our system handles it all online — or contact us if you need assistance.",
+    type: "Booking & Planning",
+  },
+  {
+    id: 333,
+    question: "Do I have to pay for the full group upfront?",
+    answer:
+      "No. Our system allows individual payments so each group member can pay their share. You can also assign costs to specific guests (like splitting the groom’s share).",
+    type: "Booking & Planning",
+  },
+  {
+    id: 444,
+    question: "Can we add or remove people after booking?",
+    answer:
+      "Yes, as long as it’s within the supplier’s change window. Just reach out and we’ll adjust your group size if availability allows.",
+    type: "Booking & Planning",
+  },
+  {
+    id: 555,
+    question: "Is there a minimum group size?",
+    answer:
+      "Most activities require a minimum of 4–6 people. Premium packages like yachts or exclusive lounges may require 8–10 minimum. Each listing shows the required group size.",
+    type: "Booking & Planning",
+  },
+  {
+    id: 666,
+    question: "What’s the payment process?",
+    answer:
+      "Once you choose your experiences, payment is made online at checkout. We don’t offer refundable holds — payment is required to confirm any booking.For last-minute or VIP-level requests, we offer an Express Concierge option at a cost, which includes personal planning, express handling, and a dedicated stag manager.",
+    type: "Payments & Deposits",
+  },
+  {
+    id: 777,
+    question: "How do individual payments work?",
+    answer:
+      "When you confirm a booking, each guest receives a personal payment link. Everyone pays their share securely, and the organiser can track who’s paid.",
+    type: "Payments & Deposits",
+  },
+  {
+    id: 888,
+    question: "Can we pay in a different currency?",
+    answer:
+      "Prices are listed in AED, but we accept all major international cards. Your bank will handle the conversion automatically.",
+    type: "Payments & Deposits",
+  },
+  {
+    id: 999,
+    question: "Can we split the groom’s cost across the group?",
+    answer:
+      "Yes. During checkout, you can choose to divide the groom’s share across everyone else. Our system handles the math for you.",
+    type: "Payments & Deposits",
+  },
+  {
+    id: 1010,
+    question: "Where do we meet for each activity?",
+    answer:
+      "Your final itinerary will include all meeting points, contact info, and arrival times. It’s sent to the organiser and each group member before the weekend.",
+    type: "The Weekend Itself",
+  },
+  {
+    id: 1011,
+    question: "Do you provide transport between activities?",
+    answer:
+      "Yes — you can add transport options like private vans, limos, or even party buses during booking. Let us know if you want an upgrade.",
+    type: "The Weekend Itself",
+  },
+  {
+    id: 1012,
+    question: "Can we drink alcohol at all activities?",
+    answer:
+      "Only at licensed venues (clubs, bars, restaurants, yachts). Alcohol is not permitted at public desert activities or sports zones.",
+    type: "The Weekend Itself",
+  },
+  {
+    id: 1013,
+    question: "What happens if we’re late?",
+    answer:
+      "Late arrivals may result in shorter sessions or missed experiences. Suppliers have different grace periods — check your itinerary and stay punctual!",
+    type: "The Weekend Itself",
+  },
+  {
+    id: 1014,
+    question: "Is it legal to have a stag party in Dubai?",
+    answer:
+      "Yes — Dubai welcomes groups, but there are rules. Public nudity, extreme drunkenness, or disorderly behaviour can get you fined or worse. Keep the wildness to private venues, and you’re good.",
+    type: "Dubai-Specific Info",
+  },
+  {
+    id: 1015,
+    question: "Are there dress or behaviour restrictions?",
+    answer:
+      "Yes, especially in public. No offensive costumes, no toplessness, and no swearing at strangers. In private venues, you can relax — but stay respectful.",
+    type: "Dubai-Specific Info",
+  },
+  {
+    id: 1016,
+    question: "Can we bring alcohol ourselves?",
+    answer:
+      " Yes — tourists can now purchase alcohol legally from licensed retailers by presenting a passport. You’ll be registered in-store and granted a temporary license. Bars, clubs, and restaurants still serve alcohol freely to tourists. Just don’t drink in public or bring your own alcohol into unlicensed areas.",
+    type: "Dubai-Specific Info",
+  },
+  {
+    id: 1017,
+    question: "Can we cancel activities after booking?",
+    answer:
+      "Each supplier has a cancellation policy, typically allowing cancellations 7–14 days, some are 30 days, in advance. Inside that window, charges may apply.",
+    type: "Changes & Cancellations",
+  },
+  {
+    id: 1018,
+    question: "What if someone drops out?",
+    answer:
+      "We can adjust the group size if enough notice is given, though late changes may still incur charges depending on the supplier.",
+    type: "Changes & Cancellations",
+  },
+  {
+    id: 1019,
+    question: "Can we reschedule?",
+    answer:
+      "Yes — if requested early enough. Late reschedules may be treated as cancellations depending on supplier availability and timing.",
+    type: "Changes & Cancellations",
+  },
+  {
+    id: 1020,
+    question: "Is DXB Stag Parties an agency?",
+    answer:
+      "No. We’re a direct platform that hand-picks Dubai’s best stag-friendly experiences. We work with top-rated suppliers to ensure quality and avoid random third-party listings.",
+    type: "General Support",
+  },
+  {
+    id: 1021,
+    question: "Do we get support during the weekend?",
+    answer:
+      "Yes. You’ll have a WhatsApp contact for support before and during your trip. Book the Stag Concierge Service if you want someone available on the ground with you at all times.",
+    type: "General Support",
+  },
+  {
+    id: 1022,
+    question: " What if something goes wrong?",
+    answer:
+      "Contact us immediately. We’ll liaise with the supplier to try to fix the issue — but keep in mind that delays, drunken damage, or no-shows are outside our control.",
+    type: "General Support",
+  },
+  {
+    id: 1022,
+    question: " Do you offer hen parties too?",
+    answer:
+      "We do! Visit DXB Hen Parties for stylish, female-friendly experiences — from glam pool days to yacht brunches and everything in between.",
+    type: "General Support",
+  },
+];

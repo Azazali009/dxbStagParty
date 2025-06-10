@@ -2,7 +2,7 @@ import React from "react";
 import { playfairDisplay } from "../layout";
 import Image from "next/image";
 import king from "../svgIcons/king.svg";
-import Faqs from "./Faqs";
+import ContactPageFaqs from "./ContactPageFaqs";
 export default function StagConfidenceSection() {
   return (
     <div className="grid min-h-[600px] grid-cols-1 items-center justify-items-center gap-12 bg-[url('/images/contact-form-bg.webp')] bg-cover bg-no-repeat p-5 sm:p-10 md:grid-cols-2 md:gap-0">
@@ -23,7 +23,7 @@ export default function StagConfidenceSection() {
           your are in legendary hands.
         </p>
       </div>
-      <Faqs />
+      <ContactPageFaqs />
     </div>
   );
 }

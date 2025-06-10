@@ -22,13 +22,13 @@ export default function BigEnergy({ ActivitiesArray }) {
       </div>
       <div className="grid grid-cols-1 gap-8 p-3 sm:p-6 lg:grid-cols-2">
         {/* column 1 */}
-        <div className="space-y-6">
+        <div className="origin-top space-y-6 [transform:perspective(300px)_rotateY(-2deg)]">
           {ActivitiesArray.slice(0, 2).map((activity, index) => {
             return (
               <Link
                 href={`/activities/${activity.id}`}
                 key={activity.id}
-                className={`relative flex ${index === 0 ? "h-[200px] [transform:perspective(300px)_rotateY(-2deg)] xs:h-[350px] sm:h-[500px]" : "h-[200px] origin-left [transform:perspective(800px)_rotateY(3deg)] xs:h-[250px] sm:h-[450px]"} rotate-12 items-end overflow-hidden rounded-lg p-5 sm:p-10`}
+                className={`relative flex ${index === 0 ? "h-[200px] xs:h-[450px] sm:h-[650px]" : "h-[200px] xs:h-[350px] sm:h-[500px]"} items-end overflow-hidden rounded-lg p-5 sm:p-10`}
               >
                 {/* overlay */}
                 <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/40"></div>
@@ -49,7 +49,7 @@ export default function BigEnergy({ ActivitiesArray }) {
 
         {/* column 2 */}
         <div className="space-y-8">
-          <div className="relative flex h-[200px] rotate-12 items-end overflow-hidden rounded-lg p-5 [transform:perspective(300px)_rotateX(2deg)] sm:h-[300px] sm:p-10">
+          <div className="relative flex h-[200px] rotate-12 items-end overflow-hidden rounded-lg p-5 [transform:perspective(300px)_rotateX(1deg)] sm:h-[400px] sm:p-10">
             {/* overlay */}
             <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
             <Image
@@ -63,13 +63,13 @@ export default function BigEnergy({ ActivitiesArray }) {
               staff favourite
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-6 xs:grid-cols-2">
+          <div className="ml-2 grid origin-top grid-cols-1 gap-6 [transform:perspective(400px)_rotateX(1deg)_rotateY(3deg)] xs:grid-cols-2">
             {ActivitiesArray.slice(0, 2).map((activity, index) => {
               return (
                 <Link
                   href={`/activities/${activity.id}`}
                   key={activity.id}
-                  className="relative flex h-[350px] items-end overflow-hidden rounded-lg p-6 [transform:perspective(300px)_rotateX(1.5deg)_rotateY(-2deg)] sm:h-[500px]"
+                  className={`relative flex items-end overflow-hidden rounded-lg p-6 ${index === 0 ? "h-[350px] sm:h-[500px]" : "h-[350px] sm:h-[500px]"}`}
                 >
                   {index === 1 && (
                     <p className="absolute left-4 top-4 z-20 rounded-full bg-black px-2 py-2 text-[9px] xs:px-4 sm:px-6 sm:text-base">
@@ -98,7 +98,7 @@ export default function BigEnergy({ ActivitiesArray }) {
               <Link
                 href={`/activities/${activity.id}`}
                 key={activity.id}
-                className="relative !mt-10 block h-[130px] w-full origin-right overflow-visible [transform:perspective(200px)_rotateY(-3deg)_scale(1.1)_translateX(-1%)_rotateZ(2deg)] xs:h-[170px] sm:!mt-20 sm:h-[250px] sm:[transform:perspective(200px)_rotateY(-3deg)_scale(1.3)_translateX(-1%)_rotateZ(2deg)] lg:!mt-16 lg:[transform:perspective(200px)_rotateY(-5deg)_scale(1.4)_translateX(-1%)_rotateZ(4deg)]"
+                className="relative !mt-10 block h-[130px] w-full origin-right overflow-visible [transform:perspective(200px)_rotateY(-3deg)_scale(1.1)_translateX(-1%)_rotateZ(2deg)_rotateX(2deg)] xs:h-[170px] sm:!mt-20 sm:h-[250px] sm:[transform:perspective(200px)_rotateY(-3deg)_scale(1.3)_translateX(-1%)_rotateZ(2deg)_rotateX(2deg)] lg:!-mt-4 lg:[transform:perspective(400px)_rotateY(-5deg)_scale(1.17)_translateX(-1%)_rotateZ(-2deg)_rotateX(2deg)]"
                 style={{
                   transformStyle: "preserve-3d",
                   backfaceVisibility: "hidden",

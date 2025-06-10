@@ -34,7 +34,7 @@ export default function Footer() {
             <Link href={"#"}>become a supplier</Link>
           </li>
           <li className="text-sm font-medium uppercase xs:text-lg">
-            <Link href={"#"}>faqs</Link>
+            <Link href={"/faqs"}>faqs</Link>
           </li>
           <li className="text-sm font-medium uppercase xs:text-lg">
             <Link href={"/terms-conditions"}>terms and conditions</Link>

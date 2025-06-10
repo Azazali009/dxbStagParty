@@ -13,6 +13,9 @@
   background-color: crimson;
   clip-path: polygon(0 0, 100% 0, 100% 230%, 0% 100%) !important;
 }
+.big-energy-slanted-cards {
+  clip-path: polygon(0 0, 100% 0, 99% 93%, 0% 100%) !important;
+}
 .slanted-rectangle .content {
   transform: perspective(300px) rotateY(4deg) rotateZ(-2deg) skewX(-3deg);
 }

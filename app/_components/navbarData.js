@@ -14,29 +14,15 @@ export const navbar = [
     navItem: "Packages",
     href: "/packages",
   },
-  // {
-  //   id: 4,
-  //   navItem: "Destinations",
-  //   href: "/destinations",
-  // },
-  // {
-  //   id: 5,
-  //   navItem: "Experiences",
-  //   href: "/experiences",
-  // },
 
   {
-    id: 7,
+    id: 4,
     navItem: "Blog",
     href: "/blog",
   },
+
   {
-    id: 8,
-    navItem: "FAQs",
-    href: "/faqs",
-  },
-  {
-    id: 9,
+    id: 5,
     navItem: "Contact",
     href: "/contact",
   },

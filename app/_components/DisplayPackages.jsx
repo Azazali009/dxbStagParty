@@ -19,26 +19,6 @@ export default function DisplayPackages({ packages }) {
           {packages.map((pack, index) => {
             return <PackageCard key={pack.id} pack={pack} index={index} />;
           })}
-
-          {/* cta column 5 */}
-          {/* {packages.length >= 3 && (
-            <div
-              className="flex flex-col gap-6 self-center text-center"
-              style={{
-                gridColumn: packages.length === 3 && "1/-1",
-                justifySelf: "center",
-                marginTop: "60px",
-              }}
-            >
-              <Link
-                href={`#`}
-                className="flex items-center rounded-2xl bg-navyBlue p-6 text-2xl font-medium capitalize duration-300 hover:opacity-70"
-              >
-                explore all exclusive packages
-              </Link>
-              <p className="text-xl">or browse all 12+ stag packages</p>
-            </div>
-          )} */}
         </div>
       </div>
     </section>
