@@ -50,6 +50,7 @@ export default function UpdateProfile({ user }) {
             className="h-10 rounded-md border border-gray-700 bg-transparent py-1.5 disabled:bg-gray-700 disabled:opacity-50"
             type="file"
             name="avatar"
+            accept="image/webp, image/png, image/jpeg, image/jpg"
           />
         </FormRow>
         <input

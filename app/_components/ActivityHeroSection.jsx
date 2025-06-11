@@ -3,7 +3,7 @@ import AnimatedHeading from "./AnimatedHeading";
 
 export default function ActivityHeroSection() {
   return (
-    <div className="relative -mt-[170px] flex min-h-[400px] items-end gap-14 bg-[url('/images/activity-page-bg.webp')] bg-cover bg-no-repeat px-8 pb-10 pt-20 sm:h-[600px] md:h-[700px]">
+    <div className="relative -mt-[170px] flex min-h-[400px] items-end gap-14 bg-[url('/images/activity-page-bg.webp')] bg-cover bg-no-repeat px-8 pb-10 pt-20 sm:h-[600px] md:min-h-[850px]">
       {/* overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent"></div>
       {/* content */}

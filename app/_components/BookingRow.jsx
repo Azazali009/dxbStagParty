@@ -8,7 +8,7 @@ import { formatToAED } from "../_lib/helpers";
 
 export default function BookingRow({ booking }) {
   return (
-    <div className="grid grid-cols-[1fr_1fr_1fr_2fr_2fr_1fr_1fr] items-center justify-center border border-gray-800 bg-navyBlue px-4 py-3 text-sm font-light last:rounded-b-md">
+    <div className="grid grid-cols-[1fr_1fr_1fr_2fr_2fr_1fr_1fr] items-center justify-center border border-gray-800 bg-navyBlue px-4 py-3 text-xs font-light last:rounded-b-md">
       <p>#{booking.id}</p>
       <p>{formatToAED(booking.totalPrice)} </p>
       <p>{format(booking.created_at, " MMM dd yyyy")} </p>
@@ -17,7 +17,7 @@ export default function BookingRow({ booking }) {
       {booking.paymentStatus === "pending" && (
         <p
           className={
-            "bg-tertiary max-w-28 rounded-full bg-gray-800 py-1 text-center text-xs font-semibold capitalize tracking-wide text-gray-400"
+            "bg-tertiary max-w-28 rounded-full bg-gray-800 py-1 text-center text-xs font-medium capitalize tracking-wide text-gray-400"
           }
         >
           {booking.paymentStatus}

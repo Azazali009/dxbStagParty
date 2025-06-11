@@ -1,43 +1,28 @@
 "use client";
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
 import toast from "react-hot-toast";
 import FormRow from "../_components/FormRow";
 import SpinnerMini from "../_components/SpinnerMini";
-import { getActivities } from "../_lib/data-services";
 import { addSupplierAction } from "../_lib/supplierAction";
-export default function SupplierForm() {
-  // const [loading, setLoading] = useState(false);
-  // const [activities, setActivities] = useState([]);
+
+export default function SupplierForm({ isForApply = false }) {
   const [isPending, startTransition] = useTransition();
 
   async function handleSubmit(formData) {
     startTransition(async () => {
-      const res = await addSupplierAction(formData);
-      if (res?.error) return toast.error(res?.error);
-      toast.success("New Supplier added successfully");
+      if (!isForApply) {
+        const res = await addSupplierAction(formData);
+        if (res?.error) return toast.error(res?.error);
+        toast.success("New Supplier added successfully");
+      }
     });
   }
 
-  // Effect to fetch activities
-  // useEffect(() => {
-  //   async function fetchActivities() {
-  //     setLoading(true);
-  //     const fetchedActivities = await getActivities();
-
-  //     setActivities(
-  //       fetchedActivities.map((act) => ({
-  //         label: act.name,
-  //         value: act.id,
-  //         price: act.price,
-  //       })),
-  //     );
-  //     setLoading(false);
-  //   }
-  //   fetchActivities();
-  // }, []);
   return (
-    <div className="mx-auto flex flex-col gap-6 px-4 py-14">
-      <h1 className="text-3xl font-semibold">Add supplier</h1>
+    <div className="mx-auto flex flex-col gap-14 px-4 py-14">
+      <h1 className="text-3xl font-semibold text-matalicGold">
+        {isForApply ? "Apply to become a supplier" : "Add supplier"}
+      </h1>
 
       <form
         action={(formData) => handleSubmit(formData)}
@@ -109,7 +94,7 @@ export default function SupplierForm() {
                 <SpinnerMini /> <span>Adding...</span>
               </div>
             ) : (
-              "Add supplier"
+              <span>{isForApply ? "Submit Application" : "Add Supplier"}</span>
             )}
           </button>
         </div>

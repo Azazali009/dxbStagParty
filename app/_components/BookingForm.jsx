@@ -15,20 +15,24 @@ export default function BookingForm({
   price,
   activityName,
   destinations,
+  groupSize,
   user,
 }) {
-  const inputRef = useRef(null);
-  const [emails, setEmails] = useState([""]);
+  const inputRef1 = useRef(null);
+  const inputRef2 = useRef(null);
 
-  // const [organizerEmail, setOrganizerEmail] = useState(session.user.email);
-  // const [organizerName, setOrganizerName] = useState(session.user.name);
   const [bookingDate, setBookingDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedActivities, setSelectedActivities] = useState([]);
   const [selectedPackages, setSelectedPackages] = useState([]);
   const [totalPrice, setTotalPrice] = useState(price);
   const [minDate, setMinDate] = useState("");
   const [bookingNotes, setBookingNotes] = useState("");
+
+  const [minGroup, maxGroup] = groupSize.split("-").map(Number);
+
+  const [emails, setEmails] = useState(() => Array(minGroup).fill(""));
 
   // add email function
   const addEmail = () => {
@@ -81,7 +85,10 @@ export default function BookingForm({
       // ✅ Check for Duplicate Emails
       const uniqueEmails = new Set(allEmails);
       if (uniqueEmails.size !== allEmails.length) {
-        toast.error("Duplicate emails are not allowed!", { id: toastId });
+        toast.error(
+          "Duplicate attendees are not allowed. Please enter a unique email.",
+          { id: toastId },
+        );
         setLoading(false);
         return;
       }
@@ -112,7 +119,12 @@ export default function BookingForm({
           attendeeEmails: allEmails,
           organizerEmail: user.email,
           activityName,
-          bookingDate,
+          bookingDate: new Date(
+            `${bookingDate}T${new Date().toTimeString().split(" ")[0]}Z`,
+          ).toISOString(),
+          end_date: new Date(
+            `${endDate}T${new Date().toTimeString().split(" ")[0]}Z`,
+          ).toISOString(),
           paidAmount: organizerAmount,
           destinations,
           booking_notes: bookingNotes,
@@ -192,10 +204,10 @@ export default function BookingForm({
           />
         </FormRow>
 
-        <FormRow label={"Select Date:"}>
+        <FormRow label={"Start Date:"}>
           <div className="relative w-full">
             <input
-              ref={inputRef}
+              ref={inputRef1}
               type="date"
               min={minDate}
               id="date"
@@ -207,29 +219,41 @@ export default function BookingForm({
             />
             <button
               type="button"
-              onClick={() => inputRef.current.showPicker((show) => !show)}
+              onClick={() => inputRef1.current.showPicker((show) => !show)}
               className="absolute right-2 top-1/2 block -translate-y-1/2 duration-300 active:scale-90"
             >
               <CalenderDaysIcon />
             </button>
           </div>
         </FormRow>
-        <FormRow label={"Booking Notes:"}>
-          <input
-            type="text"
-            id="booking_notes"
-            value={bookingNotes}
-            placeholder="important notes"
-            onChange={(e) => setBookingNotes(e.target.value)}
-            className="h-10 w-full rounded-md border-none bg-primary px-2 placeholder:text-sm focus:outline-none focus:outline-blue-600"
-            required
-          />
+        <FormRow label={"End Date:"}>
+          <div className="relative w-full">
+            <input
+              ref={inputRef2}
+              type="date"
+              min={minDate}
+              id="date"
+              value={endDate}
+              placeholder="yyyy-MM-DD"
+              onChange={(e) => setEndDate(e.target.value)}
+              className="h-10 w-full rounded-md border-none bg-primary px-2 placeholder:text-sm focus:outline-none focus:outline-blue-600"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => inputRef2.current.showPicker((show) => !show)}
+              className="absolute right-2 top-1/2 block -translate-y-1/2 duration-300 active:scale-90"
+            >
+              <CalenderDaysIcon />
+            </button>
+          </div>
         </FormRow>
 
         <AttendeeEmailInputFields
           emails={emails}
           updateEmail={updateEmail}
           removeEmail={removeEmail}
+          minGroup={minGroup}
         />
 
         <SelectActivities
@@ -241,6 +265,17 @@ export default function BookingForm({
           selectedPackages={selectedPackages}
           setSelectedPackages={setSelectedPackages}
         />
+        <FormRow expandCols={2} label={"Booking Notes(Optional)"}>
+          <textarea
+            placeholder="any booking notes?"
+            value={bookingNotes}
+            cols="30"
+            rows="12"
+            className="w-full rounded-md border-none bg-primary px-2 placeholder:text-sm focus:outline-none focus:outline-blue-600"
+            onChange={(e) => setBookingNotes(e.target.value)}
+            id="booking_notes"
+          ></textarea>
+        </FormRow>
         <div className="sticky bottom-0 flex w-full items-center gap-3 justify-self-center bg-neutral-950 p-4 [grid-column:1/-1]">
           <div>
             <Button
@@ -251,13 +286,15 @@ export default function BookingForm({
               {loading ? "Processing..." : "Pay 15% to Confirm Booking"}{" "}
             </Button>
           </div>
-          <button
-            className="inline-block rounded-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 font-medium capitalize text-white hover:bg-gradient-to-tr"
-            onClick={addEmail}
-            type="button"
-          >
-            + Add Attendee
-          </button>
+          {emails.length < maxGroup && (
+            <button
+              className="inline-block rounded-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 font-medium capitalize text-white hover:bg-gradient-to-tr"
+              onClick={addEmail}
+              type="button"
+            >
+              + Add Attendee
+            </button>
+          )}
         </div>
       </form>
       {/* summary */}

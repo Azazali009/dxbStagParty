@@ -31,7 +31,7 @@ export default function Footer() {
             <Link href={"#"}>dxb hen parties</Link>
           </li>
           <li className="text-sm font-medium uppercase xs:text-lg">
-            <Link href={"#"}>become a supplier</Link>
+            <Link href={"/become_a_supplier"}>become a supplier</Link>
           </li>
           <li className="text-sm font-medium uppercase xs:text-lg">
             <Link href={"/faqs"}>faqs</Link>
@@ -43,7 +43,7 @@ export default function Footer() {
             <Link href={"/privacy-policy"}>privacy policy</Link>
           </li>
           <li className="text-sm font-medium uppercase xs:text-lg">
-            <Link href={"#"}>careers</Link>
+            <Link href={"/careers"}>careers</Link>
           </li>
         </ul>
 

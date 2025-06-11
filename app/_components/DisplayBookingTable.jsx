@@ -3,7 +3,7 @@ import BookingRow from "../_components/BookingRow";
 export default function DisplayBookingTable({ bookings }) {
   return (
     <div>
-      <div className="grid grid-cols-[1fr_1fr_1fr_2fr_2fr_1fr_1fr] items-center rounded-t-md border border-b-0 border-gray-800 bg-navyBlue px-4 py-3 font-semibold">
+      <div className="grid grid-cols-[1fr_1fr_1fr_2fr_2fr_1fr_1fr] items-center rounded-t-md border border-b-0 border-gray-800 bg-navyBlue px-4 py-3 text-xs font-semibold">
         <p>Booking ID</p>
         <p>Booking Price</p>
         <p>Date</p>
