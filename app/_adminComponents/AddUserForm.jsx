@@ -76,7 +76,7 @@ export default function AddUserForm() {
           >
             <option value="organiser">organiser</option>
             <option value="admin">admin</option>
-            <option value="admin">supplier</option>
+            <option value="supplier">supplier</option>
           </select>
         </FormRow>
         <button

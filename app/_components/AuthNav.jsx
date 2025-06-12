@@ -22,7 +22,11 @@ export default function AuthNav() {
         <div className="flex items-center gap-4">
           <Link
             href={
-              user?.user_metadata?.role === "admin" ? "/dashboard" : "/account"
+              user?.user_metadata?.role === "admin"
+                ? "/dashboard"
+                : user?.user_metadata?.role === "supplier"
+                  ? "/supplier"
+                  : "/account"
             }
             title="Account"
           >

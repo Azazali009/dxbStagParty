@@ -1,15 +1,15 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import LoggedInMessage from "../_components/LoggedInMeesage";
-import SelectActivities from "../_components/SelectActivities";
-import SelectPackages from "../_components/SelectPackages";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import FormRow from "./FormRow";
-import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
+import AttendeeEmailsBookingDetails from "../_components/AttendeeEmailsBookingDetails";
+import BookingDetails from "../_components/BookingDetails";
+import BookingFormPagination from "../_components/BookingFormPagination";
+import LoggedInMessage from "../_components/LoggedInMeesage";
+import OrganiserBookingDetails from "../_components/OrganiserBookingDetails";
+import { useBooking } from "../_context/bookingProvider";
 import Button from "./Button";
 import Summary from "./Summary";
-import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
-
 export default function BookingForm({
   id,
   price,
@@ -18,43 +18,32 @@ export default function BookingForm({
   groupSize,
   user,
 }) {
-  const inputRef1 = useRef(null);
-  const inputRef2 = useRef(null);
-
-  const [bookingDate, setBookingDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [selectedActivities, setSelectedActivities] = useState([]);
-  const [selectedPackages, setSelectedPackages] = useState([]);
+  const {
+    selectedActivities,
+    selectedPackages,
+    loading,
+    bookingDate,
+    endDate,
+    setMinDate,
+    setLoading,
+    bookingNotes,
+    phone,
+    whatsApp,
+  } = useBooking();
   const [totalPrice, setTotalPrice] = useState(price);
-  const [minDate, setMinDate] = useState("");
-  const [bookingNotes, setBookingNotes] = useState("");
 
   const [minGroup, maxGroup] = groupSize.split("-").map(Number);
-
   const [emails, setEmails] = useState(() => Array(minGroup).fill(""));
 
-  // add email function
-  const addEmail = () => {
-    setEmails([...emails, ""]);
-  };
-
-  // delete email function
-  const removeEmail = (index) => {
-    const updatedEmails = emails.filter((_, i) => i !== index);
-    setEmails(updatedEmails);
-  };
-  const updateEmail = (index, value) => {
-    const updatedEmails = [...emails];
-    updatedEmails[index] = value;
-    setEmails(updatedEmails);
-  };
+  const searchParams = useSearchParams();
+  // Get current step from URL (default to 1)
+  const currentStep = parseInt(searchParams.get("step") || 1);
 
   // effect to disbale previous dates
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
     setMinDate(today);
-  }, []);
+  }, [setMinDate]);
   // effect for adding all prices
   useEffect(() => {
     const getSelectedActivities = selectedActivities.reduce((acc, curr) => {
@@ -128,6 +117,8 @@ export default function BookingForm({
           paidAmount: organizerAmount,
           destinations,
           booking_notes: bookingNotes,
+          phone,
+          whatsApp,
         }),
       );
 
@@ -177,125 +168,42 @@ export default function BookingForm({
 
       <form
         onSubmit={handleBooking}
-        className="grid grid-cols-1 gap-x-10 gap-y-6 p-4 md:grid-cols-2"
+        className="grid grid-cols-1 items-center gap-x-10 gap-y-6 p-4 md:grid-cols-2"
       >
-        <FormRow label={"Organizer Email:"}>
-          <input
-            type="email"
-            disabled
-            value={user.email}
-            placeholder="organizer@email.com"
-            // onChange={(e) => setOrganizerEmail(e.target.value)}
-            className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
-            autoComplete="on"
-            required
+        {currentStep === 1 && (
+          <OrganiserBookingDetails
+            email={user.email}
+            name={user?.user_metadata?.full_name}
           />
-        </FormRow>
-        <FormRow label={"Organizer Name:"}>
-          <input
-            type="text"
-            disabled
-            value={user?.user_metadata?.full_name}
-            placeholder="Organizer name"
-            // onChange={(e) => setOrganizerName(e.target.value)}
-            className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
-            autoComplete="on"
-            required
+        )}
+        {currentStep === 2 && <BookingDetails activityId={id} />}
+        {currentStep === 3 && (
+          <AttendeeEmailsBookingDetails
+            emails={emails}
+            setEmails={setEmails}
+            minGroup={minGroup}
+            maxGroup={maxGroup}
           />
-        </FormRow>
-
-        <FormRow label={"Start Date:"}>
-          <div className="relative w-full">
-            <input
-              ref={inputRef1}
-              type="date"
-              min={minDate}
-              id="date"
-              value={bookingDate}
-              placeholder="yyyy-MM-DD"
-              onChange={(e) => setBookingDate(e.target.value)}
-              className="h-10 w-full rounded-md border-none bg-primary px-2 placeholder:text-sm focus:outline-none focus:outline-blue-600"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => inputRef1.current.showPicker((show) => !show)}
-              className="absolute right-2 top-1/2 block -translate-y-1/2 duration-300 active:scale-90"
-            >
-              <CalenderDaysIcon />
-            </button>
-          </div>
-        </FormRow>
-        <FormRow label={"End Date:"}>
-          <div className="relative w-full">
-            <input
-              ref={inputRef2}
-              type="date"
-              min={minDate}
-              id="date"
-              value={endDate}
-              placeholder="yyyy-MM-DD"
-              onChange={(e) => setEndDate(e.target.value)}
-              className="h-10 w-full rounded-md border-none bg-primary px-2 placeholder:text-sm focus:outline-none focus:outline-blue-600"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => inputRef2.current.showPicker((show) => !show)}
-              className="absolute right-2 top-1/2 block -translate-y-1/2 duration-300 active:scale-90"
-            >
-              <CalenderDaysIcon />
-            </button>
-          </div>
-        </FormRow>
-
-        <AttendeeEmailInputFields
-          emails={emails}
-          updateEmail={updateEmail}
-          removeEmail={removeEmail}
-          minGroup={minGroup}
-        />
-
-        <SelectActivities
-          selectedActivities={selectedActivities}
-          setSelectedActivities={setSelectedActivities}
-          activityId={id}
-        />
-        <SelectPackages
-          selectedPackages={selectedPackages}
-          setSelectedPackages={setSelectedPackages}
-        />
-        <FormRow expandCols={2} label={"Booking Notes(Optional)"}>
-          <textarea
-            placeholder="any booking notes?"
-            value={bookingNotes}
-            cols="30"
-            rows="12"
-            className="w-full rounded-md border-none bg-primary px-2 placeholder:text-sm focus:outline-none focus:outline-blue-600"
-            onChange={(e) => setBookingNotes(e.target.value)}
-            id="booking_notes"
-          ></textarea>
-        </FormRow>
-        <div className="sticky bottom-0 flex w-full items-center gap-3 justify-self-center bg-neutral-950 p-4 [grid-column:1/-1]">
-          <div>
+        )}
+        {currentStep === 4 && (
+          <div
+            style={{ gridColumn: "1/-1" }}
+            className="flex flex-col gap-4 justify-self-center"
+          >
             <Button
               variation="gold"
               type="submit"
               disable={loading || !bookingDate}
             >
-              {loading ? "Processing..." : "Pay 15% to Confirm Booking"}{" "}
+              {loading ? "Processing..." : "Pay & Confirm"}{" "}
             </Button>
+            <small>
+              You’ll only pay 15% now to confirm your spot. The rest comes
+              later.
+            </small>
           </div>
-          {emails.length < maxGroup && (
-            <button
-              className="inline-block rounded-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-4 py-2.5 font-medium capitalize text-white hover:bg-gradient-to-tr"
-              onClick={addEmail}
-              type="button"
-            >
-              + Add Attendee
-            </button>
-          )}
-        </div>
+        )}
+        <BookingFormPagination currentStep={currentStep} />
       </form>
       {/* summary */}
       <Summary

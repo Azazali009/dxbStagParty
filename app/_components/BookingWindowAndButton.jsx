@@ -5,7 +5,7 @@ import BookingPage from "./BookingForm";
 import ModalWindow from "./ModalWindow";
 
 export default function BookingWindowAndButton({ user, activity }) {
-  const { id, price, name, destinations } = activity;
+  const { id, price, name, destinations, group_size, duration } = activity;
   const [openModal, setOpenModal] = useState(false);
   const onClose = () => setOpenModal(false);
   const open = () => setOpenModal(true);
@@ -19,8 +19,9 @@ export default function BookingWindowAndButton({ user, activity }) {
             price={price}
             activityName={name}
             destinations={destinations}
-            groupSize={activity.group_size}
+            groupSize={group_size}
             user={user}
+            duration={duration}
           />
         </ModalWindow>
       ) : (

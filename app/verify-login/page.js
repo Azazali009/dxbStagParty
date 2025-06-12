@@ -13,12 +13,15 @@ export default async function Page() {
   if (user?.user_metadata?.role === "organiser") {
     redirect("/activities");
   }
+  if (user?.user_metadata?.role === "supplier") {
+    redirect("/supplier");
+  }
 
   // Optional fallback, in case user has no recognized role
   return (
-    <div className="flex min-h-dvh w-full flex-col items-center justify-center gap-3">
+    <div className="flex min-h-dvh w-full flex-col items-center justify-center">
       <Spinner />
-      <p className="text-gray-400">
+      <p className="font-semibold text-gray-400">
         Redirecting you now. Please wait a moment...
       </p>
     </div>

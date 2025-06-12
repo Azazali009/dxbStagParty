@@ -1,10 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
-// import { auth } from "./auth";
 import { createClient } from "../_utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "./getCurrentUser";
-// import { supabase } from "./supabase";
 
 export async function updateUserProfileAction(formData) {
   const user = await getCurrentUser();

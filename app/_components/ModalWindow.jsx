@@ -2,6 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import LoggedInMeesage from "./LoggedInMeesage";
 import { createPortal } from "react-dom";
+import { useBooking } from "../_context/bookingProvider";
 export default function ModalWindow({ children, onClose, user }) {
   return createPortal(
     <AnimatePresence mode="wait">
@@ -80,8 +81,14 @@ const Overlay = ({ className }) => {
 };
 
 export const CloseIcon = ({ onClose }) => {
+  const { removeStepQueryFromUrl } = useBooking();
+
+  function handleClick() {
+    removeStepQueryFromUrl();
+    onClose();
+  }
   return (
-    <button onClick={onClose} className="group absolute right-4 top-4 z-50">
+    <button onClick={handleClick} className="group absolute right-4 top-4 z-50">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

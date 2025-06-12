@@ -36,6 +36,8 @@ export default function CompleteBooking() {
           paidAmount,
           userId,
           booking_notes,
+          phone,
+          whatsApp,
         } = bookingData;
 
         // ✅ Generate Attendee Payment Links
@@ -76,6 +78,8 @@ export default function CompleteBooking() {
           paidAmount,
           userId,
           booking_notes,
+          phone,
+          whatsApp,
         };
 
         const { CurBooking, error } = await addBooking(sanitizedBooking);
