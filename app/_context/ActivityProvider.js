@@ -96,7 +96,7 @@ export function ActivityProvider({ children }) {
   // Min/max values
 
   const groupSizeValues = allActivities
-    .map((a) =>
+    ?.map((a) =>
       a.group_size
         ?.replace("–", "-") // replace en-dash with hyphen
         .split("-")
