@@ -7,9 +7,11 @@ export const revalidate = 0;
 
 export async function generateStaticParams() {
   const activities = await getActivities();
-  const ids = activities?.map((curActivity) => ({
-    activityId: String(curActivity.id),
-  }));
+  const ids =
+    activities &&
+    activities?.map((curActivity) => ({
+      activityId: String(curActivity.id),
+    }));
   return ids;
 }
 

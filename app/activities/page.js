@@ -9,6 +9,7 @@ import { getActivities } from "../_lib/data-services";
 import { BebasNeue } from "../layout";
 import VipSpotLight from "../_components/VipSpotLight";
 import BigEnergy from "../_components/BigEnergy";
+import Empty from "../_components/Empty";
 
 export const metadata = {
   title: "Activities | DXB Stag party",
@@ -21,7 +22,7 @@ export default async function Page({ searchParams }) {
   const groupSize = Number(searchParams?.groupSize ?? 0);
 
   const ActivitiesArray = await getActivities();
-
+  if (!ActivitiesArray) return <Empty />;
   return (
     <div className="mx-auto min-h-screen w-full antialiased">
       <ActivityHeroSection />
