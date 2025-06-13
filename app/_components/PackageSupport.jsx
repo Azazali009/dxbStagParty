@@ -1,8 +1,8 @@
+import React from "react";
 import { playfairDisplay } from "../layout";
 
-export default function ActivitySupportSections({ activity }) {
-  const embedUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY}&q=${encodeURIComponent(activity.destinations)}`;
-
+export default function PackageSupport({ Package }) {
+  const embedUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY}&q=${encodeURIComponent(Package.destinations || "dubai")}`;
   return (
     <section className="space-y-10 bg-[#1f1000] px-4 py-10">
       <h2
@@ -11,12 +11,12 @@ export default function ActivitySupportSections({ activity }) {
         Optional add ons
       </h2>
       <div className="flex items-center justify-center gap-4 text-xs xs:text-base">
-        {!activity?.optionalAddOns ? (
+        {!Package?.add_ons ? (
           <p className="italic text-gray-500">
             No add-ons have been added yet!
           </p>
         ) : (
-          activity?.optionalAddOns?.map((addon) => {
+          Package?.add_ons?.map((addon) => {
             return (
               <div key={addon}>
                 <span className="inline-block capitalize">{addon}</span>
@@ -41,10 +41,10 @@ export default function ActivitySupportSections({ activity }) {
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
-            <div class="flex flex-col gap-2 text-xs font-light xs:text-lg">
+            {/* <div class="flex flex-col gap-2 text-xs font-light xs:text-lg">
               <span>{activity?.destinations}</span>
-              {/* <span>~45 min drive from Dubai Marina</span> */}
-            </div>
+            
+            </div> */}
           </div>
         </div>
 

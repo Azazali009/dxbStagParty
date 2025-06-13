@@ -1,10 +1,10 @@
-import React from "react";
-import { playfairDisplay } from "../layout";
 import Image from "next/image";
-import BookingWindowAndButton from "./BookingWindowAndButton";
+import React from "react";
 import SendToGroup from "./SendToGroup";
+import BookingWindowAndButton from "./BookingWindowAndButton";
+import { playfairDisplay } from "../layout";
 
-export default function ActivityDetailSections({ activity, user }) {
+export default function PackageDetailSection({ Package, user }) {
   return (
     <section className="space-y-10 bg-[#3D1F00] px-4 py-10">
       <div className="space-y-5">
@@ -101,12 +101,12 @@ export default function ActivityDetailSections({ activity, user }) {
       <div className="flex flex-col items-center justify-center gap-8 rounded-xl bg-[#1f1000] p-6 xs:p-12">
         <h2 className="text-lg xs:text-2xl">Lock It In or Loop the Lads</h2>
         <div className="grid w-full grid-cols-2 gap-3 text-xs xs:max-w-xl xs:gap-7 xs:text-base">
-          <BookingWindowAndButton user={user} activity={activity} />
+          <BookingWindowAndButton user={user} />
           <button className="h-8 w-full rounded border border-white bg-black capitalize hover:bg-opacity-70 xs:h-10">
             get a quote
           </button>
         </div>
-        <SendToGroup name={activity.name} />
+        <SendToGroup name={Package.name} />
       </div>
 
       <div className="relative space-y-7">
@@ -117,10 +117,10 @@ export default function ActivityDetailSections({ activity, user }) {
           <div className="relative h-[400px] overflow-hidden rounded-xl xs:h-[800px] sm:h-[600px]">
             <Image
               className="object-cover"
-              src={activity.image}
+              src={Package.image}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              alt={activity.name}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw"
+              alt={Package.name}
             />
           </div>
           <div className="space-y-4">
@@ -135,7 +135,7 @@ export default function ActivityDetailSections({ activity, user }) {
               whip around sand bowls, and catch air like a desert beast.
             </p>
             <ul className="list-inside space-y-4 text-xs xs:text-base">
-              {activity?.coreInclusions?.map((inclusion) => {
+              {Package?.inclusions?.map((inclusion) => {
                 return (
                   <li key={inclusion} className="flex items-center gap-2">
                     <svg

@@ -1,11 +1,11 @@
 "use client";
 
-export default function SendToGroup({ activity }) {
+export default function SendToGroup({ name }) {
   const handleShare = () => {
     if (navigator.share) {
       navigator
         .share({
-          title: activity?.name,
+          title: name,
           text: "Check out this activity!",
           url: window.location.href,
         })

@@ -1,24 +1,16 @@
-import React, { useRef } from "react";
-import FormRow from "./FormRow";
-import SelectPackages from "./SelectPackages";
-import SelectActivities from "./SelectActivities";
-import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
-import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
+import { useRef } from "react";
 import { useBooking } from "../_context/bookingProvider";
+import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
+import FormRow from "./FormRow";
+import SelectActivities from "./SelectActivities";
+import SelectPackages from "./SelectPackages";
 
-export default function BookingDetails({
-  minGroup,
-  maxGroup,
-  emails,
-  setEmails,
-  activityId,
-}) {
+export default function BookingDetails({ id }) {
   const {
     bookingDate,
     setBookingDate,
     endDate,
     setEndDate,
-
     selectedActivities,
     setSelectedActivities,
     selectedPackages,
@@ -80,11 +72,12 @@ export default function BookingDetails({
       <SelectActivities
         selectedActivities={selectedActivities}
         setSelectedActivities={setSelectedActivities}
-        activityId={activityId}
+        activityId={id}
       />
       <SelectPackages
         selectedPackages={selectedPackages}
         setSelectedPackages={setSelectedPackages}
+        packageId={id}
       />
       <FormRow expandCols={2} label={"Booking Notes(Optional)"}>
         <textarea

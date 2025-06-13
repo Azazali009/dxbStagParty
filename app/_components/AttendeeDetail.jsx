@@ -3,6 +3,7 @@ import PaymentTimer from "./PaymentTimer";
 import ExtendAttendeeExpiry from "../_components/ExtendAttendeeExpiry";
 import ResendPaymentLink from "./ResendPaymentLink";
 import ResendReminder from "../_components/ResendReminder";
+import Link from "next/link";
 
 export default function AttendeeDetail({
   attendee,
@@ -14,7 +15,7 @@ export default function AttendeeDetail({
   return (
     <div className="space-y-4">
       <h2 className="!mt-12 text-xl font-semibold">All Attendee&apos;s</h2>
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
         {attendee.map(
           (attendee) => (
             // attendee.email !== booking.organizerEmail && (
@@ -48,9 +49,16 @@ export default function AttendeeDetail({
                   bookingPaymentStatus={bookingPaymentStatus}
                 />
               )}
-              <p>{attendee.email}</p>
+              <div className="space-y-2">
+                <Link className="block" href={`mailto:${attendee?.email}`}>
+                  💌 {attendee.email}
+                </Link>
+                <Link className="block" href={`tel:${attendee?.phone}`}>
+                  📞 {attendee?.phone}
+                </Link>
+              </div>
 
-              <div className="grid grid-cols-2 items-center gap-4">
+              <div className="grid grid-cols-2 items-center gap-2">
                 <ExtendAttendeeExpiry
                   id={attendee.id}
                   bookingPaymentStatus={bookingPaymentStatus}

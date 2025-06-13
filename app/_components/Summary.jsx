@@ -9,6 +9,7 @@ export default function Summary({
   totalPrice,
 }) {
   const [showSummary, setShowSummary] = useState(false);
+
   return (
     <>
       {showSummary ? (
@@ -35,10 +36,12 @@ export default function Summary({
               </div>
             );
           })}
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-matalicGold">{activityName}:</span>{" "}
-            <span className="text-matalicGold">{formatToAED(price)}</span>
-          </div>
+          {price && (
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-matalicGold">{activityName}:</span>{" "}
+              <span className="text-matalicGold">{formatToAED(price)}</span>
+            </div>
+          )}
           {selectedPackages.map((pack) => {
             return (
               <div

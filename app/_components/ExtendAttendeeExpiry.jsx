@@ -44,12 +44,12 @@ export default function ExtendAttendeeExpiry({
       variation="gold"
       onClick={handleExtendExpiry}
       disabled={loading || bookingPaymentStatus === "cancelled"}
-      className="px-4 py-2.5 !text-sm font-medium"
+      className="whitespace-nowrap px-4 py-2.5 !text-xs font-medium"
     >
-      {loading ? "Processing..." : "Extend Expiry by 24h"}
+      {loading ? "Processing..." : "Extend by 24h"}
     </Button>
   ) : (
-    <button className="block w-full cursor-not-allowed rounded-full border-2 border-transparent bg-gray-500 px-4 py-2.5 text-sm font-medium capitalize text-gray-300 opacity-50 grayscale">
+    <button className="block w-full cursor-not-allowed whitespace-nowrap rounded-full border-2 border-transparent bg-gray-500 px-4 py-2.5 text-sm font-medium capitalize text-gray-300 opacity-50 grayscale">
       Extend limit reached
     </button>
   );

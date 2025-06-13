@@ -23,9 +23,8 @@ export default function CompleteBooking() {
           router.push("/");
           return;
         }
-
         const {
-          attendeeEmails,
+          attendees,
           totalPrice,
           activities,
           activityName,
@@ -45,9 +44,9 @@ export default function CompleteBooking() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            emails: attendeeEmails,
+            emails: attendees.map((att) => att.email),
             totalPrice,
-            activities: bookingData.activities,
+            activities: activities,
           }),
         });
 
@@ -62,9 +61,7 @@ export default function CompleteBooking() {
         }
 
         // ✅ Calculate Payment for Each Attendee
-        const splitAmount = Math.round(
-          (totalPrice * 0.85) / attendeeEmails.length,
-        );
+        const splitAmount = Math.round((totalPrice * 0.85) / attendees.length);
 
         // ✅ Prepare booking object with cleaned attendee list
         const sanitizedBooking = {
@@ -90,18 +87,21 @@ export default function CompleteBooking() {
           router.push("/");
           return;
         }
-        const attendeesData = attendeeEmails.map((email) => {
+        const attendeesData = bookingData.attendees.map(({ email, phone }) => {
           const paymentLink =
             data.paymentLinks.find((link) => link.email === email)?.link || "";
+
           return {
             bookingID: CurBooking.id,
             email,
+            phone, // ✅ Include phone number
             amountPaid: splitAmount,
             status: "unpaid",
-            paymentLink, // ✅ Store actual Stripe link
-            expires_at: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // ✅ 12 days expiry
+            paymentLink, // ✅ Stripe link
+            expires_at: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // ✅ 12 days from now
           };
         });
+
         // ✅ Add Attendees to Database
         const { error: attendeeErrors } = await addAttendees(attendeesData);
         if (attendeeErrors) {

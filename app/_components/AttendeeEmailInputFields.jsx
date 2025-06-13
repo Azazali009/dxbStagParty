@@ -2,29 +2,36 @@ import React from "react";
 import FormRow from "./FormRow";
 import XMarkIcon from "../svgIcons/XMarkIcon";
 
-export default function AttendeeEmailInputFields({
-  emails,
-  updateEmail,
-  removeEmail,
+export default function AttendeeInputFields({
+  attendees,
+  updateAttendee,
+  removeAttendee,
   minGroup,
 }) {
   return (
     <>
-      {emails.map((email, index) => (
-        <FormRow label={`Attendee ${index + 1} Email:`} key={index}>
-          <div className="flex items-center gap-3">
+      {attendees.map((attendee, index) => (
+        <FormRow label={`Attendee ${index + 1}`} key={index}>
+          <div className="space-y-2">
             <input
               type="email"
-              placeholder={`Enter Attendee ${index + 1} email`}
-              value={email}
-              autoComplete="email"
-              onChange={(e) => updateEmail(index, e.target.value)}
-              className="h-10 flex-1 rounded-md border-none bg-primary px-2 text-[14px] placeholder:text-sm focus:outline-none focus:outline-blue-600"
+              placeholder="Email"
+              value={attendee.email}
+              onChange={(e) => updateAttendee(index, "email", e.target.value)}
+              className="block h-10 w-full rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600"
               required
             />
-            {emails.length > minGroup && (
+            <input
+              type="tel"
+              placeholder="Phone"
+              value={attendee.phone}
+              onChange={(e) => updateAttendee(index, "phone", e.target.value)}
+              className="block h-10 w-full rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600"
+              required
+            />
+            {attendees.length > minGroup && (
               <button
-                onClick={() => removeEmail(index)}
+                onClick={() => removeAttendee(index)}
                 type="button"
                 className="flex size-6 items-center justify-center rounded-md bg-gradient-to-b from-red-800 to-red-500 text-sm font-medium capitalize text-red-100 hover:bg-gradient-to-t"
               >

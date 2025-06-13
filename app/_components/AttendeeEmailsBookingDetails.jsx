@@ -2,36 +2,50 @@ import React from "react";
 import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
 
 export default function AttendeeEmailsBookingDetails({
-  emails,
-  setEmails,
-  minGroup,
-  maxGroup,
+  attendees,
+  setAttendees,
+  minGroup = 1,
+  maxGroup = 10,
 }) {
   // delete email function
-  const removeEmail = (index) => {
-    const updatedEmails = emails.filter((_, i) => i !== index);
-    setEmails(updatedEmails);
+  // const removeEmail = (index) => {
+  //   const updatedEmails = emails.filter((_, i) => i !== index);
+  //   setEmails(updatedEmails);
+  // };
+  const removeAttendee = (index) => {
+    setAttendees((prev) => prev.filter((_, i) => i !== index));
   };
-  const updateEmail = (index, value) => {
-    const updatedEmails = [...emails];
-    updatedEmails[index] = value;
-    setEmails(updatedEmails);
+
+  // const updateEmail = (index, value) => {
+  //   const updatedEmails = [...emails];
+  //   updatedEmails[index] = value;
+  //   setEmails(updatedEmails);
+  // };
+  const updateAttendee = (index, field, value) => {
+    const updated = [...attendees];
+    updated[index][field] = value;
+    setAttendees(updated);
   };
-  const addEmail = () => {
-    setEmails([...emails, ""]);
+
+  // const addEmail = () => {
+  //   setEmails([...emails, ""]);
+  // };
+  const addAttendee = () => {
+    setAttendees((prev) => [...prev, { email: "", phone: "" }]);
   };
+
   return (
     <>
       <AttendeeEmailInputFields
-        emails={emails}
-        updateEmail={updateEmail}
-        removeEmail={removeEmail}
+        attendees={attendees}
+        updateAttendee={updateAttendee}
+        removeAttendee={removeAttendee}
         minGroup={minGroup}
       />
-      {emails.length < maxGroup && (
+      {attendees.length < maxGroup && (
         <button
           className="inline-block w-fit rounded bg-gradient-to-br from-indigo-900 via-indigo-800 to-blue-700 px-4 py-1.5 text-sm capitalize text-white hover:bg-gradient-to-tr"
-          onClick={addEmail}
+          onClick={addAttendee}
           type="button"
         >
           + Add Attendee

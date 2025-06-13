@@ -8,21 +8,24 @@ import FormRow from "./FormRow";
 export default function SelectPackages({
   setSelectedPackages,
   selectedPackages,
+  packageId,
 }) {
   const [loading, setLoading] = useState(false);
   const [packages, setPackages] = useState([]);
 
-  // Effect to fetch activities
+  // Effect to fetch packages
   useEffect(() => {
     async function fetchPackages() {
       setLoading(true);
       const fetchedPackages = await getPackages();
       setPackages(
-        fetchedPackages.map((act) => ({
-          label: act.name,
-          value: act.id,
-          price: act.price_band,
-        })),
+        fetchedPackages
+          ?.filter((pack) => pack.id !== packageId)
+          ?.map((pack) => ({
+            label: pack.name,
+            value: pack.id,
+            price: pack.price_band,
+          })),
       );
       setLoading(false);
     }

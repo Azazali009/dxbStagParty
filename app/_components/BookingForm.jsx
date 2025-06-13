@@ -15,7 +15,7 @@ export default function BookingForm({
   price,
   activityName,
   destinations,
-  groupSize,
+  groupSize = "",
   user,
 }) {
   const {
@@ -32,8 +32,13 @@ export default function BookingForm({
   } = useBooking();
   const [totalPrice, setTotalPrice] = useState(price);
 
-  const [minGroup, maxGroup] = groupSize.split("-").map(Number);
-  const [emails, setEmails] = useState(() => Array(minGroup).fill(""));
+  const [minGroup, maxGroup] = groupSize && groupSize?.split("-")?.map(Number);
+  // const [emails, setEmails] = useState(() => Array(minGroup || 1).fill(""));
+  const [attendees, setAttendees] = useState(() =>
+    Array(minGroup || 1)
+      .fill(0)
+      .map(() => ({ email: "", phone: "" })),
+  );
 
   const searchParams = useSearchParams();
   // Get current step from URL (default to 1)
@@ -53,9 +58,9 @@ export default function BookingForm({
       return acc + parseInt(curr.price);
     }, 0);
     let totalPrice =
-      parseInt(price) +
-      parseInt(getSelectedActivities) +
-      parseInt(getSelectedPackages);
+      parseInt(price || 0) +
+      parseInt(getSelectedActivities || 0) +
+      parseInt(getSelectedPackages || 0);
 
     setTotalPrice(totalPrice);
   }, [price, selectedActivities, selectedPackages]);
@@ -66,10 +71,13 @@ export default function BookingForm({
     setLoading(true);
 
     try {
-      if (!emails || !bookingDate) return;
+      if (!attendees || !bookingDate) return;
 
       // Combine Organizer Email + Attendees
-      const allEmails = [...emails, user.email];
+      // const allEmails = [...emails, user.email];
+      // Combine Organizer Email + Attendees
+      const allEmails = [...attendees.map((a) => a.email), user.email];
+      const allPhones = [...attendees.map((a) => a.phone), phone]; // phone = organizer phone
 
       // ✅ Check for Duplicate Emails
       const uniqueEmails = new Set(allEmails);
@@ -85,14 +93,49 @@ export default function BookingForm({
       // ✅ Calculate Organizer's 15% Payment
       const organizerAmount = Math.round(totalPrice * 0.15);
       // ✅ Save Booking Data to LocalStorage (Before Payment)
+      // localStorage.setItem(
+      //   "bookingData",
+      //   JSON.stringify({
+      //     // activityID: id,
+      //     activities: [
+      //       {
+      //         name: activityName,
+      //         price: price, // make sure you have this value in scope
+      //       },
+      //       ...selectedActivities.map((act) => ({
+      //         name: act.label,
+      //         price: act.price,
+      //       })),
+      //     ],
+      //     packages: selectedPackages.map((pkg) => ({
+      //       name: pkg.label,
+      //       price: pkg.price,
+      //     })),
+      //     userId: user.id,
+      //     totalPrice,
+      //     attendeeEmails: allEmails,
+      //     organizerEmail: user.email,
+      //     activityName,
+      //     bookingDate: new Date(
+      //       `${bookingDate}T${new Date().toTimeString().split(" ")[0]}Z`,
+      //     ).toISOString(),
+      //     end_date: new Date(
+      //       `${endDate}T${new Date().toTimeString().split(" ")[0]}Z`,
+      //     ).toISOString(),
+      //     paidAmount: organizerAmount,
+      //     destinations,
+      //     booking_notes: bookingNotes,
+      //     phone,
+      //     whatsApp,
+      //   }),
+      // );
       localStorage.setItem(
         "bookingData",
         JSON.stringify({
-          // activityID: id,
           activities: [
             {
               name: activityName,
-              price: price, // make sure you have this value in scope
+              price: price,
             },
             ...selectedActivities.map((act) => ({
               name: act.label,
@@ -105,7 +148,16 @@ export default function BookingForm({
           })),
           userId: user.id,
           totalPrice,
-          attendeeEmails: allEmails,
+          attendees: [
+            ...attendees.map((a) => ({
+              email: a.email,
+              phone: a.phone,
+            })),
+            {
+              email: user.email,
+              phone: phone,
+            },
+          ],
           organizerEmail: user.email,
           activityName,
           bookingDate: new Date(
@@ -176,11 +228,11 @@ export default function BookingForm({
             name={user?.user_metadata?.full_name}
           />
         )}
-        {currentStep === 2 && <BookingDetails activityId={id} />}
+        {currentStep === 2 && <BookingDetails id={id} />}
         {currentStep === 3 && (
           <AttendeeEmailsBookingDetails
-            emails={emails}
-            setEmails={setEmails}
+            attendees={attendees}
+            setAttendees={setAttendees}
             minGroup={minGroup}
             maxGroup={maxGroup}
           />
