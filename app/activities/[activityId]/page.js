@@ -9,7 +9,7 @@ export async function generateStaticParams() {
   const activities = await getActivities();
   const ids =
     activities &&
-    activities?.map((curActivity) => ({
+    activities.map((curActivity) => ({
       activityId: String(curActivity.id),
     }));
   return ids;
