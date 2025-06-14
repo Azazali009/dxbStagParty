@@ -17,6 +17,8 @@ export async function generateStaticParams() {
 
 export default async function page({ params }) {
   const booking = await getBooking(params.bookingID);
+  if (!booking)
+    return <p className="text-center text-red-600">No booking Found</p>;
   const { attendees, user } = await getAttendees(booking?.id);
 
   // await updateAttendeeStatus("aizaz.0938@gmail.com");
