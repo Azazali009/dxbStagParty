@@ -106,6 +106,7 @@ export async function signup(formData) {
   const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");
+  const role = formData.get("role");
 
   // insert user in supabase auth table
   const { data, error } = await supabase.auth.signUp({
@@ -115,7 +116,7 @@ export async function signup(formData) {
       emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/login?type=signup`,
       data: {
         full_name: name,
-        role: "organiser",
+        role: role ? role : "organiser",
       },
     },
   });
@@ -135,7 +136,7 @@ export async function signup(formData) {
       id: userId,
       email,
       fullName: name,
-      role: "organiser", // same as above or adjust as needed
+      role: role ? role : "organiser", // same as above or adjust as needed
     },
   ]);
 

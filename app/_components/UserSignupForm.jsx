@@ -48,6 +48,18 @@ export default function UserSignupForm() {
           required
         />
 
+        <select
+          name="role"
+          id="role"
+          className="w-full rounded-md border border-gray-800 bg-primary px-4 py-2 text-sm capitalize"
+        >
+          <option selected value="">
+            Choose your role
+          </option>
+          <option value="organiser">organiser</option>
+          <option value="supplier">supplier</option>
+        </select>
+
         <input
           type="password"
           placeholder="Password"
