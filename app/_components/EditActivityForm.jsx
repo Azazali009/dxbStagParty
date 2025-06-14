@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { editActivityAction } from "../_lib/actions";
 import FormRow from "./FormRow";
 import SpinnerMini from "./SpinnerMini";
-import { getSuppliers, getSupplierUsers } from "../_lib/apiSupplier";
+import { getSupplierUsers } from "../_lib/apiSupplier";
 import { getCategories } from "../_lib/categoryApi";
 
 export default function EditActivityForm({ activity }) {

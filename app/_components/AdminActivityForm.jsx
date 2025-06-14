@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { addActivityAction } from "../_lib/actions";
 import FormRow from "./FormRow";
 import SubmitButton from "./SubmitButton";
-import { getSuppliers } from "../_lib/apiSupplier";
+import { getSupplierUsers } from "../_lib/apiSupplier";
 import { getCategories } from "../_lib/categoryApi";
 
 export default function AdminActivityForm() {
@@ -27,10 +27,10 @@ export default function AdminActivityForm() {
   useEffect(() => {
     async function fetchSuppliers() {
       setLoading(true);
-      const fetchedSuppliers = await getSuppliers();
+      const fetchedSuppliers = await getSupplierUsers();
       setSuppliers(
         fetchedSuppliers.map((sup) => ({
-          name: sup.name,
+          name: sup.fullName,
           value: sup.id,
         })),
       );
