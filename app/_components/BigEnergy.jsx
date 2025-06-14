@@ -6,7 +6,7 @@ import { BebasNeue } from "../layout";
 export default function BigEnergy({ ActivitiesArray }) {
   return (
     <section className="space-y-4 bg-reddish p-4 py-20 xs:space-y-9 sm:space-y-14">
-      <div className="flex flex-col gap-2 xs:gap-4">
+      <div className="mx-auto flex max-w-7xl flex-col gap-2 xs:gap-4">
         <h2
           className={`text-left text-2xl xs:text-3xl sm:text-5xl ${BebasNeue.className} font-medium uppercase`}
         >
@@ -20,15 +20,15 @@ export default function BigEnergy({ ActivitiesArray }) {
           party starts
         </p>
       </div>
-      <div className="grid grid-cols-1 gap-8 p-3 sm:p-6 lg:grid-cols-2">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 p-3 sm:p-6 lg:grid-cols-2 lg:gap-12 2xl:gap-20">
         {/* column 1 */}
-        <div className="origin-top space-y-6 [transform:perspective(300px)_rotateY(-2deg)]">
+        <div className="space-y-6">
           {ActivitiesArray.slice(0, 2).map((activity, index) => {
             return (
               <Link
                 href={`/activities/${activity.id}`}
                 key={activity.id}
-                className={`relative flex ${index === 0 ? "h-[200px] xs:h-[450px] sm:h-[650px]" : "h-[200px] xs:h-[350px] sm:h-[500px]"} items-end overflow-hidden rounded-lg p-5 sm:p-10`}
+                className={`relative flex ${index === 0 ? "h-[200px] origin-top [transform:perspective(300px)_rotateY(-2deg)] xs:h-[450px] sm:h-[650px]" : "h-[200px] [transform:perspective(600px)_rotateY(2deg)_rotateZ(3deg)_scale(1)] xs:h-[350px] sm:h-[500px]"} items-end overflow-hidden rounded-2xl p-5 sm:p-10`}
               >
                 {/* overlay */}
                 <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/40"></div>
@@ -49,7 +49,7 @@ export default function BigEnergy({ ActivitiesArray }) {
 
         {/* column 2 */}
         <div className="space-y-8">
-          <div className="relative flex h-[200px] rotate-12 items-end overflow-hidden rounded-lg p-5 [transform:perspective(300px)_rotateX(1deg)] sm:h-[400px] sm:p-10">
+          <div className="relative flex h-[200px] rotate-12 items-end overflow-hidden rounded-2xl p-5 [transform:perspective(300px)_rotateX(1deg)] sm:h-[400px] sm:p-10">
             {/* overlay */}
             <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/20"></div>
             <Image
@@ -69,7 +69,7 @@ export default function BigEnergy({ ActivitiesArray }) {
                 <Link
                   href={`/activities/${activity.id}`}
                   key={activity.id}
-                  className={`relative flex items-end overflow-hidden rounded-lg p-6 ${index === 0 ? "h-[350px] sm:h-[500px]" : "h-[350px] sm:h-[500px]"}`}
+                  className={`relative flex items-end overflow-hidden rounded-2xl p-6 ${index === 0 ? "h-[350px] sm:h-[500px]" : "h-[350px] sm:h-[500px]"}`}
                 >
                   {index === 1 && (
                     <p className="absolute left-4 top-4 z-20 rounded-full bg-black px-2 py-2 text-[9px] xs:px-4 sm:px-6 sm:text-base">
@@ -98,11 +98,7 @@ export default function BigEnergy({ ActivitiesArray }) {
               <Link
                 href={`/activities/${activity.id}`}
                 key={activity.id}
-                className="relative !mt-10 block h-[130px] w-full origin-right overflow-visible [transform:perspective(200px)_rotateY(-3deg)_scale(1.1)_translateX(-1%)_rotateZ(2deg)_rotateX(2deg)] xs:h-[170px] sm:!mt-20 sm:h-[250px] sm:[transform:perspective(200px)_rotateY(-3deg)_scale(1.3)_translateX(-1%)_rotateZ(2deg)_rotateX(2deg)] lg:!-mt-4 lg:[transform:perspective(400px)_rotateY(-5deg)_scale(1.17)_translateX(-1%)_rotateZ(-2deg)_rotateX(2deg)]"
-                style={{
-                  transformStyle: "preserve-3d",
-                  backfaceVisibility: "hidden",
-                }}
+                className="relative !mt-10 block h-[130px] w-full origin-right overflow-visible [transform:perspective(200px)_rotateY(-3deg)_scale(1.1)_translateX(-1%)_rotateZ(2deg)_rotateX(2deg)] xs:h-[170px] sm:!mt-20 sm:h-[250px] sm:[transform:perspective(200px)_rotateY(-3deg)_scale(1.3)_translateX(-1%)_rotateZ(2deg)_rotateX(2deg)] lg:!-mt-0 lg:[transform:perspective(400px)_rotateY(-5deg)_scale(1.17)_rotateZ(-2deg)_rotateX(2deg)]"
               >
                 <div className="mt-10 h-full w-full">
                   <div className="relative h-full w-full overflow-hidden rounded-2xl">
@@ -114,7 +110,7 @@ export default function BigEnergy({ ActivitiesArray }) {
                       className="object-cover"
                     />
                     <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/80 to-transparent" />
-                    <h2 className="absolute left-6 top-1/2 z-20 -translate-y-1/2 text-lg font-bold leading-snug text-white xs:text-2xl sm:text-3xl">
+                    <h2 className="absolute left-6 top-1/2 z-20 -translate-y-1/2 text-lg font-bold leading-snug text-white [transform:perspective(600px)_rotateY(20deg)_rotateX(0deg)] xs:text-2xl sm:text-3xl">
                       {activity.name}
                     </h2>
                   </div>

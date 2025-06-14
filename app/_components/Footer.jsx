@@ -1,10 +1,14 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import instaIcon from "../svgIcons/insta.svg";
 import tiktok from "../svgIcons/tiktok.svg";
 import whatsapp from "../svgIcons/whatsapp.svg";
 import PreFooter from "./PreFooter";
+import { usePathname } from "next/navigation";
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/dashboard")) return null;
   return (
     <footer className="">
       <PreFooter />

@@ -5,7 +5,7 @@ import {
   Bebas_Neue,
   Noto_Serif_Georgian,
 } from "next/font/google";
-import ClientComponent from "./_components/ClientComponent";
+
 import Footer from "./_components/Footer";
 import Header from "./_components/Header";
 import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
@@ -59,17 +59,13 @@ export default function RootLayout({ children }) {
       >
         <AuthProvider>
           <ActivityProvider>
-            <ClientComponent>
-              <Header />
-            </ClientComponent>
+            <Header />
             <TosterComp />
             <PendingBookingDataNotification />
             <BookingProvider>
               <main className="">{children}</main>
             </BookingProvider>
-            <ClientComponent>
-              <Footer />
-            </ClientComponent>
+            <Footer />
           </ActivityProvider>
         </AuthProvider>
       </body>
