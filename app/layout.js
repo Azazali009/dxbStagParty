@@ -6,8 +6,8 @@ import {
   Noto_Serif_Georgian,
 } from "next/font/google";
 
-import FooterWrapper from "./_components/FooterWrapper";
-import HeaderWrapper from "./_components/HeaderWrapper";
+// import FooterWrapper from "./_components/FooterWrapper";
+// import HeaderWrapper from "./_components/HeaderWrapper";
 import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
 import TosterComp from "./_components/Toaster";
 import { AuthProvider } from "./_context/AuthProvider";
@@ -59,13 +59,13 @@ export default function RootLayout({ children }) {
       >
         <AuthProvider>
           <ActivityProvider>
-            <HeaderWrapper />
+            {/* <HeaderWrapper /> */}
             <TosterComp />
             <PendingBookingDataNotification />
             <BookingProvider>
               <main className="">{children}</main>
             </BookingProvider>
-            <FooterWrapper />
+            {/* <FooterWrapper /> */}
           </ActivityProvider>
         </AuthProvider>
       </body>
