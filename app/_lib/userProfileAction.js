@@ -112,6 +112,7 @@ export async function signup(formData) {
     email,
     password,
     options: {
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/login`,
       data: {
         full_name: name,
         role: "organiser",
@@ -126,7 +127,7 @@ export async function signup(formData) {
   // insert user in custom user table
   const userId = data?.user?.id;
   if (!userId)
-    return { error: "Unable to complete signup — user ID was not generated." };
+    return { error: "Unable to complete signup — your ID was not generated." };
 
   // Step 2: Add to your custom 'users' table
   const { error: userError } = await supabase.from("users").insert([

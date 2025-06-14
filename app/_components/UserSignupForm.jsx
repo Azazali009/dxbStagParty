@@ -17,6 +17,9 @@ export default function UserSignupForm() {
       const res = await signup(formData);
       refreshUser();
       if (res?.error) return toast.error(res?.error);
+      toast.success(
+        "A verification email has been sent to your inbox. Please check your email and confirm to proceed.",
+      );
     });
   }
 

@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import SpinnerMini from "../_components/SpinnerMini";
 import { useAuth } from "../_context/AuthProvider";
 import { login } from "../_lib/userProfileAction";
 import EyeIcon from "../svgIcons/EyeIcon";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
+  const searchParams = useSearchParams();
   const [passwordTye, setPasswordType] = useState("password");
   const { refreshUser } = useAuth();
   const [isPending, startTransition] = useTransition();
@@ -21,7 +23,12 @@ export default function Page() {
       if (res?.error) return toast.error(res?.error);
     });
   };
-
+  useEffect(() => {
+    const type = searchParams.get("type");
+    if (type === "signup") {
+      toast.success("Your email has been verified successfully!");
+    }
+  }, [searchParams]);
   return (
     <div className="mx-auto flex max-w-2xl flex-col items-center justify-center gap-6 px-4 py-14">
       <h1 className="text-3xl font-semibold">Login to access your area</h1>
