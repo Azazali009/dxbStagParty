@@ -1,12 +1,12 @@
 "use client";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { getActivities, getActivitiesByCategory } from "../_lib/data-services";
+import { getActivities } from "../_lib/data-services";
 
 const ActivityContext = createContext();
 
-export function ActivityProvider({ children }) {
+export default function ActivityProvider({ children }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();

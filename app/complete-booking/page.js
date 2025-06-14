@@ -10,6 +10,7 @@ export default function CompleteBooking() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     const processBooking = async () => {
       const toastId = toast.loading("Processing...");
       try {
@@ -129,10 +130,10 @@ export default function CompleteBooking() {
 
     processBooking();
   }, []);
-
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      <p className="text-lg font-semibold">Finalizing Booking...</p>
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-lg font-semibold">Finalizing Booking...</p>
+      </div>
+    );
 }

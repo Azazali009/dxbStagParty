@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from "react";
 
 const PendingBookingContext = createContext();
 
-export function BookingProvider({ children }) {
+export default function BookingProvider({ children }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();

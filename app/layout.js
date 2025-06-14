@@ -5,15 +5,31 @@ import {
   Bebas_Neue,
   Noto_Serif_Georgian,
 } from "next/font/google";
-
-// import FooterWrapper from "./_components/FooterWrapper";
-// import HeaderWrapper from "./_components/HeaderWrapper";
-import PendingBookingDataNotification from "./_components/PendingBookingDataNotification";
-import TosterComp from "./_components/Toaster";
-import { AuthProvider } from "./_context/AuthProvider";
-import { BookingProvider } from "./_context/bookingProvider";
-import { ActivityProvider } from "./_context/ActivityProvider";
 import "./globals.css";
+import dynamic from "next/dynamic";
+const HeaderWrapper = dynamic(() => import("./_components/HeaderWrapper"), {
+  ssr: false,
+});
+const FooterWrapper = dynamic(() => import("./_components/FooterWrapper"), {
+  ssr: false,
+});
+const TosterComp = dynamic(() => import("./_components/Toaster"), {
+  ssr: false,
+});
+const PendingBookingDataNotification = dynamic(
+  () => import("./_components/PendingBookingDataNotification"),
+  { ssr: false },
+);
+
+const AuthProvider = dynamic(() => import("./_context/AuthProvider"), {
+  ssr: false,
+});
+const BookingProvider = dynamic(() => import("./_context/bookingProvider"), {
+  ssr: false,
+});
+const ActivityProvider = dynamic(() => import("./_context/ActivityProvider"), {
+  ssr: false,
+});
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -59,13 +75,13 @@ export default function RootLayout({ children }) {
       >
         <AuthProvider>
           <ActivityProvider>
-            {/* <HeaderWrapper /> */}
+            <HeaderWrapper />
             <TosterComp />
             <PendingBookingDataNotification />
             <BookingProvider>
               <main className="">{children}</main>
             </BookingProvider>
-            {/* <FooterWrapper /> */}
+            <FooterWrapper />
           </ActivityProvider>
         </AuthProvider>
       </body>
