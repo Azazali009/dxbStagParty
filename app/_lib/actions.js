@@ -184,7 +184,7 @@ export async function editActivityAction(formData) {
   const existingImage = formData.get("existingImage");
   const existingBannerImage = formData.get("existingBannerImage");
   const activityId = Number(formData.get("activityId"));
-  const supplier = Number(formData.get("supplier"));
+  const supplier = formData.get("supplier");
   const dayTime = formData.get("dayTime");
   const alcoholPermitted = formData.get("alcoholPermitted");
   const photoVideoIncluded = formData.get("photoVideoIncluded");
@@ -200,7 +200,7 @@ export async function editActivityAction(formData) {
 
   const finalImage = isValidImage ? image : existingImage;
   const finalBannerImage = isValidBanner ? bannerImage : existingBannerImage;
-
+  console.log(supplier);
   if (
     !duration ||
     !description ||
@@ -349,12 +349,23 @@ export async function deleteUserAction(userId) {
   if (!user || user?.user_metadata?.role !== "admin")
     return { error: "You are not allowed to perform this action" };
 
+  // supplier case (make activity id null before deleting supplier)
+  // Step 1: Unlink supplier from activities
+  const { error: supplierError } = await supabase
+    .from("activities")
+    .update({ supplier: null })
+    .eq("supplier", userId);
+
+  if (supplierError) {
+    return { error: "Failed to delete supplier." };
+  }
+
   // // Get all bookings of the user
   const bookings = await getBookingByUserId(userId);
   // Get all booking Ids
-  const bookingIds = bookings?.map((b) => b.id);
+  const bookingIds = bookings && bookings?.map((b) => b.id);
 
-  if (bookingIds.length > 0) {
+  if (bookingIds && bookingIds?.length > 0) {
     // 2. Delete attendees linked to these bookings
     const { error: attendeeDeleteError } = await supabase
       .from("attendee")
@@ -391,6 +402,7 @@ export async function deleteUserAction(userId) {
     return { error: "Unexpected Error has occurred." };
   }
   revalidatePath("/dashboard/users");
+  revalidatePath("/dashboard/supplier");
 }
 
 export async function createUserByAdmin(formData) {
@@ -402,6 +414,7 @@ export async function createUserByAdmin(formData) {
 
   const name = formData.get("name");
   const email = formData.get("email");
+  const phone = formData.get("phone");
   const password = formData.get("password");
   const role = formData.get("role");
   // Step 1: Auth create
@@ -413,17 +426,25 @@ export async function createUserByAdmin(formData) {
       user_metadata: {
         full_name: name,
         role,
+        phone,
         // avatar: 'https://example.com/avatar.png'
       },
     });
 
-  if (authError) {
-    console.error("Error creating auth user:", authError.message);
-    return { error: "There was an issue while creating new user account." };
+  if (authError?.message) {
+    const isAlreadyRegistered =
+      authError.message ===
+      "A user with this email address has already been registered";
+
+    return {
+      error: isAlreadyRegistered
+        ? "User with this email is already registered. Please try different email"
+        : "There was an issue while creating new user account.",
+    };
   }
 
   const userId = authData.user.id;
-  const userData = { id: userId, fullName: name, role: role, email };
+  const userData = { id: userId, fullName: name, role: role, email, phone };
   // Step 2: Profile create
   const { error: userError } = await supabase.from("users").insert([userData]);
 
@@ -437,6 +458,7 @@ export async function createUserByAdmin(formData) {
   redirect("/dashboard/users");
 }
 export async function updateBookingPaymentStatus(updateBookingData, formData) {
+  const supabase = await createClient();
   // Check if user is logged in and is an admin
   const user = await getCurrentUser();
   if (!user || user?.user_metadata?.role !== "admin")

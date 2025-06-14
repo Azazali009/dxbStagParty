@@ -1,10 +1,10 @@
 import React from "react";
 import Table from "../../_adminComponents/Table";
 import SupplierRow from "../../_adminComponents/SupplierRow";
-import { getSuppliers } from "../../_lib/apiSupplier";
+import { getSuppliers, getSupplierUsers } from "../../_lib/apiSupplier";
 import CreateSupplierAndSearch from "../../_adminComponents/CreateSupplierAndSearch";
 export default async function Page() {
-  const suppliers = await getSuppliers();
+  const suppliers = await getSupplierUsers();
 
   const headers = ["Supplier ID", "Name", "Phone", "Email", "Action"];
   return (

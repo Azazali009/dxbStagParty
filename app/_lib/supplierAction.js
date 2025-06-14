@@ -40,7 +40,7 @@ export async function deleteSupplier(id) {
   if (!user || user?.user_metadata.role !== "admin")
     return { error: "You are not allowed to perform this action" };
 
-  const { error } = await supabase.from("supplier").delete().eq("id", id);
+  const { error } = await supabase.from("users").delete().eq("id", id);
   if (error) {
     console.log(error);
     return { error: "Oops! Something went wrong while deleting the supplier" };

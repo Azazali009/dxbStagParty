@@ -91,7 +91,7 @@ import { getCategoryByName } from "./categoryApi";
 export async function getActivities() {
   let { data, error } = await supabase
     .from("activities")
-    .select(`*,supplier(name),category(id,name)`);
+    .select(`*,supplier(fullName),category(id,name)`);
 
   if (error) {
     console.log(error);
@@ -116,7 +116,7 @@ export async function getActivitiesByCategory(categoryName) {
 export async function getActivity(id) {
   let { data, error } = await supabase
     .from("activities")
-    .select(`*,supplier(id,name),category(id,name)`)
+    .select(`*,supplier(id,fullName),category(id,name)`)
     .eq("id", id)
     .single();
 

@@ -23,11 +23,16 @@ export default function AddUserForm() {
   }
   return (
     <div className="mx-auto flex flex-col gap-6 px-4 py-14">
-      <h1 className="text-3xl font-semibold">Add user</h1>
+      <h1 className="text-3xl font-semibold">
+        Add user{" "}
+        <span className="inline-block text-base font-medium text-matalicGold">
+          (Organiser, Supplier, Admin)
+        </span>
+      </h1>
 
       <form
         action={(formData) => handleSubmit(formData)}
-        className="grid w-full grid-cols-1 gap-x-7 gap-y-4 sm:grid-cols-2"
+        className="grid w-full grid-cols-1 items-center gap-x-7 gap-y-4 sm:grid-cols-2"
       >
         <FormRow label="Name">
           <input
@@ -45,6 +50,16 @@ export default function AddUserForm() {
             placeholder="Email"
             name="email"
             autoComplete="email"
+            className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2"
+            required
+          />
+        </FormRow>
+        <FormRow label="Phone">
+          <input
+            type="tel"
+            placeholder="+92 xxxxxxxxx"
+            name="phone"
+            autoComplete="phone"
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2"
             required
           />

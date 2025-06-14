@@ -1,8 +1,11 @@
 import { createClient } from "../_utils/supabase/client";
 
 const supabase = createClient();
-export async function getSuppliers() {
-  let { data: suppliers, error } = await supabase.from("supplier").select("*");
+export async function getSupplierUsers() {
+  let { data: suppliers, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("role", "supplier");
   if (error) {
     console.log(error);
     throw new Error("Unable to get suppliers.");

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { editActivityAction } from "../_lib/actions";
 import FormRow from "./FormRow";
 import SpinnerMini from "./SpinnerMini";
-import { getSuppliers } from "../_lib/apiSupplier";
+import { getSuppliers, getSupplierUsers } from "../_lib/apiSupplier";
 import { getCategories } from "../_lib/categoryApi";
 
 export default function EditActivityForm({ activity }) {
@@ -35,6 +35,7 @@ export default function EditActivityForm({ activity }) {
   const [suppliers, setSuppliers] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isPending, startTransition] = useTransition();
+  console.log(suppliers);
   const editFormRef = useRef();
   const handleSubmit = (formData) => {
     startTransition(async () => {
@@ -49,11 +50,11 @@ export default function EditActivityForm({ activity }) {
   useEffect(() => {
     async function fetchSuppliers() {
       setLoading(true);
-      const fetchedSuppliers = await getSuppliers();
+      const fetchedSuppliers = await getSupplierUsers();
 
       setSuppliers(
         fetchedSuppliers.map((sup) => ({
-          name: sup.name,
+          name: sup.fullName,
           value: sup.id,
         })),
       );
@@ -166,8 +167,12 @@ export default function EditActivityForm({ activity }) {
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 capitalize text-softGold"
           >
             {supplier && supplier.id ? (
-              <option selected value={supplier.id} defaultValue={supplier.name}>
-                {supplier.name}
+              <option
+                selected
+                value={supplier.id}
+                defaultValue={supplier.fullName}
+              >
+                {supplier.fullName}
               </option>
             ) : (
               <option selected value="">

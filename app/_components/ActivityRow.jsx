@@ -13,7 +13,7 @@ export default function ActivityRow({ activity }) {
       <p className="">{activity.group_size}</p>
       <p className="capitalize">
         {activity.supplier ? (
-          activity.supplier?.name
+          activity.supplier?.fullName
         ) : (
           <span className="font-medium text-red-600">Not Assigned</span>
         )}

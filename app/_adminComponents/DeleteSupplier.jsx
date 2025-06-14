@@ -4,13 +4,15 @@ import TrashIcon from "../svgIcons/TrashIcon";
 import toast from "react-hot-toast";
 import { deleteSupplier } from "../_lib/supplierAction";
 import SpinnerMini from "../_components/SpinnerMini";
+import { deleteUserAction } from "../_lib/actions";
 
 export default function DeleteSupplier({ supplierId }) {
+  console.log(supplierId);
   const [isPending, startTransition] = useTransition();
   function handleDelete() {
     if (confirm("Are you sure you want to delete this supplier?"))
       startTransition(async () => {
-        const res = await deleteSupplier(supplierId);
+        const res = await deleteUserAction(supplierId);
         if (res?.error) return toast.error(res?.error);
       });
   }
