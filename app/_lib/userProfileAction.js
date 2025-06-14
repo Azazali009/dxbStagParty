@@ -112,7 +112,7 @@ export async function signup(formData) {
     email,
     password,
     options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/login`,
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/login?type=signup`,
       data: {
         full_name: name,
         role: "organiser",
