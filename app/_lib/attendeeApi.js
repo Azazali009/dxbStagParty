@@ -64,7 +64,7 @@ export async function checkAndUpdateBookingStatus(bookingID) {
 
     if (updateError) {
       console.error("❌ Error updating booking status:", updateError);
-      throw new Error("Error while updating booking status");
+      return { error: "Error while updating booking status" };
     }
     const organizerEmail = booking[0]?.users.email;
 
@@ -77,10 +77,27 @@ export async function checkAndUpdateBookingStatus(bookingID) {
         body: JSON.stringify({
           toEmail: organizerEmail,
           subject: "Booking Payment Completed",
-          message: `<div>
-          <h1>🎉Congrats. You booking is paid by all your attendee's</h1>
-          <p>🎉 All attendees have paid! Your booking #${bookingID} is now confirmed. Enjoy🏆</p>
-          </div>`,
+          message: `
+  <div style="background-color:#0B0E1C; color:#E0B15E; padding:30px; font-family:sans-serif; text-align:center;">
+    <img src="${process.env.NEXT_PUBLIC_SITE_URL}/logo.png" alt="DXB Stag Parties Logo" style="width:120px; margin-bottom:20px;" />
+
+    <h1 style="font-size:24px; margin-bottom:20px;">🎉 Congrats! Your Booking Is Fully Paid</h1>
+
+    <p style="font-size:16px; margin-bottom:30px;">
+      All attendees have paid! Your booking <strong>#${bookingID}</strong> is now confirmed.<br/>
+      Get ready to party like never before 🏆
+    </p>
+
+    <a href="${process.env.NEXT_PUBLIC_SITE_URL}/my-bookings"
+       style="display:inline-block; padding:12px 24px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; font-weight:bold; border-radius:6px;">
+       View Booking Details
+    </a>
+
+    <p style="margin-top:40px; font-size:12px; color:#aaa;">
+      Need help? Contact our team anytime at support@dxbstagparties.com
+    </p>
+  </div>
+`,
         }),
       });
     }
