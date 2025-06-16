@@ -1,12 +1,10 @@
 "use client";
+import Link from "next/link";
 import { useTransition } from "react";
 import toast from "react-hot-toast";
-import { signUpAction } from "../_lib/actions";
-import { signup } from "../_lib/userProfileAction";
-import SignInButton from "./SignInButton";
-import SpinnerMini from "./SpinnerMini";
-import Link from "next/link";
 import { useAuth } from "../_context/AuthProvider";
+import { signup } from "../_lib/userProfileAction";
+import SpinnerMini from "./SpinnerMini";
 
 export default function UserSignupForm() {
   const { refreshUser } = useAuth();

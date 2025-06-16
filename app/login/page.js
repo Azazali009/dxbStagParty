@@ -18,7 +18,6 @@ export default function Page() {
   const handleSubmit = (formData) => {
     startTransition(async () => {
       const res = await login(formData);
-      // window.location.href = "/verify-login";
       refreshUser();
       if (res?.error) return toast.error(res?.error);
     });
@@ -34,10 +33,7 @@ export default function Page() {
       <h1 className="text-3xl font-semibold">Login to access your area</h1>
 
       <form
-        // onSubmit={handleCredentialsLogin}
-        // action={credentialsSignInAction}
         action={(formData) => handleSubmit(formData)}
-        // action={login}
         className="w-full space-y-8 rounded-xl border border-gray-800 p-10"
       >
         <input
