@@ -95,8 +95,6 @@ export default function Page() {
           Forgot password?
         </Link>
       </div>
-      {/* <div className="text-gray-500">or</div> */}
-      {/* <SignInButton /> */}
     </div>
   );
 }

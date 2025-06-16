@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "../_utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "./getCurrentUser";
+import Link from "next/link";
 
 export async function updateUserProfileAction(formData) {
   const user = await getCurrentUser();
@@ -91,8 +92,15 @@ export async function login(formData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    console.log(error);
-    return { error: "Invalid login credentials!" };
+    if (error.message === "Email not confirmed") {
+      return {
+        error: "Your email is not verified yet. Please wait for approval.",
+      };
+    }
+
+    return {
+      error: "Invalid login credentials!",
+    };
   }
 
   revalidatePath("/", "layout");
@@ -108,8 +116,19 @@ export async function signup(formData) {
   const password = formData.get("password");
   const role = formData.get("role");
 
-  // insert user in supabase auth table
-  const { data, error } = await supabase.auth.signUp({
+  // Step 1: Check if user already exists
+  const { data: existingUsers, error: fetchError } = await supabase
+    .from("users")
+    .select("email")
+    .eq("email", email)
+    .maybeSingle();
+
+  if (existingUsers) {
+    return { error: "This email is already registered. Try logging in." };
+  }
+
+  // step 2: insert user in supabase auth table
+  const { data, error: signUpError } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -120,18 +139,21 @@ export async function signup(formData) {
       },
     },
   });
-  if (error) {
-    console.log(error);
-    return { error: "Oops! Something went wrong while creating your account." };
+  if (signUpError) {
+    console.error("Supabase Auth Signup Error:", signUpError.message);
+    const message =
+      signUpError.message === "User already registered"
+        ? "This email is already registered. Try logging in."
+        : "Unable to create your account. Please check your email or try again later.";
+    return { error: message };
   }
 
-  // insert user in custom user table
+  // step 3 insert user in custom user table
   const userId = data?.user?.id;
   if (!userId)
     return { error: "Unable to complete signup — your ID was not generated." };
 
-  // Step 2: Add to your custom 'users' table
-  const { error: userError } = await supabase.from("users").insert([
+  const { error: profileError } = await supabase.from("users").insert([
     {
       id: userId,
       email,
@@ -140,9 +162,14 @@ export async function signup(formData) {
     },
   ]);
 
-  if (userError) {
-    console.error("Error creating user profile:", userError.message);
-    return { error: "Unable to create your account" };
+  if (profileError) {
+    console.error("Supabase Custom User Table Error:", profileError.message);
+
+    const errorMsg = profileError.message.includes("foreign key constraint")
+      ? `Signup failed due to system conflict. Please contact support. (support@dxbstagparties.com)`
+      : "Could not complete signup. Please try again later.";
+
+    return { error: errorMsg };
   }
   redirect("/account");
 }
