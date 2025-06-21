@@ -1,12 +1,12 @@
 "use client";
 
 import { useTransition } from "react";
+import toast from "react-hot-toast";
+import { useAuth } from "../_context/AuthProvider";
 import { updateUserProfileAction } from "../_lib/userProfileAction";
 import FormRow from "./FormRow";
-import toast from "react-hot-toast";
 import SpinnerMini from "./SpinnerMini";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../_context/AuthProvider";
+
 export default function UpdateProfile({ user }) {
   const { refreshUser } = useAuth();
   const [isPending, startTransition] = useTransition();
@@ -19,14 +19,14 @@ export default function UpdateProfile({ user }) {
     });
   }
   return (
-    <div className="space-y-20">
-      <h1 className="text-gradient bg-gradient-to-r from-matalicGold via-secondary to-matalicGold bg-clip-text text-4xl font-bold tracking-tight text-transparent drop-shadow-lg">
+    <div className="space-y-5 xs:space-y-10 sm:space-y-20">
+      <h1 className="text-gradient bg-gradient-to-r from-matalicGold via-secondary to-matalicGold bg-clip-text text-base font-bold tracking-tight text-transparent drop-shadow-lg xs:text-xl sm:text-2xl lg:text-4xl">
         Let’s freshen up your profile ✨
       </h1>
 
       <form
         action={async (formData) => handleSubmit(formData)}
-        className="grid grid-cols-2 gap-6"
+        className="grid grid-cols-1 gap-6 md:grid-cols-2"
       >
         <FormRow label="Email">
           <input
@@ -69,7 +69,7 @@ export default function UpdateProfile({ user }) {
         <div>
           <button
             disabled={isPending}
-            className="mt-4 w-fit self-end rounded bg-indigo-600 px-6 py-2 capitalize duration-300 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-4 w-fit self-end rounded bg-indigo-600 px-4 py-1.5 text-xs capitalize duration-300 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50 xs:px-6 xs:py-2 xs:text-base"
           >
             {isPending ? (
               <div className="flex items-center justify-center gap-2">

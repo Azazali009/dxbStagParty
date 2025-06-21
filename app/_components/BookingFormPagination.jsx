@@ -36,7 +36,7 @@ function PaginationButton({ children, handleClick, disabled }) {
     <button
       onClick={handleClick}
       type="button"
-      className="rounded-sm bg-indigo-600 px-6 py-1 text-sm capitalize filter duration-300 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 disabled:grayscale"
+      className="rounded-sm bg-matalicGold px-6 py-1 text-sm capitalize text-primary filter duration-300 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 disabled:grayscale"
       disabled={disabled}
     >
       {children}

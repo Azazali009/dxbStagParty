@@ -14,7 +14,7 @@ export default async function Page() {
     redirect("/activities");
   }
   if (user?.user_metadata?.role === "supplier") {
-    redirect("/supplier");
+    redirect("/dashboard/activities");
   }
 
   // Optional fallback, in case user has no recognized role

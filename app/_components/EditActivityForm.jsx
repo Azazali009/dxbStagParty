@@ -35,7 +35,7 @@ export default function EditActivityForm({ activity }) {
   const [suppliers, setSuppliers] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isPending, startTransition] = useTransition();
-  console.log(suppliers);
+
   const editFormRef = useRef();
   const handleSubmit = (formData) => {
     startTransition(async () => {

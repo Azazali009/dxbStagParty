@@ -11,9 +11,11 @@ import { usePathname } from "next/navigation";
 import { getPendingBookings } from "../_lib/data-services";
 import { useBooking } from "../_context/bookingProvider";
 import BlogIcon from "../svgIcons/BlogIcon";
+import { useAuth } from "../_context/AuthProvider";
 
 export default function SidebarNavigations({ isSupplier }) {
   const { pendingBookingCount, setPendingBookingCount } = useBooking();
+  const { nonVerifyUsersCount } = useAuth();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -80,6 +82,11 @@ export default function SidebarNavigations({ isSupplier }) {
           >
             <UserIcon />
             <span> users</span>
+            {nonVerifyUsersCount > 0 && (
+              <span className="flex size-6 items-center justify-center rounded-full bg-red-600 text-sm">
+                {nonVerifyUsersCount}
+              </span>
+            )}
           </Link>
           <Link
             className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize transition-all duration-300 hover:bg-indigo-600`}

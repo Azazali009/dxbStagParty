@@ -1,5 +1,6 @@
 import { supabaseAdmin } from "../_lib/adminSupabase";
-
+import { createClient } from "../_utils/supabase/client";
+import { supabase } from "./supabase";
 export async function getUsers() {
   const { data, error } = await supabaseAdmin.auth.admin.listUsers();
 
@@ -20,4 +21,21 @@ export async function deleteUser(userId) {
   }
 
   return true;
+}
+
+export async function getNonVerifiedUsers() {
+  const { data } = await supabase
+    .from("users")
+    .select("*")
+    .eq("isVerified", false);
+
+  return data;
+}
+export async function getVerifiedUsers() {
+  const { data } = await supabase
+    .from("users")
+    .select("*")
+    .eq("isVerified", true);
+
+  return data;
 }

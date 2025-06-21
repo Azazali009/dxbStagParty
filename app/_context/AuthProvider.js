@@ -7,7 +7,7 @@ const AuthContext = createContext();
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [nonVerifyUsersCount, setNonVerifyUsersCount] = useState(0);
   async function getUser() {
     const supabase = createClient();
     // const { data } = await supabase.auth.getSession();
@@ -23,8 +23,28 @@ export default function AuthProvider({ children }) {
     getUser();
   }, []);
 
+  useEffect(() => {
+    async function fetchUsers() {
+      const supabase = createClient();
+      const { count } = await supabase
+        .from("users")
+        .select("*", { count: "exact" })
+        .eq("isVerified", false);
+
+      setNonVerifyUsersCount(count);
+    }
+    fetchUsers();
+  }, []);
   return (
-    <AuthContext.Provider value={{ user, loading, refreshUser: getUser }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        refreshUser: getUser,
+        nonVerifyUsersCount,
+        setNonVerifyUsersCount,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

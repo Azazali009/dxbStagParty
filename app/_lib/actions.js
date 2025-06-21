@@ -19,7 +19,11 @@ export async function addActivityAction(formData) {
   const supabase = await createClient();
   // check if user is login and user is admin
   const user = await getCurrentUser();
-  if (!user || user?.user_metadata.role !== "admin")
+  if (
+    !user ||
+    (user?.user_metadata.role !== "admin" &&
+      user?.user_metadata.role !== "supplier")
+  )
     return { error: "You are not allowed to perform this action" };
 
   // General vars
@@ -36,7 +40,7 @@ export async function addActivityAction(formData) {
   const tags = formData.get("tags")?.split(",");
   const image = formData.get("image");
   const bannerImage = formData.get("bannerImage");
-  const supplier = Number(formData.get("supplier"));
+  const supplier = formData.get("supplier");
   const dayTime = formData.get("dayTime");
   const alcoholPermitted = formData.get("alcoholPermitted");
   const photoVideoIncluded = formData.get("photoVideoIncluded");
@@ -87,6 +91,7 @@ export async function addActivityAction(formData) {
     }
   }
   const newActivity = {
+    userId: user.id,
     name,
     price,
     duration,
@@ -164,7 +169,11 @@ export async function addActivityAction(formData) {
 export async function editActivityAction(formData) {
   const supabase = await createClient();
   const user = await getCurrentUser();
-  if (!user || user?.user_metadata.role !== "admin")
+  if (
+    !user ||
+    (user?.user_metadata.role !== "admin" &&
+      user?.user_metadata.role !== "supplier")
+  )
     return { error: "You are not allowed to perform this action" };
   // General vars
   const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
@@ -427,7 +436,6 @@ export async function createUserByAdmin(formData) {
         full_name: name,
         role,
         phone,
-        // avatar: 'https://example.com/avatar.png'
       },
     });
 
@@ -444,7 +452,14 @@ export async function createUserByAdmin(formData) {
   }
 
   const userId = authData.user.id;
-  const userData = { id: userId, fullName: name, role: role, email, phone };
+  const userData = {
+    id: userId,
+    fullName: name,
+    role: role,
+    email,
+    phone,
+    isVerified: true,
+  };
   // Step 2: Profile create
   const { error: userError } = await supabase.from("users").insert([userData]);
 
@@ -457,6 +472,7 @@ export async function createUserByAdmin(formData) {
   revalidatePath("/dashboard/users");
   redirect("/dashboard/users");
 }
+
 export async function updateBookingPaymentStatus(updateBookingData, formData) {
   const supabase = await createClient();
   // Check if user is logged in and is an admin

@@ -18,9 +18,12 @@ export default function AddUserForm() {
   function handleSubmit(formData) {
     const role = formData.get("role");
     const email = formData.get("email");
+    const password = formData.get("password");
+
     startTransition(async () => {
       const res = await createUserByAdmin(formData);
       if (res?.error) return toast.error(res?.error);
+
       toast.success("User created successfully!");
 
       // Send Confirmation Email to user
@@ -30,25 +33,35 @@ export default function AddUserForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           toEmail: email,
-          subject: `You are invited for DXB Stag Party as (${role})`,
+          subject: `You're invited to DXB Stag Party as ${role}`,
           message: `
-  <div style="background-color:#0B0E1C; color:#E0B15E; padding:30px; font-family:sans-serif; text-align:center;">
-    <img src="${process.env.NEXT_PUBLIC_SITE_URL}/logo.png" alt="DXB Stag Parties Logo" style="width:120px; margin-bottom:20px;" />
-    <h1 style="font-size:24px; margin-bottom:20px;">Welcome to DXB Stag Parties!</h1>
-    <p style="font-size:16px; margin-bottom:30px;">
-      You’ve been invited to join the platform as a <strong>(${role})</strong>.
-    </p>
-    <a href="${process.env.NEXT_PUBLIC_SITE_URL}/login"
-       style="display:inline-block; padding:12px 24px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; font-weight:bold; border-radius:6px;">
-       Click here to login
-    </a>
-    <p style="margin-top:40px; font-size:12px; color:#aaa;">If you did not expect this email, you can ignore it.</p>
-  </div>
-`,
+          <div style="background-color:#0B0E1C; color:#E0B15E; padding:30px; font-family:sans-serif; text-align:center;">
+            <img src="${process.env.NEXT_PUBLIC_SITE_URL}/logo.png" alt="DXB Stag Parties Logo" style="width:120px; margin-bottom:20px;" />
+            <h1 style="font-size:24px; margin-bottom:20px;">Welcome to DXB Stag Parties!</h1>
+            <p style="font-size:16px; margin-bottom:20px;">
+              You’ve been invited to join the platform as a <strong>${role}</strong>.
+            </p>
+            <p style="font-size:15px; margin-bottom:10px;">
+              👉 These are your login credentials. Please change your password after first login:
+            </p>
+            <p style="font-size:15px; margin-bottom:20px; line-height:1.6;">
+              <strong>Email:</strong> ${email}<br/>
+              <strong>Password:</strong> ${password}
+            </p>
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL}/login"
+               style="display:inline-block; padding:12px 24px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; font-weight:bold; border-radius:6px;">
+              Click here to login
+            </a>
+            <p style="margin-top:40px; font-size:12px; color:#aaa;">
+              If you did not expect this email, you can ignore it.
+            </p>
+          </div>
+        `,
         }),
       });
     });
   }
+
   return (
     <div className="mx-auto flex flex-col gap-6 px-4 py-14">
       <h1 className="text-3xl font-semibold">

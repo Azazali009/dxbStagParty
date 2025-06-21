@@ -40,15 +40,56 @@ export async function updateSession(request) {
 
   const isLoginPage = pathname.startsWith("/login");
 
+  //ORGANISER RESTRICTION: Organiser should not access '/dashboard' and there nested router page
+  if (
+    user?.user_metadata?.role === "organiser" &&
+    pathname.startsWith("/dashboard")
+  ) {
+    return new Response(null, { status: 404 });
+  }
+
+  //ADMIN RESTRICTION: Admin should not access /account page
+  if (
+    user?.user_metadata?.role === "admin" &&
+    pathname.startsWith("/account")
+  ) {
+    return new Response(null, { status: 404 });
+  }
+
+  // SUPPLIER RESTRICTION: Supplier shoudl only access these routes
+  if (user?.user_metadata?.role === "supplier") {
+    const allowedPaths = [
+      "/dashboard/activities",
+      "/dashboard/me",
+      "/verify-login",
+      "/login",
+    ];
+
+    const isAllowed = allowedPaths.some((path) => pathname.startsWith(path));
+
+    if (!isAllowed) {
+      return new Response(null, { status: 404 });
+    }
+  }
+
+  // 🔐 Block unauthenticated users from protected pages
   if (!user && isProtectedRoute) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
+  // 🚫 Prevent logged-in users from seeing login page
   if (user && isLoginPage) {
+    const role = user?.user_metadata?.role;
     const url = request.nextUrl.clone();
-    url.pathname = "/account"; // or wherever you want to send logged-in users
+    url.pathname =
+      role === "supplier"
+        ? "/dashboard/activities"
+        : role === "admin"
+          ? "/dashboard"
+          : "/account";
+
     return NextResponse.redirect(url);
   }
 

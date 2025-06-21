@@ -69,19 +69,28 @@ async function sendEmail(to, paymentLink) {
     to,
     subject: "Your Payment Link for Stag Activity",
     text: `Click the link to pay: ${paymentLink}`,
-    html: `<h1>Stag Activity Payment</h1>
-      <p style="font-size:16px; font-weight:400;line-height:1.7;">Hi there! Below is your payment link. All other payment links have been sent to your friend emails. Please ensure timely payment to secure your booking.</p>
-       <a style="background-image: linear-gradient(to right, #086647, #21bf5d);
-         padding: 10px 24px;
-         border-radius: 6px;
-         font-weight: 700;
-         text-transform: capitalize;
-         width: fit-content;
-         color:white;
-         display:block;
-         text-decoration:none;
-         "
-          href="${paymentLink}">Pay Now</a> `,
+    html: `
+  <div style="background-color:#0B0E1C; color:#E0B15E; padding:30px; font-family:sans-serif; text-align:center;">
+    <img src="${process.env.NEXT_PUBLIC_SITE_URL}/logo.png" alt="DXB Stag Parties Logo" style="width:120px; margin-bottom:20px;" />
+
+    <h1 style="font-size:24px; margin-bottom:20px;">DXB Stag Activity Payment</h1>
+
+    <p style="font-size:16px; font-weight:400; line-height:1.7; margin-bottom:30px;">
+      Hi there! Below is your payment link. All other payment links have been sent to your friends' emails.<br/>
+      Please ensure timely payment to secure your booking.
+    </p>
+
+    <!-- Golden Branded Pay Now Button -->
+    <a href="${paymentLink}"
+       style="display:inline-block; padding:10px 20px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; font-weight:bold; border-radius:6px; margin-bottom:16px;">
+       Pay Now
+    </a>
+
+    <p style="margin-top:40px; font-size:12px; color:#aaa;">
+      If you did not expect this email, you may safely ignore it.
+    </p>
+  </div>
+`,
   };
 
   await transporter.sendMail(mailOptions);

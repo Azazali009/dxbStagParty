@@ -57,15 +57,21 @@ export default function BookingsActions({ booking }) {
             className="absolute right-0 top-10 z-10 flex flex-col gap-3 rounded-md border border-gray-800 bg-gray-900 p-4 shadow-md"
             action={async (formData) => handleChangePaymentStatus(formData)}
           >
-            <h3 className="text-sm font-medium">
+            <h3 className="text-[7px] font-medium xs:text-[9px] sm:text-sm">
               Make booking as{" "}
-              <strong className="text-lg text-emerald-600">completed</strong> or{" "}
-              <strong className="text-lg text-red-600">cancelled</strong>.
+              <strong className="text-[9px] text-emerald-600 xs:text-sm sm:text-lg">
+                completed
+              </strong>{" "}
+              or{" "}
+              <strong className="text-[9px] text-red-600 xs:text-sm sm:text-lg">
+                cancelled
+              </strong>
+              .
             </h3>
             <select
               name="paymentStatus"
               required
-              className="rounded-md border-none bg-navyBlue px-4 py-1.5 outline-none focus:outline-matalicGold disabled:bg-navyBlue"
+              className="w-full rounded-md border-none bg-navyBlue px-1 py-1.5 text-[8px] outline-none focus:outline-matalicGold disabled:bg-navyBlue xs:text-xs sm:px-4 sm:text-base"
             >
               <option selected value="">
                 Change payment status
@@ -77,7 +83,7 @@ export default function BookingsActions({ booking }) {
             <button
               disabled={isPending}
               type="submit"
-              className="rounded-md bg-navyBlue py-2 capitalize hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:bg-gray-800 disabled:opacity-50"
+              className="rounded-md bg-navyBlue py-2 text-[9px] capitalize hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:bg-gray-800 disabled:opacity-50 xs:text-xs sm:text-base"
             >
               {isPending ? (
                 <span className="flex items-center justify-center gap-2">

@@ -47,7 +47,7 @@ export default function PaymentTimer({ expiresAt, bookingPaymentStatus }) {
   }
 
   return (
-    <p className={`text-base font-medium text-secondary md:text-lg`}>
+    <p className={`text-xs font-medium text-secondary xs:text-sm md:text-lg`}>
       Payment link expires in:{" "}
       {bookingPaymentStatus !== "cancelled" ? (
         <span className="font-semibold">

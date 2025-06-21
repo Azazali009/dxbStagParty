@@ -45,12 +45,13 @@ export default function SelectPackages({
     <FormRow label={"Select Packages:"}>
       <MultiSelect
         options={packages}
-        value={selectedPackages} // Keep it controlled
+        value={selectedPackages}
         onChange={(selected) => {
-          setSelectedPackages([...selected]); // Ensure state update happens outside of render
+          setSelectedPackages([...selected]);
         }}
         labelledBy="Select Packages"
         className="custom-multi-select"
+        hasSelectAll={false}
       />
     </FormRow>
   );

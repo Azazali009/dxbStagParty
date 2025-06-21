@@ -19,13 +19,16 @@ export default function Page() {
     startTransition(async () => {
       const res = await login(formData);
       refreshUser();
+      if (res?.custom) return toast(res?.error, { icon: "⏳" });
       if (res?.error) return toast.error(res?.error);
     });
   };
   useEffect(() => {
     const type = searchParams.get("type");
     if (type === "signup") {
-      toast.success("Your email has been verified successfully!");
+      toast("Your email has been verified. Awaiting admin approval...", {
+        icon: "⏳",
+      });
     }
   }, [searchParams]);
   return (

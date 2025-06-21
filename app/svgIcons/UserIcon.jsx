@@ -1,10 +1,12 @@
-export default function UserIcon() {
+import { cn } from "../_lib/utils";
+
+export default function UserIcon({ className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className="size-5"
+      className={cn(`sm:size-5 ${className} `)}
     >
       <path
         fillRule="evenodd"

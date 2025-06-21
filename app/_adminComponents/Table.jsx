@@ -11,7 +11,7 @@ export default function Table({ headers, data, RowComponent }) {
       </div>
 
       {/* Table Body */}
-      <div className="no-scrollbar h-[350px] overflow-y-auto">
+      <div className="no-scrollbar max-h-[350px] overflow-y-auto">
         {!data?.length ? (
           <p className="py-4 text-center">No records found</p>
         ) : (

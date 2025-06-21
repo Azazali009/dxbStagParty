@@ -27,7 +27,7 @@ export default async function page({ params }) {
   const { attendees, user } = await getAttendees(booking?.id);
 
   return (
-    <div className="space-y-14 p-4 py-8">
+    <div className="space-y-14 p-1.5 py-8 xs:p-4">
       <BookingsActions booking={booking} />
       <PaymentProgressBar
         bookingPaymentStatus={booking.paymentStatus}
@@ -35,7 +35,7 @@ export default async function page({ params }) {
       />
       <div className="space-y-4">
         <BookingTable booking={booking} attendee={attendees} user={user} />
-        <div className="w-fit space-x-4 rounded-md bg-yellow-100 p-4 text-yellow-600">
+        <div className="w-fit space-x-2 rounded-md bg-yellow-100 p-2 text-xs text-yellow-600 xs:p-4 xs:text-base">
           <strong>Booking Notes:</strong>
           <span>{booking.booking_notes}</span>
         </div>

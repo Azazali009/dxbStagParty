@@ -75,13 +75,13 @@ export default function CreateBlogForm({ isEdit = false, blog = {} }) {
           defaultValue={blog?.description || ""}
         ></textarea>
       </FormRow>
-      <FormRow label={"Blog Content"} className={"[grid-column:1/-1]"}>
+      <FormRow label={"Blog Content"} className={"![grid-column:1/-1]"}>
         <ReactQuill
           modules={modules}
           theme="snow"
           value={value}
           onChange={setValue}
-          className="!rounded-md bg-navyBlue"
+          className="min-h-80 !rounded-md bg-navyBlue"
           defaultValue={blog.blogContent}
         />
       </FormRow>

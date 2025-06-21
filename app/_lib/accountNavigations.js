@@ -5,16 +5,16 @@ export const accountNavigations = [
   {
     name: "Home",
     href: "/account",
-    icon: <HomeIcon />,
+    icon: <HomeIcon className={"size-3"} />,
   },
   {
     name: "Bookings",
     href: "/account/bookings",
-    icon: <CalenderDaysIcon />,
+    icon: <CalenderDaysIcon className={"size-3"} />,
   },
   {
     name: "profile",
     href: "/account/profile",
-    icon: <UserIcon />,
+    icon: <UserIcon className={"size-3"} />,
   },
 ];

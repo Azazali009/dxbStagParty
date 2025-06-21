@@ -83,10 +83,23 @@ export async function updateUserProfileAction(formData) {
 
 export async function login(formData) {
   const supabase = await createClient();
+  const email = formData.get("email");
+  const password = formData.get("password");
+  const { data: user, error: verifiedUserError } = await supabase
+    .from("users")
+    .select("isVerified")
+    .eq("email", email)
+    .single();
+  if (user && !user?.isVerified)
+    return {
+      custom: true,
+      error:
+        "Your account is under review. You will receive an email once your account is approved by the admin.",
+    };
 
   const data = {
-    email: formData.get("email"),
-    password: formData.get("password"),
+    email,
+    password,
   };
 
   const { error } = await supabase.auth.signInWithPassword(data);
@@ -157,6 +170,7 @@ export async function signup(formData) {
     {
       id: userId,
       email,
+      isVerified: false,
       fullName: name,
       role: role ? role : "organiser", // same as above or adjust as needed
     },
@@ -231,4 +245,22 @@ export async function resetPassword(formData) {
   }
   revalidatePath("/reset-password");
   redirect("/login");
+}
+
+export async function verifyUser(userId) {
+  const user = await getCurrentUser();
+  const supabase = await createClient();
+  if (!user || user?.user_metadata?.role !== "admin")
+    return { error: "You are not allowed to perform this action" };
+
+  // update user
+  const { error } = await supabase
+    .from("users")
+    .update({ isVerified: true })
+    .eq("id", userId);
+  if (error) {
+    console.log(error);
+    return { error: "Something went wrong. Please try again later" };
+  }
+  revalidatePath("/dashboard/users");
 }

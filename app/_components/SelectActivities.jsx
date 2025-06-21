@@ -12,6 +12,7 @@ export default function SelectActivities({
 }) {
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState([]);
+
   // Effect to fetch activities
   useEffect(() => {
     async function fetchActivities() {
@@ -51,6 +52,7 @@ export default function SelectActivities({
         }}
         labelledBy="Select Activities"
         className="custom-multi-select"
+        hasSelectAll={false}
       />
     </FormRow>
   );

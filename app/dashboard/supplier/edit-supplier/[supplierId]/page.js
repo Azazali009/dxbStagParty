@@ -5,9 +5,5 @@ export default async function Page({ params }) {
   const { supplierId } = params;
   const supplier = await getSupplierById(Number(supplierId));
 
-  return (
-    <div>
-      <EditSupplierForm supplier={supplier} />
-    </div>
-  );
+  return <EditSupplierForm supplier={supplier} />;
 }
