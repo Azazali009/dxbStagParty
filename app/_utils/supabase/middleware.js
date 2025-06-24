@@ -49,27 +49,28 @@ export async function updateSession(request) {
   }
 
   //ADMIN RESTRICTION: Admin should not access /account page
-  if (
-    user?.user_metadata?.role === "admin" &&
-    pathname.startsWith("/account")
-  ) {
-    return new Response(null, { status: 404 });
-  }
+  // if (
+  //   user?.user_metadata?.role === "admin" &&
+  //   pathname.startsWith("/account")
+  // ) {
+  //   return new Response(null, { status: 404 });
+  // }
 
   // SUPPLIER RESTRICTION: Supplier shoudl only access these routes
   if (user?.user_metadata?.role === "supplier") {
-    const allowedPaths = [
-      "/dashboard/activities",
-      "/dashboard/me",
-      "/verify-login",
-      "/login",
-    ];
+    // Check only for dashboard access
+    const isDashboardPath = pathname.startsWith("/dashboard");
 
-    const isAllowed = allowedPaths.some((path) => pathname.startsWith(path));
+    if (isDashboardPath) {
+      const allowedDashboardPath = "/dashboard/activities";
+      const isAllowed = pathname.startsWith(allowedDashboardPath);
 
-    if (!isAllowed) {
-      return new Response(null, { status: 404 });
+      if (!isAllowed) {
+        return new Response(null, { status: 404 });
+      }
     }
+
+    // For non-dashboard paths, allow access
   }
 
   // 🔐 Block unauthenticated users from protected pages

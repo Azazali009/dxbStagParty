@@ -25,7 +25,7 @@ export default function AuthNav() {
               user?.user_metadata?.role === "admin"
                 ? "/dashboard"
                 : user?.user_metadata?.role === "supplier"
-                  ? "/supplier"
+                  ? "/dashboard/activities"
                   : "/account"
             }
             title="Account"
