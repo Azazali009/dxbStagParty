@@ -37,8 +37,8 @@ export default async function Page({ searchParams }) {
       {/* section 3 */}
       {/* <BigEnergy ActivitiesArray={ActivitiesArray} /> */}
       {/* section 4 */}
-      <ChilAndLuxeActivity category={"Chill & Luxe"} />
-      <HomeAndVillaActivities ActivitiesArray={ActivitiesArray} />
+      {/* <ChilAndLuxeActivity category={"Chill & Luxe"} />
+      <HomeAndVillaActivities ActivitiesArray={ActivitiesArray} /> */}
     </div>
   );
 }
