@@ -3,6 +3,7 @@ import Link from "next/link";
 import ActivityFilters from "../_components/ActivityFilters";
 import ActivityHeroSection from "../_components/ActivityHeroSection";
 import AdrenalineActivities from "../_components/AdrenalineActivities";
+import Competitive from "../_components/Competitive";
 import ChilAndLuxeActivity from "../_components/ChilAndLuxeActivity";
 import HomeAndVillaActivities from "../_components/HomeAndVillaActivities";
 import { getActivities } from "../_lib/data-services";
@@ -32,8 +33,9 @@ export default async function Page({ searchParams }) {
       <VipSpotLight />
       {/* section 2 */}
       <AdrenalineActivities category={"Adrenaline"} />
+      <Competitive category={"VIP"} />
       {/* section 3 */}
-      <BigEnergy ActivitiesArray={ActivitiesArray} />
+      {/* <BigEnergy ActivitiesArray={ActivitiesArray} /> */}
       {/* section 4 */}
       <ChilAndLuxeActivity category={"Chill & Luxe"} />
       <HomeAndVillaActivities ActivitiesArray={ActivitiesArray} />
