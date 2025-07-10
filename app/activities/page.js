@@ -1,16 +1,11 @@
-import Image from "next/image";
-import Link from "next/link";
 import ActivityFilters from "../_components/ActivityFilters";
 import ActivityHeroSection from "../_components/ActivityHeroSection";
 import AdrenalineActivities from "../_components/AdrenalineActivities";
 import Competitive from "../_components/Competitive";
-import ChilAndLuxeActivity from "../_components/ChilAndLuxeActivity";
-import HomeAndVillaActivities from "../_components/HomeAndVillaActivities";
-import { getActivities } from "../_lib/data-services";
-import { BebasNeue } from "../layout";
-import VipSpotLight from "../_components/VipSpotLight";
-import BigEnergy from "../_components/BigEnergy";
+import FoodDrink from "../_components/FoodDrink";
 import Empty from "../_components/Empty";
+import VipSpotLight from "../_components/VipSpotLight";
+import { getActivities } from "../_lib/data-services";
 
 export const metadata = {
   title: "Activities | DXB Stag party",
@@ -34,6 +29,7 @@ export default async function Page({ searchParams }) {
       {/* section 2 */}
       <AdrenalineActivities category={"Adrenaline"} />
       <Competitive category={"VIP"} />
+      <FoodDrink category={"VIP"} />
       {/* section 3 */}
       {/* <BigEnergy ActivitiesArray={ActivitiesArray} /> */}
       {/* section 4 */}

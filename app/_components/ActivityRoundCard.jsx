@@ -10,13 +10,13 @@ export default function ActivityRoundCard({ activity, className }) {
     <Link
       href={`/activities/${id}`}
       className={cn(
-        "relative flex items-end overflow-hidden rounded-xl object-cover pb-3 duration-300 hover:scale-95 hover:animate-pulse sm:pb-8",
+        "relative flex items-end overflow-hidden rounded-xl object-cover pb-3 duration-300 hover:scale-95 hover:animate-pulse",
         className,
       )}
     >
       <Image src={image} fill alt={name} className="bg-center object-cover" />
       {/* overlay */}
-      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-black"></div>
+      <div className="absolute left-0 top-0 block h-full w-full bg-gradient-to-b from-transparent to-black"></div>
       <div className="relative z-10 space-y-4 p-4">
         <h2
           className={`${cinzel.className} text-balance text-xl font-bold text-secondary xs:text-2xl`}
