@@ -1,5 +1,5 @@
 import Image from "next/image";
-export default function Empty({ name }) {
+export default function Empty({ name = "data" }) {
   return (
     <div className="flex flex-col items-center justify-center gap-5 py-10">
       <Image

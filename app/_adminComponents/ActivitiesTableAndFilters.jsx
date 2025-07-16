@@ -9,8 +9,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Fuse from "fuse.js";
 
 export default function ActivitiesTableAndFilters({ Activities }) {
-  const [sort, setSort] = useState("asc");
-  const [destinationSort, setDestinationSort] = useState("destination-asc");
+  const [sort, setSort] = useState("");
+  const [destinationSort, setDestinationSort] = useState("");
   const [grid, setGrid] = useState(false);
   const [list, setList] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");

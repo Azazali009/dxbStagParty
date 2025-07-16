@@ -6,18 +6,26 @@ import LinkButton from "./LinkButton";
 export default function FoodDrink({ category }) {
   const { filteredActivities } = useActivity();
 
-  const filteredByCategoryArr = filteredActivities.filter(
-    (activity) => activity?.category?.name === category,
-  );
+  const filteredByCategoryArr =
+    filteredActivities.length > 0
+      ? filteredActivities.filter(
+          (activity) => activity?.category?.slug === category,
+        )
+      : null;
 
-  if (!filteredByCategoryArr.length) return null;
+  if (!filteredByCategoryArr || filteredByCategoryArr.length === 0) return null;
   return (
-    <section className="bg-[#1F1000] py-10 text-softGold sm:py-20">
-      <div className="space-y-10 px-4 sm:px-8">
+    <section className="relative bg-[#1F1000] py-10 text-softGold sm:py-20">
+      {/* overlay */}
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent via-[#CC8E2C] to-primary" />
+      <div className="relative z-20 space-y-10 px-4 sm:px-8">
         <div className="flex flex-col items-center justify-center gap-2 text-center sm:gap-4">
           <h2 className="text-2xl font-semibold uppercase xs:text-4xl sm:text-5xl">
             Food & Drinks
           </h2>
+          <p className="text-xs xs:text-sm sm:text-base">
+            Feast, sip, and celebrate with flavour-packed stag moments
+          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:min-h-[600px] md:grid-cols-2 md:grid-rows-2 lg:grid-cols-4">
@@ -57,7 +65,7 @@ export default function FoodDrink({ category }) {
                 className={
                   "h-[20%] border-secondary bg-[#3D1F00] py-2 text-center text-softGold duration-300 hover:scale-90"
                 }
-                href={"/activities/category/VIP"}
+                href={"/activities/category/Food & Drink"}
               >
                 Explore more
               </LinkButton>

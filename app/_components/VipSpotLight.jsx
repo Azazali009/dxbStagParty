@@ -1,7 +1,9 @@
 import Link from "next/link";
 export default function VipSpotLight() {
   return (
-    <section className="bg-red-100 p-4 text-navyBlue">
+    <section className="relative bg-red-100 p-4 text-navyBlue">
+      {/* overlay */}
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent via-[#BE7E23] to-[#BE7E23]" />
       <div className="space-y-2 sm:space-y-6">
         <div className="p-3 sm:p-6 md:w-1/2">
           <h2 className="text-xl font-semibold uppercase leading-[1.3] sm:text-4xl">

@@ -11,7 +11,6 @@ import {
 } from "./data-services";
 
 import { extractImagePath } from "./helpers";
-// import { supabase } from "./supabase";
 import { getCurrentUser } from "./getCurrentUser";
 import { createClient } from "../_utils/supabase/server";
 

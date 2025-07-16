@@ -91,7 +91,8 @@ import { getCategoryByName } from "./categoryApi";
 export async function getActivities() {
   let { data, error } = await supabase
     .from("activities")
-    .select(`*,supplier(fullName),category(id,name)`);
+    .select(`*,supplier(fullName),category(id,name,slug)`)
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.log(error);

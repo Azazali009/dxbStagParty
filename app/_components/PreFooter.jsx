@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export default function PreFooter() {
   return (
-    <div className="relative mx-auto flex min-h-full flex-col items-center justify-end bg-[url('/images/cta-bg.webp')] bg-cover bg-no-repeat p-4 py-8 xs:p-8 xs:py-0 sm:min-h-screen">
+    <div className="relative mx-auto flex min-h-full flex-col items-center justify-end bg-[url('/images/cta-bg.webp')] bg-cover bg-no-repeat p-4 py-8 xs:p-8 xs:py-8 sm:min-h-screen">
       {/* overlay */}
-      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-[#362A23]/80 to-navyBlue/30"></div>
       <div className="relative z-10 flex flex-col items-center gap-3 text-center sm:gap-6">
         <h1
           className={`${cinzel.className} text-xl font-black text-matalicGold xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl`}

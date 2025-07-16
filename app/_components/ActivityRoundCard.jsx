@@ -4,13 +4,18 @@ import { cinzel } from "../layout";
 import Link from "next/link";
 import { cn } from "../_lib/utils";
 
-export default function ActivityRoundCard({ activity, className }) {
+export default function ActivityRoundCard({
+  activity,
+  className,
+  border = "null",
+}) {
+  if (!activity) return null;
   const { image, name, id } = activity;
   return (
     <Link
       href={`/activities/${id}`}
       className={cn(
-        "relative flex items-end overflow-hidden rounded-xl object-cover pb-3 duration-300 hover:scale-95 hover:animate-pulse",
+        `relative flex items-end ${border !== "null" && border} overflow-hidden rounded-xl object-cover pb-3 duration-300 hover:scale-95 hover:animate-pulse`,
         className,
       )}
     >

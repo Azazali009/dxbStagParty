@@ -9,8 +9,8 @@ export default function CreateActivityAndSearch({
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search activity,package,blogs..."
-        className="h-12 w-2/3 rounded-full bg-primary px-4 outline-none duration-300 placeholder:text-sm placeholder:tracking-wider focus:outline-matalicGold"
+        placeholder="Escape Room Challenge, Cocktail Masterclass..."
+        className="h-12 w-2/3 rounded-full bg-primary px-4 outline-none duration-300 placeholder:text-sm focus:outline-matalicGold"
       />
       <Link
         className="flex h-10 items-center gap-3 rounded-lg bg-indigo-600 px-6 capitalize shadow-lg duration-300 hover:bg-sky-800 hover:shadow-none"

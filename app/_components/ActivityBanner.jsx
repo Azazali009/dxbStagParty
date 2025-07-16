@@ -8,7 +8,7 @@ export default async function ActivityBanner({ activity, user }) {
   const { name, description, bannerImage } = activity;
 
   return (
-    <section className="relative flex h-[450px] items-center justify-center gap-4 object-cover p-2 text-white xs:h-[600px] xs:p-4 sm:h-[700px] md:min-h-[900px]">
+    <section className="relative flex h-[450px] items-center justify-center gap-4 object-cover p-2 text-white xs:h-[600px] xs:p-4 sm:h-[700px]">
       <Image
         src={bannerImage}
         fill
@@ -17,11 +17,11 @@ export default async function ActivityBanner({ activity, user }) {
         className="bg-center object-cover"
       />
       {/* overlay */}
-      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-[#120900]/20 to-[#3D1F00]"></div>
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent via-[#3D1F00]/40 to-[#3D1F00]"></div>
       <div className="relative z-10 mt-28 flex max-w-3xl flex-col gap-12 md:mt-0">
         <div className="space-y-4">
           <h1
-            className={`text-center text-3xl font-bold tracking-tight text-matalicGold xs:text-5xl sm:text-6xl md:text-7xl ${cinzel.className}`}
+            className={`text-center text-3xl font-bold tracking-tight text-softGold xs:text-5xl sm:text-6xl md:text-7xl ${cinzel.className}`}
           >
             {name}
           </h1>

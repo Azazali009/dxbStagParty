@@ -72,37 +72,41 @@ export default function ActivityProvider({ children }) {
 
   // Apply filter
   useEffect(() => {
-    const filtered = allActivities.filter((activity) => {
-      // Group size logic
-      const [min, max] = activity.group_size?.split("-").map(Number);
-      const groupSizeMatch =
-        groupSize === 0 || (groupSize >= min && groupSize <= max);
+    const filtered =
+      allActivities.length > 0 &&
+      allActivities?.filter((activity) => {
+        // Group size logic
+        const [min, max] = activity.group_size?.split("-").map(Number);
+        const groupSizeMatch =
+          groupSize === 0 || (groupSize >= min && groupSize <= max);
 
-      // Daytime logic
-      const dayTimeMatch =
-        !dayTime || activity.dayTime?.toLowerCase() === dayTime.toLowerCase();
+        // Daytime logic
+        const dayTimeMatch =
+          !dayTime || activity.dayTime?.toLowerCase() === dayTime.toLowerCase();
 
-      // ✅ Category logic
-      const categoryMatch =
-        !category ||
-        activity.category?.name?.toLowerCase() === category.toLowerCase();
+        // ✅ Category logic
+        const categoryMatch =
+          !category ||
+          activity.category?.name?.toLowerCase() === category.toLowerCase();
 
-      return groupSizeMatch && dayTimeMatch && categoryMatch;
-    });
+        return groupSizeMatch && dayTimeMatch && categoryMatch;
+      });
 
     setFilteredActivities(filtered);
   }, [groupSize, dayTime, allActivities, category]);
 
   // Min/max values
 
-  const groupSizeValues = allActivities
-    ?.map((a) =>
-      a.group_size
-        ?.replace("–", "-") // replace en-dash with hyphen
-        .split("-")
-        .map(Number),
-    )
-    .filter((v) => v && v.length === 2 && !isNaN(v[0]) && !isNaN(v[1]));
+  const groupSizeValues =
+    allActivities.length > 0 &&
+    allActivities
+      ?.map((a) =>
+        a.group_size
+          ?.replace("–", "-") // replace en-dash with hyphen
+          .split("-")
+          .map(Number),
+      )
+      .filter((v) => v && v.length === 2 && !isNaN(v[0]) && !isNaN(v[1]));
 
   const minGroupSize =
     groupSizeValues.length > 0
