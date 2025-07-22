@@ -17,7 +17,7 @@ export default function PreFooter() {
           Build your weekend. Rally the crew. Lock the memories in.
         </p>
         <button className="block rounded bg-matalicGold px-4 py-2 text-xs capitalize text-navyBlue duration-300 hover:opacity-80 xs:text-sm sm:px-6 sm:py-2.5 sm:text-lg">
-          start building your weekend
+          Start Planning Your Stag Party
         </button>
         <Link
           href="/packages"

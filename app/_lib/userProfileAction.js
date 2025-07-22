@@ -85,6 +85,8 @@ export async function login(formData) {
   const supabase = await createClient();
   const email = formData.get("email");
   const password = formData.get("password");
+  const redirectToFromClient = formData.get("redirectTo");
+
   const { data: user, error: verifiedUserError } = await supabase
     .from("users")
     .select("isVerified")
@@ -117,7 +119,13 @@ export async function login(formData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/verify-login");
+  // redirect("/verify-login");
+  // ✅ Forward redirectTo to verify-login
+  const encodedRedirectTo = encodeURIComponent(redirectToFromClient);
+
+  redirect(
+    ` ${encodedRedirectTo !== "null" ? `/verify-login?redirectTo=${encodedRedirectTo}` : "/verify-login"} `,
+  );
 }
 
 export async function signup(formData) {

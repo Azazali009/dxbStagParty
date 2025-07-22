@@ -39,3 +39,17 @@ export async function getVerifiedUsers() {
 
   return data;
 }
+
+export async function getCurrentUserPlanningData(userId) {
+  let { data, error } = await supabase
+    .from("planning_sessions")
+    .select("*")
+    .eq("user_id", userId)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return { error: "Error" };
+  }
+  return data;
+}

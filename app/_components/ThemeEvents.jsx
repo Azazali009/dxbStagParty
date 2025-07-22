@@ -11,9 +11,12 @@ import LinkButton from "./LinkButton";
 export default function ThemeEvents({ category }) {
   const { filteredActivities } = useActivity();
 
-  const filteredByCategoryArr = filteredActivities.filter(
-    (activity) => activity?.category?.slug === category,
-  );
+  const filteredByCategoryArr =
+    filteredActivities.length > 0
+      ? filteredActivities.filter(
+          (activity) => activity?.category?.slug === category,
+        )
+      : null;
 
   if (!filteredByCategoryArr || filteredByCategoryArr.length === 0) return null;
   return (

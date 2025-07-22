@@ -7,29 +7,16 @@ export default function AttendeeEmailsBookingDetails({
   minGroup = 1,
   maxGroup = 10,
 }) {
-  // delete email function
-  // const removeEmail = (index) => {
-  //   const updatedEmails = emails.filter((_, i) => i !== index);
-  //   setEmails(updatedEmails);
-  // };
   const removeAttendee = (index) => {
     setAttendees((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // const updateEmail = (index, value) => {
-  //   const updatedEmails = [...emails];
-  //   updatedEmails[index] = value;
-  //   setEmails(updatedEmails);
-  // };
   const updateAttendee = (index, field, value) => {
     const updated = [...attendees];
     updated[index][field] = value;
     setAttendees(updated);
   };
 
-  // const addEmail = () => {
-  //   setEmails([...emails, ""]);
-  // };
   const addAttendee = () => {
     setAttendees((prev) => [...prev, { email: "", phone: "" }]);
   };

@@ -4,11 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { supabaseAdmin } from "./adminSupabase";
 
-import {
-  createActivity,
-  getActivity,
-  getBookingByUserId,
-} from "./data-services";
+import { getActivity, getBookingByUserId } from "./data-services";
 
 import { extractImagePath } from "./helpers";
 import { getCurrentUser } from "./getCurrentUser";
@@ -516,4 +512,72 @@ export async function updateBookingPaymentStatus(updateBookingData, formData) {
     return { error: "Unable to update booking. Please try again." };
 
   revalidatePath(`/dashboard/bookings/${bookingId}`);
+}
+
+export async function addPlanning(data, formData) {
+  const supabase = await createClient();
+  // Check if user is logged in and is an admin
+  const user = await getCurrentUser();
+  if (!user) return { error: "You are not allowed to perform this action" };
+
+  const groupSize = formData.get("groupSize");
+
+  if (!groupSize || data.attendees.length < 0 || !data.startDate)
+    return { error: "Please fill all required fields!" };
+
+  const newPlanning = {
+    user_id: user && user.id,
+    start_date: data.startDate,
+    attendees: data.attendees,
+    group_size: groupSize,
+  };
+
+  const { error } = await supabase
+    .from("planning_sessions")
+    .insert([newPlanning])
+    .select();
+
+  if (error) {
+    if (
+      error.message.includes("duplicate key value") &&
+      error.message.includes("planning_sessions_user_id_key")
+    ) {
+      return {
+        error:
+          "You already have a plan. Go to your profile to update it or continue planning from there.",
+      };
+    }
+
+    // Generic fallback
+    return { error: "Something went wrong. Please try again later." };
+  }
+
+  redirect("/activities");
+}
+
+export async function updatePlanning(data, formData) {
+  const supabase = await createClient();
+  // Check if user is logged in and is an admin
+  const user = await getCurrentUser();
+  if (!user) return { error: "You are not allowed to perform this action" };
+
+  const groupSize = formData.get("groupSize");
+
+  const updatePlanning = {
+    user_id: user.id,
+    start_date: data.startDate,
+    attendees: data.attendees,
+    group_size: groupSize,
+  };
+
+  const { error } = await supabase
+    .from("planning_sessions")
+    .update(updatePlanning)
+    .eq("user_id", user.id);
+
+  if (error) {
+    return { error: "Something went wrong. Please try again later." };
+  }
+
+  revalidatePath("/account/profile");
 }

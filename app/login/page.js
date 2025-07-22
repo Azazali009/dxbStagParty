@@ -7,15 +7,17 @@ import SpinnerMini from "../_components/SpinnerMini";
 import { useAuth } from "../_context/AuthProvider";
 import { login } from "../_lib/userProfileAction";
 import EyeIcon from "../svgIcons/EyeIcon";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Page() {
   const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
   const [passwordTye, setPasswordType] = useState("password");
   const { refreshUser } = useAuth();
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (formData) => {
+    formData.append("redirectTo", redirectTo);
     startTransition(async () => {
       const res = await login(formData);
       refreshUser();

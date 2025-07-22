@@ -7,10 +7,10 @@ export default async function HomeActivities() {
   return (
     <section className="mx-auto grid grid-cols-1 gap-x-4 gap-y-10 p-4 py-10 md:grid-cols-2 md:py-20 lg:grid-cols-4">
       <div
-        className={`mb-8 flex flex-col text-center ${cinzel.className} items-center justify-center gap-3 [grid-column:1/-1]`}
+        className={`mb-8 flex flex-col text-center ${cinzel.className} items-center justify-center gap-6 [grid-column:1/-1]`}
       >
         <h2
-          className={`text-matalicGold ${cinzel.className} text-2xl font-semibold sm:text-3xl md:text-6xl`}
+          className={`text-matalicGold ${cinzel.className} text-2xl font-semibold capitalize sm:text-3xl md:text-6xl`}
         >
           signature stag styles
         </h2>

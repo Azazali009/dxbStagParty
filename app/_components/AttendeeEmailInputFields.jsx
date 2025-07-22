@@ -1,12 +1,14 @@
 import React from "react";
 import FormRow from "./FormRow";
 import XMarkIcon from "../svgIcons/XMarkIcon";
+import { cn } from "../_lib/utils";
 
 export default function AttendeeInputFields({
   attendees,
   updateAttendee,
   removeAttendee,
   minGroup,
+  inputClassName,
 }) {
   return (
     <>
@@ -18,7 +20,10 @@ export default function AttendeeInputFields({
               placeholder="Email"
               value={attendee.email}
               onChange={(e) => updateAttendee(index, "email", e.target.value)}
-              className="block h-10 w-full rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600"
+              className={cn(
+                "block h-10 w-full rounded-md border-none bg-navyBlue px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600",
+                inputClassName,
+              )}
               required
             />
             <input
@@ -26,7 +31,10 @@ export default function AttendeeInputFields({
               placeholder="Phone"
               value={attendee.phone}
               onChange={(e) => updateAttendee(index, "phone", e.target.value)}
-              className="block h-10 w-full rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600"
+              className={cn(
+                "block h-10 w-full rounded-md border-none bg-navyBlue px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600",
+                inputClassName,
+              )}
               required
             />
             {attendees.length > minGroup && (

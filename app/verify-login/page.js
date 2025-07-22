@@ -2,10 +2,16 @@ import { redirect } from "next/navigation";
 import Spinner from "../_components/Spinner";
 import { getCurrentUser } from "../_lib/getCurrentUser";
 
-export default async function Page() {
+export default async function Page({ searchParams }) {
   const user = await getCurrentUser();
-
+  const redirectTo = searchParams?.redirectTo;
   // if (user?.role === "admin") {
+
+  // ✅ 1. If redirectTo exists, use it
+  if (redirectTo) {
+    redirect(redirectTo);
+  }
+
   if (user?.user_metadata?.role === "admin") {
     redirect("/dashboard");
   }

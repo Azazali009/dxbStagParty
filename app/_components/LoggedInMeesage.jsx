@@ -1,18 +1,18 @@
 import Link from "next/link";
 import React from "react";
 
-export default function LoggedInMeesage() {
+export default function LoggedInMeesage({ redirectTo = "/login" }) {
   return (
-    <div className="">
+    <div className="p-6 text-center">
       <p className="leading-[1.8]">
         Please login
         <Link
           className="px-1 font-medium text-secondary underline hover:no-underline"
-          href={"/login"}
+          href={redirectTo}
         >
-          here
+          here to book
         </Link>
-        to book you favourite activity!
+        you favourite activity!
       </p>
     </div>
   );

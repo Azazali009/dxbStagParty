@@ -2,9 +2,10 @@ import { cinzel } from "../layout";
 import AnimatedHeading from "./AnimatedHeading";
 import bgImage from "../../public/images/home-hero-bg.webp";
 import Image from "next/image";
+import Link from "next/link";
 export default function HomeHeroSection() {
   return (
-    <section className="vl:min-h-[1000px] relative -mt-[110px] flex items-end justify-center gap-10 p-4 pb-10 pt-32 sm:min-h-[650px] 2xl:min-h-[800px]">
+    <section className="relative -mt-[110px] flex items-end justify-center gap-10 p-4 pb-10 pt-32 sm:min-h-[650px] 2xl:min-h-[800px] vl:min-h-[1000px]">
       {/* overlay */}
       <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
       <Image
@@ -24,9 +25,12 @@ export default function HomeHeroSection() {
           Dubai&apos;s most elite stag party experiences &mdash; bold, bespoke,
           unforgettable
         </p>
-        <button className="rounded border border-matalicGold bg-matalicGold px-6 py-2 text-xs font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80 xs:text-sm sm:mt-8 sm:text-base">
-          plan your party
-        </button>
+        <Link
+          href={"/build"}
+          className="rounded border border-matalicGold bg-matalicGold px-6 py-2 text-xs font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80 xs:text-sm sm:mt-8 sm:text-base"
+        >
+          Start Planning Your Stag Party
+        </Link>
       </div>
     </section>
   );

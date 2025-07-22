@@ -19,7 +19,7 @@ export default function UpdateProfile({ user }) {
     });
   }
   return (
-    <div className="space-y-5 xs:space-y-10 sm:space-y-20">
+    <div className="space-y-5 p-4 xs:space-y-10 sm:space-y-20 sm:p-6">
       <h1 className="text-gradient bg-gradient-to-r from-matalicGold via-secondary to-matalicGold bg-clip-text text-base font-bold tracking-tight text-transparent drop-shadow-lg xs:text-xl sm:text-2xl lg:text-4xl">
         Let’s freshen up your profile ✨
       </h1>
@@ -69,7 +69,7 @@ export default function UpdateProfile({ user }) {
         <div>
           <button
             disabled={isPending}
-            className="mt-4 w-fit self-end rounded bg-indigo-600 px-4 py-1.5 text-xs capitalize duration-300 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50 xs:px-6 xs:py-2 xs:text-base"
+            className="mt-4 w-fit self-end rounded border border-matalicGold bg-transparent px-4 py-1.5 text-xs capitalize text-matalicGold duration-300 hover:bg-matalicGold hover:text-navyBlue disabled:cursor-not-allowed disabled:opacity-50 xs:px-6 xs:py-2 xs:text-base"
           >
             {isPending ? (
               <div className="flex items-center justify-center gap-2">

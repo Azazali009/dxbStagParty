@@ -344,3 +344,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border: none !important;
   border-bottom: 1px solid rgb(51, 48, 48) !important;
 }
+
+/* react date picker */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+.react-datepicker__day--selected,
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--selected {
+  background: #b49353 !important;
+}
