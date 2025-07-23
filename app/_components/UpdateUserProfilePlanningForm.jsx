@@ -24,6 +24,7 @@ export default function UpdateUserProfilePlanningForm({ data }) {
   );
 
   const datepickerRef = useRef(null);
+
   //   add attendee function
   const addAttendee = () => {
     setAttendees((prev) => [...prev, { email: "", phone: "" }]);
@@ -59,7 +60,7 @@ export default function UpdateUserProfilePlanningForm({ data }) {
   return (
     <div className="space-y-5 p-4 xs:space-y-10 sm:space-y-10 sm:p-6">
       <h1 className="text-gradient bg-gradient-to-r from-matalicGold via-secondary to-matalicGold bg-clip-text text-base font-bold tracking-tight text-transparent drop-shadow-lg xs:text-xl sm:text-2xl lg:text-3xl">
-        Update activity planning
+        Make Changes to Your Plan
       </h1>
 
       <form

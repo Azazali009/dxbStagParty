@@ -21,7 +21,7 @@ export default function AttendeeInputFields({
               value={attendee.email}
               onChange={(e) => updateAttendee(index, "email", e.target.value)}
               className={cn(
-                "block h-10 w-full rounded-md border-none bg-navyBlue px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600",
+                "block h-10 w-full rounded-md border border-gray-700 bg-transparent px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600",
                 inputClassName,
               )}
               required
@@ -32,7 +32,7 @@ export default function AttendeeInputFields({
               value={attendee.phone}
               onChange={(e) => updateAttendee(index, "phone", e.target.value)}
               className={cn(
-                "block h-10 w-full rounded-md border-none bg-navyBlue px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600",
+                "block h-10 w-full rounded-md border border-gray-700 bg-transparent px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600",
                 inputClassName,
               )}
               required

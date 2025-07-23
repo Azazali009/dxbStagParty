@@ -4,7 +4,7 @@ import React from "react";
 export default function LoggedInMeesage({ redirectTo = "/login" }) {
   return (
     <div className="p-6 text-center">
-      <p className="leading-[1.8]">
+      <h2 className="text-base leading-[1.8] sm:text-xl">
         Please login
         <Link
           className="px-1 font-medium text-secondary underline hover:no-underline"
@@ -13,7 +13,7 @@ export default function LoggedInMeesage({ redirectTo = "/login" }) {
           here to book
         </Link>
         you favourite activity!
-      </p>
+      </h2>
     </div>
   );
 }

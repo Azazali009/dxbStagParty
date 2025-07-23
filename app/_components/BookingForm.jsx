@@ -17,6 +17,7 @@ export default function BookingForm({
   destinations,
   groupSize = "",
   user,
+  duration,
 }) {
   const {
     selectedActivities,
@@ -29,16 +30,18 @@ export default function BookingForm({
     bookingNotes,
     phone,
     whatsApp,
+    attendees,
+    setAttendees,
   } = useBooking();
   const [totalPrice, setTotalPrice] = useState(price);
 
   const [minGroup, maxGroup] = groupSize && groupSize?.split("-")?.map(Number);
   // const [emails, setEmails] = useState(() => Array(minGroup || 1).fill(""));
-  const [attendees, setAttendees] = useState(() =>
-    Array(minGroup || 1)
-      .fill(0)
-      .map(() => ({ email: "", phone: "" })),
-  );
+  // const [attendees, setAttendees] = useState(() =>
+  //   Array(minGroup || 1)
+  //     .fill(0)
+  //     .map(() => ({ email: "", phone: "" })),
+  // );
 
   const searchParams = useSearchParams();
   // Get current step from URL (default to 1)
@@ -49,6 +52,7 @@ export default function BookingForm({
     const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
     setMinDate(today);
   }, [setMinDate]);
+
   // effect for adding all prices
   useEffect(() => {
     const getSelectedActivities = selectedActivities.reduce((acc, curr) => {
@@ -71,11 +75,23 @@ export default function BookingForm({
     setLoading(true);
 
     try {
-      if (!attendees || !bookingDate) return;
+      // Error Toasts
+      if (!bookingDate || isNaN(bookingDate.getTime())) {
+        return toast.error("Please select a valid booking date.", {
+          id: toastId,
+        });
+      }
 
-      // Combine Organizer Email + Attendees
-      // const allEmails = [...emails, user.email];
-      // Combine Organizer Email + Attendees
+      if (!endDate || isNaN(endDate.getTime())) {
+        return toast.error("Please select a valid end date.", { id: toastId });
+      }
+
+      if (!attendees) {
+        return toast.error("Please add required attendees.", {
+          id: toastId,
+        });
+      }
+
       const allEmails = [...attendees.map((a) => a.email), user.email];
       const allPhones = [...attendees.map((a) => a.phone), phone]; // phone = organizer phone
 
@@ -92,43 +108,8 @@ export default function BookingForm({
 
       // ✅ Calculate Organizer's 15% Payment
       const organizerAmount = Math.round(totalPrice * 0.15);
+
       // ✅ Save Booking Data to LocalStorage (Before Payment)
-      // localStorage.setItem(
-      //   "bookingData",
-      //   JSON.stringify({
-      //     // activityID: id,
-      //     activities: [
-      //       {
-      //         name: activityName,
-      //         price: price, // make sure you have this value in scope
-      //       },
-      //       ...selectedActivities.map((act) => ({
-      //         name: act.label,
-      //         price: act.price,
-      //       })),
-      //     ],
-      //     packages: selectedPackages.map((pkg) => ({
-      //       name: pkg.label,
-      //       price: pkg.price,
-      //     })),
-      //     userId: user.id,
-      //     totalPrice,
-      //     attendeeEmails: allEmails,
-      //     organizerEmail: user.email,
-      //     activityName,
-      //     bookingDate: new Date(
-      //       `${bookingDate}T${new Date().toTimeString().split(" ")[0]}Z`,
-      //     ).toISOString(),
-      //     end_date: new Date(
-      //       `${endDate}T${new Date().toTimeString().split(" ")[0]}Z`,
-      //     ).toISOString(),
-      //     paidAmount: organizerAmount,
-      //     destinations,
-      //     booking_notes: bookingNotes,
-      //     phone,
-      //     whatsApp,
-      //   }),
-      // );
       localStorage.setItem(
         "bookingData",
         JSON.stringify({
@@ -160,12 +141,8 @@ export default function BookingForm({
           ],
           organizerEmail: user.email,
           activityName,
-          bookingDate: new Date(
-            `${bookingDate}T${new Date().toTimeString().split(" ")[0]}Z`,
-          ).toISOString(),
-          end_date: new Date(
-            `${endDate}T${new Date().toTimeString().split(" ")[0]}Z`,
-          ).toISOString(),
+          bookingDate: bookingDate.toISOString(),
+          end_date: endDate.toISOString(),
           paidAmount: organizerAmount,
           destinations,
           booking_notes: bookingNotes,
@@ -228,7 +205,7 @@ export default function BookingForm({
             name={user?.user_metadata?.full_name}
           />
         )}
-        {currentStep === 2 && <BookingDetails id={id} />}
+        {currentStep === 2 && <BookingDetails duration={duration} id={id} />}
         {currentStep === 3 && (
           <AttendeeEmailsBookingDetails
             attendees={attendees}
@@ -242,11 +219,7 @@ export default function BookingForm({
             style={{ gridColumn: "1/-1" }}
             className="flex flex-col gap-4 justify-self-center"
           >
-            <Button
-              variation="gold"
-              type="submit"
-              disable={loading || !bookingDate}
-            >
+            <Button variation="gold" type="submit" disable={loading}>
               {loading ? "Processing..." : "Pay & Confirm"}{" "}
             </Button>
             <small>

@@ -35,11 +35,11 @@ export default function ActivitySupportSections({ activity }) {
           </h3>
           <div class="map-container space-y-4 text-center">
             <iframe
-              class="high-contrast-map"
+              className="high-contrast-map"
               src={embedUrl}
-              allowfullscreen=""
+              allowFullScreen=""
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
             <div class="flex flex-col gap-2 text-xs font-light xs:text-lg">
               <span>{activity?.destinations}</span>

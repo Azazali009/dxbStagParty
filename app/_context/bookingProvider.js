@@ -1,10 +1,14 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useAuth } from "./AuthProvider";
+import { createClient } from "../_utils/supabase/client";
 
 const PendingBookingContext = createContext();
 
 export default function BookingProvider({ children }) {
+  const { user } = useAuth();
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -13,6 +17,7 @@ export default function BookingProvider({ children }) {
   const [whatsApp, setWhatsApp] = useState("");
   const [showCalenderView, setShowCalenderView] = useState(false);
   const [bookingDate, setBookingDate] = useState("");
+  const [attendees, setAttendees] = useState([]);
   const [endDate, setEndDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedActivities, setSelectedActivities] = useState([]);
@@ -27,6 +32,31 @@ export default function BookingProvider({ children }) {
     params.delete("step");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
+
+  // load current user planning session data for booking form
+
+  useEffect(() => {
+    if (!user?.id) return;
+    async function getCurrentUserPlanningData() {
+      const supabase = createClient();
+      let { data } = await supabase
+        .from("planning_sessions")
+        .select("*")
+        .eq("user_id", user?.id)
+        .single();
+
+      if (data?.start_date) {
+        setBookingDate(new Date(data.start_date));
+      }
+      if (!Array.isArray(data?.attendees) || data.attendees.length === 0) {
+        // Show default if attendees is missing or empty
+        setAttendees([{ email: "", phone: "" }]);
+      } else {
+        setAttendees(data.attendees);
+      }
+    }
+    getCurrentUserPlanningData();
+  }, [user?.id]);
   return (
     <PendingBookingContext.Provider
       value={{
@@ -36,6 +66,8 @@ export default function BookingProvider({ children }) {
         setWhatsApp,
         bookingDate,
         setBookingDate,
+        attendees,
+        setAttendees,
         endDate,
         setEndDate,
         loading,

@@ -3,7 +3,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import LoggedInMeesage from "./LoggedInMeesage";
 import { createPortal } from "react-dom";
 import { useBooking } from "../_context/bookingProvider";
+import { useParams } from "next/navigation";
+
 export default function ModalWindow({ children, onClose, user }) {
+  const params = useParams();
+  const activityId = params?.activityId;
   return createPortal(
     <AnimatePresence mode="wait">
       {
@@ -25,7 +29,7 @@ export default function ModalWindow({ children, onClose, user }) {
 
           <motion.div
             className={
-              "no-scrollbar relative z-50 flex max-h-[calc(100vh-5em)] flex-1 flex-col items-center justify-start overflow-y-scroll bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
+              "no-scrollbar relative z-50 flex max-h-[calc(100vh-5em)] flex-1 flex-col items-center overflow-y-auto bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
             }
             key="modal"
             initial={{
@@ -52,7 +56,15 @@ export default function ModalWindow({ children, onClose, user }) {
             }}
           >
             <CloseIcon onClose={onClose} />
-            {user ? children : <LoggedInMeesage />}
+            {user ? (
+              children
+            ) : (
+              <div className="py-10 sm:py-20">
+                <LoggedInMeesage
+                  redirectTo={`/login?redirectTo=${encodeURIComponent(`/activities/${activityId}`)}`}
+                />
+              </div>
+            )}
           </motion.div>
         </motion.div>
       }

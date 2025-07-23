@@ -331,3 +331,19 @@ export const faqs = [
     type: "General Support",
   },
 ];
+
+export function parseDuration(durationStr) {
+  if (!durationStr) return { amount: 0, unit: "minutes" };
+
+  const match = durationStr.match(/(\d+)-?(\d+)?\s*(mins?|hr|hours?)/i);
+
+  if (!match) return { amount: 0, unit: "minutes" };
+
+  const amount = parseInt(match[1]); // take the lower bound
+  const unitRaw = match[3]?.toLowerCase();
+
+  let unit = "minutes";
+  if (unitRaw.includes("hr")) unit = "hours";
+
+  return { amount, unit };
+}

@@ -14,7 +14,7 @@ export default function OrganiserBookingDetails({ email, name }) {
           value={email}
           placeholder="organizer@email.com"
           // onChange={(e) => setOrganizerEmail(e.target.value)}
-          className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
+          className="h-10 rounded-md border border-gray-700 bg-transparent px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
           autoComplete="on"
           required
         />
@@ -26,7 +26,7 @@ export default function OrganiserBookingDetails({ email, name }) {
           value={name}
           placeholder="Organizer name"
           // onChange={(e) => setOrganizerName(e.target.value)}
-          className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
+          className="h-10 rounded-md border border-gray-700 bg-transparent px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
           autoComplete="on"
           required
         />
@@ -37,7 +37,7 @@ export default function OrganiserBookingDetails({ email, name }) {
           value={phone}
           placeholder="+971 4 XXX XXXX"
           onChange={(e) => setPhone(e.target.value)}
-          className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
+          className="h-10 rounded-md border border-gray-700 bg-transparent px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
           autoComplete="on"
           required
         />
@@ -49,7 +49,7 @@ export default function OrganiserBookingDetails({ email, name }) {
             value={whatsApp}
             placeholder="+971 4 XXX XXXX"
             onChange={(e) => setWhatsApp(e.target.value)}
-            className="h-10 rounded-md border-none bg-primary px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
+            className="h-10 rounded-md border border-gray-700 bg-transparent px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600 disabled:opacity-50"
             autoComplete="on"
             required
           />
