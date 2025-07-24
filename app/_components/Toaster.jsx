@@ -8,14 +8,14 @@ export default function ToasterComp() {
       containerStyle={{ margin: "8px", fontFamily: "Poppins" }}
       toastOptions={{
         success: {
-          duration: 3000,
+          duration: 10000,
           style: {
             background: "#8E721D",
             color: "white",
           },
         },
         error: {
-          duration: 5000,
+          duration: 7000,
         },
         style: {
           fontSize: "15px",

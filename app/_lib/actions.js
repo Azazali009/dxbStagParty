@@ -544,7 +544,7 @@ export async function addPlanning(data, formData) {
     ) {
       return {
         error:
-          "You already have a plan. Go to your profile to update it or continue planning from there.",
+          "Looks like you've already started a plan! You can update it or continue planning from your profile whenever you're ready.",
       };
     }
 

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "NODE_OPTIONS='--max-old-space-size=4096' next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -35,6 +35,7 @@
     "react-multi-select-component": "^4.3.4",
     "react-quill": "^2.0.0",
     "react-use": "^17.6.0",
+    "sharp": "^0.34.3",
     "stripe": "^17.7.0",
     "tailwind-merge": "^3.0.2"
   },

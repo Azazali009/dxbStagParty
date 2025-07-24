@@ -15,5 +15,9 @@ export default async function Page() {
         />
       </div>
     );
-  return <UserPlanningForm />;
+  return (
+    <div className="p-4 sm:p-10">
+      <UserPlanningForm />
+    </div>
+  );
 }

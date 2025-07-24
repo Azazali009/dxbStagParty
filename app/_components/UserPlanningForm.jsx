@@ -43,14 +43,14 @@ export default function UserPlanningForm() {
       const res = await addPlanningWithData(formData);
       if (res?.error) return toast.error(res?.error);
       toast.success(
-        "🎉 Your stag party plan has been created! You can now start adding activities to build the perfect day.",
+        "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
       );
     });
   }
 
   const addPlanningWithData = addPlanning.bind(null, { attendees, startDate });
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-10 rounded-xl border border-neutral-800 p-6 sm:p-10">
+    <div className="mx-auto w-full max-w-3xl space-y-10 rounded-xl border border-gray-800 p-6 sm:p-10">
       <div>
         <h1
           className={`${cinzel.className} text-2xl font-bold text-matalicGold sm:text-3xl lg:text-5xl`}
@@ -76,7 +76,7 @@ export default function UserPlanningForm() {
               timeIntervals={30}
               dateFormat={"dd/MM/yyyy  hh:mm aa"}
               timeFormat="hh:mm aa"
-              className="block !h-10 w-full rounded-lg bg-navyBlue px-4 text-left font-semibold shadow-2xl focus:outline-none"
+              className="block !h-10 w-full rounded-md border border-gray-700 bg-transparent px-4 text-left font-semibold shadow-2xl focus:outline-none"
               calendarClassName="calender"
               minDate={new Date()}
               ref={datepickerRef}
@@ -93,7 +93,7 @@ export default function UserPlanningForm() {
         </FormRow>
         <FormRow label={"Group Size"}>
           <input
-            className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
+            className="h-10 rounded-md border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold"
             type="text"
             name="groupSize"
             placeholder="2-6"
