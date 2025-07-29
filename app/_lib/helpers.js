@@ -334,7 +334,7 @@ export const faqs = [
 ];
 
 // Parses string like "1-1.5 hrs", "15-30 mins", "2hr"
-function parseDuration(durationText) {
+export function parseDuration(durationText) {
   if (!durationText) return 60;
 
   const lower = durationText.toLowerCase();
