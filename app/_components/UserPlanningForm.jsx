@@ -45,9 +45,9 @@ export default function UserPlanningForm({
     startTransition(async () => {
       const res = await addPlanningWithData(formData);
       if (res?.error) return toast.error(res?.error);
-      toast.success(
-        "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
-      );
+      // toast.success(
+      //   "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
+      // );
     });
   }
 
