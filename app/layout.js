@@ -30,6 +30,12 @@ const BookingProvider = dynamic(() => import("./_context/bookingProvider"), {
 const ActivityProvider = dynamic(() => import("./_context/ActivityProvider"), {
   ssr: false,
 });
+const PartyBuilderProvider = dynamic(
+  () => import("./_context/PartyBuilderProvider"),
+  {
+    ssr: false,
+  },
+);
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -79,7 +85,9 @@ export default function RootLayout({ children }) {
             <TosterComp />
             <PendingBookingDataNotification />
             <BookingProvider>
-              <main className="">{children}</main>
+              <PartyBuilderProvider>
+                <main>{children}</main>
+              </PartyBuilderProvider>
             </BookingProvider>
             <FooterWrapper />
           </ActivityProvider>

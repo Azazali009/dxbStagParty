@@ -27,9 +27,7 @@ export default function ExtendAttendeeExpiry({
       toast.success("Expiry extended by 24 hours!", { id: toastId });
       router.refresh();
     } catch (error) {
-      //   alert("❌ Unexpected error.");
-      console.log(error);
-      toast.error("There is an unexpected error while extending expiry", {
+      toast.error(error?.message, {
         id: toastId,
       });
     } finally {

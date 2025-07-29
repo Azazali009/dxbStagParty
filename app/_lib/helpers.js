@@ -1,4 +1,5 @@
 import DOMPurify from "isomorphic-dompurify";
+import { addMinutes } from "date-fns";
 
 export function formatToAED(amount) {
   return new Intl.NumberFormat("en-AE", {
@@ -332,18 +333,60 @@ export const faqs = [
   },
 ];
 
-export function parseDuration(durationStr) {
-  if (!durationStr) return { amount: 0, unit: "minutes" };
+// Parses string like "1-1.5 hrs", "15-30 mins", "2hr"
+function parseDuration(durationText) {
+  if (!durationText) return 60;
 
-  const match = durationStr.match(/(\d+)-?(\d+)?\s*(mins?|hr|hours?)/i);
+  const lower = durationText.toLowerCase();
 
-  if (!match) return { amount: 0, unit: "minutes" };
+  if (lower.includes("min")) {
+    const match = lower.match(/\d+/);
+    return match ? parseInt(match[0], 10) : 30;
+  }
 
-  const amount = parseInt(match[1]); // take the lower bound
-  const unitRaw = match[3]?.toLowerCase();
+  const hourMatch = lower.match(/(\d+(\.\d+)?)/); // handles "1.5", "2-3"
+  return hourMatch ? parseFloat(hourMatch[1]) * 60 : 60;
+}
 
-  let unit = "minutes";
-  if (unitRaw.includes("hr")) unit = "hours";
+export function autoBuildTimeline(
+  activities,
+  startTime,
+  userBuffers = {},
+  includeTransport = false,
+  transportHours = 1,
+) {
+  if (!activities || !startTime) return [];
 
-  return { amount, unit };
+  let current = new Date(startTime);
+  const DEFAULT_BUFFER = 60;
+
+  return activities.map((activity) => {
+    const durationMinutes = parseDuration(activity.duration);
+    const start = new Date(current);
+    const end = addMinutes(start, durationMinutes);
+
+    const userInput = userBuffers[activity.id] || DEFAULT_BUFFER;
+    const buffer = userInput;
+
+    // --- Transport warning logic
+    let warning = null;
+    if (buffer !== DEFAULT_BUFFER) {
+      warning = `⚠️ Buffer input is ${buffer} mins (Expected: ${DEFAULT_BUFFER} mins)`;
+    }
+
+    if (includeTransport && buffer < transportHours * 60) {
+      warning = `🚐 Transport time may not be enough. You allowed ${buffer} mins, but we recommend ${transportHours * 60} mins.`;
+    }
+
+    current = addMinutes(end, buffer);
+
+    return {
+      ...activity,
+      startTime: start,
+      endTime: end,
+      buffer,
+      warning,
+      userInput,
+    };
+  });
 }

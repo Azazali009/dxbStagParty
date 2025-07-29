@@ -4,7 +4,7 @@ import XMarkIcon from "../svgIcons/XMarkIcon";
 import { cn } from "../_lib/utils";
 
 export default function AttendeeInputFields({
-  attendees,
+  attendees = [],
   updateAttendee,
   removeAttendee,
   minGroup,

@@ -520,39 +520,45 @@ export async function addPlanning(data, formData) {
   const user = await getCurrentUser();
   if (!user) return { error: "You are not allowed to perform this action" };
 
-  const groupSize = formData.get("groupSize");
-
-  if (!groupSize || data.attendees.length < 0 || !data.startDate)
+  const groupSize = data.groupSize;
+  const startDate = data.startDate;
+  const endDate = data.endDate;
+  const attendees = data.attendees;
+  const selectedActivityIds = data.selectedActivityIds;
+  console.log(data);
+  if (!groupSize || attendees.length < 0 || !startDate || !endDate)
     return { error: "Please fill all required fields!" };
 
   const newPlanning = {
     user_id: user && user.id,
-    start_date: data.startDate,
-    attendees: data.attendees,
+    start_date: startDate,
+    end_date: endDate,
+    attendees: attendees,
     group_size: groupSize,
+    activityIds: selectedActivityIds,
   };
 
-  const { error } = await supabase
-    .from("planning_sessions")
-    .insert([newPlanning])
-    .select();
+  // const { error } = await supabase
+  //   .from("planning_sessions")
+  //   .insert([newPlanning])
+  //   .select();
 
-  if (error) {
-    if (
-      error.message.includes("duplicate key value") &&
-      error.message.includes("planning_sessions_user_id_key")
-    ) {
-      return {
-        error:
-          "Looks like you've already started a plan! You can update it or continue planning from your profile whenever you're ready.",
-      };
-    }
+  // if (error) {
+  //   if (
+  //     error.message.includes("duplicate key value") &&
+  //     error.message.includes("planning_sessions_user_id_key")
+  //   ) {
+  //     return {
+  //       error:
+  //         "Looks like you've already started a plan! You can update it or continue planning from your profile whenever you're ready.",
+  //     };
+  //   }
 
-    // Generic fallback
-    return { error: "Something went wrong. Please try again later." };
-  }
+  //   // Generic fallback
+  //   return { error: "Something went wrong. Please try again later." };
+  // }
 
-  redirect("/activities");
+  // redirect("/activities");
 }
 
 export async function updatePlanning(data, formData) {

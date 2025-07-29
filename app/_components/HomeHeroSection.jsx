@@ -26,7 +26,7 @@ export default function HomeHeroSection() {
           unforgettable
         </p>
         <Link
-          href={"/build"}
+          href={"/builder"}
           className="rounded border border-matalicGold bg-matalicGold px-6 py-2 text-xs font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80 xs:text-sm sm:mt-8 sm:text-base"
         >
           Start Planning Your Stag Party

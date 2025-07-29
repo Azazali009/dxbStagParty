@@ -154,7 +154,7 @@ export async function updateAttendeeStatus(email, amount) {
 // ✅ Function to Extend Expiry Date by 24 Hours
 export async function extendAttendeeExpiry(attendeeID) {
   if (!attendeeID) {
-    throw new Error("Missing attendee ID");
+    return { error: "Missing attendee ID" };
   }
 
   // ✅ Fetch current expiry date
@@ -165,12 +165,12 @@ export async function extendAttendeeExpiry(attendeeID) {
     .single();
 
   if (error || !attendee) {
-    throw new Error("Attendee not found");
+    return { error: "Attendee not found" };
   }
 
   // ✅ If attendee has already extended, prevent further extension
   if (attendee.has_extended) {
-    throw new Error("You have already extended your payment link once!");
+    return { error: "You have already extended your payment link once!" };
   }
 
   const currentExpiry = new Date(attendee.expires_at);
@@ -178,7 +178,9 @@ export async function extendAttendeeExpiry(attendeeID) {
 
   // ✅ Ensure the current expiry has not passed
   if (currentExpiry < now) {
-    throw new Error("Payment link has already expired!");
+    throw new Error(
+      "Payment link has already expired! Please try to sent fresh link.",
+    );
   }
 
   // ✅ Extend expiry by 24 hours

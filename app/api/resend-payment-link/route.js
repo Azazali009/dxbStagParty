@@ -29,7 +29,7 @@ export async function POST(req) {
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/booking-failed`,
     });
     const paymentLink = session.url;
-    await sendEmail(email, paymentLink);
+    await sendEmail(email, paymentLink, remainingAttempts);
     return NextResponse.json({ status: "success", paymentLink });
   } catch (error) {
     return NextResponse.json({ status: "failed", error: error.message });
@@ -37,7 +37,7 @@ export async function POST(req) {
 }
 
 // 📧 Function to Send Email
-async function sendEmail(to, paymentLink) {
+async function sendEmail(to, paymentLink, remainingAttempts) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {

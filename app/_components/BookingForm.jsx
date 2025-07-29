@@ -36,12 +36,6 @@ export default function BookingForm({
   const [totalPrice, setTotalPrice] = useState(price);
 
   const [minGroup, maxGroup] = groupSize && groupSize?.split("-")?.map(Number);
-  // const [emails, setEmails] = useState(() => Array(minGroup || 1).fill(""));
-  // const [attendees, setAttendees] = useState(() =>
-  //   Array(minGroup || 1)
-  //     .fill(0)
-  //     .map(() => ({ email: "", phone: "" })),
-  // );
 
   const searchParams = useSearchParams();
   // Get current step from URL (default to 1)
