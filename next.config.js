@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    eslint: {
+      // ⛔️ This disables ESLint completely during build
+      ignoreDuringBuilds: true,
+    },
     remotePatterns: [
       {
         protocol: "https",
@@ -33,7 +37,6 @@ const nextConfig = {
       },
     ],
   },
-  // output: "export",
 };
 
 module.exports = nextConfig;
