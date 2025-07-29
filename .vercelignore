@@ -1,7 +1,8 @@
 node_modules
-.vercel
 .next
-*.log
+.vercel
 build
 coverage
+*.log
 *.tsbuildinfo
+.env*
