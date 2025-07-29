@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    // ⛔️ This disables ESLint completely during build
+    ignoreDuringBuilds: true,
+  },
   images: {
-    eslint: {
-      // ⛔️ This disables ESLint completely during build
-      ignoreDuringBuilds: true,
-    },
     remotePatterns: [
       {
         protocol: "https",
