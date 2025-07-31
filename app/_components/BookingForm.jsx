@@ -10,6 +10,7 @@ import OrganiserBookingDetails from "../_components/OrganiserBookingDetails";
 import { useBooking } from "../_context/bookingProvider";
 import Button from "./Button";
 import Summary from "./Summary";
+
 export default function BookingForm({
   id,
   price,

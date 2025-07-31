@@ -38,6 +38,9 @@ export default function BookingDetails({ id, duration }) {
       setEndDate(end);
     }
   };
+  function isValidDate(d) {
+    return d instanceof Date && !isNaN(d.getTime());
+  }
 
   useEffect(() => {
     if (bookingDate && !endDate && duration) {
@@ -71,7 +74,7 @@ export default function BookingDetails({ id, duration }) {
           />
           <button
             type="button"
-            onClick={(e) => datepickerRef.current.setOpen((prev) => !prev)}
+            onClick={() => datepickerRef.current.setOpen((prev) => !prev)}
             className={"absolute right-2 top-1/2 block -translate-y-1/2"}
           >
             <CalenderDaysIcon />
@@ -81,7 +84,7 @@ export default function BookingDetails({ id, duration }) {
       <FormRow label={"End Date"}>
         <div className="relative w-full rounded border border-gray-700">
           <DatePicker
-            selected={endDate}
+            selected={isValidDate(endDate) ? endDate : null}
             onChange={(date) => setEndDate(date)}
             showTimeSelect
             placeholderText="Select a date and time"

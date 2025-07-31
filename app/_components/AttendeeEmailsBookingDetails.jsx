@@ -18,7 +18,7 @@ export default function AttendeeEmailsBookingDetails({
   };
 
   const addAttendee = () => {
-    setAttendees((prev) => [...prev, { email: "", phone: "" }]);
+    setAttendees((prev) => [...prev, { email: "", name: "" }]);
   };
 
   return (
