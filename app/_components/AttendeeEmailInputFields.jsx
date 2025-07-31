@@ -27,10 +27,10 @@ export default function AttendeeInputFields({
               required
             />
             <input
-              type="tel"
-              placeholder="Phone"
-              value={attendee.phone}
-              onChange={(e) => updateAttendee(index, "phone", e.target.value)}
+              type="text"
+              placeholder="Name"
+              value={attendee.name}
+              onChange={(e) => updateAttendee(index, "name", e.target.value)}
               className={cn(
                 "block h-10 w-full rounded-md border border-gray-700 bg-transparent px-2 text-sm placeholder:text-sm focus:outline-none focus:outline-blue-600",
                 inputClassName,

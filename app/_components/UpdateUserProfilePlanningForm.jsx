@@ -10,7 +10,7 @@ import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
 import toast from "react-hot-toast";
 
 export default function UpdateUserProfilePlanningForm({ data }) {
-  const { start_date, group_size } = data;
+  const { start_date } = data;
 
   const [isPending, startTransition] = useTransition();
   const [startDate, setStartDate] = useState(() =>
@@ -65,7 +65,7 @@ export default function UpdateUserProfilePlanningForm({ data }) {
 
       <form
         action={async (formData) => handleSubmit(formData)}
-        className="grid grid-cols-1 items-center gap-6 md:grid-cols-2"
+        className="grid grid-cols-1 gap-6 md:grid-cols-2"
       >
         <FormRow label={"Start Date"}>
           <div className="relative w-full rounded border border-gray-700">
@@ -92,14 +92,7 @@ export default function UpdateUserProfilePlanningForm({ data }) {
             </button>
           </div>
         </FormRow>
-        <FormRow label={"Group Size"}>
-          <input
-            type="text"
-            className="h-10 rounded border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold disabled:bg-gray-700 disabled:opacity-50"
-            name="groupSize"
-            defaultValue={group_size}
-          />
-        </FormRow>
+
         <>
           <AttendeeEmailInputFields
             attendees={attendees}
@@ -111,13 +104,15 @@ export default function UpdateUserProfilePlanningForm({ data }) {
             }
           />
 
-          <button
-            className="inline-block w-fit rounded bg-gradient-to-br from-indigo-900 via-indigo-800 to-blue-700 px-4 py-1.5 text-sm capitalize text-white hover:bg-gradient-to-tr"
-            onClick={addAttendee}
-            type="button"
-          >
-            + Attendee
-          </button>
+          <div className="self-center">
+            <button
+              className="inline-block w-fit rounded bg-gradient-to-br from-indigo-900 via-indigo-800 to-blue-700 px-4 py-1.5 text-sm capitalize text-white hover:bg-gradient-to-tr"
+              onClick={addAttendee}
+              type="button"
+            >
+              + Attendee
+            </button>
+          </div>
         </>
         <div className="[grid-column:1/-1]">
           <button

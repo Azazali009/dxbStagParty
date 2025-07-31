@@ -6,7 +6,6 @@ const BuilderContext = createContext();
 export default function PartyBuilderProvider({ children }) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [groupSize, setGroupSize] = useState("");
   const [selectedActivityIds, setSelectedActivityIds] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [activityBuffers, setActivityBuffers] = useState({});
@@ -16,8 +15,10 @@ export default function PartyBuilderProvider({ children }) {
   const [attendees, setAttendees] = useState(() =>
     Array(1)
       .fill(0)
-      .map(() => ({ email: "", phone: "" })),
+      .map(() => ({ email: "", name: "" })),
   );
+
+  const [isAttendeeError, setIsAttendeeError] = useState(false);
 
   return (
     <BuilderContext.Provider
@@ -26,8 +27,6 @@ export default function PartyBuilderProvider({ children }) {
         setStartDate,
         endDate,
         setEndDate,
-        groupSize,
-        setGroupSize,
         selectedActivityIds,
         setSelectedActivityIds,
         selectedCategory,
@@ -40,6 +39,8 @@ export default function PartyBuilderProvider({ children }) {
         setIncludeTransport,
         transportHours,
         setTransportHours,
+        isAttendeeError,
+        setIsAttendeeError,
       }}
     >
       {children}

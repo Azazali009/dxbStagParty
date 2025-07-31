@@ -32,11 +32,6 @@ export default async function Page({ searchParams }) {
       <FoodDrink category={"food-&-drink"} />
       <ThemeEvents category={"theme-events"} />
       <ChillRecovery category={"chill-&-luxe"} />
-      {/* section 3 */}
-      {/* <BigEnergy ActivitiesArray={ActivitiesArray} /> */}
-      {/* section 4 */}
-      {/* <ChilAndLuxeActivity category={"Chill & Luxe"} />
-      <HomeAndVillaActivities ActivitiesArray={ActivitiesArray} /> */}
     </div>
   );
 }

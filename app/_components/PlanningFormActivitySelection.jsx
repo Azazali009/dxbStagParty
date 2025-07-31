@@ -62,14 +62,16 @@ export default function PlanningFormActivitySelection({
                   className="group flex w-full max-w-[200px] gap-2 overflow-hidden rounded-lg bg-navyBlue text-xs shadow-2xl"
                   key={id}
                 >
-                  <Image
-                    src={act.image}
-                    alt={act.name}
-                    width={50}
-                    height={50}
-                    className="aspect-square duration-300 group-hover:scale-125"
-                  />
-                  <div className="flex flex-col gap-2 p-2">
+                  <div className="w-1/2 overflow-hidden">
+                    <Image
+                      src={act.image}
+                      alt={act.name}
+                      width={50}
+                      height={50}
+                      className="aspect-square w-full object-cover duration-300 group-hover:scale-125"
+                    />
+                  </div>
+                  <div className="flex w-1/2 flex-col gap-2 p-2">
                     <span className="font-semibold text-neutral-500">
                       {act?.category.name}
                     </span>
@@ -90,7 +92,7 @@ export default function PlanningFormActivitySelection({
               return (
                 <button
                   type="button"
-                  className={`rounded-sm ${selectedCategory === category.slug ? "translate-y-1 shadow-xl" : "translate-y-0 shadow-none"} bg-navyBlue px-3 py-1 text-xs duration-300 hover:translate-y-1 hover:shadow-xl active:scale-75`}
+                  className={`rounded-sm ${selectedCategory === category.slug ? "translate-y-1 bg-matalicGold text-navyBlue shadow-xl" : "translate-y-0 bg-navyBlue text-white shadow-none"} px-3 py-1 text-xs font-medium duration-300 hover:translate-y-1 hover:shadow-xl active:scale-75`}
                   onClick={() => setSelectedCategory(category.slug)}
                   key={category.slug}
                 >
@@ -133,7 +135,7 @@ export default function PlanningFormActivitySelection({
                   alt={activity.name}
                   width={50}
                   height={50}
-                  className="aspect-square"
+                  className="aspect-square rounded border border-neutral-700"
                 />
                 <span>{activity.name}</span>
               </label>

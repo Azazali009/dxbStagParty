@@ -12,17 +12,16 @@ export default function PlanningFormBookingInfoStep() {
     setStartDate,
     endDate,
     setEndDate,
-    groupSize,
-    setGroupSize,
     attendees,
     setAttendees,
+    isAttendeeError,
   } = usePartyBuilder();
   const startDatepickerRef = useRef(null);
   const endDatepickerRef = useRef(null);
 
   //   add attendee function
   const addAttendee = () => {
-    setAttendees((prev) => [...prev, { email: "", phone: "" }]);
+    setAttendees((prev) => [...prev, { email: "", name: "" }]);
   };
 
   //   remove attendee function
@@ -90,7 +89,7 @@ export default function PlanningFormBookingInfoStep() {
         </div>
       </FormRow>
 
-      <FormRow label={"Group Size"}>
+      {/* <FormRow label={"Group Size"}>
         <input
           className="h-10 rounded-md border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold"
           type="text"
@@ -100,7 +99,7 @@ export default function PlanningFormBookingInfoStep() {
           onChange={(e) => setGroupSize(e.target.value)}
           required
         />
-      </FormRow>
+      </FormRow> */}
 
       <>
         <AttendeeEmailInputFields
@@ -108,6 +107,7 @@ export default function PlanningFormBookingInfoStep() {
           updateAttendee={updateAttendee}
           removeAttendee={removeAttendee}
           minGroup={1}
+          inputClassName={`${isAttendeeError && " border-red-500"}`}
         />
 
         <button

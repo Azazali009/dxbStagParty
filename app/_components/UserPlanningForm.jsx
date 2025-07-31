@@ -1,9 +1,8 @@
 "use client";
-import { Suspense, useTransition } from "react";
+import { Suspense, useState, useTransition } from "react";
 import dynamic from "next/dynamic";
 
 import { addPlanning } from "../_lib/actions";
-// import PlanningFormActivitySelection from "./PlanningFormActivitySelection";
 const PlanningFormActivitySelection = dynamic(
   () => import("./PlanningFormActivitySelection"),
   {
@@ -21,11 +20,14 @@ import Spinner from "./Spinner";
 import toast from "react-hot-toast";
 import { usePartyBuilder } from "../_context/PartyBuilderProvider";
 import { autoBuildTimeline } from "../_lib/helpers";
+import LoggedInMeesage from "./LoggedInMeesage";
+import { useAuth } from "../_context/AuthProvider";
 
 export default function UserPlanningForm({
   planningStep,
   activities,
   categories,
+  serverUser,
 }) {
   const {
     startDate,
@@ -38,6 +40,8 @@ export default function UserPlanningForm({
     transportHours,
   } = usePartyBuilder();
 
+  const { user: clientUser, loading: loadingUser } = useAuth();
+
   const [isPending, startTransition] = useTransition();
 
   //   handle submit
@@ -45,9 +49,9 @@ export default function UserPlanningForm({
     startTransition(async () => {
       const res = await addPlanningWithData(formData);
       if (res?.error) return toast.error(res?.error);
-      // toast.success(
-      //   "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
-      // );
+      toast.success(
+        "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
+      );
     });
   }
 
@@ -56,7 +60,7 @@ export default function UserPlanningForm({
     startDate,
     endDate,
     selectedActivityIds,
-    groupSize,
+    includeTransport,
   });
 
   // timeline logic
@@ -72,6 +76,15 @@ export default function UserPlanningForm({
     transportHours,
   );
 
+  if (!loadingUser && (!serverUser || !clientUser)) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <LoggedInMeesage
+          redirectTo={`/login?redirectTo=${encodeURIComponent("/builder")}`}
+        />
+      </div>
+    );
+  }
   return (
     <div className="mx-auto w-full max-w-3xl space-y-10 rounded-xl border border-gray-800 p-6 sm:p-10">
       <PlanningFormHeading />

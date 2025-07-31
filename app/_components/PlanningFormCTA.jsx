@@ -2,8 +2,12 @@ import React from "react";
 import SpinnerMini from "./SpinnerMini";
 import FormNavigationButton from "./FormNavigationButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePartyBuilder } from "../_context/PartyBuilderProvider";
+import toast from "react-hot-toast";
 
 export default function PlanningFormCTA({ planningStep, isPending }) {
+  const { attendees, isAttendeeError, setIsAttendeeError } = usePartyBuilder();
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -14,9 +18,44 @@ export default function PlanningFormCTA({ planningStep, isPending }) {
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
+  // function handleNext() {
+  //   goToStep(planningStep + 1);
+  // }
   function handleNext() {
+    const seenNames = new Set();
+    const seenEmails = new Set();
+
+    for (const attendee of attendees || []) {
+      const name = attendee.name?.trim().toLowerCase();
+      const email = attendee.email?.trim().toLowerCase();
+
+      if (!name || !email) {
+        toast.error("Each attendee must have both name and email.");
+        setIsAttendeeError(true);
+        return; // ❌ prevent moving to next step
+      }
+
+      if (seenNames.has(name)) {
+        toast.error(`Duplicate name "${attendee.name}" found.`);
+        setIsAttendeeError(true);
+        return;
+      }
+
+      if (seenEmails.has(email)) {
+        toast.error(`Duplicate email "${attendee.email}" found.`);
+        setIsAttendeeError(true);
+        return;
+      }
+
+      seenNames.add(name);
+      seenEmails.add(email);
+    }
+
+    // ✅ Passed validation, move to next step
+    setIsAttendeeError(false);
     goToStep(planningStep + 1);
   }
+
   function handlePrevious() {
     if (planningStep > 1) goToStep(planningStep - 1);
   }

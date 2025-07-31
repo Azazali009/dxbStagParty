@@ -8,6 +8,7 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [nonVerifyUsersCount, setNonVerifyUsersCount] = useState(0);
+
   async function getUser() {
     const supabase = createClient();
     // const { data } = await supabase.auth.getSession();

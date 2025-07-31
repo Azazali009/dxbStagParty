@@ -11,21 +11,13 @@ export default async function Page({ searchParams }) {
   const activities = await getActivities();
   const categories = await getCategories();
 
-  if (!user)
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        {" "}
-        <LoggedInMeesage
-          redirectTo={`/login?redirectTo=${encodeURIComponent("/build")}`}
-        />
-      </div>
-    );
   return (
     <div className="p-4 sm:p-10">
       <UserPlanningForm
         categories={categories}
         planningStep={planningStep}
         activities={activities}
+        serverUser={user}
       />
     </div>
   );
