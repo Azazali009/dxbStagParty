@@ -107,13 +107,14 @@ export async function checkAndUpdateBookingStatus(bookingID) {
   }
 }
 // ✅4️⃣  Update Payment Status of a Specific Attendee
-export async function updateAttendeeStatus(email, amount) {
+export async function updateAttendeeStatus(email, bookingId, amount) {
   const { data, error } = await supabase
     .from("attendee")
     .update({ status: "paid" })
     .eq("email", email)
+    .eq("bookingID", Number(bookingId))
     .select("bookingID")
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error("❌ Error updating attendee status:", error);

@@ -11,6 +11,7 @@ export default function PlanningFormCTA({ planningStep, isPending }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+
   // handle pagination
   function goToStep(step) {
     const params = new URLSearchParams(searchParams);
@@ -18,9 +19,6 @@ export default function PlanningFormCTA({ planningStep, isPending }) {
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
-  // function handleNext() {
-  //   goToStep(planningStep + 1);
-  // }
   function handleNext() {
     const seenNames = new Set();
     const seenEmails = new Set();
@@ -77,7 +75,7 @@ export default function PlanningFormCTA({ planningStep, isPending }) {
               disabled={isPending}
               className="flex min-w-[100px] items-center justify-center rounded-md border border-matalicGold bg-transparent px-6 py-2 text-center font-semibold capitalize text-matalicGold duration-300 hover:bg-matalicGold hover:text-navyBlue hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-matalicGold"
             >
-              {isPending ? <SpinnerMini /> : "submit"}
+              {isPending ? <SpinnerMini /> : "save & pay"}
             </button>
           </div>
         )}

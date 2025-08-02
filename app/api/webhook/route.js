@@ -19,11 +19,14 @@ export async function POST(req) {
       const session = event.data.object;
       const email = session.customer_email; // ✅ Get attendee's email
       const amount = session.amount_total / 100; // Amount in AED
+      const bookingId = session.metadata.bookingId;
+      console.log("WEBHOOK bookingId:", session.metadata.bookingId);
+      console.log("WEBHOOK email:", session.customer_email);
 
       console.log(`✅ Payment received from: ${email}`);
 
       // ✅ Update Attendee Status in Supabase
-      await updateAttendeeStatus(email, amount);
+      await updateAttendeeStatus(email, bookingId, amount);
     }
 
     return NextResponse.json({ received: true });

@@ -18,6 +18,7 @@ export async function updateAttendeeResendIncrementAction(attendee, bookingID) {
         email: attendee.email,
         amount: attendee.amountPaid,
         remainingAttempts: attendee.resendIncrement,
+        bookingId: bookingID,
       }),
     },
   );

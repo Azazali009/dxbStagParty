@@ -22,6 +22,8 @@ import { usePartyBuilder } from "../_context/PartyBuilderProvider";
 import { autoBuildTimeline } from "../_lib/helpers";
 import LoggedInMeesage from "./LoggedInMeesage";
 import { useAuth } from "../_context/AuthProvider";
+import { addBooking } from "../_lib/data-services";
+import { updateAttendeeStatus } from "../_lib/attendeeApi";
 
 export default function UserPlanningForm({
   planningStep,
@@ -44,14 +46,13 @@ export default function UserPlanningForm({
   const [isPending, startTransition] = useTransition();
 
   const user = clientUser || serverUser;
+
+  // handle booking function
   const handleBooking = async () => {
     const toastId = toast.loading("Processing...");
 
     try {
       const allEmails = [...attendees.map((a) => a.email), user.email];
-
-      // ✅ Check for Duplicate Emails
-      const uniqueEmails = new Set(allEmails);
 
       // fetch selected activides from actividyIds
       const selectedActivities = activities.filter((activity) =>
@@ -68,10 +69,27 @@ export default function UserPlanningForm({
       // Calculate Organizer's 15% Payment
       const organizerAmount = Math.round(totalPrice * 0.15);
 
+      // Save booking to DB first and get bookingId
+      const { CurBooking, error } = await addBooking({
+        userId: user.id,
+        totalPrice,
+        bookingDate: startDate,
+        end_date: endDate,
+        activities: selectedActivities,
+        paidAmount: organizerAmount,
+      });
+
+      if (error) {
+        toast.error("Booking creation failed");
+        return;
+      }
+
+      const bookingId = CurBooking.id;
       //  Save Booking Data to LocalStorage (Before Payment)
       localStorage.setItem(
         "bookingData",
         JSON.stringify({
+          bookingId,
           activities: [
             ...selectedActivities.map((act) => ({
               name: act.name,
@@ -88,7 +106,7 @@ export default function UserPlanningForm({
             })),
             {
               email: user?.email,
-              name: user?.name,
+              name: user?.user_metadata?.full_name,
             },
           ],
           organizerEmail: user.email,
@@ -106,6 +124,7 @@ export default function UserPlanningForm({
           email: user.email,
           amount: organizerAmount,
           activityName: selectedActivities?.map((act) => act.name),
+          bookingId,
         }),
       });
 
@@ -127,16 +146,16 @@ export default function UserPlanningForm({
     }
   };
 
-  //   handle submit
+  // handle submit
   function handleSubmit(formData) {
-    handleBooking();
-    // startTransition(async () => {
-    //   const res = await addPlanningWithData(formData);
-    //   if (res?.error) return toast.error(res?.error);
-    //   toast.success(
-    //     "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
-    //   );
-    // });
+    startTransition(async () => {
+      const res = await addPlanningWithData(formData);
+      if (res?.error) return toast.error(res?.error);
+      handleBooking();
+      // toast.success(
+      //   "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
+      // );
+    });
   }
 
   const addPlanningWithData = addPlanning.bind(null, {
@@ -172,6 +191,7 @@ export default function UserPlanningForm({
   return (
     <div className="mx-auto w-full max-w-3xl space-y-10 rounded-xl border border-gray-800 p-6 sm:p-10">
       <PlanningFormHeading />
+
       <form
         action={async (formData) => handleSubmit(formData)}
         className="flex flex-col gap-6"

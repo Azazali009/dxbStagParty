@@ -25,6 +25,7 @@ export default function CompleteBooking() {
           return;
         }
         const {
+          bookingId,
           attendees,
           totalPrice,
           activities,
@@ -48,6 +49,7 @@ export default function CompleteBooking() {
             emails: attendees.map((att) => att.email),
             totalPrice,
             activities: activities,
+            bookingId,
           }),
         });
 
@@ -65,35 +67,35 @@ export default function CompleteBooking() {
         const splitAmount = Math.round((totalPrice * 0.85) / attendees.length);
 
         // ✅ Prepare booking object with cleaned attendee list
-        const sanitizedBooking = {
-          totalPrice,
-          activities,
-          activityName,
-          bookingDate,
-          end_date,
-          destinations,
-          packages,
-          paidAmount,
-          userId,
-          booking_notes,
-          phone,
-          whatsApp,
-        };
+        // const sanitizedBooking = {
+        //   totalPrice,
+        //   activities,
+        //   activityName,
+        //   bookingDate,
+        //   end_date,
+        //   destinations,
+        //   packages,
+        //   paidAmount,
+        //   userId,
+        //   booking_notes,
+        //   phone,
+        //   whatsApp,
+        // };
 
-        const { CurBooking, error } = await addBooking(sanitizedBooking);
-        if (error) {
-          toast.error("Unexpected error while adding booking.", {
-            id: toastId,
-          });
-          router.push("/");
-          return;
-        }
-        const attendeesData = bookingData.attendees.map(({ email, name }) => {
+        // const { CurBooking, error } = await addBooking(sanitizedBooking);
+        // if (error) {
+        //   toast.error("Unexpected error while adding booking.", {
+        //     id: toastId,
+        //   });
+        //   router.push("/");
+        //   return;
+        // }
+        const attendeesData = attendees.map(({ email, name }) => {
           const paymentLink =
             data.paymentLinks.find((link) => link.email === email)?.link || "";
 
           return {
-            bookingID: CurBooking.id,
+            bookingID: bookingId,
             email,
             name,
             amountPaid: splitAmount,
@@ -116,7 +118,7 @@ export default function CompleteBooking() {
           "Booking complete! Attendees will receive payment links through emails 📩.",
           { id: toastId },
         );
-        router.push(`/account/bookings/${CurBooking.id}`); // Redirect to bookings page
+        router.push(`/account/bookings/${bookingId}`); // Redirect to bookings page
         localStorage.removeItem("bookingData");
       } catch (error) {
         console.log(error);
@@ -133,7 +135,7 @@ export default function CompleteBooking() {
   if (loading)
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-lg font-semibold">Finalizing Booking...</p>
+        <p className="text-lg font-semibold">Booking Processing...</p>
       </div>
     );
 }

@@ -35,7 +35,7 @@ export default function AttendeeCard({
       >
         <span>Attendee:</span>
         <span className="text-xs font-normal xs:text-base sm:text-lg">
-          {attendee?.email?.split("@")[0]}
+          {attendee?.name}
         </span>
       </h1>
       <div

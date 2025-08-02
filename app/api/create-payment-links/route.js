@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 
 export async function POST(req) {
   try {
-    const { emails, totalPrice, activities } = await req.json();
+    const { emails, totalPrice, activities, bookingId } = await req.json();
 
     if (!emails || emails.length === 0 || !totalPrice) {
       return NextResponse.json(
@@ -23,6 +23,9 @@ export async function POST(req) {
         payment_method_types: ["card"],
         mode: "payment",
         customer_email: email,
+        metadata: {
+          bookingId,
+        },
         line_items: [
           {
             price_data: {

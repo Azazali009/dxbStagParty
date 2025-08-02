@@ -610,10 +610,6 @@ export async function addPlanning(data, formData) {
   if (response.error) {
     return { error: "Something went wrong while saving your plan." };
   }
-
-  revalidatePath("/account/profile");
-
-  redirect("/account/profile");
 }
 
 export async function updatePlanning(data, formData) {
