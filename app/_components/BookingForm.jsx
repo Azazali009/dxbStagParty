@@ -88,7 +88,6 @@ export default function BookingForm({
       }
 
       const allEmails = [...attendees.map((a) => a.email), user.email];
-      const allPhones = [...attendees.map((a) => a.phone), phone]; // phone = organizer phone
 
       // ✅ Check for Duplicate Emails
       const uniqueEmails = new Set(allEmails);
@@ -127,7 +126,7 @@ export default function BookingForm({
           attendees: [
             ...attendees.map((a) => ({
               email: a.email,
-              phone: a.phone,
+              name: a.name,
             })),
             {
               email: user.email,
@@ -200,7 +199,9 @@ export default function BookingForm({
             name={user?.user_metadata?.full_name}
           />
         )}
-        {currentStep === 2 && <BookingDetails duration={duration} id={id} />}
+        {currentStep === 2 && (
+          <BookingDetails user={user} duration={duration} id={id} />
+        )}
         {currentStep === 3 && (
           <AttendeeEmailsBookingDetails
             attendees={attendees}

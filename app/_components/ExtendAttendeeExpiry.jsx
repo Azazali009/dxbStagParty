@@ -42,7 +42,7 @@ export default function ExtendAttendeeExpiry({
       variation="gold"
       onClick={handleExtendExpiry}
       disabled={loading || bookingPaymentStatus === "cancelled"}
-      className="whitespace-nowrap px-4 py-2.5 !text-xs font-medium"
+      className="whitespace-nowrap px-4 py-2.5 !text-xs font-medium tracking-normal hover:bg-matalicGold hover:text-navyBlue md:!text-base"
     >
       {loading ? "Processing..." : "Extend by 24h"}
     </Button>

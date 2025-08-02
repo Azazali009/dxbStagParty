@@ -1,6 +1,5 @@
 import { supabaseAdmin } from "../_lib/adminSupabase";
-import { createClient } from "../_utils/supabase/client";
-import { supabase } from "./supabase";
+
 export async function getUsers() {
   const { data, error } = await supabaseAdmin.auth.admin.listUsers();
 
@@ -24,6 +23,7 @@ export async function deleteUser(userId) {
 }
 
 export async function getNonVerifiedUsers() {
+  const supabase = createClient();
   const { data } = await supabase
     .from("users")
     .select("*")
@@ -32,24 +32,11 @@ export async function getNonVerifiedUsers() {
   return data;
 }
 export async function getVerifiedUsers() {
+  const supabase = createClient();
   const { data } = await supabase
     .from("users")
     .select("*")
     .eq("isVerified", true);
 
-  return data;
-}
-
-export async function getCurrentUserPlanningData(userId) {
-  let { data, error } = await supabase
-    .from("planning_sessions")
-    .select("*")
-    .eq("user_id", userId)
-    .single();
-
-  if (error) {
-    console.log(error);
-    return { error: "Error" };
-  }
   return data;
 }

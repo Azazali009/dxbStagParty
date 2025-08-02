@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useTransition } from "react";
+import React, { act, useEffect, useRef, useState, useTransition } from "react";
 import SpinnerMini from "./SpinnerMini";
 import FormRow from "./FormRow";
 import DatePicker from "react-datepicker";
@@ -8,9 +8,18 @@ import { updatePlanning } from "../_lib/actions";
 import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
 import AttendeeEmailInputFields from "./AttendeeEmailInputFields";
 import toast from "react-hot-toast";
+import { MultiSelect } from "react-multi-select-component";
+import { getActivities } from "../_lib/data-services";
+import { autoBuildTimeline } from "../_lib/helpers";
+import PlanningFormTimeline from "./PlanningFormTimeline";
+import { usePartyBuilder } from "../_context/PartyBuilderProvider";
 
 export default function UpdateUserProfilePlanningForm({ data }) {
-  const { start_date } = data;
+  const [activities, setActivities] = useState([]);
+  const [selectedActivities, setSelectedActivities] = useState([]);
+  const { activityBuffers, includeTransport, transportHours } =
+    usePartyBuilder();
+  const { start_date, activityIds } = data;
 
   const [isPending, startTransition] = useTransition();
   const [startDate, setStartDate] = useState(() =>
@@ -55,7 +64,49 @@ export default function UpdateUserProfilePlanningForm({ data }) {
   const updatePlanningWithData = updatePlanning.bind(null, {
     attendees,
     startDate,
+    selectedActivityIds: selectedActivities.map((act) => act.value),
   });
+
+  const timeline = autoBuildTimeline(
+    selectedActivities,
+    startDate,
+    activityBuffers,
+    includeTransport,
+    transportHours,
+  );
+  // fetch selected activities based on activityIds
+  useEffect(() => {
+    async function fetchActivities() {
+      const fetchedActivities = await getActivities();
+
+      const selectedActivities = fetchedActivities.filter((activity) =>
+        activityIds.includes(activity.id),
+      );
+      setSelectedActivities(
+        selectedActivities.map((act) => ({
+          ...act,
+          label: act.name,
+          value: act.id,
+          duration: act.duration,
+        })),
+      );
+    }
+    fetchActivities();
+  }, [activityIds]);
+
+  // fetch all activities for the dropdown
+  useEffect(() => {
+    async function fetchActivities() {
+      const fetchedActivities = await getActivities();
+      setActivities(
+        fetchedActivities.map((act) => ({
+          label: act.name,
+          value: act.id,
+        })),
+      );
+    }
+    fetchActivities();
+  }, []);
 
   return (
     <div className="space-y-5 p-4 xs:space-y-10 sm:space-y-10 sm:p-6">
@@ -93,7 +144,19 @@ export default function UpdateUserProfilePlanningForm({ data }) {
           </div>
         </FormRow>
 
-        <>
+        <FormRow label={"Select Activities:"}>
+          <MultiSelect
+            options={activities}
+            value={selectedActivities}
+            onChange={(selected) => {
+              setSelectedActivities([...selected]);
+            }}
+            labelledBy="Select Activities"
+            className="custom-multi-select"
+            hasSelectAll={false}
+          />
+        </FormRow>
+        <div className="space-y-8">
           <AttendeeEmailInputFields
             attendees={attendees}
             updateAttendee={updateAttendee}
@@ -113,7 +176,11 @@ export default function UpdateUserProfilePlanningForm({ data }) {
               + Attendee
             </button>
           </div>
-        </>
+        </div>
+
+        <div className="mt-10 [grid-column:1/-1]">
+          <PlanningFormTimeline timeline={timeline} />
+        </div>
         <div className="[grid-column:1/-1]">
           <button
             disabled={isPending}

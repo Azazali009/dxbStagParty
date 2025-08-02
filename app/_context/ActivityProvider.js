@@ -96,7 +96,6 @@ export default function ActivityProvider({ children }) {
   }, [groupSize, dayTime, allActivities, category]);
 
   // Min/max values
-
   const groupSizeValues =
     allActivities.length > 0 &&
     allActivities

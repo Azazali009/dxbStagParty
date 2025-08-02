@@ -89,18 +89,6 @@ export default function PlanningFormBookingInfoStep() {
         </div>
       </FormRow>
 
-      {/* <FormRow label={"Group Size"}>
-        <input
-          className="h-10 rounded-md border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold"
-          type="text"
-          name="groupSize"
-          placeholder="2-6"
-          value={groupSize}
-          onChange={(e) => setGroupSize(e.target.value)}
-          required
-        />
-      </FormRow> */}
-
       <>
         <AttendeeEmailInputFields
           attendees={attendees}

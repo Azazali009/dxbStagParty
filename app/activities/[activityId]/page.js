@@ -1,5 +1,4 @@
 import { getActivities, getActivity } from "../../_lib/data-services";
-
 import ActivityDetails from "../../_components/ActivityDetails";
 import Empty from "../../_components/Empty.jsx";
 

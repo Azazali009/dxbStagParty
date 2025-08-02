@@ -30,14 +30,14 @@ export default function ResendPayment({
         <button
           onClick={handleClick}
           disabled={isPending}
-          className="text-nowrap rounded-full border-2 border-emerald-700 px-4 py-2.5 text-xs font-medium capitalize duration-300 hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
+          className="text-nowrap rounded-full border-2 border-emerald-700 px-4 py-2.5 text-xs font-medium capitalize duration-300 hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent md:text-base"
         >
           {isPending ? (
             <div className="flex items-center justify-center gap-2">
               <SpinnerMini /> <span>sending...</span>{" "}
             </div>
           ) : (
-            `resend payment link (${attendee.resendIncrement})`
+            `resend link (${attendee.resendIncrement})`
           )}
         </button>
       ) : (

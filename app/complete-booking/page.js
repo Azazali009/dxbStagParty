@@ -88,14 +88,14 @@ export default function CompleteBooking() {
           router.push("/");
           return;
         }
-        const attendeesData = bookingData.attendees.map(({ email, phone }) => {
+        const attendeesData = bookingData.attendees.map(({ email, name }) => {
           const paymentLink =
             data.paymentLinks.find((link) => link.email === email)?.link || "";
 
           return {
             bookingID: CurBooking.id,
             email,
-            phone, // ✅ Include phone number
+            name,
             amountPaid: splitAmount,
             status: "unpaid",
             paymentLink, // ✅ Stripe link

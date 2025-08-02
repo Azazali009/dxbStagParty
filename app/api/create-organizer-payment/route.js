@@ -17,7 +17,9 @@ export async function POST(req) {
           price_data: {
             currency: "aed",
             product_data: {
-              name: `Organizer Payment for ${activityName}`,
+              name: Array.isArray(activityName)
+                ? `Organizer Payment for ${activityName.map((n) => n).join(", ")}`
+                : `Organizer Payment for ${activityName}`,
             },
             unit_amount: amount * 100, // Convert to cents
           },

@@ -50,7 +50,7 @@ export default function BookingProvider({ children }) {
       }
       if (!Array.isArray(data?.attendees) || data.attendees.length === 0) {
         // Show default if attendees is missing or empty
-        setAttendees([{ email: "", phone: "" }]);
+        setAttendees([{ email: "", name: "" }]);
       } else {
         setAttendees(data.attendees);
       }

@@ -514,9 +514,54 @@ export async function updateBookingPaymentStatus(updateBookingData, formData) {
   revalidatePath(`/dashboard/bookings/${bookingId}`);
 }
 
+// export async function addPlanning(data, formData) {
+//   const supabase = await createClient();
+//   // Check if user is logged in and is an admin
+//   const user = await getCurrentUser();
+//   if (!user) return { error: "You are not allowed to perform this action" };
+
+//   const startDate = data.startDate;
+//   const endDate = data.endDate;
+//   const attendees = data.attendees;
+//   const selectedActivityIds = data.selectedActivityIds;
+//   const includeTransport = data.includeTransport;
+
+//   if (attendees.length < 0 || !startDate || !endDate)
+//     return { error: "Please fill all required fields!" };
+
+//   const newPlanning = {
+//     user_id: user && user.id,
+//     start_date: startDate,
+//     end_date: endDate,
+//     attendees,
+//     activityIds: selectedActivityIds,
+//     hasTransport: includeTransport,
+//   };
+
+//   const { error } = await supabase
+//     .from("planning_sessions")
+//     .insert([newPlanning])
+//     .select();
+
+//   if (error) {
+//     if (
+//       error.message.includes("duplicate key value") &&
+//       error.message.includes("planning_sessions_user_id_key")
+//     ) {
+//       return {
+//         error:
+//           "Looks like you've already started a plan! You can update it or continue planning from your profile whenever you're ready.",
+//       };
+//     }
+
+//     // Generic fallback
+//     return { error: "Something went wrong. Please try again later." };
+//   }
+
+//   redirect("/activities");
+// }
 export async function addPlanning(data, formData) {
   const supabase = await createClient();
-  // Check if user is logged in and is an admin
   const user = await getCurrentUser();
   if (!user) return { error: "You are not allowed to perform this action" };
 
@@ -526,39 +571,49 @@ export async function addPlanning(data, formData) {
   const selectedActivityIds = data.selectedActivityIds;
   const includeTransport = data.includeTransport;
 
-  if (attendees.length < 0 || !startDate || !endDate)
+  if (attendees.length <= 0 || !startDate || !endDate)
     return { error: "Please fill all required fields!" };
 
   const newPlanning = {
-    user_id: user && user.id,
+    user_id: user.id,
     start_date: startDate,
     end_date: endDate,
-    attendees: attendees,
+    attendees,
     activityIds: selectedActivityIds,
     hasTransport: includeTransport,
   };
 
-  const { error } = await supabase
+  // Check if planning already exists for this user
+  const { data: existingPlanning, error: fetchError } = await supabase
     .from("planning_sessions")
-    .insert([newPlanning])
-    .select();
+    .select("id")
+    .eq("user_id", user.id)
+    .single();
 
-  if (error) {
-    if (
-      error.message.includes("duplicate key value") &&
-      error.message.includes("planning_sessions_user_id_key")
-    ) {
-      return {
-        error:
-          "Looks like you've already started a plan! You can update it or continue planning from your profile whenever you're ready.",
-      };
-    }
-
-    // Generic fallback
+  if (fetchError && fetchError.code !== "PGRST116") {
+    // If it's an error other than "row not found"
     return { error: "Something went wrong. Please try again later." };
   }
 
-  redirect("/activities");
+  let response;
+  if (existingPlanning) {
+    // Update existing planning
+    response = await supabase
+      .from("planning_sessions")
+      .update(newPlanning)
+      .eq("user_id", user.id);
+  } else {
+    // Insert new planning
+    response = await supabase.from("planning_sessions").insert([newPlanning]);
+  }
+
+  if (response.error) {
+    return { error: "Something went wrong while saving your plan." };
+  }
+
+  revalidatePath("/account/profile");
+
+  redirect("/account/profile");
 }
 
 export async function updatePlanning(data, formData) {
@@ -571,6 +626,7 @@ export async function updatePlanning(data, formData) {
     user_id: user.id,
     start_date: data.startDate,
     attendees: data.attendees,
+    activityIds: data.selectedActivityIds,
   };
 
   const { error } = await supabase

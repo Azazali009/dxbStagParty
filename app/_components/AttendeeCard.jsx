@@ -15,6 +15,11 @@ export default function AttendeeCard({
       key={attendee.id}
       className={`space-y-4 ${bookingPaymentStatus === "cancelled" && "grayscale"} bg-navyBlue/50 shadow-lg ${attendee.status === "unpaid" ? "text-softGold" : "text-green-500"} rounded-lg px-6 py-10 shadow-lg`}
     >
+      <p className="capitalize">
+        Hey,{" "}
+        <span className="font-semibold text-matalicGold">{attendee?.name}</span>{" "}
+        <span className="inline-block animate-wave sm:text-xl">👋</span>
+      </p>
       <ResendReminder
         status={attendee.status}
         attempts={attendee.resendIncrement}
@@ -47,9 +52,6 @@ export default function AttendeeCard({
       <div className="space-y-2 text-xs xs:text-base">
         <Link className="block" href={`mailto:${attendee?.email}`}>
           💌 {attendee.email}
-        </Link>
-        <Link className="block" href={`tel:${attendee?.phone}`}>
-          📞 {attendee?.phone}
         </Link>
       </div>
 

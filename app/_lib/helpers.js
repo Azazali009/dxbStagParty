@@ -391,4 +391,44 @@ export function autoBuildTimeline(
   });
 }
 
-// I understand it’s a placeholder but the group won’t be using a group range, they’ll need a specific group size, it’ll be 8 or 10 or 5 but they won’t be using 2-6 or 5-10. We can’t book a group range, we need definite number so if the group is 10 then it’s 10, we price based on 10 and we need the names, emails and phone number for 10 people / attendees also. If they enter contact’s for 8 but the group size is 10 then this shouldn’t allow them to continue. We also need to stop them using a repeat name, email so they are inputting correct and valid information not just repeating the same name and email 10 times. We need contacts for all attendees in case of a problem.
+export function parseDurationBooking(durationText) {
+  if (!durationText || typeof durationText !== "string") {
+    return { amount: 60, unit: "minutes" }; // default fallback
+  }
+
+  const lower = durationText.toLowerCase().trim();
+
+  // Match hours like: "2 hours", "1.5hr", "hr", "h"
+  const hourRegex = /(\d+(\.\d+)?)\s*(h|hr|hrs|hour|hours)\b/;
+  const hourMatch = lower.match(hourRegex);
+
+  if (hourMatch) {
+    return {
+      amount: parseFloat(hourMatch[1]),
+      unit: "hours",
+    };
+  }
+
+  // Match minutes like: "30 min", "45 minutes", "mins"
+  const minuteRegex = /(\d+)\s*(m|min|mins|minute|minutes)\b/;
+  const minuteMatch = lower.match(minuteRegex);
+
+  if (minuteMatch) {
+    return {
+      amount: parseInt(minuteMatch[1], 10),
+      unit: "minutes",
+    };
+  }
+
+  // If only digits like "90", assume minutes
+  const justNumber = lower.match(/^(\d+(\.\d+)?)$/);
+  if (justNumber) {
+    return {
+      amount: parseFloat(justNumber[1]),
+      unit: "minutes",
+    };
+  }
+
+  // Default fallback
+  return { amount: 60, unit: "minutes" };
+}

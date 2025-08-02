@@ -6,9 +6,11 @@ import CalenderDaysIcon from "../svgIcons/CalenderDaysIcon";
 import FormRow from "./FormRow";
 import SelectActivities from "./SelectActivities";
 import SelectPackages from "./SelectPackages";
-import { parseDuration } from "../_lib/helpers";
+import { parseDurationBooking } from "../_lib/helpers";
+import { getActivities } from "../_lib/data-services";
+import { getPlanningSessionByUserId } from "../_lib/apiPlanningSession";
 
-export default function BookingDetails({ id, duration }) {
+export default function BookingDetails({ id, duration, user }) {
   const {
     bookingDate,
     setBookingDate,
@@ -20,40 +22,54 @@ export default function BookingDetails({ id, duration }) {
     setSelectedPackages,
     bookingNotes,
     setBookingNotes,
-    minDate,
   } = useBooking();
+
   const datepickerRef = useRef(null);
   const datepickerRef2 = useRef(null);
 
+  // Handle start date change
   const handleStartDateChange = (date) => {
     setBookingDate(date);
-
-    const { amount, unit } = parseDuration(duration);
-
-    if (!isNaN(date?.getTime())) {
-      const end = new Date(date);
-      if (unit === "hours") end.setHours(end.getHours() + amount);
-      else end.setMinutes(end.getMinutes() + amount);
-
-      setEndDate(end);
-    }
   };
   function isValidDate(d) {
     return d instanceof Date && !isNaN(d.getTime());
   }
 
   useEffect(() => {
-    if (bookingDate && !endDate && duration) {
-      const { amount, unit } = parseDuration(duration);
+    if (bookingDate && duration) {
+      const { amount, unit } = parseDurationBooking(duration);
 
       const end = new Date(bookingDate);
+      if (isNaN(end.getTime())) return;
+
       unit === "hours"
         ? end.setHours(end.getHours() + amount)
         : end.setMinutes(end.getMinutes() + amount);
 
       setEndDate(end);
     }
-  }, [bookingDate, endDate, duration, setEndDate]);
+  }, [bookingDate, duration, setEndDate]);
+
+  useEffect(() => {
+    async function fetchActivities() {
+      const planningSession = await getPlanningSessionByUserId(user.id);
+      const activityIds = planningSession?.activityIds || [];
+      const fetchedActivities = await getActivities();
+
+      const selectedActivities = fetchedActivities.filter((activity) =>
+        activityIds.includes(activity.id),
+      );
+      setSelectedActivities(
+        selectedActivities.map((act) => ({
+          ...act,
+          label: act.name,
+          value: act.id,
+          duration: act.duration,
+        })),
+      );
+    }
+    fetchActivities();
+  }, [setSelectedActivities, user.id]);
 
   return (
     <>

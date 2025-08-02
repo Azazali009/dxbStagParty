@@ -20,12 +20,14 @@ export default async function Page({ searchParams }) {
   const groupSize = Number(searchParams?.groupSize ?? 0);
 
   const ActivitiesArray = await getActivities();
-  if (!ActivitiesArray) return <Empty name="Activities" />;
+
+  if (!ActivitiesArray || ActivitiesArray.length === 0)
+    return <Empty name="Activities" />;
   return (
     <div className="mx-auto min-h-screen w-full antialiased">
       <ActivityHeroSection />
 
-      <ActivityFilters searchQuery={searchQuery} groupSize={groupSize} />
+      <ActivityFilters />
       <VipSpotLight />
       <AdrenalineActivities category={"adrenaline"} />
       <Competitive category={"competitive"} />

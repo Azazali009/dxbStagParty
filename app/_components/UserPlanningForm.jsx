@@ -32,7 +32,6 @@ export default function UserPlanningForm({
   const {
     startDate,
     endDate,
-    groupSize,
     selectedActivityIds,
     attendees,
     activityBuffers,
@@ -44,15 +43,100 @@ export default function UserPlanningForm({
 
   const [isPending, startTransition] = useTransition();
 
+  const user = clientUser || serverUser;
+  const handleBooking = async () => {
+    const toastId = toast.loading("Processing...");
+
+    try {
+      const allEmails = [...attendees.map((a) => a.email), user.email];
+
+      // ✅ Check for Duplicate Emails
+      const uniqueEmails = new Set(allEmails);
+
+      // fetch selected activides from actividyIds
+      const selectedActivities = activities.filter((activity) =>
+        selectedActivityIds.includes(activity.id),
+      );
+
+      // get all prices from activities and add them
+      const prices = selectedActivities
+        ?.map((act) => act.price)
+        ?.reduce((acc, cur) => acc + cur, 0);
+
+      const totalPrice = prices * (attendees?.length || 1);
+
+      // Calculate Organizer's 15% Payment
+      const organizerAmount = Math.round(totalPrice * 0.15);
+
+      //  Save Booking Data to LocalStorage (Before Payment)
+      localStorage.setItem(
+        "bookingData",
+        JSON.stringify({
+          activities: [
+            ...selectedActivities.map((act) => ({
+              name: act.name,
+              price: act.price,
+            })),
+          ],
+
+          userId: user.id,
+          totalPrice,
+          attendees: [
+            ...attendees.map((a) => ({
+              email: a.email,
+              name: a.name,
+            })),
+            {
+              email: user?.email,
+              name: user?.name,
+            },
+          ],
+          organizerEmail: user.email,
+          bookingDate: startDate,
+          end_date: endDate,
+          paidAmount: organizerAmount,
+        }),
+      );
+
+      // ✅ Request Organizer Payment Link
+      const organizerPaymentRes = await fetch("/api/create-organizer-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user.email,
+          amount: organizerAmount,
+          activityName: selectedActivities?.map((act) => act.name),
+        }),
+      });
+
+      const organizerPaymentData = await organizerPaymentRes.json();
+
+      if (!organizerPaymentData.success) {
+        toast.error("Error generating organizer payment link.", {
+          id: toastId,
+        });
+        return;
+      }
+
+      //   // ✅ Redirect Organizer to Stripe Checkout for Payment
+      window.location.href = organizerPaymentData.paymentLink;
+      localStorage.setItem("bookingInProgress", "true");
+    } catch (error) {
+      console.error("❌ Error:", error);
+      toast.error("Error processing payment.", { id: toastId });
+    }
+  };
+
   //   handle submit
   function handleSubmit(formData) {
-    startTransition(async () => {
-      const res = await addPlanningWithData(formData);
-      if (res?.error) return toast.error(res?.error);
-      toast.success(
-        "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
-      );
-    });
+    handleBooking();
+    // startTransition(async () => {
+    //   const res = await addPlanningWithData(formData);
+    //   if (res?.error) return toast.error(res?.error);
+    //   toast.success(
+    //     "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
+    //   );
+    // });
   }
 
   const addPlanningWithData = addPlanning.bind(null, {

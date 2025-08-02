@@ -21,7 +21,7 @@ export default function BookingTable({ booking, attendee }) {
       </h1>
       <div className="hidden bg-navyBlue text-[14px] sm:block">
         <BookingTableHeader />
-        <div className="grid grid-cols-10 items-center justify-items-center rounded-b-md border border-gray-700 bg-transparent px-2 py-2 text-center text-[8px] lg:text-xs">
+        <div className="grid grid-cols-9 items-center justify-items-center rounded-b-md border border-gray-700 bg-transparent px-2 py-2 text-center text-[8px] lg:text-xs">
           <p className="col-span-2 flex flex-col gap-1">
             {" "}
             {booking?.activities?.map((act, i) => {
@@ -37,7 +37,6 @@ export default function BookingTable({ booking, attendee }) {
           <p>{booking.totalPrice}</p>
           <p> {booking?.paidAmount ?? "0"}</p>
           <p> {attendee.length}</p>
-          <p>{booking.destinations}</p>
           <p>{booking.users.fullName}</p>
           <p className="col-span-2 text-balance"> {booking.users.email}</p>
         </div>

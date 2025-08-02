@@ -6,14 +6,14 @@ import { cinzel } from "../layout";
 import LinkButton from "./LinkButton";
 export default function AdrenalineActivities({ category }) {
   const { filteredActivities } = useActivity();
-
+  console.log("AdrenalineActivities", filteredActivities);
   const filteredByCategoryArr =
     filteredActivities?.length > 0
       ? filteredActivities?.filter(
           (activity) => activity?.category?.slug === category,
         )
       : null;
-  console.log(filteredActivities);
+
   if (!filteredByCategoryArr || filteredByCategoryArr.length === 0) return null;
   return (
     <section className="relative bg-[url('/images/adrenaline-bg.webp')] bg-cover bg-no-repeat py-10 sm:py-20">
