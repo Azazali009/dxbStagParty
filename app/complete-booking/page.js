@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { addBooking } from "../_lib/data-services";
-import { addAttendees } from "../_lib/attendeeApi";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { addAttendees } from "../_lib/attendeeApi";
 
 export default function CompleteBooking() {
   const router = useRouter();

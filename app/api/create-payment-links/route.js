@@ -30,14 +30,18 @@ export async function POST(req) {
           {
             price_data: {
               currency: "aed",
-              product_data: { name: "DXB Stag party" },
+              product_data: {
+                name:
+                  Array.isArray(activities) &&
+                  `Organizer Payment for ${activities.map((n) => n?.name).join(", ")}`,
+              },
               unit_amount: perPersonAmount * 100, // Amount in cents
             },
             quantity: 1,
           },
         ],
         success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success`,
-        cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cancel`,
+        cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/booking-failed`,
       });
 
       const paymentLink = session.url;

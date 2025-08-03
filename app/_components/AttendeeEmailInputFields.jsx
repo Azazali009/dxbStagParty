@@ -18,6 +18,7 @@ export default function AttendeeInputFields({
             <input
               type="email"
               placeholder="Email"
+              autoComplete="email"
               value={attendee.email}
               onChange={(e) => updateAttendee(index, "email", e.target.value)}
               className={cn(
@@ -29,6 +30,7 @@ export default function AttendeeInputFields({
             <input
               type="text"
               placeholder="Name"
+              autoComplete="name"
               value={attendee.name}
               onChange={(e) => updateAttendee(index, "name", e.target.value)}
               className={cn(

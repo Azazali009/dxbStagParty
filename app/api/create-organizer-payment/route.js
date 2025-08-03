@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
   try {
-    const { email, amount, activityName, bookingId } = await req.json();
+    const { email, amount, activities, bookingId } = await req.json();
 
     // 🔹 1️⃣ Create Stripe Checkout Session for Organizer Payment
     const session = await stripe.checkout.sessions.create({
@@ -20,9 +20,9 @@ export async function POST(req) {
           price_data: {
             currency: "aed",
             product_data: {
-              name: Array.isArray(activityName)
-                ? `Organizer Payment for ${activityName.map((n) => n).join(", ")}`
-                : `Organizer Payment for ${activityName}`,
+              name:
+                Array.isArray(activities) &&
+                `Organizer Payment for ${activities.map((n) => n?.name).join(", ")}`,
             },
             unit_amount: amount * 100, // Convert to cents
           },

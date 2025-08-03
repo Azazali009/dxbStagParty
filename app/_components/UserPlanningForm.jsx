@@ -96,7 +96,6 @@ export default function UserPlanningForm({
               price: act.price,
             })),
           ],
-
           userId: user.id,
           totalPrice,
           attendees: [
@@ -123,7 +122,7 @@ export default function UserPlanningForm({
         body: JSON.stringify({
           email: user.email,
           amount: organizerAmount,
-          activityName: selectedActivities?.map((act) => act.name),
+          activities: selectedActivities,
           bookingId,
         }),
       });

@@ -20,7 +20,9 @@ export async function generateStaticParams() {
 
 export default async function page({ params }) {
   const curAuthUser = await getCurrentUser();
-  const booking = await getBooking(params.bookingID);
+  const bookingID = await params.bookingID;
+
+  const booking = await getBooking(bookingID);
 
   if (!booking) return <Empty name="Booking" />;
   // Check the right user could see only his own bookings
@@ -44,6 +46,7 @@ export default async function page({ params }) {
       <AttendeeDetail
         bookingPaymentStatus={booking.paymentStatus}
         attendee={attendees}
+        bookingID={bookingID}
       />
     </div>
   );

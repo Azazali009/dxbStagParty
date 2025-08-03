@@ -1,3 +1,3 @@
 export default function Page() {
-  return <div>Oh! You cancel you payment</div>;
+  return <div>Oh! You cancel you booking</div>;
 }

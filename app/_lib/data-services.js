@@ -88,6 +88,13 @@ import { getCategoryByName } from "./categoryApi";
 //   return data;
 // }
 
+export async function deleteBooking(bookingId) {
+  const supabase = createClient();
+  const { error } = await supabase.from("booking").delete().eq("id", bookingId);
+
+  if (error) return { error: "Booking could not deleted" };
+}
+
 export async function getActivities() {
   let { data, error } = await supabase
     .from("activities")

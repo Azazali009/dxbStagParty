@@ -25,7 +25,7 @@ export async function updateAttendeeResendIncrementAction(attendee, bookingID) {
 
   const data = await res.json();
   const attendeeRes = await updateAttendeeResendIncrement(attendee.id);
-  console.log(attendeeRes);
+
   if (data.status === "failed" || attendeeRes?.error)
     return {
       error:
