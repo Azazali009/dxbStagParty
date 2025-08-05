@@ -432,3 +432,17 @@ export function parseDurationBooking(durationText) {
   // Default fallback
   return { amount: 60, unit: "minutes" };
 }
+
+export function formatDateTime(datetimeStr) {
+  const date = new Date(datetimeStr);
+
+  return date.toLocaleString("en-US", {
+    weekday: "short", // e.g. Wed
+    year: "numeric",
+    month: "short", // e.g. Aug
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true, // 12-hour format with AM/PM
+  });
+}

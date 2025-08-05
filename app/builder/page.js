@@ -1,5 +1,5 @@
 import React from "react";
-import UserPlanningForm from "../_components/UserPlanningForm";
+import UserPlanningFormAndSummary from "../_components/UserPlanningFormAndSummary";
 import { getCurrentUser } from "../_lib/getCurrentUser";
 import LoggedInMeesage from "../_components/LoggedInMeesage";
 import { getActivities } from "../_lib/data-services";
@@ -13,7 +13,7 @@ export default async function Page({ searchParams }) {
 
   return (
     <div className="p-4 sm:p-10">
-      <UserPlanningForm
+      <UserPlanningFormAndSummary
         categories={categories}
         planningStep={planningStep}
         activities={activities}

@@ -1,8 +1,14 @@
 "use client";
-import { Suspense, useState, useTransition } from "react";
 import dynamic from "next/dynamic";
+import { Suspense, useTransition } from "react";
 
 import { addPlanning } from "../_lib/actions";
+import PlanningFormBookingInfoStep from "./PlanningFormBookingInfoStep";
+import PlanningFormCTA from "./PlanningFormCTA";
+import PlanningFormHeading from "./PlanningFormHeading";
+import PlanningFormTimeline from "./PlanningFormTimeline";
+import PlanningFormTransport from "./PlanningFormTransport";
+import Spinner from "./Spinner";
 const PlanningFormActivitySelection = dynamic(
   () => import("./PlanningFormActivitySelection"),
   {
@@ -10,22 +16,16 @@ const PlanningFormActivitySelection = dynamic(
     ssr: false, // if it's client only
   },
 );
-import PlanningFormBookingInfoStep from "./PlanningFormBookingInfoStep";
-import PlanningFormCTA from "./PlanningFormCTA";
-import PlanningFormHeading from "./PlanningFormHeading";
-import PlanningFormTimeline from "./PlanningFormTimeline";
-import PlanningFormTransport from "./PlanningFormTransport";
-import Spinner from "./Spinner";
 
 import toast from "react-hot-toast";
+import { useAuth } from "../_context/AuthProvider";
 import { usePartyBuilder } from "../_context/PartyBuilderProvider";
+import { addBooking } from "../_lib/data-services";
 import { autoBuildTimeline } from "../_lib/helpers";
 import LoggedInMeesage from "./LoggedInMeesage";
-import { useAuth } from "../_context/AuthProvider";
-import { addBooking } from "../_lib/data-services";
-import { updateAttendeeStatus } from "../_lib/attendeeApi";
+import PlanningSUmmaryPanel from "./PlanningSUmmaryPanel";
 
-export default function UserPlanningForm({
+export default function UserPlanningFormAndSummary({
   planningStep,
   activities,
   categories,
@@ -188,35 +188,38 @@ export default function UserPlanningForm({
     );
   }
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-10 rounded-xl border border-gray-800 p-6 sm:p-10">
-      <PlanningFormHeading />
+    <div className="grid min-h-screen grid-cols-[1fr_0.5fr] gap-10 divide-x divide-neutral-700">
+      <div className="mx-auto w-full space-y-10 rounded-xl border border-gray-800 p-6 sm:p-10">
+        <PlanningFormHeading />
 
-      <form
-        action={async (formData) => handleSubmit(formData)}
-        className="flex flex-col gap-6"
-      >
-        {/* step 1 */}
-        {planningStep === 1 && <PlanningFormBookingInfoStep />}
+        <form
+          action={async (formData) => handleSubmit(formData)}
+          className="flex flex-col gap-6"
+        >
+          {/* step 1 */}
+          {planningStep === 1 && <PlanningFormBookingInfoStep />}
 
-        {/* step 2 (Activity Selection) */}
-        {planningStep === 2 && (
-          <Suspense fallback={<Spinner />}>
-            <PlanningFormActivitySelection
-              activities={activities}
-              categories={categories}
-            />
-          </Suspense>
-        )}
+          {/* step 2 (Activity Selection) */}
+          {planningStep === 2 && (
+            <Suspense fallback={<Spinner />}>
+              <PlanningFormActivitySelection
+                activities={activities}
+                categories={categories}
+              />
+            </Suspense>
+          )}
 
-        {/* step 3 (Time logic) */}
-        {planningStep === 3 && <PlanningFormTimeline timeline={timeline} />}
+          {/* step 3 (Time logic) */}
+          {planningStep === 3 && <PlanningFormTimeline timeline={timeline} />}
 
-        {/* step 4 transport */}
-        {planningStep === 4 && <PlanningFormTransport timeline={timeline} />}
+          {/* step 4 transport */}
+          {planningStep === 4 && <PlanningFormTransport timeline={timeline} />}
 
-        {/*Form cta */}
-        <PlanningFormCTA planningStep={planningStep} isPending={isPending} />
-      </form>
+          {/*Form cta */}
+          <PlanningFormCTA planningStep={planningStep} isPending={isPending} />
+        </form>
+      </div>
+      <PlanningSUmmaryPanel selectedActivities={selectedActivities} />
     </div>
   );
 }

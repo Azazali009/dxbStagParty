@@ -119,7 +119,7 @@ h3 {
 }
 .no-scrollbar::-webkit-scrollbar-track {
   width: 2px;
-  background-color: #424242;
+  background-color: transparent;
   border-radius: 50px;
 }
 @layer components {
