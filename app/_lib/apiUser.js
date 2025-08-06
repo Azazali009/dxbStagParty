@@ -23,20 +23,20 @@ export async function deleteUser(userId) {
 }
 
 export async function getNonVerifiedUsers() {
-  const supabase = createClient();
-  const { data } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("users")
     .select("*")
     .eq("isVerified", false);
 
+  if (error) return { error: "Unable to load non verified users" };
   return data;
 }
 export async function getVerifiedUsers() {
-  const supabase = createClient();
-  const { data } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("users")
     .select("*")
     .eq("isVerified", true);
 
+  if (error) return { error: "Unable to load users" };
   return data;
 }

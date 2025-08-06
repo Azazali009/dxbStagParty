@@ -18,7 +18,7 @@ export default function BookingFormPagination({ currentStep }) {
     if (currentStep > 1) goToStep(currentStep - 1);
   };
   return (
-    <div className="sticky bottom-0 flex w-full items-center justify-between bg-neutral-950 p-4 pb-1 [grid-column:1/-1]">
+    <div className="sticky bottom-0 flex w-full items-center justify-between bg-neutral-900 p-4 pb-1 [grid-column:1/-1]">
       <PaginationButton
         disabled={currentStep === 1}
         handleClick={handlePrevious}

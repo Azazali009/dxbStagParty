@@ -29,7 +29,7 @@ export default function ModalWindow({ children, onClose, user }) {
 
           <motion.div
             className={
-              "no-scrollbar relative z-50 flex max-h-[calc(100vh-5em)] flex-1 flex-col items-center overflow-y-auto bg-neutral-950 md:max-w-[70%] md:rounded-2xl"
+              "no-scrollbar relative z-50 flex max-h-[calc(100vh-5em)] flex-1 flex-col items-center overflow-y-auto bg-neutral-900 md:rounded-2xl lg:max-w-[90%]"
             }
             key="modal"
             initial={{

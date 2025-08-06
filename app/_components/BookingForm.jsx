@@ -10,6 +10,7 @@ import OrganiserBookingDetails from "../_components/OrganiserBookingDetails";
 import { useBooking } from "../_context/bookingProvider";
 import Button from "./Button";
 import Summary from "./Summary";
+import { addBooking } from "../_lib/data-services";
 
 export default function BookingForm({
   id,
@@ -103,10 +104,31 @@ export default function BookingForm({
       // ✅ Calculate Organizer's 15% Payment
       const organizerAmount = Math.round(totalPrice * 0.15);
 
+      // Save booking to DB first and get bookingId
+      const { CurBooking, error } = await addBooking({
+        userId: user.id,
+        totalPrice,
+        bookingDate,
+        end_date: endDate,
+        activities: selectedActivities,
+        paidAmount: organizerAmount,
+        phone,
+        whatsApp,
+        booking_notes: bookingNotes,
+      });
+
+      if (error) {
+        toast.error("Booking creation failed");
+        return;
+      }
+
+      const bookingId = CurBooking.id;
+
       // ✅ Save Booking Data to LocalStorage (Before Payment)
       localStorage.setItem(
         "bookingData",
         JSON.stringify({
+          bookingId,
           activities: [
             {
               name: activityName,
@@ -152,7 +174,8 @@ export default function BookingForm({
         body: JSON.stringify({
           email: user.email,
           amount: organizerAmount,
-          activityName,
+          activities: selectedActivities,
+          bookingId,
         }),
       });
 
@@ -177,59 +200,65 @@ export default function BookingForm({
     }
   };
 
-  if (!user) return <LoggedInMessage />;
+  if (!user)
+    return (
+      <LoggedInMessage
+        redirectTo={`/login?redirectTo=${encodeURIComponent(`/activities/${id}`)}`}
+      />
+    );
 
   return (
-    <div className="relative w-full space-y-6 px-3 py-6 text-neutral-200">
-      <h1 className="text-center text-base font-bold text-secondary md:text-3xl dark:text-neutral-100">
-        Level up your party with
-        <span className="rounded-md border border-gray-200 bg-gray-100 px-1 py-0.5 dark:border-neutral-700 dark:bg-secondary">
-          DXB Stag
-        </span>{" "}
-        Party
-      </h1>
+    <div className="relative grid w-full grid-cols-[1fr_0.5fr] divide-x divide-neutral-800 text-neutral-200">
+      <div className="space-y-6 p-8">
+        <h1 className="text-center text-base font-bold text-secondary md:text-3xl dark:text-neutral-100">
+          Level up your party with
+          <span className="rounded-md border border-gray-200 bg-gray-100 px-1 py-0.5 dark:border-neutral-700 dark:bg-secondary">
+            DXB Stag
+          </span>{" "}
+          Party
+        </h1>
 
-      <form
-        onSubmit={handleBooking}
-        className="grid grid-cols-1 items-center gap-x-10 gap-y-6 p-4 md:grid-cols-2"
-      >
-        {currentStep === 1 && (
-          <OrganiserBookingDetails
-            email={user.email}
-            name={user?.user_metadata?.full_name}
-          />
-        )}
-        {currentStep === 2 && (
-          <BookingDetails user={user} duration={duration} id={id} />
-        )}
-        {currentStep === 3 && (
-          <AttendeeEmailsBookingDetails
-            attendees={attendees}
-            setAttendees={setAttendees}
-            minGroup={minGroup}
-            maxGroup={maxGroup}
-          />
-        )}
-        {currentStep === 4 && (
-          <div
-            style={{ gridColumn: "1/-1" }}
-            className="flex flex-col gap-4 justify-self-center"
-          >
-            <Button variation="gold" type="submit" disable={loading}>
-              {loading ? "Processing..." : "Pay & Confirm"}{" "}
-            </Button>
-            <small>
-              You’ll only pay 15% now to confirm your spot. The rest comes
-              later.
-            </small>
-          </div>
-        )}
-        <BookingFormPagination currentStep={currentStep} />
-      </form>
+        <form
+          onSubmit={handleBooking}
+          className="grid grid-cols-1 items-center gap-x-10 gap-y-6 p-4 md:grid-cols-2"
+        >
+          {currentStep === 1 && (
+            <OrganiserBookingDetails
+              email={user.email}
+              name={user?.user_metadata?.full_name}
+            />
+          )}
+          {currentStep === 2 && (
+            <BookingDetails user={user} duration={duration} id={id} />
+          )}
+          {currentStep === 3 && (
+            <AttendeeEmailsBookingDetails
+              attendees={attendees}
+              setAttendees={setAttendees}
+              minGroup={minGroup}
+              maxGroup={maxGroup}
+            />
+          )}
+          {currentStep === 4 && (
+            <div
+              style={{ gridColumn: "1/-1" }}
+              className="flex flex-col gap-4 justify-self-center"
+            >
+              <Button variation="gold" type="submit" disable={loading}>
+                {loading ? "Processing..." : "Pay & Confirm"}{" "}
+              </Button>
+              <small>
+                You’ll only pay 15% now to confirm your spot. The rest comes
+                later.
+              </small>
+            </div>
+          )}
+          <BookingFormPagination currentStep={currentStep} />
+        </form>
+      </div>
+
       {/* summary */}
       <Summary
-        selectedActivities={selectedActivities}
-        selectedPackages={selectedPackages}
         price={price}
         activityName={activityName}
         totalPrice={totalPrice}

@@ -446,3 +446,27 @@ export function formatDateTime(datetimeStr) {
     hour12: true, // 12-hour format with AM/PM
   });
 }
+
+// Function to extract data and validate
+export function extractAndValidateFormData(formData, optionalFields = []) {
+  const formDataObject = {};
+
+  // Extract all data from FormData
+  formData.forEach((value, key) => {
+    formDataObject[key] = value;
+  });
+
+  // Validation: Check if any field is empty except optional fields
+  for (const [key, value] of Object.entries(formDataObject)) {
+    // If the field is not in the optionalFields array and it's empty, return error
+    if (!optionalFields.includes(key) && !value.trim()) {
+      return {
+        valid: false,
+        error: `${key?.replaceAll("_", " ")} cannot be empty`, // Return error if field is empty
+      };
+    }
+  }
+
+  // If all fields are valid, return valid status
+  return { valid: true, data: formDataObject };
+}

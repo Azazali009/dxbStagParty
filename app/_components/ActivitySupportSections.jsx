@@ -26,7 +26,7 @@ export default function ActivitySupportSections({ activity }) {
         )}
       </div>
       {/* map section */}
-      <div className="!mt-24 grid grid-cols-1 gap-12 sm:grid-cols-2">
+      {/* <div className="!mt-24 grid grid-cols-1 gap-12 sm:grid-cols-2">
         <div>
           <h3
             className={`text-center text-2xl font-semibold xs:text-3xl ${playfairDisplay.className} capitalize tracking-wider`}
@@ -43,7 +43,6 @@ export default function ActivitySupportSections({ activity }) {
             ></iframe>
             <div class="flex flex-col gap-2 text-xs font-light xs:text-lg">
               <span>{activity?.destinations}</span>
-              {/* <span>~45 min drive from Dubai Marina</span> */}
             </div>
           </div>
         </div>
@@ -64,7 +63,7 @@ export default function ActivitySupportSections({ activity }) {
             <span>Comfortable / activewear</span>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* review section */}
       <div className="space-y-10 py-10 xs:space-y-20">
         <h2
