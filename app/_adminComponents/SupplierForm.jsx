@@ -14,7 +14,7 @@ export default function SupplierForm({ isForApply = false }) {
   const [activities, setActivities] = useState([]);
   const [selectedActivities, setSelectedActivities] = useState([]);
   const [images, setImages] = useState([undefined]);
-  const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
+  const [bankDetails, setBankDetails] = useState({ bank: "", iban: "" });
 
   async function uploadImagesToSupabaseBucket() {
     const supabase = createClient();
@@ -42,7 +42,6 @@ export default function SupplierForm({ isForApply = false }) {
       urls.push(url); // ✅ Push to local array
     }
 
-    setUploadedImageUrls(urls); // ✅ Update state (optional)
     return urls; // ✅ Return array from function
   }
 
@@ -76,6 +75,7 @@ export default function SupplierForm({ isForApply = false }) {
           {
             selectedActivities,
             urls,
+            bankDetails,
           },
           formData,
         );
@@ -129,7 +129,7 @@ export default function SupplierForm({ isForApply = false }) {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col gap-14 px-4 py-14">
+    <div className="mx-auto flex flex-col gap-14 rounded-2xl border border-neutral-700 px-8 py-14">
       <h1 className="text-3xl font-semibold text-matalicGold">
         {isForApply ? "Apply to become a supplier" : "Add supplier"}
       </h1>
@@ -291,6 +291,7 @@ export default function SupplierForm({ isForApply = false }) {
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           />
         </FormRow>
+
         <FormRow label="lead time">
           <input
             type="text"
@@ -301,9 +302,169 @@ export default function SupplierForm({ isForApply = false }) {
           />
         </FormRow>
 
+        <FormRow label="min group size">
+          <input
+            type="number"
+            placeholder="	2"
+            name="min_group_size"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="max group size">
+          <input
+            type="number"
+            placeholder="12"
+            name="max_group_size"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="booking method">
+          <input
+            type="text"
+            placeholder="Manual / Online"
+            name="booking_method"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="location type">
+          <input
+            type="text"
+            placeholder="Outdoor / Indoor"
+            name="location_type"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="base price">
+          <input
+            type="number"
+            placeholder="200"
+            name="base_price"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="discounted price">
+          <input
+            type="number"
+            placeholder="150"
+            name="discounted_price"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        {/* <FormRow label="add ons">
+          <input
+            type="text"
+            placeholder="200"
+            name="add_ons"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow> */}
+
+        <FormRow label="deposit required">
+          <select
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+            name="deposit_required"
+            id=""
+          >
+            <option value="">Is deposite required?</option>
+            <option value="false">False</option>
+            <option value="true">True</option>
+          </select>
+        </FormRow>
+
+        <FormRow label="cancellation_terms">
+          <input
+            type="text"
+            placeholder="72 hours in advance"
+            name="cancellation_terms"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="commission agreement">
+          <input
+            type="text"
+            placeholder="10% per booking"
+            name="commission_agreement"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="payment preferences">
+          <input
+            type="text"
+            placeholder="Bank Transfer"
+            name="payment_preferences"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow
+          label="bank_details"
+          className={"space-y-4 ![grid-column:1/-1]"}
+        >
+          <label>
+            Bank Name
+            <input
+              type="text"
+              value={bankDetails.bank}
+              className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+              onChange={(e) =>
+                setBankDetails({ ...bankDetails, bank: e.target.value })
+              }
+            />
+          </label>
+
+          <label>
+            IBAN Number
+            <input
+              type="text"
+              value={bankDetails.iban}
+              className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+              onChange={(e) =>
+                setBankDetails({ ...bankDetails, iban: e.target.value })
+              }
+            />
+          </label>
+        </FormRow>
+
+        <FormRow label="activity tags">
+          <input
+            type="text"
+            placeholder="Adventure, Family, ..."
+            name="activity_tags"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+        <FormRow label="mobility requirements">
+          <input
+            type="text"
+            placeholder="Not wheelchair accessible"
+            name="mobility_requirements"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
         <div className="[grid-column:1/-1]">
           <button
-            className="flex w-fit items-center justify-center gap-2 rounded border border-matalicGold bg-transparent px-6 py-2.5 text-center font-medium capitalize text-matalicGold duration-300 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+            className="flex w-fit items-center justify-center gap-2 rounded border border-matalicGold bg-transparent px-6 py-2.5 text-center font-medium capitalize text-matalicGold duration-300 hover:opacity-80 active:scale-90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
             type="submit"
             disabled={isPending}
           >

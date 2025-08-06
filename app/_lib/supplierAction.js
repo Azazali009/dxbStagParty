@@ -37,7 +37,7 @@ export async function addSupplierAction(formData) {
 export async function applySupplierAction(data, formData) {
   const supabase = await createClient();
   const user = await getCurrentUser();
-  const { urls, selectedActivities } = data;
+  const { urls, selectedActivities, bankDetails } = data;
   const activityIds = selectedActivities?.map((activity) => activity?.value);
 
   // check error for empty fields
@@ -46,14 +46,22 @@ export async function applySupplierAction(data, formData) {
   if (!result?.valid) return { error: result?.error };
 
   const formDataObject = result?.data;
-  const { locations, languages, available_hours, blackout_dates } =
-    formDataObject;
+  const {
+    locations,
+    languages,
+    available_hours,
+    blackout_dates,
+    add_ons,
+    activity_tags,
+  } = formDataObject;
 
   // convert text fields to an array for json data in supabase
   const locationArr = locations?.split(",");
   const languagesArr = languages?.split(",");
   const available_hoursArr = available_hours?.split(",");
   const blackout_datesArr = blackout_dates?.split(",");
+  const add_onsArr = add_ons?.split(",") ?? null;
+  const activity_tagsArr = activity_tags?.split(",");
 
   const newSupplier = {
     ...formDataObject,
@@ -63,6 +71,9 @@ export async function applySupplierAction(data, formData) {
     gallery: urls?.length > 0 ? urls : null,
     available_hours: available_hoursArr,
     blackout_dates: blackout_datesArr,
+    add_ons: add_onsArr,
+    bank_details: bankDetails,
+    activity_tags: activity_tagsArr,
   };
   console.log(newSupplier);
   // add to supabase
