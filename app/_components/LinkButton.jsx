@@ -4,7 +4,7 @@ import { cn } from "../_lib/utils";
 export default function LinkButton({
   children,
   className,
-  href,
+  href = "#",
   variation = "default",
   size = "medium",
 }) {

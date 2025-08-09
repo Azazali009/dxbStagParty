@@ -80,7 +80,7 @@ export default function UpdateUserProfilePlanningForm({ data }) {
       const fetchedActivities = await getActivities();
 
       const selectedActivities = fetchedActivities.filter((activity) =>
-        activityIds.includes(activity.id),
+        activityIds?.includes(activity.id),
       );
       setSelectedActivities(
         selectedActivities.map((act) => ({

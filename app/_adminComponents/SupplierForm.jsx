@@ -3,10 +3,15 @@ import { useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import FormRow from "../_components/FormRow";
 import SpinnerMini from "../_components/SpinnerMini";
-import { addSupplierAction, applySupplierAction } from "../_lib/supplierAction";
+import {
+  addAndApplySupplierAction,
+  addSupplierAction,
+  applySupplierAction,
+} from "../_lib/supplierAction";
 import { getActivities } from "../_lib/data-services";
 import { MultiSelect } from "react-multi-select-component";
 import { createClient } from "../_utils/supabase/client";
+import EyeIcon from "../svgIcons/EyeIcon";
 
 export default function SupplierForm({ isForApply = false }) {
   const [isPending, startTransition] = useTransition();
@@ -15,6 +20,7 @@ export default function SupplierForm({ isForApply = false }) {
   const [selectedActivities, setSelectedActivities] = useState([]);
   const [images, setImages] = useState([undefined]);
   const [bankDetails, setBankDetails] = useState({ bank: "", iban: "" });
+  const [passwordTye, setPasswordType] = useState("password");
 
   async function uploadImagesToSupabaseBucket() {
     const supabase = createClient();
@@ -46,45 +52,137 @@ export default function SupplierForm({ isForApply = false }) {
   }
 
   // handle submit
+  // async function handleSubmit(formData) {
+  //   startTransition(async () => {
+  //     if (!isForApply) {
+  //       const res = await addSupplierAction(
+  //         {
+  //           selectedActivities,
+  //           urls: [], // Empty for now
+  //           validateOnly: true,
+  //         },
+  //         formData,
+  //       );
+  //       if (res?.error) return toast.error(res?.error);
+  //       // Step 3: if no error, now upload images
+  //       const urls = await uploadImagesToSupabaseBucket();
+  //       // Step 4: now send final form with images
+  //       const finalRes = await addSupplierAction(
+  //         {
+  //           selectedActivities,
+  //           urls,
+  //           bankDetails,
+  //         },
+  //         formData,
+  //       );
+
+  //       if (finalRes?.error) return toast.error(finalRes?.error);
+  //       toast.success("New Supplier added successfully");
+  //     } else {
+  //       // Step 1: validate form data locally
+  //       const res = await applySupplierAction(
+  //         {
+  //           selectedActivities,
+  //           urls: [], // Empty for now
+  //           validateOnly: true,
+  //         },
+  //         formData,
+  //       );
+
+  //       // Step 2: check for validation error (from server)
+  //       if (res?.error) {
+  //         return toast.error(res?.error);
+  //       }
+
+  //       // Step 3: if no error, now upload images
+  //       const urls = await uploadImagesToSupabaseBucket();
+
+  //       // Step 4: now send final form with images
+  //       const finalRes = await applySupplierAction(
+  //         {
+  //           selectedActivities,
+  //           urls,
+  //           bankDetails,
+  //         },
+  //         formData,
+  //       );
+
+  //       if (finalRes?.error) return toast.error(finalRes?.error);
+  //       toast.success(
+  //         "Your form has been submitted. Please wait for admin approval.",
+  //       );
+  //     }
+  //   });
+  // }
+
   async function handleSubmit(formData) {
     startTransition(async () => {
-      if (!isForApply) {
-        const res = await addSupplierAction(formData);
-        if (res?.error) return toast.error(res?.error);
-        toast.success("New Supplier added successfully");
-      } else {
-        // Step 1: validate form data locally
-        const res = await applySupplierAction(
-          {
-            selectedActivities,
-            urls: [], // Empty for now
-          },
-          formData,
-        );
+      const role = formData.get("role");
+      const email = formData.get("email");
+      const password = formData.get("password");
+      const res = await addAndApplySupplierAction(
+        {
+          selectedActivities,
+          urls: [], // Empty for now
+          validateOnly: true,
+          isForApply,
+        },
+        formData,
+      );
+      if (res?.error) return toast.error(res?.error);
+      // Step 3: if no error, now upload images
+      const urls = await uploadImagesToSupabaseBucket();
+      // Step 4: now send final form with images
+      const finalRes = await addAndApplySupplierAction(
+        {
+          selectedActivities,
+          urls,
+          bankDetails,
+          isForApply,
+        },
+        formData,
+      );
 
-        // Step 2: check for validation error (from server)
-        if (res?.error) {
-          return toast.error(res?.error);
-        }
+      if (finalRes?.error) return toast.error(finalRes?.error);
 
-        // Step 3: if no error, now upload images
-        const urls = await uploadImagesToSupabaseBucket();
-
-        // Step 4: now send final form with images
-        const finalRes = await applySupplierAction(
-          {
-            selectedActivities,
-            urls,
-            bankDetails,
-          },
-          formData,
-        );
-
-        if (finalRes?.error) return toast.error(finalRes?.error);
-        toast.success(
-          "Your form has been submitted. Please wait for admin approval.",
-        );
-      }
+      toast.success(
+        !isForApply
+          ? "New Supplier added successfully"
+          : "Your form has been submitted. Please wait for admin approval.",
+      );
+      // send invite mail to user
+      const emailApiUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/send-email`;
+      await fetch(emailApiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          toEmail: email,
+          subject: `You're invited to DXB Stag Party as ${role}`,
+          message: `
+          <div style="background-color:#0B0E1C; color:#E0B15E; padding:30px; font-family:sans-serif; text-align:center;">
+            <img src="${process.env.NEXT_PUBLIC_SITE_URL}/logo.png" alt="DXB Stag Parties Logo" style="width:120px; margin-bottom:20px;" />
+            <h1 style="font-size:24px; margin-bottom:20px;">Welcome to DXB Stag Parties!</h1>
+            <p style="font-size:16px; margin-bottom:20px;">
+              You’ve been invited to join the platform as a <strong>${role}</strong>.
+            </p>
+            <p style="font-size:15px; margin-bottom:10px;">
+              👉 These are your login credentials. Please change your password after first login:
+            </p>
+            <p style="font-size:15px; margin-bottom:20px; line-height:1.6;">
+              <strong>Email:</strong> ${email}<br/>
+              <strong>Password:</strong> ${password}
+            </p>
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL}/login"
+               style="display:inline-block; padding:12px 24px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; font-weight:bold; border-radius:6px;">
+              Click here to login
+            </a>
+            <p style="margin-top:40px; font-size:12px; color:#aaa;">
+              If you did not expect this email, you can ignore it.
+            </p>
+          </div>
+        `,
+        }),
+      });
     });
   }
 
@@ -129,8 +227,8 @@ export default function SupplierForm({ isForApply = false }) {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col gap-14 rounded-2xl border border-neutral-700 px-8 py-14">
-      <h1 className="text-3xl font-semibold text-matalicGold">
+    <div className="mx-auto my-8 flex flex-col gap-14 rounded-2xl border border-neutral-700 px-8 py-14">
+      <h1 className="text-center text-3xl font-semibold text-matalicGold">
         {isForApply ? "Apply to become a supplier" : "Add supplier"}
       </h1>
 
@@ -193,12 +291,37 @@ export default function SupplierForm({ isForApply = false }) {
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           />
         </FormRow>
+        <FormRow label="Password">
+          <div className="relative">
+            <input
+              type={passwordTye}
+              placeholder="******"
+              name="password"
+              autoComplete="on"
+              className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+            />
+            <button
+              type="button"
+              onClick={() =>
+                setPasswordType((cur) =>
+                  cur === "password" ? "text" : "password",
+                )
+              }
+              className="absolute right-4 top-1/2 block -translate-y-1/2 fill-sky-600"
+            >
+              <EyeIcon />
+            </button>
+          </div>
+        </FormRow>
+
         <FormRow label="short description">
           <textarea
             name="short_description"
             className="w-full rounded-md border border-neutral-700 bg-primary p-4"
             id="short_description"
             placeholder="Thrilling desert dune rides"
+            cols={5}
+            rows={5}
           ></textarea>
         </FormRow>
         <FormRow label="full description">
@@ -415,8 +538,8 @@ export default function SupplierForm({ isForApply = false }) {
         </FormRow>
 
         <FormRow
-          label="bank_details"
-          className={"space-y-4 ![grid-column:1/-1]"}
+          label="bank details"
+          className={"space-y-2 ![grid-column:1/-1]"}
         >
           <label>
             Bank Name
@@ -452,6 +575,7 @@ export default function SupplierForm({ isForApply = false }) {
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           />
         </FormRow>
+
         <FormRow label="mobility requirements">
           <input
             type="text"
@@ -460,6 +584,155 @@ export default function SupplierForm({ isForApply = false }) {
             autoComplete="on"
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           />
+        </FormRow>
+
+        <FormRow label="minimum age">
+          <input
+            type="number"
+            placeholder="18"
+            name="minimum_age"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="alcohol included">
+          <select
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+            name="alcohol_included"
+            id=""
+          >
+            <option value="">alcohol included?</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </FormRow>
+
+        <FormRow label="media friendly">
+          <select
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+            name="media_friendly"
+            id=""
+          >
+            <option value="">Is media friendly?</option>
+            <option value="true">Yes</option>
+            <option value="false">NO</option>
+          </select>
+        </FormRow>
+
+        <FormRow label="safety certifications">
+          <input
+            type="text"
+            placeholder="ISO 9001, Local Tourism Cert, ..."
+            name="safety_certifications"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="insurance provided">
+          <select
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+            name="insurance_provided"
+            id=""
+          >
+            <option value="">insurance provided?</option>
+            <option value="true">Yes</option>
+            <option value="false">NO</option>
+          </select>
+        </FormRow>
+
+        <FormRow label="preferred communication channel">
+          <input
+            type="text"
+            placeholder="WhatsApp"
+            name="preferred_communication_channel"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="response time expectation">
+          <input
+            type="text"
+            placeholder="Within 24 hours"
+            name="response_time_expectation"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="auto reminder triggers">
+          <input
+            type="text"
+            placeholder="24"
+            name="auto_reminder_triggers"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="custom booking notes">
+          <textarea
+            name="custom_booking_notes"
+            className="w-full rounded-md border border-neutral-700 bg-primary p-4"
+            id="full_description"
+            placeholder="Bring ID and wear outdoor shoes ..."
+            cols={5}
+            rows={5}
+          ></textarea>
+        </FormRow>
+
+        <FormRow label="trade license">
+          <input
+            type="text"
+            placeholder="URL"
+            name="trade_license"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="insurance certificate">
+          <input
+            type="text"
+            placeholder="URL"
+            name="insurance_certificate"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="id verification">
+          <input
+            type="text"
+            placeholder="URL"
+            name="id_verification"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="contract agreement">
+          <input
+            type="text"
+            placeholder="URL"
+            name="contract_agreement"
+            autoComplete="on"
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          />
+        </FormRow>
+
+        <FormRow label="exclusivity confirmed">
+          <select
+            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+            name="exclusivity_confirmed"
+            id=""
+          >
+            <option value="">Is exclusivity confirmed?</option>
+            <option value="true">Yes</option>
+            <option value="false">NO</option>
+          </select>
         </FormRow>
 
         <div className="[grid-column:1/-1]">

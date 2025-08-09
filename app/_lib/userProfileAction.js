@@ -4,6 +4,7 @@ import { createClient } from "../_utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "./getCurrentUser";
 import Link from "next/link";
+import { sendEmail } from "./sendEmail";
 
 export async function updateUserProfileAction(formData) {
   const user = await getCurrentUser();
@@ -271,4 +272,77 @@ export async function verifyUser(userId) {
     return { error: "Something went wrong. Please try again later" };
   }
   revalidatePath("/dashboard/users");
+}
+
+export async function addVoteAction(data, formData) {
+  const supabase = await createClient();
+  const user = await getCurrentUser();
+  // 1. Parse form data
+  const activities = data?.selectedActivities;
+  const activityIds = activities && activities?.map((act) => act.value);
+  const attendees = data?.attendees;
+
+  if (!activities || activities.length < 3) {
+    return { error: "Please select at least 3 activities." };
+  }
+
+  if (!attendees || attendees.length === 0) {
+    return { error: "Please add at least one attendee." };
+  }
+
+  // 2. Generate link token & deadline
+  const linkToken = Math.random().toString(36).slice(2, 12);
+  // const endTime = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  const now = new Date(); // Date object
+  const endTime = new Date(now.getTime() + 1 * 60 * 1000); // 1 minute ahead
+
+  // 3. check current user
+  if (!user) {
+    return { error: "You must be logged in to create a voting session." };
+  }
+
+  // 4. Insert into voting_sessions
+  const { error } = await supabase.from("voting_sessions").insert([
+    {
+      organiser_id: user.id,
+      title: "Activity Vote",
+      activity_ids: activityIds,
+      voter_contacts: attendees, // JSONB
+      status: "open",
+      end_time: endTime,
+      link_token: linkToken,
+    },
+  ]);
+
+  if (error) {
+    console.error(error);
+    return { error: "Failed to create voting session." };
+  }
+
+  // ✅ Send voting link to all attendees
+  const votingLink = `${process.env.NEXT_PUBLIC_SITE_URL}/account/vote/${linkToken}`;
+
+  for (const attendee of attendees) {
+    if (attendee.email) {
+      await sendEmail({
+        toEmail: attendee.email,
+        subject: "You're invited to vote for an activity 🎯",
+        message: `
+          <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;">
+            <h2 style="color: #333;">Vote for Your Favorite Activity</h2>
+            <p>You’ve been invited to vote for your preferred stag activity. Please click the link below to cast your vote:</p>
+            <a href="${votingLink}" 
+               style="display:inline-block; padding:10px 20px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; border-radius:5px;">
+               Vote Now
+            </a>
+            <p style="margin-top:20px; font-size:14px; color:#555;">
+              This link will expire in 24 hours. Please make sure to vote before the deadline.
+            </p>
+          </div>
+        `,
+      });
+    }
+  }
+
+  return { success: true };
 }

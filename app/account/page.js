@@ -1,5 +1,7 @@
 // import { auth } from "../_lib/auth";
 
+import Button from "../_components/Button";
+import LinkButton from "../_components/LinkButton";
 import { createClient } from "../_utils/supabase/server";
 
 export default async function Page() {
@@ -11,8 +13,13 @@ export default async function Page() {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-4 p-4">
       <h1>Welcome {user?.email}</h1>
+      <div>
+        <Button href="/account/vote" className={"w-fit"} variation="gold">
+          Start Activity Vote
+        </Button>
+      </div>
     </div>
   );
 }

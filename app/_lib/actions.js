@@ -346,14 +346,87 @@ export async function deleteActivityAction(activityId) {
   revalidatePath("/dashboard/activities");
 }
 
+// export async function deleteUserAction(userId) {
+//   // check if user is login and user is admin
+//   const user = await getCurrentUser();
+//   const supabase = await createClient();
+//   if (!user || user?.user_metadata?.role !== "admin")
+//     return { error: "You are not allowed to perform this action" };
+
+//   // supplier case (make activity id null before deleting supplier)
+//   // Step 1: Unlink supplier from activities
+//   const { error: supplierError } = await supabase
+//     .from("activities")
+//     .update({ supplier: null })
+//     .eq("supplier", userId);
+
+//   if (supplierError) {
+//     return { error: "Failed to delete supplier." };
+//   }
+
+//   // // Get all bookings of the user
+//   const bookings = await getBookingByUserId(userId);
+//   // Get all booking Ids
+//   const bookingIds = bookings && bookings?.map((b) => b.id);
+
+//   if (bookingIds && bookingIds?.length > 0) {
+//     // 2. Delete attendees linked to these bookings
+//     const { error: attendeeDeleteError } = await supabase
+//       .from("attendee")
+//       .delete()
+//       .in("bookingID", bookingIds);
+
+//     if (attendeeDeleteError) {
+//       return { error: "Failed to delete attendee data." };
+//     }
+
+//     // 3. Delete bookings
+//     const { error: bookingDeleteError } = await supabase
+//       .from("booking")
+//       .delete()
+//       .in("id", bookingIds);
+
+//     if (bookingDeleteError) {
+//       return { error: "Failed to delete booking data." };
+//     }
+//   }
+//   // delete normal user from custom user table
+//   const { error: customUserError } = await supabaseAdmin
+//     .from("users")
+//     .delete()
+//     .eq("id", userId);
+//   if (customUserError) {
+//     return { error: "Unexpected Error has occurred." };
+//   }
+
+//   // delete user from supplier table
+//   const { error: supplierTableError } = await supabaseAdmin
+//     .from("supplier")
+//     .delete()
+//     .eq("user_id", userId);
+
+//   if (supplierTableError)
+//     return { error: "Supplier not deleted from supplier table" };
+//   // Delete built in user table user
+
+//   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
+
+//   if (error) {
+//     console.log(error.message);
+//     return { error: "Unexpected Error has occurred." };
+//   }
+//   revalidatePath("/dashboard/users");
+//   revalidatePath("/dashboard/supplier");
+// }
+
 export async function deleteUserAction(userId) {
-  // check if user is login and user is admin
   const user = await getCurrentUser();
   const supabase = await createClient();
-  if (!user || user?.user_metadata?.role !== "admin")
-    return { error: "You are not allowed to perform this action" };
 
-  // supplier case (make activity id null before deleting supplier)
+  if (!user || user?.user_metadata?.role !== "admin") {
+    return { error: "You are not allowed to perform this action" };
+  }
+
   // Step 1: Unlink supplier from activities
   const { error: supplierError } = await supabase
     .from("activities")
@@ -361,16 +434,14 @@ export async function deleteUserAction(userId) {
     .eq("supplier", userId);
 
   if (supplierError) {
-    return { error: "Failed to delete supplier." };
+    return { error: "Failed to unlink supplier from activities." };
   }
 
-  // // Get all bookings of the user
+  // Step 2: Delete related bookings & attendees
   const bookings = await getBookingByUserId(userId);
-  // Get all booking Ids
-  const bookingIds = bookings && bookings?.map((b) => b.id);
+  const bookingIds = bookings?.map((b) => b.id);
 
-  if (bookingIds && bookingIds?.length > 0) {
-    // 2. Delete attendees linked to these bookings
+  if (bookingIds?.length > 0) {
     const { error: attendeeDeleteError } = await supabase
       .from("attendee")
       .delete()
@@ -380,7 +451,6 @@ export async function deleteUserAction(userId) {
       return { error: "Failed to delete attendee data." };
     }
 
-    // 3. Delete bookings
     const { error: bookingDeleteError } = await supabase
       .from("booking")
       .delete()
@@ -390,23 +460,41 @@ export async function deleteUserAction(userId) {
       return { error: "Failed to delete booking data." };
     }
   }
-  // delete normal user from custom user table
-  const { error: customUserError } = await supabaseAdmin
+
+  // Step 3: Delete from supplier table
+  const { error: supplierTableError } = await supabase
+    .from("supplier")
+    .delete()
+    .eq("user_id", userId);
+
+  if (supplierTableError) {
+    return { error: "Failed to delete from supplier table." };
+  }
+
+  // Step 4: Delete from custom users table
+  const { error: customUserError } = await supabase
     .from("users")
     .delete()
     .eq("id", userId);
-  if (customUserError) {
-    return { error: "Unexpected Error has occurred." };
-  }
-  // Delete built in user table user
-  const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
-  if (error) {
-    console.log(error.message);
-    return { error: "Unexpected Error has occurred." };
+  if (customUserError) {
+    return { error: "Failed to delete from users table." };
   }
+
+  // ✅ Step 5: Finally, delete from auth.users
+  const { error: authDeleteError } =
+    await supabaseAdmin.auth.admin.deleteUser(userId);
+
+  if (authDeleteError) {
+    console.error(authDeleteError.message);
+    return { error: "Failed to delete auth user." };
+  }
+
+  // Optional revalidation
   revalidatePath("/dashboard/users");
   revalidatePath("/dashboard/supplier");
+
+  return { success: true };
 }
 
 export async function createUserByAdmin(formData) {
