@@ -5,7 +5,7 @@ import { accountNavigations } from "../_lib/accountNavigations";
 export default function AccountSidebar({ children }) {
   const pathname = usePathname();
   return (
-    <div className="sticky top-10 flex h-fit flex-col border-r border-navyBlue bg-navyBlue px-2 py-4 lg:py-10">
+    <div className="sticky top-10 flex flex-col border-r border-navyBlue bg-navyBlue px-2 py-4 lg:py-10">
       <ul className="flex flex-row justify-center gap-2 lg:min-h-screen lg:flex-col lg:justify-start">
         {accountNavigations.map((link) => {
           return (

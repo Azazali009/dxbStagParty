@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { createClient } from "../../_utils/supabase/client";
 import Image from "next/image";
-import Empty from "../../../_components/Empty";
+import Empty from "../../_components/Empty";
 import toast from "react-hot-toast";
-import { createClient } from "../../../_utils/supabase/client";
 
 export default function VotingPage({ params }) {
   const supabase = createClient();
@@ -92,12 +91,13 @@ export default function VotingPage({ params }) {
 
     // ✅ Call Edge Function for early close
     try {
-      await fetch(
+      const res = await fetch(
         "https://dvuzbcalsepjpbwkypyz.supabase.co/functions/v1/close_if_all_voted",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
           },
           body: JSON.stringify({ session_id: sessionData.id }),
         },
@@ -108,32 +108,46 @@ export default function VotingPage({ params }) {
   };
 
   if (loading) {
-    return <p className="text-center">Loading voting session...</p>;
+    return (
+      <div className="flex min-h-dvh items-center justify-center">
+        <p className="text-center">Loading voting session...</p>
+      </div>
+    );
   }
 
   if (!sessionData) {
-    return <Empty name="Voting Session" />;
+    return (
+      <div className="flex min-h-dvh items-center justify-center">
+        <Empty name="Voting Session" />
+      </div>
+    );
   }
 
   if (sessionData.closed) {
     return (
-      <p className="text-center font-semibold text-gray-400">
-        Voting has ended.
-      </p>
+      <div className="flex min-h-dvh items-center justify-center">
+        <p className="text-center font-semibold text-red-500">
+          Voting has ended.
+        </p>
+      </div>
     );
   }
 
   if (hasVoted) {
     return (
-      <div className="text-center">
-        <h2 className="text-xl font-bold">✅ Thanks for voting!</h2>
-        <p>Results will be shared by the organiser.</p>
+      <div className="flex min-h-dvh flex-col items-center justify-center gap-4 text-center">
+        <h2 className="text-xl font-bold text-matalicGold sm:text-6xl">
+          Thanks for voting!
+        </h2>
+        <p className="text-neutral-400">
+          Results will be shared by the organiser.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl p-4">
+    <div className="mx-auto min-h-dvh max-w-3xl p-4">
       <h1 className="mb-6 text-center text-2xl font-bold text-matalicGold">
         Vote for Your Favorite Activity
       </h1>

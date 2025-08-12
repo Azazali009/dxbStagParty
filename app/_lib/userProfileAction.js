@@ -292,9 +292,7 @@ export async function addVoteAction(data, formData) {
 
   // 2. Generate link token & deadline
   const linkToken = Math.random().toString(36).slice(2, 12);
-  // const endTime = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  const now = new Date(); // Date object
-  const endTime = new Date(now.getTime() + 1 * 60 * 1000); // 1 minute ahead
+  const endTime = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 
   // 3. check current user
   if (!user) {
@@ -320,7 +318,7 @@ export async function addVoteAction(data, formData) {
   }
 
   // ✅ Send voting link to all attendees
-  const votingLink = `${process.env.NEXT_PUBLIC_SITE_URL}/account/vote/${linkToken}`;
+  const votingLink = `${process.env.NEXT_PUBLIC_SITE_URL}/vote/${linkToken}`;
 
   for (const attendee of attendees) {
     if (attendee.email) {
@@ -344,5 +342,6 @@ export async function addVoteAction(data, formData) {
     }
   }
 
+  redirect("/account");
   return { success: true };
 }

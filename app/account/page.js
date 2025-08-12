@@ -1,20 +1,21 @@
-// import { auth } from "../_lib/auth";
-
 import Button from "../_components/Button";
-import LinkButton from "../_components/LinkButton";
-import { createClient } from "../_utils/supabase/server";
+import VotingList from "../_components/VotingList";
+import { getCurrentUser } from "../_lib/getCurrentUser";
 
+export const revalidate = 0;
 export default async function Page() {
-  // const { user } = await auth();
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <h1>Welcome {user?.email}</h1>
+      <h1 className="text-4xl font-semibold text-softGold">
+        Welcome{" "}
+        <span className="text-matalicGold">
+          {" "}
+          {user?.user_metadata?.full_name || user?.email}
+        </span>
+      </h1>
+      <VotingList user={user} />
       <div>
         <Button href="/account/vote" className={"w-fit"} variation="gold">
           Start Activity Vote
