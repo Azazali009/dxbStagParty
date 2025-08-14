@@ -1,7 +1,157 @@
+// "use client";
+// import { useRouter } from "next/navigation";
+// import { useEffect, useState } from "react";
+// import toast from "react-hot-toast";
+// import { addAttendees } from "../_lib/attendeeApi";
+
+// export default function CompleteBooking() {
+//   const router = useRouter();
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     setLoading(true);
+//     const processBooking = async () => {
+//       const toastId = toast.loading("Processing...");
+//       try {
+//         // ✅ Retrieve Booking Data from LocalStorage
+//         const bookingData = JSON.parse(localStorage.getItem("bookingData"));
+
+//         if (!bookingData) {
+//           toast.error("Missing booking details. Unable to complete booking.", {
+//             id: toastId,
+//           });
+//           router.push("/");
+//           return;
+//         }
+//         const {
+//           // bookingId,
+//           attendees,
+//           totalPrice,
+//           activities,
+//           activityName,
+//           bookingDate,
+//           end_date,
+//           destinations,
+//           packages,
+//           paidAmount,
+//           userId,
+//           booking_notes,
+//           phone,
+//           whatsApp,
+//         } = bookingData;
+
+//         // ✅ Generate Attendee Payment Links
+//         const res = await fetch("/api/create-payment-links", {
+//           method: "POST",
+//           headers: { "Content-Type": "application/json" },
+//           body: JSON.stringify({
+//             emails: attendees.map((att) => att.email),
+//             totalPrice,
+//             activities: activities,
+//             bookingId,
+//           }),
+//         });
+
+//         const data = await res.json();
+
+//         if (!data.success) {
+//           toast.error("Error generating attendee payment links.", {
+//             id: toastId,
+//           });
+//           router.push("/");
+//           return;
+//         }
+
+//         // ✅ Calculate Payment for Each Attendee
+//         const splitAmount = Math.round((totalPrice * 0.85) / attendees.length);
+
+//         // ✅ Prepare booking object with cleaned attendee list
+//         const sanitizedBooking = {
+//           totalPrice,
+//           activities,
+//           bookingDate,
+//           end_date,
+//           destinations,
+//           packages,
+//           paidAmount,
+//           userId,
+//           booking_notes,
+//           phone,
+//           whatsApp,
+//         };
+
+//         const { CurBooking, error } = await addBooking(sanitizedBooking);
+
+//         if (error) {
+//           toast.error("Unexpected error while adding booking.", {
+//             id: toastId,
+//           });
+//           router.push("/");
+//           return;
+//         }
+//         const attendeesData = attendees.map(({ email, name }) => {
+//           const paymentLink =
+//             data.paymentLinks.find((link) => link.email === email)?.link || "";
+
+//           return {
+//             bookingID: CurBooking.id,
+//             email,
+//             name,
+//             amountPaid: splitAmount,
+//             status: "unpaid",
+//             paymentLink, // ✅ Stripe link
+//             expires_at: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // ✅ 12 days from now
+//           };
+//         });
+
+//         // ✅ Add Attendees to Database
+//         const { error: attendeeErrors } = await addAttendees(attendeesData);
+//         if (attendeeErrors) {
+//           toast.error("Unexpected error while adding attendees.", {
+//             id: toastId,
+//           });
+//           router.push("/");
+//           return;
+//         }
+//         toast.success(
+//           "Booking complete! Attendees will receive payment links through emails 📩.",
+//           { id: toastId },
+//         );
+
+//         // Redirect to new booking
+//         router.push(`/account/bookings/${CurBooking.id}`);
+
+//         // Cleanup
+//         localStorage.removeItem("bookingData");
+//         localStorage.removeItem("bookingInProgress");
+//       } catch (error) {
+//         console.log(error);
+//         toast.error("Opps! Something went wrong on the server", {
+//           id: toastId,
+//         });
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     processBooking();
+//   }, []);
+//   if (loading)
+//     return (
+//       <div className="flex min-h-screen items-center justify-center">
+//         <p className="text-lg font-semibold">Booking Processing...</p>
+//       </div>
+//     );
+// }
+
+// new code
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
+// ✅ apne actual paths lagao
+import { addBooking } from "../_lib/data-services"; // <-- make sure this exists
 import { addAttendees } from "../_lib/attendeeApi";
 
 export default function CompleteBooking() {
@@ -9,26 +159,42 @@ export default function CompleteBooking() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     const processBooking = async () => {
       const toastId = toast.loading("Processing...");
       try {
-        // ✅ Retrieve Booking Data from LocalStorage
-        const bookingData = JSON.parse(localStorage.getItem("bookingData"));
-
-        if (!bookingData) {
-          toast.error("Missing booking details. Unable to complete booking.", {
-            id: toastId,
-          });
+        // 1) URL se Stripe session_id lo
+        const params = new URLSearchParams(window.location.search);
+        const sessionId = params.get("session_id");
+        if (!sessionId) {
+          toast.error("Missing payment session.", { id: toastId });
           router.push("/");
           return;
         }
+
+        // 2) Server par payment verify karo
+        const vRes = await fetch(
+          `/api/verify-payment?session_id=${encodeURIComponent(sessionId)}`,
+        );
+        const { paid } = await vRes.json();
+        if (!paid) {
+          toast.error("Payment not verified.", { id: toastId });
+          router.push("/");
+          return;
+        }
+
+        // 3) LocalStorage se booking data lo
+        const raw = localStorage.getItem("bookingData");
+        if (!raw) {
+          toast.error("Missing booking details.", { id: toastId });
+          router.push("/");
+          return;
+        }
+        const bookingData = JSON.parse(raw);
+
         const {
-          bookingId,
-          attendees,
+          attendees = [],
           totalPrice,
           activities,
-          activityName,
           bookingDate,
           end_date,
           destinations,
@@ -40,20 +206,56 @@ export default function CompleteBooking() {
           whatsApp,
         } = bookingData;
 
-        // ✅ Generate Attendee Payment Links
+        if (!Array.isArray(attendees) || attendees.length === 0) {
+          toast.error("No attendees found for booking.", { id: toastId });
+          router.push("/");
+          return;
+        }
+
+        // 4) Pehle DB me booking create karo (AB payment verified hai)
+        const sanitizedBooking = {
+          totalPrice,
+          activities,
+          bookingDate,
+          end_date,
+          destinations,
+          packages,
+          paidAmount,
+          userId,
+          booking_notes,
+          phone,
+          whatsApp,
+          paymentSessionId: sessionId, // 🔒 duplicate-prevention ke liye unique constraint rakh lo
+        };
+
+        const { CurBooking, error } = await addBooking(sanitizedBooking);
+        if (error || !CurBooking?.id) {
+          toast.error("Unexpected error while adding booking.", {
+            id: toastId,
+          });
+          router.push("/");
+          return;
+        }
+
+        const bookingId = CurBooking.id;
+
+        // 5) Ab attendee payment links banao (bookingId ke saath)
+        const splitAmount = Math.round(
+          (Number(totalPrice || 0) * 0.85) / attendees.length,
+        );
+
         const res = await fetch("/api/create-payment-links", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             emails: attendees.map((att) => att.email),
             totalPrice,
-            activities: activities,
-            bookingId,
+            activities,
+            bookingId, // ✅ ab defined hai
           }),
         });
 
         const data = await res.json();
-
         if (!data.success) {
           toast.error("Error generating attendee payment links.", {
             id: toastId,
@@ -62,36 +264,13 @@ export default function CompleteBooking() {
           return;
         }
 
-        // ✅ Calculate Payment for Each Attendee
-        const splitAmount = Math.round((totalPrice * 0.85) / attendees.length);
-
-        // ✅ Prepare booking object with cleaned attendee list
-        // const sanitizedBooking = {
-        //   totalPrice,
-        //   activities,
-        //   activityName,
-        //   bookingDate,
-        //   end_date,
-        //   destinations,
-        //   packages,
-        //   paidAmount,
-        //   userId,
-        //   booking_notes,
-        //   phone,
-        //   whatsApp,
-        // };
-
-        // const { CurBooking, error } = await addBooking(sanitizedBooking);
-        // if (error) {
-        //   toast.error("Unexpected error while adding booking.", {
-        //     id: toastId,
-        //   });
-        //   router.push("/");
-        //   return;
-        // }
+        // 6) Attendees payload tayyar karo
+        const expiryIso = new Date(
+          Date.now() + 12 * 24 * 60 * 60 * 1000,
+        ).toISOString(); // 12 days
         const attendeesData = attendees.map(({ email, name }) => {
           const paymentLink =
-            data.paymentLinks.find((link) => link.email === email)?.link || "";
+            data.paymentLinks?.find((link) => link.email === email)?.link || "";
 
           return {
             bookingID: bookingId,
@@ -99,12 +278,12 @@ export default function CompleteBooking() {
             name,
             amountPaid: splitAmount,
             status: "unpaid",
-            paymentLink, // ✅ Stripe link
-            expires_at: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // ✅ 12 days from now
+            paymentLink,
+            expires_at: expiryIso,
           };
         });
 
-        // ✅ Add Attendees to Database
+        // 7) Attendees ko DB me save karo
         const { error: attendeeErrors } = await addAttendees(attendeesData);
         if (attendeeErrors) {
           toast.error("Unexpected error while adding attendees.", {
@@ -113,28 +292,37 @@ export default function CompleteBooking() {
           router.push("/");
           return;
         }
-        toast.success(
-          "Booking complete! Attendees will receive payment links through emails 📩.",
-          { id: toastId },
-        );
-        router.push(`/account/bookings/${bookingId}`); // Redirect to bookings page
+
+        // 8) Cleanup + redirect
         localStorage.removeItem("bookingData");
-      } catch (error) {
-        console.log(error);
+        localStorage.removeItem("bookingInProgress");
+
+        toast.success("Booking complete! Payment links sent to attendees.", {
+          id: toastId,
+        });
+        router.push(`/account/bookings/${bookingId}`);
+      } catch (err) {
+        console.error(err);
         toast.error("Opps! Something went wrong on the server", {
           id: toastId,
         });
+        router.push("/");
       } finally {
         setLoading(false);
       }
     };
 
     processBooking();
-  }, []);
-  if (loading)
+  }, [router]);
+
+  if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <p className="text-lg font-semibold">Booking Processing...</p>
       </div>
     );
+  }
+
+  // Optional final state (agar loading false ho jaye aur redirect ho chuka ho)
+  return null;
 }

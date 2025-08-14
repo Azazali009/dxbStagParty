@@ -1,6 +1,7 @@
-import { supabase } from "./supabase";
+import { createClient } from "../_utils/supabase/server";
 
 export async function getVotingSessionsByOrganiserId(organiserId) {
+  const supabase = await createClient();
   // 1) Get sessions
   let { data: sessions, error: sErr } = await supabase
     .from("voting_sessions")
@@ -64,6 +65,7 @@ export async function getVotingSessionsByOrganiserId(organiserId) {
 }
 
 export async function getVotingSessionById(id) {
+  const supabase = await createClient();
   let { data, error } = await supabase
     .from("voting_sessions")
     .select("*")
@@ -80,6 +82,7 @@ export async function getVotingSessionById(id) {
 }
 
 export async function getVotesBySessionId(sessionId) {
+  const supabase = await createClient();
   const { data } = await supabase
     .from("votes")
     .select("*")
@@ -88,6 +91,7 @@ export async function getVotesBySessionId(sessionId) {
   return data;
 }
 export async function getVotesByActivityId(activityId) {
+  const supabase = await createClient();
   const { count } = await supabase
     .from("votes")
     .select("*", { count: "exact", head: true })

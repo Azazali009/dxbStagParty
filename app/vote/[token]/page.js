@@ -5,6 +5,7 @@ import { createClient } from "../../_utils/supabase/client";
 import Image from "next/image";
 import Empty from "../../_components/Empty";
 import toast from "react-hot-toast";
+import EndVoteSession from "../../_components/EndVoteSession";
 
 export default function VotingPage({ params }) {
   const supabase = createClient();
@@ -124,13 +125,7 @@ export default function VotingPage({ params }) {
   }
 
   if (sessionData.closed) {
-    return (
-      <div className="flex min-h-dvh items-center justify-center">
-        <p className="text-center font-semibold text-red-500">
-          Voting has ended.
-        </p>
-      </div>
-    );
+    return <EndVoteSession />;
   }
 
   if (hasVoted) {

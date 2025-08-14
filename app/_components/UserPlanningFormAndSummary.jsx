@@ -70,26 +70,25 @@ export default function UserPlanningFormAndSummary({
       const organizerAmount = Math.round(totalPrice * 0.15);
 
       // Save booking to DB first and get bookingId
-      const { CurBooking, error } = await addBooking({
-        userId: user.id,
-        totalPrice,
-        bookingDate: startDate,
-        end_date: endDate,
-        activities: selectedActivities,
-        paidAmount: organizerAmount,
-      });
+      // const { CurBooking, error } = await addBooking({
+      //   userId: user.id,
+      //   totalPrice,
+      //   bookingDate: startDate,
+      //   end_date: endDate,
+      //   activities: selectedActivities,
+      //   paidAmount: organizerAmount,
+      // });
 
-      if (error) {
-        toast.error("Booking creation failed");
-        return;
-      }
+      // if (error) {
+      //   toast.error("Booking creation failed");
+      //   return;
+      // }
 
-      const bookingId = CurBooking.id;
+      // const bookingId = CurBooking.id;
       //  Save Booking Data to LocalStorage (Before Payment)
       localStorage.setItem(
         "bookingData",
         JSON.stringify({
-          bookingId,
           activities: [
             ...selectedActivities.map((act) => ({
               name: act.name,
@@ -123,7 +122,6 @@ export default function UserPlanningFormAndSummary({
           email: user.email,
           amount: organizerAmount,
           activities: selectedActivities,
-          bookingId,
         }),
       });
 

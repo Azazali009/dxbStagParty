@@ -12,9 +12,9 @@ export async function POST(req) {
       payment_method_types: ["card"],
       mode: "payment",
       customer_email: email,
-      metadata: {
-        bookingId,
-      },
+      // metadata: {
+      //   bookingId,
+      // },
       line_items: [
         {
           price_data: {
@@ -30,7 +30,7 @@ export async function POST(req) {
         },
       ],
       // success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/payment-success?email=${email}`,
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/complete-booking`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/complete-booking?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/booking-failed`,
     });
 

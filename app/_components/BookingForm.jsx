@@ -105,30 +105,29 @@ export default function BookingForm({
       const organizerAmount = Math.round(totalPrice * 0.15);
 
       // Save booking to DB first and get bookingId
-      const { CurBooking, error } = await addBooking({
-        userId: user.id,
-        totalPrice,
-        bookingDate,
-        end_date: endDate,
-        activities: selectedActivities,
-        paidAmount: organizerAmount,
-        phone,
-        whatsApp,
-        booking_notes: bookingNotes,
-      });
+      // const { CurBooking, error } = await addBooking({
+      //   userId: user.id,
+      //   totalPrice,
+      //   bookingDate,
+      //   end_date: endDate,
+      //   activities: selectedActivities,
+      //   paidAmount: organizerAmount,
+      //   phone,
+      //   whatsApp,
+      //   booking_notes: bookingNotes,
+      // });
 
-      if (error) {
-        toast.error("Booking creation failed");
-        return;
-      }
+      // if (error) {
+      //   toast.error("Booking creation failed");
+      //   return;
+      // }
 
-      const bookingId = CurBooking.id;
+      // const bookingId = CurBooking.id;
 
       // ✅ Save Booking Data to LocalStorage (Before Payment)
       localStorage.setItem(
         "bookingData",
         JSON.stringify({
-          bookingId,
           activities: [
             {
               name: activityName,
@@ -175,7 +174,6 @@ export default function BookingForm({
           email: user.email,
           amount: organizerAmount,
           activities: selectedActivities,
-          bookingId,
         }),
       });
 

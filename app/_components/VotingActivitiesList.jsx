@@ -32,26 +32,26 @@ export default function VotingActivitiesList({
       const organizerAmount = Math.round(totalPrice * 0.15);
 
       // Save booking to DB first and get bookingId
-      const { CurBooking, error } = await addBooking({
-        userId: user.id,
-        totalPrice,
-        bookingDate: session?.created_at,
-        end_date: session.end_time,
-        activities: [selectedActivity],
-        paidAmount: organizerAmount,
-      });
+      // const { CurBooking, error } = await addBooking({
+      //   userId: user.id,
+      //   totalPrice,
+      //   bookingDate: session?.created_at,
+      //   end_date: session.end_time,
+      //   activities: [selectedActivity],
+      //   paidAmount: organizerAmount,
+      // });
 
-      if (error) {
-        toast.error("Booking creation failed");
-        return;
-      }
+      // if (error) {
+      //   toast.error("Booking creation failed");
+      //   return;
+      // }
 
-      const bookingId = CurBooking.id;
+      // const bookingId = CurBooking.id;
       //  Save Booking Data to LocalStorage (Before Payment)
       localStorage.setItem(
         "bookingData",
         JSON.stringify({
-          bookingId,
+          // bookingId,
           activities: [selectedActivity],
           userId: user.id,
           totalPrice,
@@ -80,7 +80,7 @@ export default function VotingActivitiesList({
           email: user.email,
           amount: organizerAmount,
           activities: [selectedActivity],
-          bookingId,
+          // bookingId,
         }),
       });
 

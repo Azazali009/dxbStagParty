@@ -17,7 +17,11 @@ export default async function Page() {
       </h1>
       <VotingList user={user} />
       <div>
-        <Button href="/account/vote" className={"w-fit"} variation="gold">
+        <Button
+          href="/account/create-vote"
+          className={"w-fit"}
+          variation="gold"
+        >
           Start Activity Vote
         </Button>
       </div>

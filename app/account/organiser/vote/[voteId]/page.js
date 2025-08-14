@@ -7,6 +7,7 @@ import {
   getVotingSessionById,
 } from "../../../../_lib/apiVotingSession";
 import { getActivities } from "../../../../_lib/data-services";
+import VoteDetailsRealtime from "../../../../_components/VoteDetailsRealtime";
 
 export const revalidate = 0;
 
@@ -56,6 +57,7 @@ export default async function VotingSessionDetails({ params }) {
 
   return (
     <div className="container mx-auto px-4 py-6">
+      <VoteDetailsRealtime sessionId={session.id} />
       <h1 className="mb-2 text-3xl font-semibold">{session.title}</h1>
 
       <VoteStatusBar
