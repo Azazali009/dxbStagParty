@@ -13,7 +13,7 @@ export default function AttendeeCard({
   return (
     <div
       key={attendee.id}
-      className={`space-y-4 ${bookingPaymentStatus === "cancelled" && "grayscale"} bg-navyBlue/50 shadow-lg ${attendee.status === "unpaid" ? "text-softGold" : "text-green-500"} rounded-lg px-6 py-10 shadow-lg`}
+      className={`space-y-4 ${bookingPaymentStatus === "cancelled" && "grayscale"} bg-neutral-800 shadow-lg ${attendee.status === "unpaid" ? "text-softGold" : "text-green-500"} rounded-lg px-6 py-10 shadow-2xl`}
     >
       <p className="capitalize">
         Hey,{" "}

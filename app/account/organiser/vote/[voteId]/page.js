@@ -1,6 +1,7 @@
-import Image from "next/image";
-import Button from "../../../../_components/Button";
-import Countdown from "../../../../_components/Countdown";
+import { getCurrentUser } from "../../../../_lib/getCurrentUser";
+import Empty from "../../../../_components/Empty";
+import VoteStatusBar from "../../../../_components/VoteStatusBar";
+import VotingActivitiesList from "../../../../_components/VotingActivitiesList";
 import {
   getVotesBySessionId,
   getVotingSessionById,
@@ -8,7 +9,9 @@ import {
 import { getActivities } from "../../../../_lib/data-services";
 
 export const revalidate = 0;
+
 export default async function VotingSessionDetails({ params }) {
+  const user = await getCurrentUser();
   const { voteId } = params;
 
   const [activities, session] = await Promise.all([
@@ -17,11 +20,7 @@ export default async function VotingSessionDetails({ params }) {
   ]);
 
   if (!session) {
-    return (
-      <div className="container mx-auto px-4 py-6">
-        <h1 className="mb-6 text-3xl font-semibold">Session not found</h1>
-      </div>
-    );
+    return <Empty name="Session" />;
   }
 
   const isClosed = session.status === "closed";
@@ -59,100 +58,22 @@ export default async function VotingSessionDetails({ params }) {
     <div className="container mx-auto px-4 py-6">
       <h1 className="mb-2 text-3xl font-semibold">{session.title}</h1>
 
-      <div className="mb-6 flex flex-wrap items-center gap-3 text-sm">
-        <span
-          className={`rounded-full px-3 py-1 font-medium ${
-            isClosed
-              ? "bg-red-900/40 text-red-300"
-              : "bg-yellow-900/40 text-yellow-300"
-          }`}
-        >
-          {isClosed ? "Closed" : "Open for voting"}
-        </span>
+      <VoteStatusBar
+        totalAttendees={totalAttendees}
+        totalVotes={totalVotes}
+        session={session}
+        isClosed={isClosed}
+      />
 
-        <span className="text-gray-400">
-          Votes:{" "}
-          <b>
-            {totalVotes} / {totalAttendees}
-          </b>
-        </span>
-
-        <span className="text-gray-400">
-          {isClosed ? (
-            <>
-              Session closed at:{" "}
-              <b>
-                {new Date(
-                  session.closed_at || session.end_time,
-                ).toLocaleString()}
-              </b>
-            </>
-          ) : (
-            <>
-              Time remaining:{" "}
-              <Countdown
-                endTime={session?.end_time}
-                isClosed={isClosed}
-                intervalMs={1000} // update every second; change to 30000 for per-30s
-              />{" "}
-              (closes {new Date(session.end_time).toLocaleString()})
-            </>
-          )}
-        </span>
-      </div>
-
-      <div className="rounded-lg border border-neutral-700 p-6 shadow-lg">
-        <h2 className="text-xl font-medium">Activities</h2>
-
-        <ul className="mt-4 space-y-4">
-          {decorated.map((activity) => (
-            <li
-              key={activity.id}
-              className={`flex w-full gap-4 rounded-md border p-4 shadow-2xl ${
-                activity.isWinner ? "border-matalicGold" : "border-neutral-700"
-              }`}
-            >
-              <div className="relative h-[84px] w-[112px] shrink-0 overflow-hidden rounded-md bg-neutral-800">
-                <Image
-                  src={activity?.bannerImage || "/default-activity-image.jpg"}
-                  alt={activity.name || `Activity #${activity.id}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              <div className="flex flex-1 items-center justify-between">
-                <div>
-                  <h4
-                    className={`font-semibold ${
-                      activity.isWinner
-                        ? "text-matalicGold"
-                        : "text-neutral-600"
-                    }`}
-                  >
-                    {activity.name}
-                  </h4>
-                  <p
-                    className={`text-sm ${activity?.isWinner ? "text-softGold" : "text-neutral-600"}`}
-                  >
-                    Votes: <b>{activity.voteCount}</b>
-                  </p>
-                </div>
-
-                {isClosed && activity.isWinner && (
-                  <Button className="!w-fit py-2.5 sm:text-sm" variation="gold">
-                    Proceed to Booking
-                  </Button>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-
-        {isClosed && totalVotes === 0 && (
-          <p className="mt-4 text-sm text-gray-400">No votes were cast.</p>
-        )}
-      </div>
+      <VotingActivitiesList
+        isClosed={isClosed}
+        decorated={decorated}
+        totalVotes={totalVotes}
+        attendees={session?.voter_contacts}
+        activities={decorated}
+        user={user}
+        session={session}
+      />
     </div>
   );
 }

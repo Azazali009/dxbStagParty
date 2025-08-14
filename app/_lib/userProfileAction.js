@@ -326,17 +326,31 @@ export async function addVoteAction(data, formData) {
         toEmail: attendee.email,
         subject: "You're invited to vote for an activity 🎯",
         message: `
-          <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;">
-            <h2 style="color: #333;">Vote for Your Favorite Activity</h2>
-            <p>You’ve been invited to vote for your preferred stag activity. Please click the link below to cast your vote:</p>
-            <a href="${votingLink}" 
-               style="display:inline-block; padding:10px 20px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; border-radius:5px;">
-               Vote Now
-            </a>
-            <p style="margin-top:20px; font-size:14px; color:#555;">
-              This link will expire in 24 hours. Please make sure to vote before the deadline.
-            </p>
-          </div>
+              <div style="background-color:#0B0E1C; color:#E0B15E !important; padding:30px; font-family:sans-serif; text-align:center;">
+                      <img src="${process.env.NEXT_PUBLIC_SITE_URL}/logo.png" alt="DXB Stag Parties Logo" style="width:120px; margin-bottom:20px;" />
+
+                      <!-- TOP AD SLOT (placeholder / sellable space) -->
+                        <div style="background:#E0B15E; color:#0B0E1C; padding:10px; font-size:14px; font-weight:bold; margin-bottom:24px; border-radius:6px;">
+                          Your Ad Could Be Here — Promote Your Brand With DXB Stag Parties
+                        </div>
+
+                      <h1 style="font-size:24px; margin-bottom:20px; color:#E0B15E !important;">Vote for Your Favorite Activity</h1>
+                      <p style="font-size:16px; margin-bottom:24px; color:#fff;">
+                        You’ve been invited to vote for your preferred stag activity. Click the button below to cast your vote:
+                      </p>
+                      <a href="${votingLink}" 
+                        style="display:inline-block; padding:12px 24px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; border-radius:50px; font-weight:bold;">
+                        Vote Now
+                      </a>
+                      <p style="margin-top:30px; font-size:14px; color:#aaa;">
+                        This link will expire in 24 hours. Please make sure to vote before the deadline.
+                      </p>
+                      <!-- BOTTOM AD SLOT (placeholder / sellable space) -->
+                        <div style="background:#E0B15E; color:#0B0E1C; padding:10px; font-size:14px; font-weight:bold; margin-top:20px; border-radius:6px;">
+                          Partner With Us — Contact <a href="${process.env.NEXT_PUBLIC_SITE_URL}/contact" style="color:#0B0E1C; text-decoration:underline;">DXB Stag Parties</a>
+                        </div>
+                </div>
+
         `,
       });
     }

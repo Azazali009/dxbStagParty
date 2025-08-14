@@ -23,7 +23,7 @@ export async function POST(req) {
     }
 
     const mailOptions = {
-      from: `"Booking System" <${process.env.EMAIL_USER}>`,
+      from: `"${process.env.EMAIL_FROM_NAME}" <${process.env.EMAIL_FROM_USER}>`,
       to: toEmail,
       subject: subject,
       html: message,

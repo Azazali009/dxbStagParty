@@ -12,7 +12,7 @@ export default function ActivityVotingForm() {
   const [selectedActivities, setSelectedActivities] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState([]);
-  const [attendees, setAttendees] = useState(() => [{ email: "", phone: "" }]);
+  const [attendees, setAttendees] = useState(() => [{ email: "", name: "" }]);
   const [isPending, startTransition] = useTransition();
 
   function handleSubmit(formData) {
@@ -30,7 +30,7 @@ export default function ActivityVotingForm() {
 
   //   add attendee function
   const addAttendee = () => {
-    setAttendees((prev) => [...prev, { email: "", phone: "" }]);
+    setAttendees((prev) => [...prev, { email: "", name: "" }]);
   };
 
   //   remove attendee function

@@ -14,7 +14,7 @@ export default async function VotingList({ user }) {
         {sessions.map((session) => (
           <div
             key={session.id}
-            className={`rounded-lg ${session.status === "open" ? "text-softGold" : "text-neutral-500"} border border-neutral-700 p-6 shadow-lg`}
+            className={`space-y-4 rounded-lg ${session.status === "open" ? "text-softGold" : "text-neutral-500"} border border-neutral-700 p-6 shadow-lg`}
           >
             <h2 className="text-xl font-medium">{session.title}</h2>
 
@@ -30,7 +30,7 @@ export default async function VotingList({ user }) {
             <p className="mt-2">
               Votes:{" "}
               <strong>
-                {session?.result_json?.total_votes || 0} /
+                {session?.result_json?.total_votes || 0} /{" "}
                 {session?.voter_contacts?.length || 0}
               </strong>
             </p>
@@ -54,7 +54,7 @@ export default async function VotingList({ user }) {
                         key={a.id}
                         className={`flex justify-between ${
                           a.isWinner
-                            ? "font-bold text-yellow-400"
+                            ? "font-bold text-matalicGold"
                             : "text-gray-300"
                         }`}
                       >
