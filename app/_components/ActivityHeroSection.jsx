@@ -1,5 +1,6 @@
 import { BebasNeue } from "../layout";
 import AnimatedHeading from "./AnimatedHeading";
+import Button from "./Button";
 
 export default function ActivityHeroSection() {
   return (
@@ -15,6 +16,13 @@ export default function ActivityHeroSection() {
           Dubai&apos;s most legendary <br /> stag party experiences
         </AnimatedHeading>
         <p className="">60+ curated activities. One unforgettable weekend.</p>
+        <Button
+          href="/account/create-vote"
+          className={"w-fit"}
+          variation="gold"
+        >
+          Start Activity Vote
+        </Button>
       </div>
     </div>
   );

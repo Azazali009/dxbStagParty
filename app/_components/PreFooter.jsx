@@ -16,9 +16,12 @@ export default function PreFooter() {
         <p className="text-sm xs:text-xl">
           Build your weekend. Rally the crew. Lock the memories in.
         </p>
-        <button className="block rounded bg-matalicGold px-4 py-2 text-xs capitalize text-navyBlue duration-300 hover:opacity-80 xs:text-sm sm:px-6 sm:py-2.5 sm:text-lg">
+        <Link
+          href={"/builder"}
+          className="block rounded bg-matalicGold px-4 py-2 text-xs capitalize text-navyBlue duration-300 hover:opacity-80 xs:text-sm sm:px-6 sm:py-2.5 sm:text-lg"
+        >
           Start Planning Your Stag Party
-        </button>
+        </Link>
         <Link
           href="/packages"
           className="block text-xs capitalize underline hover:no-underline xs:text-sm sm:text-lg"

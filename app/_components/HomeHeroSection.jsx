@@ -3,6 +3,7 @@ import AnimatedHeading from "./AnimatedHeading";
 import bgImage from "../../public/images/home-hero-bg.webp";
 import Image from "next/image";
 import Link from "next/link";
+import Button from "./Button";
 export default function HomeHeroSection() {
   return (
     <section className="relative -mt-[110px] flex items-end justify-center gap-10 p-4 pb-10 pt-32 sm:min-h-[650px] 2xl:min-h-[800px] vl:min-h-[1000px]">
@@ -25,12 +26,18 @@ export default function HomeHeroSection() {
           Dubai&apos;s most elite stag party experiences &mdash; bold, bespoke,
           unforgettable
         </p>
-        <Link
-          href={"/builder"}
-          className="rounded border border-matalicGold bg-matalicGold px-6 py-2 text-xs font-medium uppercase text-primary backdrop-blur-md duration-300 hover:bg-transparent hover:text-softGold hover:opacity-80 xs:text-sm sm:mt-8 sm:text-base"
-        >
-          Start Planning Your Stag Party
-        </Link>
+        <div className="flex items-center gap-4">
+          <Button variation="gold" className={"w-fit"} href={"/builder"}>
+            Start Planning Your Stag Party
+          </Button>
+          <Button
+            href="/account/create-vote"
+            className={"w-fit"}
+            variation="gold"
+          >
+            Start Activity Vote
+          </Button>
+        </div>
       </div>
     </section>
   );

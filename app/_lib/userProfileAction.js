@@ -136,7 +136,7 @@ export async function signup(formData) {
   const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");
-  const role = formData.get("role");
+  // const role = formData.get("role");
 
   // Step 1: Check if user already exists
   const { data: existingUsers, error: fetchError } = await supabase
@@ -157,7 +157,7 @@ export async function signup(formData) {
       emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/login?type=signup`,
       data: {
         full_name: name,
-        role: role ? role : "organiser",
+        role: "organiser",
       },
     },
   });
@@ -181,7 +181,7 @@ export async function signup(formData) {
       email,
       isVerified: false,
       fullName: name,
-      role: role ? role : "organiser", // same as above or adjust as needed
+      role: "organiser", // same as above or adjust as needed
     },
   ]);
 
@@ -194,7 +194,8 @@ export async function signup(formData) {
 
     return { error: errorMsg };
   }
-  redirect("/account");
+  await supabase.auth.signOut();
+  redirect("/login");
 }
 
 export async function signOut() {

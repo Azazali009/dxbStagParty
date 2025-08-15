@@ -7,7 +7,7 @@ import SpinnerMini from "../_components/SpinnerMini";
 import { useAuth } from "../_context/AuthProvider";
 import { login } from "../_lib/userProfileAction";
 import EyeIcon from "../svgIcons/EyeIcon";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
   const searchParams = useSearchParams();
