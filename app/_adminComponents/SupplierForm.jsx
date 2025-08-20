@@ -12,6 +12,15 @@ import { getActivities } from "../_lib/data-services";
 import { MultiSelect } from "react-multi-select-component";
 import { createClient } from "../_utils/supabase/client";
 import EyeIcon from "../svgIcons/EyeIcon";
+import AccountAccessStep from "./AccountAccessStep";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import BusinessProfileStep from "./BusinessProfileStep";
+import AvailabilityOperationStep from "./AvailabilityOperationStep";
+import PricingCommissionStep from "./PricingCommissionStep";
+import ActivityMetaDataStep from "./ActivityMetaDataStep";
+import BookingAlert from "./BookingAlert";
+import DocumentsLegal from "./DocumentsLegal";
+import FormNavigationButton from "../_components/FormNavigationButton";
 
 export default function SupplierForm({ isForApply = false }) {
   const [isPending, startTransition] = useTransition();
@@ -20,8 +29,25 @@ export default function SupplierForm({ isForApply = false }) {
   const [selectedActivities, setSelectedActivities] = useState([]);
   const [images, setImages] = useState([undefined]);
   const [bankDetails, setBankDetails] = useState({ bank: "", iban: "" });
-  const [passwordTye, setPasswordType] = useState("password");
+  const [step, setStep] = useState(1);
 
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const activeStep = Number(searchParams.get("step") ?? 1);
+
+  function handleNext() {
+    const params = new URLSearchParams(searchParams);
+    params.set("step", activeStep + 1);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }
+  function handlePrev() {
+    if (activeStep > 1) {
+      const params = new URLSearchParams(searchParams);
+      params.set("step", activeStep - 1);
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }
+  }
   async function uploadImagesToSupabaseBucket() {
     const supabase = createClient();
     const urls = []; // ✅ Temporary array to collect all URLs
@@ -191,25 +217,6 @@ export default function SupplierForm({ isForApply = false }) {
   //   uploadedImageUrls,
   // });
 
-  // handle gallery images
-  const handleImageChange = (index, file) => {
-    const newImages = [...images];
-    newImages[index] = file;
-    setImages(newImages);
-  };
-
-  // handle add image function
-  const handleAddImage = () => {
-    setImages([...images, undefined]); // placeholder for next image
-  };
-
-  // handle remove image function
-
-  const handleRemoveImage = (index) => {
-    const newImages = [...images];
-    newImages.splice(index, 1); // Remove the one at `index`
-    setImages(newImages);
-  };
   // fetch all activities
   useEffect(() => {
     setLoading(true);
@@ -236,504 +243,33 @@ export default function SupplierForm({ isForApply = false }) {
         action={(formData) => handleSubmit(formData)}
         className="grid w-full grid-cols-1 gap-x-7 gap-y-8 sm:grid-cols-2"
       >
-        <FormRow label="Supplier Name">
-          <input
-            type="text"
-            placeholder="Name"
-            name="name"
-            autoComplete="name"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+        {activeStep === 1 && (
+          <AccountAccessStep
+            loading={loading}
+            activities={activities}
+            selectedActivities={selectedActivities}
+            setSelectedActivities={setSelectedActivities}
           />
-        </FormRow>
-        <FormRow label="Email">
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            autoComplete="email"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-        <FormRow label="Phone">
-          <input
-            type="tel"
-            placeholder="+01234...."
-            name="phone"
-            autoComplete="tel"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-        {loading ? (
-          <div className="my-4 flex flex-col gap-4">
-            <div className="h-4 w-[50%] animate-pulse rounded-xl bg-navyBlue"></div>
-            <div className="h-4 w-full animate-pulse rounded-xl bg-navyBlue"></div>
-          </div>
-        ) : (
-          <FormRow label={"Add Activities"}>
-            <MultiSelect
-              options={activities}
-              value={selectedActivities} // Keep it controlled
-              onChange={(selected) => {
-                setSelectedActivities([...selected]); // Ensure state update happens outside of render
-              }}
-              labelledBy="Add Activities"
-              className="custom-multi-select"
-              hasSelectAll={false}
-            />
-          </FormRow>
         )}
-        <FormRow label="Role">
-          <input
-            type="text"
-            placeholder="supplier"
-            name="role"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+
+        {activeStep === 2 && (
+          <BusinessProfileStep images={images} setImages={setImages} />
+        )}
+
+        {activeStep === 3 && <AvailabilityOperationStep />}
+
+        {activeStep === 4 && (
+          <PricingCommissionStep
+            bankDetails={bankDetails}
+            setBankDetails={setBankDetails}
           />
-        </FormRow>
-        <FormRow label="Password">
-          <div className="relative">
-            <input
-              type={passwordTye}
-              placeholder="******"
-              name="password"
-              autoComplete="on"
-              className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-            />
-            <button
-              type="button"
-              onClick={() =>
-                setPasswordType((cur) =>
-                  cur === "password" ? "text" : "password",
-                )
-              }
-              className="absolute right-4 top-1/2 block -translate-y-1/2 fill-sky-600"
-            >
-              <EyeIcon />
-            </button>
-          </div>
-        </FormRow>
+        )}
 
-        <FormRow label="short description">
-          <textarea
-            name="short_description"
-            className="w-full rounded-md border border-neutral-700 bg-primary p-4"
-            id="short_description"
-            placeholder="Thrilling desert dune rides"
-            cols={5}
-            rows={5}
-          ></textarea>
-        </FormRow>
-        <FormRow label="full description">
-          <textarea
-            name="full_description"
-            className="w-full rounded-md border border-neutral-700 bg-primary p-4"
-            id="full_description"
-            placeholder="We offer fully guided off-road..."
-            cols={5}
-            rows={5}
-          ></textarea>
-        </FormRow>
+        {activeStep === 5 && <ActivityMetaDataStep />}
 
-        <FormRow label="business type">
-          <input
-            type="text"
-            placeholder="Tour Operator"
-            name="business_type"
-            autoComplete="organization"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
+        {activeStep === 6 && <BookingAlert />}
 
-        <FormRow label="locations">
-          <input
-            type="text"
-            placeholder="Dubai, Sharjah, ..."
-            name="locations"
-            autoComplete="address-level2"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-        <FormRow label="languages">
-          <input
-            type="text"
-            placeholder="English, Arabic, ..."
-            name="languages"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label={"Gallery"}>
-          {images.map((_, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <input
-                type="file"
-                className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-                accept="image/*"
-                onChange={(e) =>
-                  e.target.files?.[0] &&
-                  handleImageChange(index, e.target.files[0])
-                }
-              />
-              {images.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => handleRemoveImage(index)}
-                  className="flex size-6 items-center justify-center rounded bg-red-600 text-lg text-white hover:bg-red-700"
-                >
-                  &times;
-                </button>
-              )}
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleAddImage}
-            className="w-fit rounded bg-indigo-600 px-4 py-2 text-white"
-          >
-            Add Image
-          </button>
-        </FormRow>
-
-        <FormRow label="available hours">
-          <input
-            type="text"
-            placeholder="mon: 10-18, fri: 12-22, ..."
-            name="available_hours"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-        <FormRow label="blackout dates">
-          <input
-            type="text"
-            placeholder="2025-12-25, 2025-01-01 ..."
-            name="blackout_dates"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="lead time">
-          <input
-            type="text"
-            placeholder="	48 (hours)"
-            name="lead_time_required"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="min group size">
-          <input
-            type="number"
-            placeholder="	2"
-            name="min_group_size"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="max group size">
-          <input
-            type="number"
-            placeholder="12"
-            name="max_group_size"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="booking method">
-          <input
-            type="text"
-            placeholder="Manual / Online"
-            name="booking_method"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="location type">
-          <input
-            type="text"
-            placeholder="Outdoor / Indoor"
-            name="location_type"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="base price">
-          <input
-            type="number"
-            placeholder="200"
-            name="base_price"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="discounted price">
-          <input
-            type="number"
-            placeholder="150"
-            name="discounted_price"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        {/* <FormRow label="add ons">
-          <input
-            type="text"
-            placeholder="200"
-            name="add_ons"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow> */}
-
-        <FormRow label="deposit required">
-          <select
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-            name="deposit_required"
-            id=""
-          >
-            <option value="">Is deposite required?</option>
-            <option value="false">False</option>
-            <option value="true">True</option>
-          </select>
-        </FormRow>
-
-        <FormRow label="cancellation_terms">
-          <input
-            type="text"
-            placeholder="72 hours in advance"
-            name="cancellation_terms"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="commission agreement">
-          <input
-            type="text"
-            placeholder="10% per booking"
-            name="commission_agreement"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="payment preferences">
-          <input
-            type="text"
-            placeholder="Bank Transfer"
-            name="payment_preferences"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow
-          label="bank details"
-          className={"space-y-2 ![grid-column:1/-1]"}
-        >
-          <label>
-            Bank Name
-            <input
-              type="text"
-              value={bankDetails.bank}
-              className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-              onChange={(e) =>
-                setBankDetails({ ...bankDetails, bank: e.target.value })
-              }
-            />
-          </label>
-
-          <label>
-            IBAN Number
-            <input
-              type="text"
-              value={bankDetails.iban}
-              className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-              onChange={(e) =>
-                setBankDetails({ ...bankDetails, iban: e.target.value })
-              }
-            />
-          </label>
-        </FormRow>
-
-        <FormRow label="activity tags">
-          <input
-            type="text"
-            placeholder="Adventure, Family, ..."
-            name="activity_tags"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="mobility requirements">
-          <input
-            type="text"
-            placeholder="Not wheelchair accessible"
-            name="mobility_requirements"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="minimum age">
-          <input
-            type="number"
-            placeholder="18"
-            name="minimum_age"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="alcohol included">
-          <select
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-            name="alcohol_included"
-            id=""
-          >
-            <option value="">alcohol included?</option>
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </FormRow>
-
-        <FormRow label="media friendly">
-          <select
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-            name="media_friendly"
-            id=""
-          >
-            <option value="">Is media friendly?</option>
-            <option value="true">Yes</option>
-            <option value="false">NO</option>
-          </select>
-        </FormRow>
-
-        <FormRow label="safety certifications">
-          <input
-            type="text"
-            placeholder="ISO 9001, Local Tourism Cert, ..."
-            name="safety_certifications"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="insurance provided">
-          <select
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-            name="insurance_provided"
-            id=""
-          >
-            <option value="">insurance provided?</option>
-            <option value="true">Yes</option>
-            <option value="false">NO</option>
-          </select>
-        </FormRow>
-
-        <FormRow label="preferred communication channel">
-          <input
-            type="text"
-            placeholder="WhatsApp"
-            name="preferred_communication_channel"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="response time expectation">
-          <input
-            type="text"
-            placeholder="Within 24 hours"
-            name="response_time_expectation"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="auto reminder triggers">
-          <input
-            type="text"
-            placeholder="24"
-            name="auto_reminder_triggers"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="custom booking notes">
-          <textarea
-            name="custom_booking_notes"
-            className="w-full rounded-md border border-neutral-700 bg-primary p-4"
-            id="full_description"
-            placeholder="Bring ID and wear outdoor shoes ..."
-            cols={5}
-            rows={5}
-          ></textarea>
-        </FormRow>
-
-        <FormRow label="trade license">
-          <input
-            type="text"
-            placeholder="URL"
-            name="trade_license"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="insurance certificate">
-          <input
-            type="text"
-            placeholder="URL"
-            name="insurance_certificate"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="id verification">
-          <input
-            type="text"
-            placeholder="URL"
-            name="id_verification"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="contract agreement">
-          <input
-            type="text"
-            placeholder="URL"
-            name="contract_agreement"
-            autoComplete="on"
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-          />
-        </FormRow>
-
-        <FormRow label="exclusivity confirmed">
-          <select
-            className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-            name="exclusivity_confirmed"
-            id=""
-          >
-            <option value="">Is exclusivity confirmed?</option>
-            <option value="true">Yes</option>
-            <option value="false">NO</option>
-          </select>
-        </FormRow>
+        {activeStep === 7 && <DocumentsLegal />}
 
         <div className="[grid-column:1/-1]">
           <button
@@ -750,6 +286,21 @@ export default function SupplierForm({ isForApply = false }) {
               <span>{isForApply ? "Submit Application" : "Add Supplier"}</span>
             )}
           </button>
+        </div>
+
+        <div className="flex items-center justify-between [grid-column:1/-1]">
+          <FormNavigationButton
+            onClick={handlePrev}
+            disabled={activeStep === 1}
+          >
+            Prev
+          </FormNavigationButton>
+          <FormNavigationButton
+            onClick={handleNext}
+            disabled={activeStep === 7}
+          >
+            Next
+          </FormNavigationButton>
         </div>
       </form>
     </div>

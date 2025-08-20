@@ -23,7 +23,7 @@ export default function AdminActivityForm() {
     });
   };
 
-  // Effect to fetch activities
+  // Effect to fetch activities,suppliers
   useEffect(() => {
     async function fetchSuppliers() {
       setLoading(true);

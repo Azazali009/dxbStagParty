@@ -4,7 +4,9 @@ import bgImage from "../../public/images/home-hero-bg.webp";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
-export default function HomeHeroSection() {
+import { getCurrentUser } from "../_lib/getCurrentUser";
+export default async function HomeHeroSection() {
+  const user = await getCurrentUser();
   return (
     <section className="relative -mt-[110px] flex items-end justify-center gap-10 p-4 pb-10 pt-32 sm:min-h-[650px] 2xl:min-h-[800px] vl:min-h-[1000px]">
       {/* overlay */}
@@ -30,13 +32,15 @@ export default function HomeHeroSection() {
           <Button variation="gold" className={"w-fit"} href={"/builder"}>
             Start Planning Your Stag Party
           </Button>
-          <Button
-            href="/account/create-vote"
-            className={"w-fit"}
-            variation="gold"
-          >
-            Start Activity Vote
-          </Button>
+          {user && (
+            <Button
+              href="/account/create-vote"
+              className={"w-fit"}
+              variation="gold"
+            >
+              Start Activity Vote
+            </Button>
+          )}
         </div>
       </div>
     </section>

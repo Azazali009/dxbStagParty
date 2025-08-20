@@ -357,6 +357,5 @@ export async function addVoteAction(data, formData) {
     }
   }
 
-  redirect("/account");
-  return { success: true };
+  redirect("/account/vote");
 }

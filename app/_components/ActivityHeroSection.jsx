@@ -1,8 +1,10 @@
+import { getCurrentUser } from "../_lib/getCurrentUser";
 import { BebasNeue } from "../layout";
 import AnimatedHeading from "./AnimatedHeading";
 import Button from "./Button";
 
-export default function ActivityHeroSection() {
+export default async function ActivityHeroSection() {
+  const user = await getCurrentUser();
   return (
     <div className="relative -mt-[170px] flex min-h-[400px] items-end gap-14 bg-[url('/images/activity-page-bg.webp')] bg-cover bg-no-repeat px-8 pb-10 pt-20 sm:h-[600px] md:min-h-[850px]">
       {/* overlay */}
@@ -16,13 +18,15 @@ export default function ActivityHeroSection() {
           Dubai&apos;s most legendary <br /> stag party experiences
         </AnimatedHeading>
         <p className="">60+ curated activities. One unforgettable weekend.</p>
-        <Button
-          href="/account/create-vote"
-          className={"w-fit"}
-          variation="gold"
-        >
-          Start Activity Vote
-        </Button>
+        {user && (
+          <Button
+            href="/account/create-vote"
+            className={"w-fit"}
+            variation="gold"
+          >
+            Start Activity Vote
+          </Button>
+        )}
       </div>
     </div>
   );

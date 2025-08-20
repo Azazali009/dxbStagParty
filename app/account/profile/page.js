@@ -13,7 +13,7 @@ export default async function Page() {
   return (
     <div className="space-y-10 bg-navyBlue p-2 py-10 text-softGold sm:p-6 lg:py-20">
       <UpdateProfile user={user} />
-      <UpdateUserProfilePlanningForm data={data} />
+      {data && <UpdateUserProfilePlanningForm data={data} />}
     </div>
   );
 }

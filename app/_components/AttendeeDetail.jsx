@@ -36,7 +36,7 @@ export default function AttendeeDetail({
     attendees,
     bookingID,
   });
-  if (!attendee.length)
+  if (!attendee.length || !attendee)
     return <p className="text-center text-red-500">No attendess found</p>;
   return (
     <div className="space-y-4">

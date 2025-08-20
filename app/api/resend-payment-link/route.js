@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export async function POST(req) {
   try {
     const { email, amount, remainingAttempts, bookingId } = await req.json();
-    console.log(bookingId);
+
     // 🔹 1️⃣ Create Stripe Checkout Session for Organizer Payment
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

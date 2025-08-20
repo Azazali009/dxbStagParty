@@ -198,7 +198,7 @@ export async function getBookingByUserId(userId) {
     .eq("userId", userId);
   if (error) {
     console.log(error);
-    throw new Error("Error while getting your bookings.");
+    return { error: "Error while getting your bookings." };
   }
   return bookings;
 }

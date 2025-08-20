@@ -17,7 +17,7 @@ export async function getAttendees(id) {
     .eq("bookingID", id);
   if (error) {
     console.log(error);
-    throw new Error("Error while getting attendees. Please try again later!");
+    return { error: "Error while getting attendees. Please try again later!" };
   }
   // get user ID
   const userId = attendees?.[0]?.booking?.userId;

@@ -6,11 +6,11 @@ export async function getCurrentUserPlanningData(userId) {
     .from("planning_sessions")
     .select("*")
     .eq("user_id", userId)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.log(error);
-    return { error: "Error" };
+    return { error: "Unexpected Error. Please try again later/" };
   }
   return data;
 }
