@@ -6,7 +6,9 @@ import {
   Noto_Serif_Georgian,
 } from "next/font/google";
 import "./globals.css";
+import "lenis/dist/lenis.css";
 import dynamic from "next/dynamic";
+import LenisProvider from "./_components/LenisProvider";
 const HeaderWrapper = dynamic(() => import("./_components/HeaderWrapper"), {
   ssr: false,
 });
@@ -75,24 +77,26 @@ export const Georgia = Noto_Serif_Georgian({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${poppins.className} scroll-smooth`}>
-      <body
-        className={`${poppins.className} overflow-x-hidden bg-primary text-softGold antialiased`}
-      >
-        <AuthProvider>
-          <ActivityProvider>
-            <HeaderWrapper />
-            <TosterComp />
-            <PendingBookingDataNotification />
-            <BookingProvider>
-              <PartyBuilderProvider>
-                <main>{children}</main>
-              </PartyBuilderProvider>
-            </BookingProvider>
-            <FooterWrapper />
-          </ActivityProvider>
-        </AuthProvider>
-      </body>
+    <html lang="en" className={`${poppins.className}`}>
+      <LenisProvider>
+        <body
+          className={`${poppins.className} overflow-x-hidden bg-primary text-softGold antialiased`}
+        >
+          <AuthProvider>
+            <ActivityProvider>
+              <HeaderWrapper />
+              <TosterComp />
+              <PendingBookingDataNotification />
+              <BookingProvider>
+                <PartyBuilderProvider>
+                  <main>{children}</main>
+                </PartyBuilderProvider>
+              </BookingProvider>
+              <FooterWrapper />
+            </ActivityProvider>
+          </AuthProvider>
+        </body>
+      </LenisProvider>
     </html>
   );
 }
