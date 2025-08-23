@@ -6,6 +6,7 @@ import { navbar } from "./navbarData";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
+import Button from "./Button";
 
 export default function MobileNav() {
   const ref = useRef();
@@ -54,6 +55,16 @@ export default function MobileNav() {
                 </Link>
               </li>
             ))}
+            <li>
+              {" "}
+              <Button
+                variation="gold"
+                className={"w-fit !px-4 !py-2 !text-[10px]"}
+                href={"/builder"}
+              >
+                Start Planning Your Stag Party
+              </Button>
+            </li>
           </ul>
         </div>
       </div>

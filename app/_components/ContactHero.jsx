@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { playfairDisplay } from "../layout";
-import Image from "next/image";
-import whiteWhatsapp from "../svgIcons/whiteWhatsapp.svg";
+import Button from "./Button";
 
 export default function ContactHero() {
   return (
@@ -17,7 +16,7 @@ export default function ContactHero() {
           Tell us your dream - we well make it a weekend to remember
         </p>
         <div className="flex items-center gap-3 sm:gap-6">
-          <Link
+          {/* <Link
             className="flex h-8 items-center gap-1 rounded-md border border-emerald-800 bg-emerald-800 px-4 text-[10px] capitalize duration-300 hover:bg-emerald-950 xs:gap-2 sm:h-10 sm:px-6 sm:text-base"
             href={"https://wa.me/+971568347487"}
           >
@@ -29,10 +28,17 @@ export default function ContactHero() {
               alt="whatsapp"
             />
             <span>chat on whatsapp</span>
-          </Link>
+          </Link> */}
+          <Button
+            variation="gold"
+            className={"w-fit rounded-md"}
+            href={"/builder"}
+          >
+            Start Planning Your Stag Party
+          </Button>
           <Link
             href={"#enquire"}
-            className="flex h-8 items-center justify-center rounded-md border border-neutral-600 bg-transparent px-4 text-[10px] capitalize duration-300 hover:opacity-80 sm:h-10 sm:px-6 sm:text-base"
+            className="flex items-center justify-center rounded-md border border-neutral-600 bg-transparent px-4 py-2 text-[10px] capitalize duration-300 hover:opacity-80 sm:px-6 sm:py-3 sm:text-base"
           >
             send an enquiry
           </Link>

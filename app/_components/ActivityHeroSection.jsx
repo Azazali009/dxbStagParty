@@ -18,15 +18,16 @@ export default async function ActivityHeroSection() {
           Dubai&apos;s most legendary <br /> stag party experiences
         </AnimatedHeading>
         <p className="">60+ curated activities. One unforgettable weekend.</p>
-        {user && (
-          <Button
-            href="/account/create-vote"
-            className={"w-fit"}
-            variation="gold"
-          >
-            Start Activity Vote
+        <div className="flex items-center gap-2">
+          {user && (
+            <Button href="/account/create-vote" className={""} variation="gold">
+              Start Activity Vote
+            </Button>
+          )}
+          <Button variation="gold" href={"/activities/all"}>
+            Explore all activities
           </Button>
-        )}
+        </div>
       </div>
     </div>
   );

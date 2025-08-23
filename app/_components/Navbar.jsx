@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Logo from "../_components/Logo";
 import MobileNav from "./MobileNav";
 import { navbar } from "./navbarData";
+import Button from "./Button";
 
 export default function Navbar() {
   const pathName = usePathname();
@@ -20,6 +21,11 @@ export default function Navbar() {
             <Link href={cur.href}>{cur.navItem}</Link>
           </li>
         ))}
+        <li>
+          <Button variation="gold" className={"w-fit"} href={"/builder"}>
+            Start Planning Your Stag Party
+          </Button>
+        </li>
       </ul>
       <MobileNav />
     </nav>
