@@ -2,7 +2,7 @@ import React from "react";
 import { getBlogById, getBlogCategories, getBlogs } from "../../_lib/blogApi";
 import Image from "next/image";
 import { cinzel } from "../../layout";
-import { sanitizeHtml } from "../../_lib/helpers";
+import { formatDateTime, sanitizeHtml } from "../../_lib/helpers";
 import BlogSidebar from "../../_components/BlogSidebar";
 
 export const revalidate = 0;
@@ -23,20 +23,26 @@ export default async function Page({ params }) {
   const safeHtml = sanitizeHtml(blogContent);
   return (
     <div>
-      <div className="flex items-center gap-6 p-8">
-        <figure className="relative size-20 overflow-hidden rounded-full border-2 border-gray-600 bg-navyBlue">
-          <Image
-            src={users.avatar}
-            fill
-            alt={users.fullName}
-            className="object-cover"
-          />
-        </figure>
-        <div className="flex flex-col">
-          <span className="font-semibold">Author</span>
-          <span className="font-medium uppercase text-gray-500">
-            {users.fullName}
-          </span>
+      <div className="flex items-center justify-between p-8">
+        <div className="flex items-center gap-6">
+          <figure className="relative size-20 overflow-hidden rounded-full border-2 border-gray-600 bg-navyBlue">
+            <Image
+              src={users.avatar}
+              fill
+              alt={users.fullName}
+              className="object-cover"
+            />
+          </figure>
+          <div className="flex flex-col">
+            <span className="font-semibold">Author</span>
+            <span className="font-medium uppercase text-neutral-500">
+              {users.fullName}
+            </span>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 text-neutral-500">
+          <span>Created at:</span>
+          <span>{formatDateTime(blog.created_at)}</span>
         </div>
       </div>
       <div className="relative flex min-h-[400px] items-center justify-center md:min-h-[700px]">
