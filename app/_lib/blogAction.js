@@ -25,6 +25,7 @@ export async function addBlog(bolgBody, formData) {
   const description = formData.get("description")?.slice(0, 100);
   const image = formData.get("image");
   const blogContent = bolgBody.value;
+  const blogCategoryId = Number(bolgBody.selectedCategory);
 
   //   check for empty fields
   if (!name || !category || !image || !description)
@@ -59,6 +60,7 @@ export async function addBlog(bolgBody, formData) {
       image: imagePath,
       userId: user.id,
       description,
+      category: blogCategoryId,
     },
   ]);
 
@@ -81,7 +83,7 @@ export async function editBlog(blogBody, formData) {
     return { error: "You are not allowed to perform this action" };
 
   const name = formData.get("name")?.slice(0, 100);
-  const category = formData.get("category")?.slice(0, 100);
+  const category = formData.get("category");
   const description = formData.get("description")?.slice(0, 1000);
   const image = formData.get("image");
   const existingImage = formData.get("existingImage");

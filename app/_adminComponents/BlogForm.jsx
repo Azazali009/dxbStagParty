@@ -1,5 +1,5 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import FormRow from "../_components/FormRow";
 import SubmitButton from "../_components/SubmitButton";
 import { addBlog, editBlog } from "../_lib/blogAction";
@@ -7,6 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import { toolbarOptions } from "../_lib/helpers";
 import toast from "react-hot-toast";
+import { getBlogCategories } from "../_lib/blogApi";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const modules = {
@@ -16,6 +17,10 @@ const modules = {
 export default function CreateBlogForm({ isEdit = false, blog = {} }) {
   const [isPending, startTransition] = useTransition();
   const [value, setValue] = useState(blog.blogContent || "");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedcategory] = useState(
+    isEdit ? blog.blogCategories.id : "",
+  );
 
   const handleSubmit = (formData) => {
     startTransition(async () => {
@@ -29,8 +34,18 @@ export default function CreateBlogForm({ isEdit = false, blog = {} }) {
   };
 
   const blogWithData = !isEdit
-    ? addBlog.bind(null, { value })
+    ? addBlog.bind(null, { value, selectedCategory })
     : editBlog.bind(null, { value, blogId: blog.id });
+
+  // fetch blog categories
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getBlogCategories();
+      setCategories(data);
+    }
+    fetchData();
+  }, []);
   return (
     <form
       action={(formData) => handleSubmit(formData)}
@@ -47,13 +62,21 @@ export default function CreateBlogForm({ isEdit = false, blog = {} }) {
       </FormRow>
 
       <FormRow label={"Category"}>
-        <input
-          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
-          type="text"
+        <select
           name="category"
-          placeholder="blog"
-          defaultValue={blog.category || ""}
-        />
+          value={selectedCategory}
+          onChange={(e) => setSelectedcategory(e.target.value)}
+          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+        >
+          <option value="">Select category</option>
+          {categories?.map((cat) => {
+            return (
+              <option value={cat.id} key={cat.id}>
+                {cat.name}
+              </option>
+            );
+          })}
+        </select>
       </FormRow>
       <FormRow label={"Blog Image"}>
         <input

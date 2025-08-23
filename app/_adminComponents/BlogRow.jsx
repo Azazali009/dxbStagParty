@@ -18,7 +18,7 @@ export default function BlogRow({ blog }) {
       />
       <p>#{blog.id}</p>
       <p>{blog.name} </p>
-      <p>{blog.category}</p>
+      <p>{blog.blogCategories.name}</p>
       <div className="flex items-center gap-2">
         <DeleteBlog id={blog.id} />
         <Link

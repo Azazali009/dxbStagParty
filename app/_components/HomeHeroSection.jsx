@@ -8,9 +8,9 @@ import { getCurrentUser } from "../_lib/getCurrentUser";
 export default async function HomeHeroSection() {
   const user = await getCurrentUser();
   return (
-    <section className="relative -mt-[110px] flex items-end justify-center gap-10 p-4 pb-10 pt-32 sm:min-h-[650px] 2xl:min-h-[800px] vl:min-h-[1000px]">
+    <section className="relative -mt-[110px] flex h-[400px] items-end justify-center gap-10 p-4 pb-10 pt-32 sm:min-h-[650px] 2xl:min-h-[800px] vl:min-h-[1000px]">
       {/* overlay */}
-      <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-transparent to-navyBlue"></div>
+      <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-transparent to-primary"></div>
       <Image
         src={bgImage}
         fill
@@ -28,7 +28,7 @@ export default async function HomeHeroSection() {
           Dubai&apos;s most elite stag party experiences &mdash; bold, bespoke,
           unforgettable
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <Button variation="gold" className={"w-fit"} href={"/builder"}>
             Start Planning Your Stag Party
           </Button>

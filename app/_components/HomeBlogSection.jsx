@@ -11,6 +11,8 @@ import videoIcon from "../svgIcons/video.png";
 import pdfIcon from "../svgIcons/pdf.png";
 import InterestImageBox from "./InterestImageBox";
 import Link from "next/link";
+import LinkButton from "./LinkButton";
+import Button from "./Button";
 export default function HomeBlogSection() {
   return (
     <div className="mx-auto max-w-6xl space-y-12 py-14 xl:max-w-full">
@@ -45,12 +47,9 @@ export default function HomeBlogSection() {
               The ultimate 3-day itinerary: yachts, buggies, beach clubs &
               banter
             </p>
-            <Link
-              href={"/blog"}
-              className="inline-block rounded-md border border-matalicGold bg-neutral-800 px-4 py-2 text-xs font-light capitalize duration-300 hover:bg-neutral-900 xs:px-6 xs:py-2.5 xs:text-base"
-            >
+            <Button href={"/blog"} variation="gold" className="w-fit">
               Read the full guide
-            </Link>
+            </Button>
           </div>
         </div>
         <div className="space-y-12">
@@ -73,12 +72,9 @@ export default function HomeBlogSection() {
             <InterestImageBox icon={folderPlayIcon} text={"Blog"} />
             <InterestImageBox icon={videoIcon} text={"Video"} />
           </div> */}
-          <Link
-            href={"/blog"}
-            className="inline-block rounded-md border border-matalicGold bg-neutral-800 px-6 py-2.5 font-light capitalize duration-300 hover:bg-neutral-900"
-          >
+          <Button href={"/blog"} variation="gold" className="w-fit">
             browse the stag guide
-          </Link>
+          </Button>
         </div>
       </div>
     </div>
