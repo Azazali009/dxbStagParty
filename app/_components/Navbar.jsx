@@ -22,7 +22,11 @@ export default function Navbar() {
           </li>
         ))}
         <li>
-          <Button variation="gold" className={"w-fit"} href={"/builder"}>
+          <Button
+            variation="gold"
+            className={"w-fit !py-2 !text-sm"}
+            href={"/builder"}
+          >
             Start Planning Your Stag Party
           </Button>
         </li>
