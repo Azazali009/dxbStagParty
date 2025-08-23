@@ -13,7 +13,9 @@ export default async function BlogHero() {
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-navyBlue/90 to-transparent"></div>
       <div className="relative z-10 flex flex-col justify-center gap-2 p-3 xs:gap-6 xs:p-6 md:w-[80%] lg:w-[50%]">
-        <p className="text-xs uppercase xs:text-base">{blog.category}</p>
+        <p className="text-xs uppercase xs:text-base">
+          {blog.blogCategories?.name}
+        </p>
         <h1
           className={`${playfairDisplay.className} text-3xl font-semibold capitalize leading-[1.3] sm:text-5xl md:text-8xl`}
         >

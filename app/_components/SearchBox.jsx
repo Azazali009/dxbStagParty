@@ -67,7 +67,7 @@ export default function SearchBox() {
                         <div className="flex flex-col gap-1">
                           <Link
                             className="line-clamp-1 text-sm duration-300 hover:text-neutral-500 hover:underline"
-                            href={`/blogs/${blog.id}`}
+                            href={`/blog/${blog.id}`}
                           >
                             {blog.name}
                           </Link>
