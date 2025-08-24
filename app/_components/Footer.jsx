@@ -99,9 +99,9 @@ import Link from "next/link";
 export const SLUG = {
   experiences: "/activities",
   packages: "/packages",
-  builder: "/build",
-  concierge: "/concierge",
-  hen: "/hen-parties",
+  builder: "/builder",
+  concierge: "#",
+  hen: "#",
   categories: {
     adrenaline: "/activities#adrenaline",
     dayToNight: "/activities#day-to-night",
