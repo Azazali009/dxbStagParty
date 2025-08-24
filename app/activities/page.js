@@ -26,7 +26,6 @@ export default async function Page({ searchParams }) {
   return (
     <div className="mx-auto min-h-screen w-full antialiased">
       <ActivityHeroSection />
-
       <ActivityFilters />
       <VipSpotLight />
       <AdrenalineActivities category={"adrenaline"} />

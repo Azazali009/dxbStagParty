@@ -16,9 +16,9 @@ export default function ChillRecovery({ category }) {
 
   if (!filteredByCategoryArr || filteredByCategoryArr.length === 0) return null;
   return (
-    <section className="relative bg-navyBlue py-10 text-matalicGold sm:py-20">
+    <section className="relative bg-navyBlue pb-10 text-matalicGold sm:py-20">
       {/* overlay */}
-      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent via-transparent to-[#362A23]" />
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent via-transparent to-primary" />
 
       <div className="relative z-20 space-y-10 px-4 sm:px-8">
         <div className="flex flex-col items-center justify-center gap-2 text-center sm:gap-4">

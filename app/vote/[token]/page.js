@@ -55,7 +55,7 @@ export default function VotingPage({ params }) {
     };
 
     fetchVotingSession();
-  }, [token]);
+  }, [token, supabase]);
 
   const handleVote = async (activityId) => {
     setLoadingVote(true);
