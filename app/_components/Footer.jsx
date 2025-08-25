@@ -92,393 +92,120 @@
 // }
 
 import Link from "next/link";
+import FooterCategories from "./FooterCategories";
+import { Suspense } from "react";
+import SpinnerMini from "./SpinnerMini";
+import FooterBuildLinks from "./FooterBuildLinks";
+import FooterSupport from "./FooterSupport";
+import FooterContact from "./FooterContact";
+import TrustBox from "./TrustBox";
+import Copyright from "./Copyright";
 
-// ---------------------------------------------
-// SLUGS (defaults)
-// ---------------------------------------------
-export const SLUG = {
-  experiences: "/activities",
-  packages: "/packages",
-  builder: "/builder",
-  concierge: "#",
-  hen: "#",
-  categories: {
-    adrenaline: "/activities#adrenaline",
-    dayToNight: "/activities#day-to-night",
-    chillLuxe: "/activities#chill-and-luxe",
-    blog: "/blog", // ok if "coming soon"
-    reviews: "/reviews", // ok if "coming soon"
-  },
-  support: {
-    faq: "/faq",
-    payments: "/payment-and-deposits",
-    cancellations: "/cancellation-policy",
-    terms: "/terms-and-conditions",
-    privacy: "/privacy-policy",
-    cookies: "/cookie-preferences",
-    accessibility: "/accessibility",
-  },
-  work: {
-    supplier: "/become-a-supplier",
-    supplierLogin: "/supplier",
-    careers: "/careers",
-    press: "/press",
-  },
-  contact: {
-    wa: "https://wa.me/971000000000",
-    email: "mailto:hello@dxbstagparties.com",
-    instagram: "#",
-    tiktok: "#",
-    facebook: "#",
-    linkedin: "#",
-    sitemap: "/sitemap",
-  },
-};
-
-// ---------------------------------------------
-// Helpers
-// ---------------------------------------------
-export function buildLinkGroups(S) {
-  return [
-    {
-      title: "Top Categories",
-      links: [
-        { label: "Adrenaline", href: S.categories.adrenaline },
-        { label: "Day to Night", href: S.categories.dayToNight },
-        { label: "Chill & Luxe", href: S.categories.chillLuxe },
-        { label: "Guides & Blog", href: S.categories.blog },
-        { label: "DXB Hen Parties", href: S.hen },
-        { label: "Reviews", href: S.categories.reviews },
-      ],
-    },
-    {
-      title: "Support",
-      links: [
-        { label: "FAQs", href: S.support.faq },
-        { label: "Payment & Deposits", href: S.support.payments },
-        { label: "Cancellation Policy", href: S.support.cancellations },
-        { label: "Terms & Conditions", href: S.support.terms },
-        { label: "Privacy Policy", href: S.support.privacy },
-        { label: "Cookie Preferences", href: S.support.cookies },
-        { label: "Accessibility", href: S.support.accessibility },
-      ],
-    },
-    {
-      title: "Work With Us",
-      links: [
-        { label: "Become a Supplier", href: S.work.supplier },
-        { label: "Supplier Login", href: S.work.supplierLogin },
-        { label: "Careers", href: S.work.careers },
-        { label: "Press / Media Kit", href: S.work.press },
-      ],
-    },
-    {
-      title: "Contact",
-      links: [
-        { label: "WhatsApp", href: S.contact.wa },
-        { label: "Email", href: S.contact.email },
-        { label: "Instagram", href: S.contact.instagram },
-        { label: "TikTok", href: S.contact.tiktok },
-        { label: "Facebook", href: S.contact.facebook },
-        { label: "LinkedIn", href: S.contact.linkedin },
-        { label: "Sitemap", href: S.contact.sitemap },
-      ],
-    },
-  ];
-}
-
-export function buildNavJsonLd(S, groups) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "SiteNavigationElement",
-    name: [
-      "Build My Stag Party",
-      "Need it handled? Request a Concierge",
-      "Experiences",
-      "Packages",
-      "Planner / Builder",
-      "DXB Hen Parties",
-      ...groups.flatMap((g) => g.links.map((l) => l.label)),
-    ],
-    url: [
-      S.builder,
-      S.concierge,
-      S.experiences,
-      S.packages,
-      S.builder,
-      S.hen,
-      ...groups.flatMap((g) => g.links.map((l) => l.href)),
-    ],
-  };
-}
-
-// ---------------------------------------------
-// Bits
-// ---------------------------------------------
-export function FooterCTA({ href, children }) {
+export default async function Footer() {
   return (
-    <Link
-      href={href}
-      className="inline-flex items-center justify-center rounded-md bg-amber-400 px-5 py-3 text-sm font-semibold text-black transition hover:bg-amber-300"
-    >
-      {children}
-    </Link>
-  );
-}
-
-export function FooterA({ href, children }) {
-  return (
-    <Link href={href} className="hover:text-white">
-      {children}
-    </Link>
-  );
-}
-
-export function Usp({ title, note }) {
-  return (
-    <div className="flex items-start gap-3">
-      <div className="mt-0.5 text-amber-400">◆</div>
-      <div>
-        <div className="font-medium">{title}</div>
-        {note && <div className="text-neutral-400">{note}</div>}
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------
-// Variants
-// ---------------------------------------------
-export function FooterClassic({ SLUG: S }) {
-  const year = new Date().getFullYear();
-  const groups = buildLinkGroups(S);
-  const jsonLd = buildNavJsonLd(S, groups);
-
-  return (
-    <footer
-      className="border-t border-neutral-800 bg-neutral-950 text-neutral-200"
-      aria-labelledby="site-footer"
-    >
-      {/* USP bar */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-6 py-6 text-sm sm:grid-cols-2 lg:grid-cols-4">
-          <Usp title="Secure checkout" note="Stripe / Apple Pay" />
-          <Usp title="Split payments" note="Pay individually" />
-          <Usp title="Concierge available" note="From planning to party" />
-          <Usp title="Fast replies" note="Same-day response" />
-        </div>
-      </div>
-
-      {/* Main */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr,1fr,1fr,1fr,1fr]">
-          {/* Brand + CTAs + Quick links + Newsletter */}
-          <section aria-label="Brand and actions">
-            <h2
-              id="site-footer"
-              className="text-2xl font-semibold tracking-tight"
-            >
-              DXB Stag Parties
-            </h2>
-            <p className="mt-3 text-neutral-400">
-              Dubai’s most complete stag party builder. Split payments,
-              concierge support, zero faff.
-            </p>
-
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <FooterCTA href={S.builder}>Build My Stag Party</FooterCTA>
-              <FooterCTA href={S.concierge}>
-                Need it handled? Request a Concierge
-              </FooterCTA>
-            </div>
-
-            <ul className="mt-6 space-y-2 text-sm">
-              <li>
-                <FooterA href={S.experiences}>Experiences</FooterA>
-              </li>
-              <li>
-                <FooterA href={S.packages}>Packages</FooterA>
-              </li>
-              <li>
-                <FooterA href={S.builder}>Planner / Builder</FooterA>
-              </li>
-              <li>
-                <FooterA href={S.hen}>DXB Hen Parties</FooterA>
-              </li>
-            </ul>
-
-            {/* Newsletter (optional hook) */}
-            <form className="mt-8" action="/api/subscribe" method="post">
-              <label htmlFor="email" className="block text-sm font-medium">
-                Stay in the loop
-              </label>
-              <div className="mt-3 flex gap-3">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="Enter your email"
-                  className="min-w-0 flex-auto rounded-md border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                />
-                <button
-                  type="submit"
-                  className="rounded-md bg-neutral-200 px-5 py-3 text-sm font-semibold text-black transition hover:bg-white"
-                >
-                  Subscribe
-                </button>
+    <footer className="space-y-6 bg-black px-4">
+      <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr] gap-8 px-4 py-6">
+        {/* col 1 */}
+        <div className="space-y-4">
+          <div className="space-y-4">
+            <div className="flex items-start gap-2">
+              <div className="size-8 rounded-full bg-matalicGold" />
+              <div>
+                <h2 className="text-2xl font-medium">DXB Stag Parties</h2>
+                <p className="text-sm text-neutral-500">
+                  Dubai premium stag weekend builder
+                </p>
               </div>
-              <p className="mt-2 text-xs text-neutral-500">
-                We’ll never spam. Unsubscribe anytime.
-              </p>
-            </form>
-          </section>
-
-          {/* Link groups */}
-          {groups.map((g) => (
-            <nav key={g.title} aria-label={g.title}>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-400">
-                {g.title}
-              </h3>
-              <ul className="mt-4 space-y-3">
-                {g.links.map((l) => (
-                  <li key={l.label}>
-                    <FooterA href={l.href}>{l.label}</FooterA>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ))}
-        </div>
-      </div>
-
-      {/* Legal strip */}
-      <div className="border-t border-neutral-800">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row sm:px-6 lg:px-8">
-          <div className="text-xs text-neutral-500">
-            © {year} DXB Stag Parties. All rights reserved.
-          </div>
-          <div className="flex items-center gap-6 text-xs text-neutral-400">
-            <div className="flex items-center gap-2">◆ Secure checkout</div>
-            <div className="flex items-center gap-2">◆ Split payments</div>
-            <div className="flex items-center gap-2">◆ Concierge support</div>
-          </div>
-        </div>
-      </div>
-
-      {/* JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-    </footer>
-  );
-}
-
-export function FooterMinimal({ SLUG: S }) {
-  const year = new Date().getFullYear();
-  const groups = buildLinkGroups(S);
-
-  return (
-    <footer className="border-t border-neutral-800 bg-neutral-950 text-neutral-200">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-wrap items-center gap-3">
-            <FooterCTA href={S.builder}>Build My Stag Party</FooterCTA>
-            <FooterCTA href={S.concierge}>Request a Concierge</FooterCTA>
-          </div>
-          <div className="grid gap-8 md:grid-cols-4">
-            {groups.map((g) => (
-              <nav key={g.title} aria-label={g.title}>
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
-                  {g.title}
-                </h3>
-                <ul className="mt-3 space-y-2">
-                  {g.links.map((l) => (
-                    <li key={l.label}>
-                      <FooterA href={l.href}>{l.label}</FooterA>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            ))}
-          </div>
-          <div className="flex flex-wrap items-center justify-between border-t border-neutral-800 pt-4 text-xs text-neutral-400">
-            <span>© {year} DXB Stag Parties.</span>
-            <div className="flex gap-4">
-              <Usp title="Secure checkout" />
-              <Usp title="Split payments" />
-              <Usp title="Concierge support" />
             </div>
+            <p className="text-sm text-neutral-500">
+              Plan an unforgettable Dubai send-off with curated activities, slit
+              payments, and a concierge level experience - all in a few clicks.
+            </p>
           </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
-export function FooterSplit({ SLUG: S }) {
-  const year = new Date().getFullYear();
-  const groups = buildLinkGroups(S);
-  const [top, support, work, contact] = groups;
+          <Link
+            href={"/builder"}
+            className="flex items-center justify-center gap-2 rounded-lg border border-matalicGold bg-matalicGold py-2 font-medium capitalize text-navyBlue duration-300 hover:bg-transparent hover:text-matalicGold"
+          >
+            <span>Build my stag party</span>
 
-  return (
-    <footer className="border-t border-neutral-800 bg-neutral-950 text-neutral-200">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        {/* Big center CTA block */}
-        <div className="flex flex-col items-center text-center">
-          <h2 className="text-xl font-semibold">
-            Plan the ultimate Dubai stag
-          </h2>
-          <p className="mt-2 text-neutral-400">
-            Build your plan in minutes or hand it to our concierge.
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2.5"
+              stroke="currentColor"
+              className="size-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </Link>
+          <Link
+            href={"#"}
+            className="flex items-center justify-center gap-2 rounded-lg border border-matalicGold bg-matalicGold py-2 font-medium capitalize text-navyBlue duration-300 hover:bg-transparent hover:text-matalicGold"
+          >
+            <span>Request a concierge</span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2.5"
+              stroke="currentColor"
+              className="size-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </Link>
+
+          <p className="text-xs font-medium text-neutral-500">
+            Get the <span className="text-matalicGold"> DXB Stag Playbook</span>{" "}
+            (free PDF) - top venues, timing and budget tips.
           </p>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <FooterCTA href={S.builder}>Build My Stag Party</FooterCTA>
-            <FooterCTA href={S.concierge}>Request a Concierge</FooterCTA>
-          </div>
-          <div className="mt-4 text-sm">
-            <FooterA href={S.experiences}>Browse experiences</FooterA>
-            <span className="text-neutral-500"> · </span>
-            <FooterA href={S.packages}>See packages</FooterA>
-            <span className="text-neutral-500"> · </span>
-            <FooterA href={S.hen}>DXB Hen Parties</FooterA>
-          </div>
+
+          <form className="flex items-center gap-2">
+            <input
+              type="text"
+              className="w-full rounded-md border border-neutral-600 bg-neutral-900 px-2 py-1.5 placeholder:text-xs"
+              placeholder="Your email"
+            />
+            <button className="rounded-md bg-matalicGold px-4 py-2 font-semibold text-navyBlue">
+              Got it
+            </button>
+          </form>
+          <p className="text-xs text-stone-500">
+            No spam, just clever planning tips. Unsubscribe anytime.
+          </p>
         </div>
 
-        {/* Compact link clusters */}
-        <div className="mt-10 grid gap-8 md:grid-cols-4">
-          {[top, support, work, contact].map((g) => (
-            <nav key={g.title} aria-label={g.title}>
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
-                {g.title}
-              </h3>
-              <ul className="mt-3 space-y-2">
-                {g.links.map((l) => (
-                  <li key={l.label}>
-                    <FooterA href={l.href}>{l.label}</FooterA>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ))}
-        </div>
+        {/* col 2 */}
+        <FooterBuildLinks />
 
-        <div className="mt-8 flex items-center justify-between border-t border-neutral-800 pt-4 text-xs text-neutral-500">
-          <span>© {year} DXB Stag Parties.</span>
-          <span>Secure checkout · Split payments · Concierge support</span>
-        </div>
+        {/* col 3 */}
+        <Suspense
+          fallback={
+            <div className="flex h-[150px] w-full items-center justify-center">
+              <SpinnerMini />
+            </div>
+          }
+        >
+          <FooterCategories />
+        </Suspense>
+        <FooterSupport />
+        <FooterContact />
       </div>
+      <hr className="border-neutral-800" />
+      <TrustBox />
+      <hr className="border-neutral-800" />
+      <Copyright />
     </footer>
   );
-}
-
-// ---------------------------------------------
-// Main Export (Single entry)
-// ---------------------------------------------
-export default function Footer({ variant = "classic", slugs }) {
-  const merged = { ...SLUG, ...(slugs || {}) };
-  if (variant === "minimal") return <FooterMinimal SLUG={merged} />;
-  if (variant === "split") return <FooterSplit SLUG={merged} />;
-  return <FooterClassic SLUG={merged} />;
 }
