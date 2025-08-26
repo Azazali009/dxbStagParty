@@ -4,7 +4,7 @@ import clock from "../svgIcons/clock.svg";
 
 export default function TrustBox() {
   return (
-    <div className="grid grid-cols-1 gap-6 xs:grid-cols-2 sm:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
       <div className="flex items-start gap-4 rounded-2xl border border-neutral-800 bg-neutral-900 px-8 py-4">
         <Image
           src={"/images/security.png"}

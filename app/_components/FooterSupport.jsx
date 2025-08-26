@@ -43,7 +43,7 @@ export default function FooterSupport() {
     <div className="space-y-6">
       <h2 className="text-sm font-semibold">Support</h2>
 
-      <ul className="space-y-4">
+      <ul className="flex flex-col items-start gap-4">
         {supportLinks?.map((link) => (
           <li
             key={link.id}

@@ -37,7 +37,7 @@ export default function FooterBuildLinks() {
   return (
     <div className="space-y-6">
       <h2 className="text-sm font-semibold">Build</h2>
-      <ul className="space-y-4">
+      <ul className="flex flex-col items-start gap-4">
         {buildLinks?.map((link) => (
           <li
             className="text-sm font-medium text-neutral-500 hover:underline"

@@ -6,6 +6,8 @@ import Image from "next/image";
 import Empty from "../../_components/Empty";
 import toast from "react-hot-toast";
 import EndVoteSession from "../../_components/EndVoteSession";
+import Link from "next/link";
+import Button from "../../_components/Button";
 
 export default function VotingPage({ params }) {
   const supabase = createClient();
@@ -160,13 +162,24 @@ export default function VotingPage({ params }) {
             <p className="text-sm text-gray-500">
               {act.duration} • ${act.price} PP
             </p>
-            <button
-              disabled={loadingVote}
-              onClick={() => handleVote(act.id)}
-              className="mt-3 w-full rounded bg-matalicGold py-2 font-semibold text-black hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-80"
-            >
-              Vote
-            </button>
+            <div className="mt-4 flex items-center gap-2">
+              <button
+                disabled={loadingVote}
+                onClick={() => handleVote(act.id)}
+                className="w-full rounded border-2 border-matalicGold bg-matalicGold py-2 font-semibold text-navyBlue hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-80"
+              >
+                Vote
+              </button>
+              <Button
+                className={
+                  "rounded !py-2 font-semibold hover:bg-matalicGold hover:text-navyBlue"
+                }
+                variation="gold"
+                href={`/activities/${act.id}`}
+              >
+                View more
+              </Button>
+            </div>
           </div>
         ))}
       </div>

@@ -12,8 +12,10 @@ import { getPendingBookings } from "../_lib/data-services";
 import { useBooking } from "../_context/bookingProvider";
 import BlogIcon from "../svgIcons/BlogIcon";
 import { useAuth } from "../_context/AuthProvider";
+import VoteIcon from "../svgIcons/VoteIcon";
 
 export default function SidebarNavigations({ isSupplier }) {
+  const [show, setShow] = useState(false);
   const { pendingBookingCount, setPendingBookingCount } = useBooking();
   const { nonVerifyUsersCount } = useAuth();
   const pathname = usePathname();
@@ -88,6 +90,74 @@ export default function SidebarNavigations({ isSupplier }) {
               </span>
             )}
           </Link>
+          <div className="space-y-2">
+            <button
+              onClick={() => setShow((show) => !show)}
+              className={`flex min-h-[3rem] w-full cursor-pointer items-center gap-2 rounded-md px-6 capitalize ${pathname.startsWith("/dashboard/voting") && "bg-indigo-600"} transition-all duration-300 hover:bg-indigo-600`}
+            >
+              <VoteIcon />
+              <h2 className="">Voting</h2>
+              {!show ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  className="size-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  className="size-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m4.5 15.75 7.5-7.5 7.5 7.5"
+                  />
+                </svg>
+              )}
+            </button>
+            {show && (
+              <ul className="ml-5 space-y-1 text-center">
+                <li>
+                  <Link
+                    href="/dashboard/voting/sessions"
+                    className={`block rounded-md px-3 py-2 text-sm hover:bg-neutral-800 ${pathname.startsWith("/dashboard/voting/sessions") && "bg-neutral-800"}`}
+                  >
+                    Sessions
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/dashboard/voting/votes"
+                    className={`block rounded-md px-3 py-2 text-sm hover:bg-neutral-800 ${pathname.startsWith("/dashboard/voting/votes") && "bg-neutral-800"}`}
+                  >
+                    Votes Log
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/dashboard/voting/reports"
+                    className={`block rounded-md px-3 py-2 text-sm hover:bg-neutral-800 ${pathname.startsWith("/dashboard/voting/reports") && "bg-neutral-800"}`}
+                  >
+                    Reports
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </div>
           <Link
             className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize transition-all duration-300 hover:bg-indigo-600`}
             href={"/"}

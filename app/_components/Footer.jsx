@@ -103,13 +103,14 @@ import Copyright from "./Copyright";
 
 export default async function Footer() {
   return (
-    <footer className="space-y-6 bg-black px-4">
-      <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr] gap-8 px-4 py-6">
+    <footer className="relative space-y-6 border-t border-neutral-800 bg-black px-4">
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-t from-transparent via-transparent to-primary" />
+      <div className="relative z-10 grid grid-cols-1 gap-8 px-4 py-6 sm:grid-cols-[1fr_1fr] md:grid-cols-[1.5fr_1fr_1fr] lg:grid-cols-[1.5fr_1fr_1fr_1fr_1fr]">
         {/* col 1 */}
         <div className="space-y-4">
           <div className="space-y-4">
             <div className="flex items-start gap-2">
-              <div className="size-8 rounded-full bg-matalicGold" />
+              {/* <div className="size-8 rounded-full bg-matalicGold" /> */}
               <div>
                 <h2 className="text-2xl font-medium">DXB Stag Parties</h2>
                 <p className="text-sm text-neutral-500">
