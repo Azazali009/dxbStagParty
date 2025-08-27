@@ -75,13 +75,17 @@ export default function ReportsPage({ results, trend }) {
 
       {/* Votes Trend */}
       <h2 className="mb-4 text-xl font-semibold">Voting Trend (Over Time)</h2>
-      <div className="h-72 w-full rounded-lg border border-gray-700 bg-gray-900 p-4">
+      <div className="h-72 w-full rounded-lg border border-neutral-700 bg-gray-900 p-4">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={trend}>
             <CartesianGrid strokeDasharray="3 3" stroke="#444" />
             <XAxis dataKey="date" stroke="#aaa" />
             <YAxis stroke="#aaa" />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{ backgroundColor: "#404040 ", border: "none" }}
+              labelStyle={{ color: "#e0b15e" }}
+              itemStyle={{ color: "#e0b15e" }}
+            />
             <Line
               type="monotone"
               dataKey="votes"
