@@ -46,7 +46,7 @@ export default function AuthNav() {
         <div className="flex items-center gap-4">
           <Link
             className="inline-block rounded-sm border-2 border-matalicGold bg-matalicGold px-4 py-1 text-sm font-semibold capitalize text-navyBlue duration-300 hover:bg-transparent hover:text-white xs:px-6 xs:py-1.5 xs:text-base"
-            href={"/account"}
+            href={"/login"}
           >
             Login
           </Link>
