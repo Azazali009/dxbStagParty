@@ -6,38 +6,31 @@ export default function Testimonilas() {
   const testimonials = [
     {
       quote:
-        "The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for.",
-      name: "Sarah Chen",
-      designation: "Product Manager at TechFlow",
-      src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "Booking our stag party with DXB Stag Parties was the best decision we made. From VIP nightlife access to unforgettable daytime adventures, everything was handled with precision and style. It honestly felt like a once-in-a-lifetime experience — Dubai at its absolute best. The guys still talk about it every week!",
+      name: "— James Carter",
+      designation: "Best Man",
+      src: "/images/testimonilas/testimonila1.webp",
     },
     {
       quote:
-        "Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable.",
-      name: "Michael Rodriguez",
-      designation: "CTO at InnovateSphere",
-      src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "As the groom-to-be, I wanted something unforgettable but stress-free. DXB Stag Parties took care of everything — from the wild nights to the epic daytime adventures. All I had to do was show up and enjoy with my mates. It was the perfect send-off before married life — truly world-class!",
+      name: "— Michael Andrews",
+      designation: "Groom-to-Be",
+      src: "/images/testimonilas/testimonila2.webp",
     },
     {
       quote:
-        "This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple.",
-      name: "Emily Watson",
-      designation: "Operations Director at CloudScale",
-      src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "I was the one organizing the whole stag trip, and honestly, I was worried about handling all the details. DXB Stag Parties made it effortless — from bookings to VIP access, everything ran smoothly. The guys thought I had done all the hard work, but it was really the team making me look good. Couldn’t have asked for better!",
+      name: "— Daniel Foster",
+      designation: "Group Organizer",
+      src: "/images/testimonilas/testimonila3.webp",
     },
     {
       quote:
-        "Outstanding support and robust features. It's rare to find a product that delivers on all its promises.",
-      name: "James Kim",
-      designation: "Engineering Lead at DataPro",
-      src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      quote:
-        "The scalability and performance have been game-changing for our organization. Highly recommend to any growing business.",
-      name: "Lisa Thompson",
-      designation: "VP of Technology at FutureNet",
-      src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "I flew in from overseas just for the stag, and it was worth every mile. The whole experience felt like pure VIP treatment — yachts, clubs, adventures, all without a single hiccup. DXB Stag Parties know how to create memories that last a lifetime. I’m already planning my next trip back to Dubai!",
+      name: "— Oliver Bennett",
+      designation: "International Guest",
+      src: "/images/testimonilas/testimonila4.webp",
     },
   ];
   return <AnimatedTestimonials testimonials={testimonials} cinzel={cinzel} />;
