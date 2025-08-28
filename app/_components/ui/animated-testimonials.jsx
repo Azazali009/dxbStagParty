@@ -64,7 +64,7 @@ export const AnimatedTestimonials = ({
                   duration: 0.4,
                   ease: "easeInOut",
                 }}
-                className="absolute inset-0 h-[400px] origin-bottom rounded-lg bg-softGold p-4 pb-10 sm:pb-20 2xl:h-[500px]"
+                className="absolute inset-0 h-[400px] origin-bottom rounded-lg bg-matalicGold p-4 pb-10 sm:pb-20 2xl:h-[500px]"
               >
                 <Image
                   src={testimonial.src}
@@ -135,14 +135,14 @@ export const AnimatedTestimonials = ({
           <div className="mt-auto flex gap-4 xs:pt-12 md:pt-0 2xl:mt-10">
             <button
               onClick={handlePrev}
-              className="rounded-md bg-reddish px-4 py-2.5 text-sm font-semibold capitalize duration-300 hover:scale-95 sm:px-6 sm:text-base"
+              className="rounded-md border border-matalicGold bg-transparent px-4 py-2.5 text-sm font-semibold capitalize text-matalicGold duration-300 hover:scale-95 sm:px-6 sm:text-base"
             >
               previous legend
               {/* <IconArrowLeft className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:rotate-12 dark:text-neutral-400" /> */}
             </button>
             <button
               onClick={handleNext}
-              className="rounded-md bg-reddish px-4 py-2.5 text-sm font-semibold capitalize duration-300 hover:scale-95 sm:px-6 sm:text-base"
+              className="rounded-md border border-matalicGold bg-transparent px-4 py-2.5 text-sm font-semibold capitalize text-matalicGold duration-300 hover:scale-95 sm:px-6 sm:text-base"
             >
               {/* <IconArrowRight className="h-5 w-5 text-black transition-transform duration-300 group-hover/button:-rotate-12 dark:text-neutral-400" /> */}
               Next legend
