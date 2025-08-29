@@ -24,7 +24,7 @@ export default async function ActivityHeroSection() {
               Start Activity Vote
             </Button>
           )}
-          <Button variation="gold" href={"/activities/all"}>
+          <Button variation="gold" href={"/activities/all"} className={"w-fit"}>
             Explore all activities
           </Button>
         </div>
