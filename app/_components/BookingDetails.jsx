@@ -10,7 +10,13 @@ import { parseDurationBooking } from "../_lib/helpers";
 import { getActivities } from "../_lib/data-services";
 import { getPlanningSessionByUserId } from "../_lib/apiPlanningSession";
 
-export default function BookingDetails({ id, duration, user }) {
+export default function BookingDetails({
+  id,
+  duration,
+  user,
+  curPrice,
+  curActivity,
+}) {
   const {
     bookingDate,
     setBookingDate,
@@ -59,17 +65,18 @@ export default function BookingDetails({ id, duration, user }) {
       const selectedActivities = fetchedActivities.filter((activity) =>
         activityIds.includes(activity.id),
       );
-      setSelectedActivities(
-        selectedActivities.map((act) => ({
+      setSelectedActivities([
+        { label: curActivity, value: id, price: curPrice },
+        ...selectedActivities.map((act) => ({
           ...act,
           label: act.name,
           value: act.id,
           duration: act.duration,
         })),
-      );
+      ]);
     }
     fetchActivities();
-  }, [setSelectedActivities, user.id]);
+  }, [setSelectedActivities, user.id, curActivity, curPrice, id]);
 
   return (
     <>

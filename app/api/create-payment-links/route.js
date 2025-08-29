@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { stripe } from "../../_lib/stripe";
 import nodemailer from "nodemailer";
+import { extractImages, sanitizeImages } from "../../_lib/helpers";
 
 export async function POST(req) {
   try {
     const { emails, totalPrice, activities, bookingId } = await req.json();
 
+    const images = sanitizeImages(extractImages(activities));
     if (!emails || emails.length === 0 || !totalPrice) {
       return NextResponse.json(
         { error: "Email and total price are required" },
@@ -34,6 +36,7 @@ export async function POST(req) {
                 name:
                   Array.isArray(activities) &&
                   `Organizer Payment for ${activities.map((n) => n?.name).join(", ")}`,
+                images: images,
               },
               unit_amount: perPersonAmount * 100, // Amount in cents
             },

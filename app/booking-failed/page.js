@@ -32,8 +32,8 @@ export default function BookingFailed() {
         <Image src="/error.png" alt="Booking Failed" width={200} height={200} />
         <h2 className="mb-2 text-2xl font-bold text-red-600">Booking Failed</h2>
         <p className="">
-          Your payment was not completed. The booking has been deleted and
-          cancelled to free up the slot.
+          Your payment was not completed. Please try again or contact support if
+          the issue persists.
         </p>
         <Link
           href={"/builder"}

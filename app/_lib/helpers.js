@@ -470,3 +470,37 @@ export function extractAndValidateFormData(formData, optionalFields = []) {
   // If all fields are valid, return valid status
   return { valid: true, data: formDataObject };
 }
+
+// extract image for stripe
+export function extractImages(activities) {
+  if (!Array.isArray(activities)) return [];
+  const urls = activities
+    .map((a) => a?.image) // adapt keys
+    .flat()
+    .filter(Boolean)
+    .map((u) => u.trim())
+    .filter((u) => /^https?:\/\//i.test(u));
+  // Stripe supports multiple images; keep top few (first shown most)
+  return Array.from(new Set(urls)).slice(0, 4);
+}
+
+export function sanitizeImages(maybe) {
+  const arr = Array.isArray(maybe) ? maybe : [];
+  const out = [];
+  for (const raw of arr) {
+    if (typeof raw !== "string") continue;
+    const s = raw.trim();
+    if (!/^https:\/\//i.test(s)) continue; // must be HTTPS + absolute
+    try {
+      const u = new URL(s);
+      u.pathname = u.pathname
+        .split("/")
+        .map((seg) => encodeURIComponent(decodeURIComponent(seg)))
+        .join("/");
+      out.push(u.toString());
+    } catch {
+      /* ignore invalid */
+    }
+  }
+  return Array.from(new Set(out)).slice(0, 8);
+}

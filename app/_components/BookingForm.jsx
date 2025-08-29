@@ -10,7 +10,6 @@ import OrganiserBookingDetails from "../_components/OrganiserBookingDetails";
 import { useBooking } from "../_context/bookingProvider";
 import Button from "./Button";
 import Summary from "./Summary";
-import { addBooking } from "../_lib/data-services";
 
 export default function BookingForm({
   id,
@@ -20,6 +19,7 @@ export default function BookingForm({
   groupSize = "",
   user,
   duration,
+  image,
 }) {
   const {
     selectedActivities,
@@ -58,9 +58,7 @@ export default function BookingForm({
       return acc + parseInt(curr.price);
     }, 0);
     let totalPrice =
-      parseInt(price || 0) +
-      parseInt(getSelectedActivities || 0) +
-      parseInt(getSelectedPackages || 0);
+      parseInt(getSelectedActivities || 0) + parseInt(getSelectedPackages || 0);
 
     setTotalPrice(totalPrice);
   }, [price, selectedActivities, selectedPackages]);
@@ -132,10 +130,12 @@ export default function BookingForm({
             {
               name: activityName,
               price: price,
+              image,
             },
             ...selectedActivities.map((act) => ({
               name: act.label,
               price: act.price,
+              image: act.image,
             })),
           ],
           packages: selectedPackages.map((pkg) => ({
@@ -178,7 +178,7 @@ export default function BookingForm({
       });
 
       const organizerPaymentData = await organizerPaymentRes.json();
-
+      console.log(organizerPaymentData);
       if (!organizerPaymentData.success) {
         toast.error("Error generating organizer payment link.", {
           id: toastId,
@@ -227,7 +227,13 @@ export default function BookingForm({
             />
           )}
           {currentStep === 2 && (
-            <BookingDetails user={user} duration={duration} id={id} />
+            <BookingDetails
+              curActivity={activityName}
+              curPrice={price}
+              user={user}
+              duration={duration}
+              id={id}
+            />
           )}
           {currentStep === 3 && (
             <AttendeeEmailsBookingDetails

@@ -1,7 +1,6 @@
 import Image from "next/image";
-import LinkButton from "./LinkButton";
-import { cinzel, playfairDisplay } from "../layout";
 import Link from "next/link";
+import { cinzel } from "../layout";
 
 export default function ActivityCard({ activity }) {
   const { image, name, id, description, duration, price, group_size } =

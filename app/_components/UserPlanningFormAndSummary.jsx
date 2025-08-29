@@ -52,8 +52,6 @@ export default function UserPlanningFormAndSummary({
     const toastId = toast.loading("Processing...");
 
     try {
-      const allEmails = [...attendees.map((a) => a.email), user.email];
-
       // fetch selected activides from actividyIds
       const selectedActivities = activities.filter((activity) =>
         selectedActivityIds.includes(activity.id),
@@ -69,23 +67,7 @@ export default function UserPlanningFormAndSummary({
       // Calculate Organizer's 15% Payment
       const organizerAmount = Math.round(totalPrice * 0.15);
 
-      // Save booking to DB first and get bookingId
-      // const { CurBooking, error } = await addBooking({
-      //   userId: user.id,
-      //   totalPrice,
-      //   bookingDate: startDate,
-      //   end_date: endDate,
-      //   activities: selectedActivities,
-      //   paidAmount: organizerAmount,
-      // });
-
-      // if (error) {
-      //   toast.error("Booking creation failed");
-      //   return;
-      // }
-
-      // const bookingId = CurBooking.id;
-      //  Save Booking Data to LocalStorage (Before Payment)
+      // Save booking data to localStorage for use after redirect
       localStorage.setItem(
         "bookingData",
         JSON.stringify({
@@ -93,6 +75,7 @@ export default function UserPlanningFormAndSummary({
             ...selectedActivities.map((act) => ({
               name: act.name,
               price: act.price,
+              image: act.image,
             })),
           ],
           userId: user.id,

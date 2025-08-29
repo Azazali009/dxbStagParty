@@ -100,6 +100,7 @@ export const AnimatedTestimonials = ({
             }}
           >
             <h3 className={`text-2xl ${cinzel.className} font-bold`}>
+              <span className="text-matalicGold">—</span>{" "}
               {testimonials[active].name}
             </h3>
             <p className="text-sm text-neutral-500">

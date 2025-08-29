@@ -23,6 +23,7 @@ export default function SelectActivities({
         fetchedActivities
           ?.filter((act) => act.id !== activityId)
           ?.map((act) => ({
+            ...act,
             label: act.name,
             value: act.id,
             price: act.price,

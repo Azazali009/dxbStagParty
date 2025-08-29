@@ -101,7 +101,7 @@ import FooterContact from "./FooterContact";
 import TrustBox from "./TrustBox";
 import Copyright from "./Copyright";
 
-export default async function Footer() {
+export default function Footer() {
   return (
     <footer className="relative space-y-6 border-t border-neutral-800 bg-black px-4">
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-t from-transparent via-transparent to-primary" />

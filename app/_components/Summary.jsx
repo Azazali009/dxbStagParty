@@ -3,7 +3,6 @@ import { formatToAED } from "../_lib/helpers";
 import { useBooking } from "../_context/bookingProvider";
 
 export default function Summary({ activityName, price, totalPrice }) {
-  const [showSummary, setShowSummary] = useState(false);
   const { selectedActivities, selectedPackages, attendees } = useBooking();
   return (
     <div
@@ -21,12 +20,12 @@ export default function Summary({ activityName, price, totalPrice }) {
           </div>
         );
       })}
-      {price && (
+      {/* {price && (
         <div className="flex items-center justify-between text-sm">
           <span className="">{activityName}:</span>{" "}
           <span className="">{formatToAED(price)}</span>
         </div>
-      )}
+      )} */}
       {selectedPackages.map((pack) => {
         return (
           <div

@@ -8,9 +8,6 @@ import HowItWorks from "./_components/HowItWorks";
 import Testimonilas from "./_components/Testimonials";
 import WhyChooseUs from "./_components/WhyChooseUs";
 
-export const metadata = {
-  title: "DXB Stag party",
-};
 export default function Home() {
   return (
     <div className="space-y-6">
