@@ -21,6 +21,7 @@ export default function ActivityCard({ activity }) {
         <p className="">{description}...</p>
         <Link
           href={`/activities/${id}`}
+          prefetch={true}
           className="block w-fit rounded-sm border-2 border-matalicGold bg-transparent px-4 py-2 text-sm uppercase tracking-wider backdrop-blur duration-300 hover:bg-matalicGold hover:text-navyBlue"
         >
           Explore itinerary
