@@ -25,7 +25,7 @@ export default function BlogSidebar({ author, categories }) {
 
       <button
         onClick={() => setShow((show) => !show)}
-        className="relative z-20"
+        className="relative z-20 block lg:hidden"
       >
         {!show ? <Humburger /> : <XMarkIcon />}
       </button>
