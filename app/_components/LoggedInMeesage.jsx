@@ -9,10 +9,11 @@ export default function LoggedInMeesage({ redirectTo = "/login" }) {
         <Link
           className="px-1 font-medium text-secondary underline hover:no-underline"
           href={redirectTo}
+          prefetch={true}
         >
           here to book
         </Link>
-        you favourite activity!
+        your favourite activity!
       </h2>
     </div>
   );

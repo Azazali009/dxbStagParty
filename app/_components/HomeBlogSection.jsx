@@ -16,7 +16,7 @@ import Button from "./Button";
 export default function HomeBlogSection() {
   return (
     <div className="mx-auto max-w-6xl space-y-12 py-14 xl:max-w-full">
-      <div className="space-y-2 xs:space-y-4">
+      <div className="space-y-1">
         <h2
           className={`${cinzel.className} text-center text-4xl font-semibold text-matalicGold xs:text-5xl`}
         >

@@ -93,8 +93,6 @@
 
 import Link from "next/link";
 import FooterCategories from "./FooterCategories";
-import { Suspense } from "react";
-import SpinnerMini from "./SpinnerMini";
 import FooterBuildLinks from "./FooterBuildLinks";
 import FooterSupport from "./FooterSupport";
 import FooterContact from "./FooterContact";
@@ -191,15 +189,9 @@ export default function Footer() {
         <FooterBuildLinks />
 
         {/* col 3 */}
-        <Suspense
-          fallback={
-            <div className="flex h-[150px] w-full items-center justify-center">
-              <SpinnerMini />
-            </div>
-          }
-        >
-          <FooterCategories />
-        </Suspense>
+
+        <FooterCategories />
+
         <FooterSupport />
         <FooterContact />
       </div>

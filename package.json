@@ -33,6 +33,7 @@
     "react-multi-carousel": "^2.8.6",
     "react-multi-select-component": "^4.3.4",
     "react-quill": "^2.0.0",
+    "react-share": "^5.2.2",
     "react-use": "^17.6.0",
     "recharts": "^3.1.2",
     "stripe": "^17.7.0",

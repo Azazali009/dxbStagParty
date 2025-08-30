@@ -1,9 +1,22 @@
 import Link from "next/link";
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import { getCategories } from "../_lib/categoryApi";
+import SpinnerMini from "./SpinnerMini";
 
-export default async function FooterCategories() {
-  const categories = await getCategories();
+export default function FooterCategories() {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    async function fetchCategories() {
+      const data = await getCategories();
+      setCategories(data);
+      setLoading(false);
+    }
+    fetchCategories();
+  }, []);
+  if (loading) return <SpinnerMini />;
   return (
     <div className="space-y-6">
       <h2 className="text-sm font-semibold">Top Categories</h2>

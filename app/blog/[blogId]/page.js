@@ -4,6 +4,7 @@ import Image from "next/image";
 import { cinzel } from "../../layout";
 import { formatDateTime, sanitizeHtml } from "../../_lib/helpers";
 import BlogSidebar from "../../_components/BlogSidebar";
+import SocialShare from "../../_components/SocialShare";
 
 export const revalidate = 0;
 export async function generateStaticParams() {
@@ -40,9 +41,15 @@ export default async function Page({ params }) {
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-neutral-500">
-          <span>Created at:</span>
-          <span>{formatDateTime(blog.created_at)}</span>
+        <div className="flex flex-col items-end gap-2">
+          <div className="flex items-center gap-2 text-neutral-500">
+            <span>Created at:</span>
+            <span>{formatDateTime(blog.created_at)}</span>
+          </div>
+          <SocialShare
+            title={name}
+            url={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${blogId}`}
+          />
         </div>
       </div>
       <div className="relative flex min-h-[400px] items-center justify-center md:min-h-[700px]">
