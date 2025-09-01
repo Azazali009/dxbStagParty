@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import FormRow from "../_components/FormRow";
 // import { resetPassword } from "../_lib/userProfileAction";
 import toast from "react-hot-toast";
@@ -8,14 +8,13 @@ import EyeIcon from "../svgIcons/EyeIcon";
 import { cinzel } from "../layout";
 // import { supabase } from "../_lib/supabase";
 import { useRouter } from "next/navigation";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "../_utils/supabase/client";
 
 export default function ResetPassword() {
-  const supabase = createClientComponentClient();
   const router = useRouter();
   const [passwordTye, setPasswordType] = useState("password");
   const [isPending, startTransition] = useTransition();
-  const [sessionReady, setSessionReady] = useState(false);
+
   // before
   // function handleSubmit(formData) {
   //   startTransition(async () => {
@@ -27,6 +26,7 @@ export default function ResetPassword() {
 
   // after: without server action: Because hash token are not working with server action
   async function handleSubmit(formData) {
+    const supabase = createClient();
     const password = String(formData.get("password") || "");
     const confirmPassword = String(formData.get("confirmPassword") || "");
 
@@ -47,32 +47,6 @@ export default function ResetPassword() {
       router.push("/login");
     });
   }
-
-  // 🔑 Step 1: capture session from `?code=...`
-  useEffect(() => {
-    (async () => {
-      try {
-        if (window.location.search.includes("code=")) {
-          await supabase.auth.exchangeCodeForSession(window.location.href);
-          // URL cleanup optional:
-          window.history.replaceState({}, "", window.location.pathname);
-        }
-        setSessionReady(true);
-      } catch (err) {
-        console.error("session capture failed:", err);
-        toast.error("Invalid or expired reset link.");
-      }
-    })();
-  }, [supabase]);
-
-  if (!sessionReady) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p>Verifying reset link...</p>
-      </div>
-    );
-  }
-
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl items-center justify-center">
       <form
