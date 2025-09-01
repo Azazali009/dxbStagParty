@@ -223,10 +223,8 @@ export async function forgotPassword(formData) {
         "Invalid email or user may not found with this email. Try correct email",
     };
   }
-  const { error: resetError } = await supabase.auth.resetPasswordForEmail(
-    email,
-    { redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password` },
-  );
+  const { error: resetError } =
+    await supabase.auth.resetPasswordForEmail(email);
   const { error: signOutError } = await supabase.auth.signOut();
   if (resetError || signOutError) {
     console.log(resetError);
