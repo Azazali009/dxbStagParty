@@ -1,28 +1,87 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import FormRow from "../_components/FormRow";
-import { resetPassword } from "../_lib/userProfileAction";
+// import { resetPassword } from "../_lib/userProfileAction";
 import toast from "react-hot-toast";
 import SpinnerMini from "../_components/SpinnerMini";
 import EyeIcon from "../svgIcons/EyeIcon";
-import { cinzel, playfairDisplay } from "../layout";
+import { cinzel } from "../layout";
+// import { supabase } from "../_lib/supabase";
+import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export default function ResetPassword() {
+  const supabase = createClientComponentClient();
+  const router = useRouter();
   const [passwordTye, setPasswordType] = useState("password");
   const [isPending, startTransition] = useTransition();
+  const [sessionReady, setSessionReady] = useState(false);
+  // before
+  // function handleSubmit(formData) {
+  //   startTransition(async () => {
+  //     const res = await resetPassword(formData);
+  //     if (res?.error) return toast.error(res?.error);
+  //     toast.success("Password changed successfully.");
+  //   });
+  // }
 
-  function handleSubmit(formData) {
+  // after: without server action: Because hash token are not working with server action
+  async function handleSubmit(formData) {
+    const password = String(formData.get("password") || "");
+    const confirmPassword = String(formData.get("confirmPassword") || "");
+
+    if (!password || !confirmPassword)
+      return toast.error("Please fill all fields.");
+    if (password !== confirmPassword)
+      return toast.error("Password should be same.");
+
     startTransition(async () => {
-      const res = await resetPassword(formData);
-      if (res?.error) return toast.error(res?.error);
+      const { error } = await supabase.auth.updateUser({ password });
+      if (error) {
+        console.error(error);
+        return toast.error(
+          error?.message || "Something went wrong! Please try again.",
+        );
+      }
       toast.success("Password changed successfully.");
+      router.push("/login");
     });
   }
+
+  // 🔑 Step 1: capture session from `?code=...`
+  useEffect(() => {
+    (async () => {
+      try {
+        if (window.location.search.includes("code=")) {
+          await supabase.auth.exchangeCodeForSession(window.location.href);
+          // URL cleanup optional:
+          window.history.replaceState({}, "", window.location.pathname);
+        }
+        setSessionReady(true);
+      } catch (err) {
+        console.error("session capture failed:", err);
+        toast.error("Invalid or expired reset link.");
+      }
+    })();
+  }, [supabase]);
+
+  if (!sessionReady) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p>Verifying reset link...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl items-center justify-center">
       <form
         className="w-full space-y-8 rounded-xl border border-gray-800 p-6"
-        action={(formData) => handleSubmit(formData)}
+        // action={(formData) => handleSubmit(formData)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(new FormData(e.currentTarget));
+        }}
       >
         <h1
           className={`!mb-12 ${cinzel.className} text-center text-4xl font-bold text-matalicGold`}

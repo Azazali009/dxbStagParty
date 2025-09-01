@@ -13,14 +13,6 @@ export default function MobileNav() {
   const pathName = usePathname();
   const [navOpen, setNavOpen] = useState(false);
 
-  useEffect(() => {
-    const html = document.querySelector("html");
-    if (navOpen) {
-      html.style.overflow = "hidden";
-    } else {
-      html.style.overflow = "auto";
-    }
-  }, [navOpen]);
   return (
     <div className="block lg:hidden">
       <button onClick={() => setNavOpen((show) => !show)}>

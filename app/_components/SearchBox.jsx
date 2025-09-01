@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useMemo, useState } from "react";
 import DesignBorder from "./DesignBorder";
 import { AnimatePresence, motion } from "framer-motion";

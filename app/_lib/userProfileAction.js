@@ -235,7 +235,6 @@ export async function forgotPassword(formData) {
 }
 
 export async function resetPassword(formData) {
-  const supabase = await createClient();
   const password = formData.get("password");
   const confirmPassword = formData.get("confirmPassword");
 

@@ -37,3 +37,16 @@ export async function getBlogsByCategoryId(categoryId) {
   if (error) return { error: "Server error occurred while fetching blogs" };
   return data;
 }
+
+export default async function RecentBlogs() {
+  const { data, error } = await supabase
+    .from("blog")
+    .select("id, name,description, image, created_at")
+    .order("created_at", { ascending: false })
+    .limit(3);
+
+  if (error) {
+    return { error: "Server error occurred while fetching recent blogs" };
+  }
+  return data;
+}
