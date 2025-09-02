@@ -9,6 +9,13 @@ import { cinzel } from "../layout";
 export default function ForgotPassword() {
   const [isPending, startTransition] = useTransition();
 
+  // function handleSubmit(formData) {
+  //   startTransition(async () => {
+  //     const res = await forgotPassword(formData);
+  //     if (res?.error) return toast.error(res?.error);
+  //     toast.success("Password reset link is sent to your email");
+  //   });
+  // }
   function handleSubmit(formData) {
     startTransition(async () => {
       const res = await forgotPassword(formData);

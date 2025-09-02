@@ -1,52 +1,24 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import FormRow from "../_components/FormRow";
-// import { resetPassword } from "../_lib/userProfileAction";
+import { resetPassword } from "../_lib/userProfileAction";
 import toast from "react-hot-toast";
 import SpinnerMini from "../_components/SpinnerMini";
 import EyeIcon from "../svgIcons/EyeIcon";
 import { cinzel } from "../layout";
-// import { supabase } from "../_lib/supabase";
-import { useRouter } from "next/navigation";
-import { createClient } from "../_utils/supabase/client";
 
 export default function ResetPassword() {
-  const router = useRouter();
   const [passwordTye, setPasswordType] = useState("password");
   const [isPending, startTransition] = useTransition();
 
-  // before
-  // function handleSubmit(formData) {
-  //   startTransition(async () => {
-  //     const res = await resetPassword(formData);
-  //     if (res?.error) return toast.error(res?.error);
-  //     toast.success("Password changed successfully.");
-  //   });
-  // }
-
-  // after: without server action: Because hash token are not working with server action
-  async function handleSubmit(formData) {
-    const supabase = createClient();
-    const password = String(formData.get("password") || "");
-    const confirmPassword = String(formData.get("confirmPassword") || "");
-
-    if (!password || !confirmPassword)
-      return toast.error("Please fill all fields.");
-    if (password !== confirmPassword)
-      return toast.error("Password should be same.");
-
+  function handleSubmit(formData) {
     startTransition(async () => {
-      const { error } = await supabase.auth.updateUser({ password });
-      if (error) {
-        console.error(error);
-        return toast.error(
-          error?.message || "Something went wrong! Please try again.",
-        );
-      }
+      const res = await resetPassword(formData);
+      if (res?.error) return toast.error(res?.error);
       toast.success("Password changed successfully.");
-      router.push("/login");
     });
   }
+
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl items-center justify-center">
       <form
@@ -77,7 +49,7 @@ export default function ResetPassword() {
             type={passwordTye}
             placeholder="******"
             name="confirmPassword"
-            autoComplete="password"
+            autoComplete="new-password"
             className="w-full rounded-md border border-gray-800 bg-transparent px-4 py-2 outline-none focus:outline-matalicGold"
             required
           />

@@ -3,7 +3,6 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "../_utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "./getCurrentUser";
-import Link from "next/link";
 import { sendEmail } from "./sendEmail";
 
 export async function updateUserProfileAction(formData) {
@@ -223,8 +222,10 @@ export async function forgotPassword(formData) {
         "Invalid email or user may not found with this email. Try correct email",
     };
   }
-  const { error: resetError } =
-    await supabase.auth.resetPasswordForEmail(email);
+  const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+    email,
+    { redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password` },
+  );
   const { error: signOutError } = await supabase.auth.signOut();
   if (resetError || signOutError) {
     console.log(resetError);
@@ -235,6 +236,7 @@ export async function forgotPassword(formData) {
 }
 
 export async function resetPassword(formData) {
+  const supabase = await createClient();
   const password = formData.get("password");
   const confirmPassword = formData.get("confirmPassword");
 
@@ -249,7 +251,7 @@ export async function resetPassword(formData) {
   if (error) {
     console.log(error);
     return {
-      error: "Sorry, this link has expired. Please request a fresh one.",
+      error: error?.message || "Something went wrong! Please try again.",
     };
   }
   revalidatePath("/reset-password");
