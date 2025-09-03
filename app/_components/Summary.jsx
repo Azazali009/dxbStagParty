@@ -1,9 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { formatToAED } from "../_lib/helpers";
 import { useBooking } from "../_context/bookingProvider";
+import { set } from "date-fns";
 
-export default function Summary({ activityName, price, totalPrice }) {
-  const { selectedActivities, selectedPackages, attendees } = useBooking();
+export default function Summary({ totalPrice, user }) {
+  const {
+    selectedActivities,
+    selectedPackages,
+    attendees,
+    setAttendees,
+    includeGroom,
+    isOrganizerAttending,
+    groomDetails,
+  } = useBooking();
+
+  const validAttendees = attendees.filter(
+    (a) => a?.email?.trim() || a?.name?.trim(),
+  );
+
+  // ✅ Derived attendees for display only
+  const displayAttendees = [
+    ...validAttendees,
+    ...(isOrganizerAttending && user?.email
+      ? [{ email: user.email, name: user.user_metadata.full_name }]
+      : []),
+    ...(includeGroom && groomDetails
+      ? [{ email: groomDetails.email, name: groomDetails.name }]
+      : []),
+  ];
   return (
     <div
       draggable
@@ -39,7 +63,7 @@ export default function Summary({ activityName, price, totalPrice }) {
       })}
       <div className="flex items-center justify-between">
         <span>Total Attendees: </span>
-        <span>{attendees?.length}</span>
+        <span>{displayAttendees?.length}</span>
       </div>
       <div className="flex items-center justify-between gap-4 border-t border-neutral-800 pt-5">
         <h2 className="text-lg font-semibold">Total Price:</h2>

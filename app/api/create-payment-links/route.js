@@ -5,21 +5,35 @@ import { extractImages, sanitizeImages } from "../../_lib/helpers";
 
 export async function POST(req) {
   try {
-    const { emails, totalPrice, activities, bookingId } = await req.json();
+    const {
+      emails,
+      participants = [],
+      totalPrice,
+      activities,
+      bookingId,
+    } = await req.json();
 
     const images = sanitizeImages(extractImages(activities));
-    if (!emails || emails.length === 0 || !totalPrice) {
-      return NextResponse.json(
-        { error: "Email and total price are required" },
-        { status: 400 },
-      );
+    // if (!emails || emails.length === 0 || !totalPrice) {
+    //   return NextResponse.json(
+    //     { error: "Email and total price are required" },
+    //     { status: 400 },
+    //   );
+    // }
+
+    if (!participants.length) {
+      return res
+        .status(400)
+        .json({ success: false, error: "No participants provided" });
     }
 
     // calculte price for each attendee and remove the 15% which is paid by the organizer
-    const perPersonAmount = Math.round((totalPrice * 0.85) / emails.length);
+    // const perPersonAmount = Math.round((totalPrice * 0.85) / emails.length);
     let paymentLinks = [];
 
-    for (const email of emails) {
+    for (const participant of participants) {
+      const { email, amount } = participant;
+
       // 🔹 Create Stripe Payment Link
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -38,7 +52,7 @@ export async function POST(req) {
                   `Organizer Payment for ${activities.map((n) => n?.name).join(", ")}`,
                 images: images,
               },
-              unit_amount: perPersonAmount * 100, // Amount in cents
+              unit_amount: Math.round(amount * 100), // Amount in cents
             },
             quantity: 1,
           },

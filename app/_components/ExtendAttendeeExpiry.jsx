@@ -36,7 +36,8 @@ export default function ExtendAttendeeExpiry({
   };
 
   return !hasExtended &&
-    attendeePayemntStatus === "unpaid" &&
+    (attendeePayemntStatus === "unpaid" ||
+      attendeePayemntStatus === "partially-paid") &&
     bookingPaymentStatus !== "cancelled" ? (
     <Button
       variation="gold"

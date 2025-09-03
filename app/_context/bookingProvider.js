@@ -24,7 +24,9 @@ export default function BookingProvider({ children }) {
   const [selectedPackages, setSelectedPackages] = useState([]);
   const [minDate, setMinDate] = useState("");
   const [bookingNotes, setBookingNotes] = useState("");
-
+  const [isOrganizerAttending, setIsOrganizerAttending] = useState(false);
+  const [includeGroom, setIncludeGroom] = useState(false);
+  const [groomDetails, setGroomDetails] = useState({ name: "", email: "" });
   // clear step query while closing booking popup modal
   function removeStepQueryFromUrl() {
     const params = new URLSearchParams(searchParams);
@@ -85,6 +87,12 @@ export default function BookingProvider({ children }) {
         showCalenderView,
         setShowCalenderView,
         removeStepQueryFromUrl,
+        isOrganizerAttending,
+        setIsOrganizerAttending,
+        includeGroom,
+        setIncludeGroom,
+        groomDetails,
+        setGroomDetails,
       }}
     >
       {children}

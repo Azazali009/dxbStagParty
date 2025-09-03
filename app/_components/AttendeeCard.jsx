@@ -10,10 +10,13 @@ export default function AttendeeCard({
   bookingPaymentStatus,
   bookingID,
 }) {
+  const paid = attendee.status === "paid";
+  const partiallyPaid = attendee.status === "partially-paid";
+  const unpaid = attendee.status === "unpaid";
   return (
     <div
       key={attendee.id}
-      className={`space-y-4 ${bookingPaymentStatus === "cancelled" && "grayscale"} bg-neutral-800 shadow-lg ${attendee.status === "unpaid" ? "text-softGold" : "text-green-500"} rounded-lg px-6 py-10 shadow-2xl`}
+      className={`space-y-4 ${bookingPaymentStatus === "cancelled" && "grayscale"} bg-neutral-800 shadow-lg ${unpaid && "text-softGold"} ${paid && "text-green-500"} rounded-lg px-6 py-10 shadow-2xl ${partiallyPaid && "text-yellow-500"}`}
     >
       <p className="capitalize">
         Hey,{" "}
@@ -24,12 +27,13 @@ export default function AttendeeCard({
         status={attendee.status}
         attempts={attendee.resendIncrement}
       />
-      {attendee.status === "unpaid" && attendee.expires_at && (
-        <PaymentTimer
-          expiresAt={attendee.expires_at}
-          bookingPaymentStatus={bookingPaymentStatus}
-        />
-      )}
+      {(attendee.status === "unpaid" || attendee.status === "partially-paid") &&
+        attendee.expires_at && (
+          <PaymentTimer
+            expiresAt={attendee.expires_at}
+            bookingPaymentStatus={bookingPaymentStatus}
+          />
+        )}
       <h1
         className={`flex items-center gap-2 text-xs font-bold xs:text-base md:text-xl`}
       >
@@ -43,9 +47,10 @@ export default function AttendeeCard({
       >
         <span className="font-bold">Attendee Payment:</span>
         <span
-          className={`font-semibold capitalize ${attendee.status === "unpaid" ? "text-red-500" : "text-green-500"}`}
+          className={`font-semibold capitalize ${unpaid && "text-red-500"} ${paid && "text-green-500"} ${partiallyPaid && "text-yellow-500"} `}
         >
-          {attendee.status} {attendee.status === "unpaid" ? "❌" : "✅"}
+          {attendee.status} {unpaid && "❌"} {paid && "✅"}{" "}
+          {partiallyPaid && "⚠️"}
         </span>
       </div>
 

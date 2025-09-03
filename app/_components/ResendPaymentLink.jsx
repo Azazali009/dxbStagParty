@@ -25,7 +25,7 @@ export default function ResendPayment({
   return (
     <>
       {attendee.resendIncrement > 0 &&
-      attendee.status === "unpaid" &&
+      (attendee.status === "unpaid" || attendee.status === "partially-paid") &&
       bookingPaymentStatus === "pending" ? (
         <button
           onClick={handleClick}

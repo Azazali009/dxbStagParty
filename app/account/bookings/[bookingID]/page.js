@@ -31,7 +31,7 @@ export default async function page({ params }) {
 
   return (
     <div className="space-y-14 p-1.5 py-8 xs:p-4">
-      <BookingsActions booking={booking} />
+      <BookingsActions booking={booking} curUser={curAuthUser} />
       <PaymentProgressBar
         bookingPaymentStatus={booking.paymentStatus}
         attendee={attendees}

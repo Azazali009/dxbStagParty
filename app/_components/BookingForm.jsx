@@ -34,6 +34,9 @@ export default function BookingForm({
     whatsApp,
     attendees,
     setAttendees,
+    isOrganizerAttending,
+    includeGroom,
+    groomDetails,
   } = useBooking();
   const [totalPrice, setTotalPrice] = useState(price);
 
@@ -86,7 +89,24 @@ export default function BookingForm({
         });
       }
 
-      const allEmails = [...attendees.map((a) => a.email), user.email];
+      if (
+        includeGroom &&
+        !groomDetails?.name?.trim() &&
+        !groomDetails?.email?.trim()
+      ) {
+        return toast.error("Please provide groom details.", { id: toastId });
+      }
+      const allEmails = [...attendees.map((a) => a.email)];
+
+      // Organizer include karo agar attending hai
+      if (isOrganizerAttending && user?.email) {
+        allEmails.push(user.email);
+      }
+
+      // Groom include karo agar toggle on hai
+      if (includeGroom) {
+        allEmails.push(groomDetails.email); // placeholder groom email
+      }
 
       // ✅ Check for Duplicate Emails
       const uniqueEmails = new Set(allEmails);
@@ -129,12 +149,9 @@ export default function BookingForm({
               email: a.email,
               name: a.name,
             })),
-            {
-              email: user.email,
-              phone: phone,
-            },
           ],
           organizerEmail: user.email,
+          organizerName: user?.user_metadata?.full_name || "organiser",
           activityName,
           bookingDate: bookingDate.toISOString(),
           end_date: endDate.toISOString(),
@@ -143,6 +160,9 @@ export default function BookingForm({
           booking_notes: bookingNotes,
           phone,
           whatsApp,
+          isOrganizerAttending,
+          includeGroom,
+          groomDetails: includeGroom ? groomDetails : null,
         }),
       );
 
@@ -242,11 +262,7 @@ export default function BookingForm({
       </div>
 
       {/* summary */}
-      <Summary
-        price={price}
-        activityName={activityName}
-        totalPrice={totalPrice}
-      />
+      <Summary user={user} totalPrice={totalPrice} />
     </div>
   );
 }

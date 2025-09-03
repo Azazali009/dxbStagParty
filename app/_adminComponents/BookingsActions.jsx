@@ -7,7 +7,7 @@ import SpinnerMini from "../_components/SpinnerMini";
 import { getPendingBookings } from "../_lib/data-services";
 import { useBooking } from "../_context/bookingProvider";
 
-export default function BookingsActions({ booking }) {
+export default function BookingsActions({ booking, curUser }) {
   const { id, totalPrice, paymentStatus } = booking;
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
@@ -35,6 +35,7 @@ export default function BookingsActions({ booking }) {
     });
   };
 
+  if (curUser?.user_metadata?.role !== "admin") return null;
   return (
     <div className="relative flex items-center justify-end">
       <button

@@ -204,6 +204,11 @@ export default function CompleteBooking() {
           booking_notes,
           phone,
           whatsApp,
+          isOrganizerAttending,
+          organizerName,
+          organizerEmail,
+          includeGroom,
+          groomDetails,
         } = bookingData;
 
         if (!Array.isArray(attendees) || attendees.length === 0) {
@@ -240,16 +245,51 @@ export default function CompleteBooking() {
         const bookingId = CurBooking.id;
 
         // 5) Ab attendee payment links banao (bookingId ke saath)
-        const splitAmount = Math.round(
-          (Number(totalPrice || 0) * 0.85) / attendees.length,
-        );
+        // const splitAmount = Math.round(
+        //   (Number(totalPrice || 0) * 0.85) / attendees.length,
+        // );
+
+        // get totall attendees
+        const totalParticipants =
+          attendees.length +
+          (isOrganizerAttending ? 1 : 0) +
+          (includeGroom ? 1 : 0);
+
+        // check if totalParticipants is 0
+        if (totalParticipants === 0) {
+          toast.error("No participants found for booking.", { id: toastId });
+          router.push("/");
+          return;
+        }
+
+        const splitAmount = Math.round(Number(totalPrice) / totalParticipants);
+
+        let allEmails = attendees.map((a) => a.email);
+        if (isOrganizerAttending) allEmails.push(organizerEmail);
+        if (includeGroom) allEmails.push(groomDetails.email);
 
         const res = await fetch("/api/create-payment-links", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            emails: attendees.map((att) => att.email),
-            totalPrice,
+            // emails: allEmails.map((e) => e),
+            participants: [
+              ...attendees.map((a) => ({
+                email: a.email,
+                amount: splitAmount,
+              })),
+              ...(isOrganizerAttending
+                ? [
+                    {
+                      email: organizerEmail,
+                      amount: splitAmount - bookingData.paidAmount,
+                    },
+                  ]
+                : []),
+              ...(includeGroom
+                ? [{ email: groomDetails.email, amount: splitAmount }]
+                : []),
+            ],
             activities,
             bookingId, // ✅ ab defined hai
           }),
@@ -282,6 +322,32 @@ export default function CompleteBooking() {
             expires_at: expiryIso,
           };
         });
+
+        // ✅ Organizer attending case
+        if (isOrganizerAttending) {
+          attendeesData.push({
+            bookingID: bookingId,
+            email: organizerEmail,
+            name: organizerName,
+            amountPaid: splitAmount - bookingData.paidAmount, // deposit adjust
+            status: "partially-paid",
+            paymentLink: "", // deposit already paid
+            expires_at: expiryIso,
+          });
+        }
+
+        // ✅ Groom included case
+        if (includeGroom) {
+          attendeesData.push({
+            bookingID: bookingId,
+            email: groomDetails.email, // placeholder email
+            name: groomDetails.name,
+            amountPaid: splitAmount,
+            status: "unpaid",
+            paymentLink: "",
+            expires_at: expiryIso,
+          });
+        }
 
         // 7) Attendees ko DB me save karo
         const { error: attendeeErrors } = await addAttendees(attendeesData);
