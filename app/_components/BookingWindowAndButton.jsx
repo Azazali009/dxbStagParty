@@ -9,7 +9,8 @@ export default function BookingWindowAndButton({
   activity = {},
   Package = {},
 }) {
-  const { id, price, name, destinations, group_size, duration } = activity;
+  const { id, price, name, destinations, group_size, duration, image } =
+    activity;
   const isEmptyObject = (obj) => {
     return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
   };
@@ -23,6 +24,7 @@ export default function BookingWindowAndButton({
         groupSize: group_size,
         user,
         duration,
+        image,
       }
     : !isEmptyObject(Package)
       ? {

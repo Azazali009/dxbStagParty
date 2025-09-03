@@ -39,7 +39,7 @@ export default function BookingForm({
     groomDetails,
   } = useBooking();
   const [totalPrice, setTotalPrice] = useState(price);
-
+  console.log(selectedActivities);
   const [minGroup, maxGroup] = groupSize && groupSize?.split("-")?.map(Number);
 
   const searchParams = useSearchParams();
@@ -83,10 +83,14 @@ export default function BookingForm({
         return toast.error("Please select a valid end date.", { id: toastId });
       }
 
-      if (!attendees) {
-        return toast.error("Please add required attendees.", {
-          id: toastId,
-        });
+      const validAttendees = attendees.filter(
+        (a) => a?.email?.trim() || a?.name?.trim(),
+      );
+
+      if (!validAttendees.length) {
+        toast.error("Please add attendee details.", { id: toastId });
+        setLoading(false);
+        return;
       }
 
       if (

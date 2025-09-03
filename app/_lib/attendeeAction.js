@@ -6,8 +6,6 @@ import { getCurrentUser } from "./getCurrentUser";
 
 export async function updateAttendeeResendIncrementAction(attendee, bookingID) {
   const user = await getCurrentUser();
-  if (!user || user?.user_metadata?.role !== "admin")
-    return { error: "You are not allowed to perform this action" };
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SITE_URL}/api/resend-payment-link`,
