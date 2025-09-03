@@ -251,7 +251,7 @@ export default function CompleteBooking() {
 
         // get totall attendees
         const totalParticipants =
-          attendees.length +
+          attendees?.length +
           (isOrganizerAttending ? 1 : 0) +
           (includeGroom ? 1 : 0);
 
@@ -264,7 +264,7 @@ export default function CompleteBooking() {
 
         const splitAmount = Math.round(Number(totalPrice) / totalParticipants);
 
-        let allEmails = attendees.map((a) => a.email);
+        let allEmails = attendees?.map((a) => a.email);
         if (isOrganizerAttending) allEmails.push(organizerEmail);
         if (includeGroom) allEmails.push(groomDetails.email);
 
@@ -274,10 +274,11 @@ export default function CompleteBooking() {
           body: JSON.stringify({
             // emails: allEmails.map((e) => e),
             participants: [
-              ...attendees.map((a) => ({
-                email: a.email,
-                amount: splitAmount,
-              })),
+              ...(attendees.length > 0 &&
+                attendees?.map((a) => ({
+                  email: a.email,
+                  amount: splitAmount,
+                }))),
               ...(isOrganizerAttending
                 ? [
                     {

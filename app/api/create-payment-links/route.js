@@ -34,6 +34,10 @@ export async function POST(req) {
     for (const participant of participants) {
       const { email, amount } = participant;
 
+      if (!email || !email.includes("@")) {
+        console.warn("Skipping invalid participant:", participant);
+        continue; // skip if email is invalid
+      }
       // 🔹 Create Stripe Payment Link
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
