@@ -1,6 +1,5 @@
-import React from "react";
 import Table from "./Table";
-import VerifiedUserRow from "./VerifiedUserRow";
+import UserRow from "./UserRow";
 
 export default function VerifiedUsers({ headers, data }) {
   return (
@@ -12,7 +11,7 @@ export default function VerifiedUsers({ headers, data }) {
           headers={headers}
           data={data}
           RowComponent={({ id, ...user }) => (
-            <VerifiedUserRow key={id} user={{ id, ...user }} />
+            <UserRow isVerified={true} key={id} user={{ id, ...user }} />
           )}
         />
       </div>

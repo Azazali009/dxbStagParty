@@ -7,7 +7,6 @@ import SpinnerMini from "../_components/SpinnerMini";
 import { deleteUserAction } from "../_lib/actions";
 
 export default function DeleteSupplier({ supplierId }) {
-  console.log(supplierId);
   const [isPending, startTransition] = useTransition();
   function handleDelete() {
     if (confirm("Are you sure you want to delete this supplier?"))

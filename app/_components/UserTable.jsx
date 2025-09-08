@@ -1,13 +1,6 @@
-import Image from "next/image";
-import {
-  getNonVerifiedUsers,
-  getUsers,
-  getVerifiedUsers,
-} from "../_lib/apiUser";
-import UserRow from "../_adminComponents/VerifiedUserRow";
-import Table from "../_adminComponents/Table";
 import NonVerifiedUser from "../_adminComponents/NonVerifiedUser";
 import VerifiedUsers from "../_adminComponents/VerifiedUsers";
+import { getNonVerifiedUsers, getVerifiedUsers } from "../_lib/apiUser";
 
 export default async function UserTable() {
   const users = await getVerifiedUsers();

@@ -30,7 +30,7 @@ const supportLinks = [
   {
     id: 6005,
     text: "Become a supplier",
-    href: "/become-a-supplier",
+    href: "/become_a_supplier",
   },
   {
     id: 6006,

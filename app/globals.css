@@ -26,6 +26,42 @@
   clip-path: inset(0 0 0 0 round 20px) !important;
   transform: perspective(300px) rotateY(-6deg) rotateX(-3deg) skewX(-2deg) !important;
 }
+
+/* supplier form calender */
+
+.rdp-day.rdp-today {
+  color: #e0b15e !important;
+}
+.rdp-range_start,
+.rdp-range_end {
+  background: #e0b15e !important;
+}
+.rdp-range_start {
+  border-top-left-radius: 30px !important;
+  border-bottom-left-radius: 30px !important;
+}
+.rdp-range_end {
+  border-top-right-radius: 30px !important;
+  border-bottom-right-radius: 30px !important;
+}
+.rdp-range_middle {
+  background-color: #e0b15e !important;
+  color: #05172a !important;
+}
+
+/* Clock icon for time input filed */
+/* Chrome, Safari, Edge */
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* inverts black → white */
+  cursor: pointer;
+}
+
+/* Firefox */
+input[type="time"]::-moz-focus-inner,
+input[type="time"]::-moz-calendar-picker-indicator {
+  filter: invert(1);
+}
+
 @media (max-width: 640px) {
   .middle-card {
     height: 400px;

@@ -1,7 +1,9 @@
 import React from "react";
 import FormRow from "../_components/FormRow";
+import { useSupplier } from "../_context/SupplierProvider";
 
 export default function ActivityMetaDataStep() {
+  const { formData, handleChange } = useSupplier();
   return (
     <>
       <FormRow label="activity tags">
@@ -9,19 +11,27 @@ export default function ActivityMetaDataStep() {
           type="text"
           placeholder="Adventure, Family, ..."
           name="activity_tags"
+          value={formData.activity_tags}
+          onChange={handleChange}
           autoComplete="on"
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
 
       <FormRow label="mobility requirements">
-        <input
-          type="text"
-          placeholder="Not wheelchair accessible"
+        <select
           name="mobility_requirements"
-          autoComplete="on"
+          defaultValue=""
+          value={formData.mobility_requirements}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
+        >
+          <option value="" disabled>
+            Select option
+          </option>
+          <option value="yes">Wheelchair Accessible</option>
+          <option value="no">Not Wheelchair Accessible</option>
+        </select>
       </FormRow>
 
       <FormRow label="minimum age">
@@ -30,6 +40,8 @@ export default function ActivityMetaDataStep() {
           placeholder="18"
           name="minimum_age"
           autoComplete="on"
+          value={formData.minimum_age}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
@@ -38,6 +50,8 @@ export default function ActivityMetaDataStep() {
         <select
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           name="alcohol_included"
+          value={formData.alcohol_included}
+          onChange={handleChange}
           id=""
         >
           <option value="">alcohol included?</option>
@@ -50,6 +64,8 @@ export default function ActivityMetaDataStep() {
         <select
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           name="media_friendly"
+          value={formData.media_friendly}
+          onChange={handleChange}
           id=""
         >
           <option value="">Is media friendly?</option>
@@ -64,6 +80,8 @@ export default function ActivityMetaDataStep() {
           placeholder="ISO 9001, Local Tourism Cert, ..."
           name="safety_certifications"
           autoComplete="on"
+          value={formData.safety_certifications}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
@@ -72,6 +90,8 @@ export default function ActivityMetaDataStep() {
         <select
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           name="insurance_provided"
+          value={formData.insurance_provided}
+          onChange={handleChange}
           id=""
         >
           <option value="">insurance provided?</option>

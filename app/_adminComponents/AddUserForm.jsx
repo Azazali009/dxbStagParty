@@ -63,7 +63,7 @@ export default function AddUserForm() {
       <h1 className="text-3xl font-semibold">
         Add user{" "}
         <span className="inline-block text-base font-medium text-matalicGold">
-          (Organiser, Supplier, Admin)
+          (Organiser, Admin)
         </span>
       </h1>
 
@@ -128,23 +128,24 @@ export default function AddUserForm() {
           >
             <option value="organiser">organiser</option>
             <option value="admin">admin</option>
-            <option value="supplier">supplier</option>
           </select>
         </FormRow>
-        <button
-          className="flex w-fit items-center justify-center gap-2 rounded bg-sky-600 px-6 py-2.5 text-center font-medium capitalize text-softGold duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
-          type="submit"
-          disabled={isPending}
-        >
-          {isPending ? (
-            <div className="flex items-center gap-2">
-              {" "}
-              <SpinnerMini /> <span>Creating...</span>
-            </div>
-          ) : (
-            "Create user"
-          )}
-        </button>
+        <div style={{ gridColumn: "1/-1" }} className="mt-6">
+          <button
+            className="flex w-fit items-center justify-center gap-2 rounded border border-matalicGold px-6 py-2.5 text-center font-medium capitalize text-matalicGold duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending ? (
+              <div className="flex items-center gap-2">
+                {" "}
+                <SpinnerMini /> <span>Creating...</span>
+              </div>
+            ) : (
+              "Create user"
+            )}
+          </button>
+        </div>
       </form>
     </div>
   );

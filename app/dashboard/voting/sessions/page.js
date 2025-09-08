@@ -1,6 +1,5 @@
 import VotingSessionsTable from "../../../_adminComponents/VotingSessionsTable";
 import { getVotingSessions } from "../../../_lib/apiVotingSession";
-import Link from "next/link";
 
 export default async function SessionsPage() {
   const sessions = await getVotingSessions();

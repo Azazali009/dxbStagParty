@@ -1,10 +1,13 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { createClient } from "../_utils/supabase/client";
+import { useSupabaseSubscription } from "../_hooks/useSupabaseSubscription";
+import { supabase } from "../_lib/supabase";
 
 const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
+  useSupabaseSubscription({ table: "users", filterKey: "users" });
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [nonVerifyUsersCount, setNonVerifyUsersCount] = useState(0);
@@ -35,7 +38,7 @@ export default function AuthProvider({ children }) {
       setNonVerifyUsersCount(count);
     }
     fetchUsers();
-  }, []);
+  });
   return (
     <AuthContext.Provider
       value={{

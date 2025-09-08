@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import FormRow from "../_components/FormRow";
 import EyeIcon from "../svgIcons/EyeIcon";
 import { MultiSelect } from "react-multi-select-component";
+import { useSupplier } from "../_context/SupplierProvider";
 
-export default function AccountAccessStep({
-  loading,
-  activities,
-  selectedActivities,
-  setSelectedActivities,
-}) {
+export default function AccountAccessStep() {
   const [passwordTye, setPasswordType] = useState("password");
+  const {
+    formData,
+    handleChange,
+    activities,
+    loading,
+    setSelectedActivities,
+    selectedActivities,
+  } = useSupplier();
+
   return (
     <>
       <FormRow label="Supplier Name">
@@ -18,6 +23,8 @@ export default function AccountAccessStep({
           placeholder="Name"
           name="name"
           autoComplete="name"
+          value={formData.name}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
@@ -27,6 +34,8 @@ export default function AccountAccessStep({
           placeholder="Email"
           name="email"
           autoComplete="email"
+          value={formData.email}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
@@ -36,6 +45,8 @@ export default function AccountAccessStep({
           placeholder="+01234...."
           name="phone"
           autoComplete="tel"
+          value={formData.phone}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
@@ -46,9 +57,19 @@ export default function AccountAccessStep({
         </div>
       ) : (
         <FormRow label={"Add Activities"}>
-          <MultiSelect
+          {/* <MultiSelect
             options={activities}
             value={selectedActivities} // Keep it controlled
+            onChange={(selected) => {
+              setSelectedActivities([...selected]); // Ensure state update happens outside of render
+            }}
+            labelledBy="Add Activities"
+            className="custom-multi-select"
+            hasSelectAll={false}
+          /> */}
+          <MultiSelect
+            options={activities}
+            value={selectedActivities} // Controlled input
             onChange={(selected) => {
               setSelectedActivities([...selected]); // Ensure state update happens outside of render
             }}
@@ -58,21 +79,15 @@ export default function AccountAccessStep({
           />
         </FormRow>
       )}
-      <FormRow label="Role">
-        <input
-          type="text"
-          placeholder="supplier"
-          name="role"
-          autoComplete="on"
-          className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
-      </FormRow>
+
       <FormRow label="Password">
         <div className="relative">
           <input
             type={passwordTye}
             placeholder="******"
             name="password"
+            value={formData.password}
+            onChange={handleChange}
             autoComplete="on"
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           />

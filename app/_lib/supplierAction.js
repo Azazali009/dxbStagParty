@@ -36,197 +36,324 @@ import { supabaseAdmin } from "./adminSupabase";
 //   redirect("/dashboard/supplier");
 // }
 
-export async function addAndApplySupplierAction(data, formData) {
+// export async function addAndApplySupplierAction(data) {
+//   const supabase = await createClient();
+//   const user = await getCurrentUser();
+//   const {
+//     urls,
+//     selectedActivities,
+//     bankDetails,
+//     validateOnly,
+//     isForApply,
+//     range,
+//   } = data;
+
+//   const isFromAdmin = !isForApply; // Reverse for clarity
+
+//   // check the form should from admin side and the current user role should be an admin
+//   if (isFromAdmin && (!user || user?.user_metadata?.role !== "admin")) {
+//     return { error: "You are not allowed to perform this action" };
+//   }
+//   const activityIds = selectedActivities?.map((activity) => activity?.value);
+
+//   // Optional fields for validation
+//   const optionalFields = [
+//     "short_description",
+//     "full_description",
+//     "custom_booking_notes",
+//   ];
+
+//   // Validate form
+//   const result = extractAndValidateFormData(formData, optionalFields);
+//   if (!result?.valid) return { error: result?.error };
+
+//   // 🛑 If only validating, exit here — don’t insert
+//   if (validateOnly) return { success: true };
+
+//   const formDataObject = result?.data;
+//   const {
+//     locations,
+//     languages,
+//     available_hours,
+//     blackout_dates,
+//     add_ons,
+//     activity_tags,
+//     safety_certifications,
+//     email,
+//     name,
+//     role,
+//   } = formDataObject;
+
+//   // exclude password field -> because we do not want to add password in supplier table
+//   const { password, ...filteredFormData } = formDataObject;
+
+//   // Transform fields
+//   const locationArr = locations?.split(",");
+//   const languagesArr = languages?.split(",");
+//   const available_hoursArr = available_hours?.split(",");
+//   const blackout_datesArr = blackout_dates?.split(",");
+//   const add_onsArr = add_ons?.split(",") ?? null;
+//   const activity_tagsArr = activity_tags?.split(",");
+//   const safety_certificationsArr = safety_certifications?.split(",");
+
+//   let user_id;
+//   let authErrorMessage = "";
+
+//   if (isFromAdmin) {
+//     // Admin creating a new user
+//     const { data: newUser, error: signUpError } =
+//       await supabaseAdmin.auth.admin.createUser({
+//         email,
+//         password,
+//         email_confirm: true,
+//         user_metadata: {
+//           full_name: name,
+//           role: role ?? "supplier",
+//         },
+//       });
+
+//     if (signUpError) {
+//       console.error("Admin Signup Error:", signUpError.message);
+//       authErrorMessage =
+//         signUpError.message.includes("already been registered") ||
+//         signUpError.message.includes("User already registered")
+//           ? "This email is already registered. Try logging in."
+//           : "Unable to create the account. Please try again.";
+//       return { error: authErrorMessage };
+//     }
+
+//     user_id = newUser?.user?.id;
+//   } else {
+//     // Normal user creating own account via admin client (server-side)
+//     const { data: newUser, error: signUpError } =
+//       await supabaseAdmin.auth.admin.createUser({
+//         email,
+//         password,
+//         email_confirm: true,
+//         user_metadata: {
+//           full_name: name,
+//           role: role ?? "supplier",
+//         },
+//       });
+
+//     if (signUpError) {
+//       console.error("Signup Error:", signUpError.message);
+//       authErrorMessage = signUpError.message.includes("already been registered")
+//         ? "This email is already registered. Try logging in."
+//         : "Unable to create your account. Please try again.";
+//       return { error: authErrorMessage };
+//     }
+
+//     user_id = newUser?.user?.id;
+//   }
+
+//   const { data: existingUser, error: fetchError } = await supabase
+//     .from("users")
+//     .select("id")
+//     .eq("email", email)
+//     .single();
+
+//   if (existingUser) {
+//     return { error: "This email is already registered." };
+//   }
+
+//   // insert user in custom user table
+//   if (!user_id)
+//     return { error: "Unable to complete action — your ID was not generated." };
+
+//   const { error: profileError } = await supabase.from("users").insert([
+//     {
+//       id: user_id,
+//       email,
+//       isVerified: false,
+//       fullName: name,
+//       role: role ? role : "supplier",
+//     },
+//   ]);
+//   if (profileError) {
+//     console.error("Supabase Custom User Table Error:", profileError.message);
+
+//     const errorMsg = profileError.message.includes("foreign key constraint")
+//       ? `Signup failed due to system conflict. Please contact support. (support@dxbstagparties.com)`
+//       : "Could not complete signup. Please try again later.";
+
+//     return { error: errorMsg };
+//   }
+//   // Final supplier data
+
+//   const newSupplier = {
+//     ...filteredFormData,
+//     activityIds,
+//     locations: locationArr,
+//     languages: languagesArr,
+//     gallery: urls?.length > 0 ? urls : null,
+//     available_hours: available_hoursArr,
+//     blackout_dates: blackout_datesArr,
+//     add_ons: add_onsArr,
+//     bank_details: bankDetails,
+//     activity_tags: activity_tagsArr,
+//     safety_certifications: safety_certificationsArr,
+//     user_id,
+//     blackout_start: range?.from,
+//     blackout_end: range?.to,
+//   };
+
+//   // Insert supplier into supplier table
+//   const { error: insertError } = await supabase
+//     .from("supplier")
+//     .insert([newSupplier])
+//     .select();
+
+//   if (insertError) {
+//     console.log(insertError);
+//     return { error: "Error while submitting application." };
+//   }
+//   if (isForApply) {
+//     redirect("/login");
+//   }
+//   return { success: true };
+// }
+
+export async function addAndApplySupplierAction(data) {
   const supabase = await createClient();
   const user = await getCurrentUser();
-  const { urls, selectedActivities, bankDetails, validateOnly, isForApply } =
-    data;
 
-  const isFromAdmin = !isForApply; // Reverse for clarity
+  const {
+    urls,
+    validateOnly,
+    isForApply,
+    range,
+    selectedActivities,
+    bankDetails,
+    name,
+    email,
+    password,
+    locations,
+    languages,
+    available_hours,
+    add_ons,
+    activity_tags,
+    safety_certifications,
+    ...rest
+  } = data;
 
-  // check the form should from admin side and the current user role should be an admin
+  const isFromAdmin = !isForApply;
+
+  // ✅ Admin-only restriction
   if (isFromAdmin && (!user || user?.user_metadata?.role !== "admin")) {
     return { error: "You are not allowed to perform this action" };
   }
-  const activityIds = selectedActivities?.map((activity) => activity?.value);
 
-  // Optional fields for validation
+  // ✅ Validation
   const optionalFields = [
     "short_description",
     "full_description",
     "custom_booking_notes",
+    "role",
   ];
+  const validation = extractAndValidateFormData(data, optionalFields);
+  if (!validation.valid) return { error: validation.error };
 
-  // Validate form
-  const result = extractAndValidateFormData(formData, optionalFields);
-  if (!result?.valid) return { error: result?.error };
-
-  // 🛑 If only validating, exit here — don’t insert
   if (validateOnly) return { success: true };
 
-  const formDataObject = result?.data;
-  const {
-    locations,
-    languages,
-    available_hours,
-    blackout_dates,
-    add_ons,
-    activity_tags,
-    safety_certifications,
-    email,
-    name,
-    role,
-  } = formDataObject;
-
-  // exclude password field -> because we do not want to add password in supplier table
-  const { password, ...filteredFormData } = formDataObject;
-
-  // Transform fields
-  const locationArr = locations?.split(",");
-  const languagesArr = languages?.split(",");
-  const available_hoursArr = available_hours?.split(",");
-  const blackout_datesArr = blackout_dates?.split(",");
-  const add_onsArr = add_ons?.split(",") ?? null;
-  const activity_tagsArr = activity_tags?.split(",");
-  const safety_certificationsArr = safety_certifications?.split(",");
-
-  // insert user in supabase auth table
-
-  // const { data: newUser, error: signUpError } =
-  //   await supabaseAdmin.auth.admin.createUser({
-  //     email,
-  //     password,
-  //     email_confirm: true, // ✅ This skips confirmation email
-  //     user_metadata: {
-  //       full_name: name,
-  //       role: role ?? "supplier",
-  //     },
-  //   });
-  // if (signUpError) {
-  //   console.error("Supabase Auth Signup Error:", signUpError.message);
-  //   const message =
-  //     signUpError.message === "User already registered" ||
-  //     signUpError?.message ===
-  //       "A user with this email address has already been registered"
-  //       ? "This email is already registered. Try logging in."
-  //       : "Unable to create your account. Please check your email or try again later.";
-  //   return { error: message };
-  // }
   let user_id;
   let authErrorMessage = "";
 
-  if (isFromAdmin) {
-    // Admin creating a new user
-    const { data: newUser, error: signUpError } =
-      await supabaseAdmin.auth.admin.createUser({
-        email,
-        password,
-        email_confirm: true,
-        user_metadata: {
-          full_name: name,
-          role: role ?? "supplier",
-        },
-      });
-
-    if (signUpError) {
-      console.error("Admin Signup Error:", signUpError.message);
-      authErrorMessage =
-        signUpError.message.includes("already been registered") ||
-        signUpError.message.includes("User already registered")
-          ? "This email is already registered. Try logging in."
-          : "Unable to create the account. Please try again.";
-      return { error: authErrorMessage };
-    }
-
-    user_id = newUser?.user?.id;
-  } else {
-    // Normal user creating own account
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
-      {
-        email,
-        password,
-        options: {
-          data: {
-            full_name: name,
-            role: role ?? "supplier",
-          },
-        },
+  // ✅ Create user via Admin client (no anonymous issue)
+  const { data: newUser, error: signUpError } =
+    await supabaseAdmin.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true,
+      user_metadata: {
+        full_name: name,
+        role: "supplier",
       },
-    );
+    });
 
-    if (signUpError) {
-      console.error("Self Signup Error:", signUpError.message);
-      authErrorMessage = signUpError.message.includes("already been registered")
-        ? "This email is already registered. Try logging in."
-        : "Unable to create your account. Please try again.";
-      return { error: authErrorMessage };
-    }
-
-    user_id = signUpData?.user?.id;
+  if (signUpError) {
+    console.error("Signup Error:", signUpError.message);
+    authErrorMessage = signUpError.message.includes("already been registered")
+      ? "This email is already registered. Try logging in."
+      : "Unable to create your account. Please try again.";
+    return { error: authErrorMessage };
   }
 
-  const { data: existingUser, error: fetchError } = await supabase
-    .from("users")
-    .select("id")
-    .eq("email", email)
-    .single();
+  user_id = newUser?.user?.id;
 
-  if (existingUser) {
-    return { error: "This email is already registered." };
-  }
+  // ✅ Check if exists in custom users table
+  // const { data: existingUser } = await supabase
+  //   .from("users")
+  //   .select("id")
+  //   .eq("email", email)
+  //   .single();
 
-  // insert user in custom user table
-  if (!user_id)
-    return { error: "Unable to complete action — your ID was not generated." };
+  // if (existingUser) {
+  //   return { error: "This email is already registered." };
+  // }
 
+  // ✅ Insert user into custom users table
   const { error: profileError } = await supabase.from("users").insert([
     {
       id: user_id,
       email,
       isVerified: false,
       fullName: name,
-      role: role ? role : "supplier",
+      role: "supplier",
     },
   ]);
+
   if (profileError) {
     console.error("Supabase Custom User Table Error:", profileError.message);
-
-    const errorMsg = profileError.message.includes("foreign key constraint")
-      ? `Signup failed due to system conflict. Please contact support. (support@dxbstagparties.com)`
-      : "Could not complete signup. Please try again later.";
-
-    return { error: errorMsg };
+    return { error: "Could not complete signup. Please try again later." };
   }
-  // Final supplier data
 
+  // ✅ Transform fields
+  const locationArr = locations?.split(",") ?? [];
+  const languagesArr = languages?.split(",") ?? [];
+  const available_hoursArr = available_hours?.split(",") ?? [];
+  const add_onsArr = add_ons?.split(",") ?? [];
+  const activity_tagsArr = activity_tags?.split(",") ?? [];
+  const safety_certificationsArr = safety_certifications?.split(",") ?? [];
+  const activityIds = selectedActivities?.map((act) => act?.value) ?? [];
+
+  // ✅ Prepare supplier object
   const newSupplier = {
-    ...filteredFormData,
-    activityIds,
+    ...rest,
+
+    name,
+    email,
+    role: "supplier",
     locations: locationArr,
     languages: languagesArr,
     gallery: urls?.length > 0 ? urls : null,
     available_hours: available_hoursArr,
-    blackout_dates: blackout_datesArr,
     add_ons: add_onsArr,
     bank_details: bankDetails,
     activity_tags: activity_tagsArr,
     safety_certifications: safety_certificationsArr,
+    activityIds,
     user_id,
+    blackout_start: range?.from ?? null,
+    blackout_end: range?.to ?? null,
   };
 
-  // Insert supplier into supplier table
+  // ✅ Insert into supplier table
   const { error: insertError } = await supabase
     .from("supplier")
     .insert([newSupplier])
     .select();
 
   if (insertError) {
-    console.log(insertError);
+    console.log("Supplier Insert Error:", insertError);
+    await supabaseAdmin.auth.admin.deleteUser(user_id);
     return { error: "Error while submitting application." };
   }
+
   if (isForApply) {
     redirect("/login");
   }
+
   return { success: true };
 }
 

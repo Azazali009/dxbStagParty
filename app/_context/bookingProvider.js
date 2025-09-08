@@ -3,10 +3,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { createClient } from "../_utils/supabase/client";
+import { useSupabaseSubscription } from "../_hooks/useSupabaseSubscription";
 
 const PendingBookingContext = createContext();
 
 export default function BookingProvider({ children }) {
+  useSupabaseSubscription({ table: "booking", filterKey: "booking" });
   const { user } = useAuth();
 
   const searchParams = useSearchParams();

@@ -16,7 +16,9 @@ export default function VerifyUserButton({ email, userId }) {
       startTransition(async () => {
         const res = await verifyUser(userId);
         if (res?.error) return toast.error(res?.error);
-        toast.success("User Verified successfully.");
+        toast.success(
+          "User has been successfully verified. A notification will be sent to the registered email address.",
+        );
         const { count } = await supabase
           .from("users")
           .select("*", { count: "exact" })

@@ -448,27 +448,67 @@ export function formatDateTime(datetimeStr) {
 }
 
 // Function to extract data and validate
+// export function extractAndValidateFormData(formData, optionalFields = []) {
+//   const formDataObject = {};
+
+//   // Extract all data from FormData
+//   formData.forEach((value, key) => {
+//     formDataObject[key] = value;
+//   });
+
+//   // Validation: Check if any field is empty except optional fields
+//   for (const [key, value] of Object.entries(formDataObject)) {
+//     // If the field is not in the optionalFields array and it's empty, return error
+//     if (!optionalFields.includes(key) && !value.trim()) {
+//       return {
+//         valid: false,
+//         error: `${key?.replaceAll("_", " ")} cannot be empty`, // Return error if field is empty
+//       };
+//     }
+//   }
+
+//   // If all fields are valid, return valid status
+//   return { valid: true, data: formDataObject };
+// }
 export function extractAndValidateFormData(formData, optionalFields = []) {
-  const formDataObject = {};
-
-  // Extract all data from FormData
-  formData.forEach((value, key) => {
-    formDataObject[key] = value;
-  });
-
   // Validation: Check if any field is empty except optional fields
-  for (const [key, value] of Object.entries(formDataObject)) {
-    // If the field is not in the optionalFields array and it's empty, return error
-    if (!optionalFields.includes(key) && !value.trim()) {
+  for (const [key, value] of Object.entries(formData)) {
+    if (optionalFields.includes(key)) continue; // skip optional fields
+
+    if (value === null || value === undefined) {
       return {
         valid: false,
-        error: `${key?.replaceAll("_", " ")} cannot be empty`, // Return error if field is empty
+        error: `${key.replaceAll("_", " ")} cannot be empty`,
       };
+    }
+
+    // If value is string → trim and check
+    if (typeof value === "string" && !value.trim()) {
+      return {
+        valid: false,
+        error: `${key.replaceAll("_", " ")} cannot be empty`,
+      };
+    }
+
+    // If value is object (like bankDetails), check nested keys
+    if (typeof value === "object" && !Array.isArray(value)) {
+      for (const [subKey, subValue] of Object.entries(value)) {
+        if (
+          !optionalFields.includes(`${key}.${subKey}`) &&
+          (subValue === null ||
+            subValue === undefined ||
+            (typeof subValue === "string" && !subValue.trim()))
+        ) {
+          return {
+            valid: false,
+            error: `${subKey.replaceAll("_", " ")} in ${key} cannot be empty`,
+          };
+        }
+      }
     }
   }
 
-  // If all fields are valid, return valid status
-  return { valid: true, data: formDataObject };
+  return { valid: true, data: formData };
 }
 
 // extract image for stripe
@@ -503,4 +543,11 @@ export function sanitizeImages(maybe) {
     }
   }
   return Array.from(new Set(out)).slice(0, 8);
+}
+
+// omit or removing any fields from obejct
+export function omit(obj, keys = []) {
+  const copy = { ...obj };
+  keys.forEach((key) => delete copy[key]);
+  return copy;
 }

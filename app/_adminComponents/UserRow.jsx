@@ -3,7 +3,7 @@ import DeleteUser from "../_components/DeleteUser";
 import VerifyUserButton from "../_adminComponents/VerifyUserButton";
 import Image from "next/image";
 
-export default function NonVerifiedUserRow({ user }) {
+export default function UserRow({ user, isVerified = false }) {
   return (
     <div
       key={user.id}
@@ -11,7 +11,7 @@ export default function NonVerifiedUserRow({ user }) {
     >
       <div className="relative size-12 overflow-hidden rounded-full border border-gray-800 bg-navyBlue">
         <Image
-          src={user?.image || "/images/defaultUser.png"}
+          src={user?.avatar || user?.image || "/images/defaultUser.png"}
           fill
           alt={user?.fullName}
           className="rounded-full object-cover"
@@ -22,7 +22,9 @@ export default function NonVerifiedUserRow({ user }) {
       <p>{user.email}</p>
       <p>{user?.role}</p>
       <div className="flex items-center gap-2">
-        <VerifyUserButton email={user.email} userId={user.id} />
+        {!isVerified && (
+          <VerifyUserButton email={user.email} userId={user.id} />
+        )}
         <DeleteUser email={user.email} userId={user.id} />
       </div>
     </div>

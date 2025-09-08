@@ -1,17 +1,24 @@
 import React from "react";
 import FormRow from "../_components/FormRow";
+import { useSupplier } from "../_context/SupplierProvider";
 
 export default function BookingAlert() {
+  const { formData, handleChange } = useSupplier();
   return (
     <>
       <FormRow label="preferred communication channel">
-        <input
-          type="text"
-          placeholder="WhatsApp"
+        <select
           name="preferred_communication_channel"
-          autoComplete="on"
+          multiple
+          size={3}
+          value={formData.preferred_communication_channel}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
+        >
+          <option value="email">Email</option>
+          <option value="phone">Phone</option>
+          <option value="whatsapp">WhatsApp</option>
+        </select>
       </FormRow>
 
       <FormRow label="response time expectation">
@@ -20,6 +27,8 @@ export default function BookingAlert() {
           placeholder="Within 24 hours"
           name="response_time_expectation"
           autoComplete="on"
+          value={formData.response_time_expectation}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
@@ -29,6 +38,8 @@ export default function BookingAlert() {
           type="text"
           placeholder="24"
           name="auto_reminder_triggers"
+          value={formData.auto_reminder_triggers}
+          onChange={handleChange}
           autoComplete="on"
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
@@ -42,6 +53,8 @@ export default function BookingAlert() {
           placeholder="Bring ID and wear outdoor shoes ..."
           cols={5}
           rows={5}
+          value={formData.custom_booking_notes}
+          onChange={handleChange}
         ></textarea>
       </FormRow>
     </>

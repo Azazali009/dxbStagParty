@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 import Button from "./Button";
 import toast from "react-hot-toast";
-import { addBooking } from "../_lib/data-services";
 
 export default function VotingActivitiesList({
   isClosed,
@@ -49,9 +48,13 @@ export default function VotingActivitiesList({
             },
           ],
           organizerEmail: user.email,
+          organizerName: user?.user_metadata?.full_name || "organiser",
           bookingDate: session?.created_at,
           end_date: session.end_time,
           paidAmount: organizerAmount,
+          isOrganizerAttending: session?.isOrganizerAttending,
+          includeGroom: session.includeGroom,
+          groomDetails: session.groomDetails,
         }),
       );
 

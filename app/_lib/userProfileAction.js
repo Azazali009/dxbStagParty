@@ -283,6 +283,9 @@ export async function addVoteAction(data, formData) {
   const activities = data?.selectedActivities;
   const activityIds = activities && activities?.map((act) => act.value);
   const attendees = data?.attendees;
+  const groomDetails = data?.groomDetails;
+  const isOrganizerAttending = data?.isOrganizerAttending;
+  const includeGroom = data?.includeGroom;
 
   if (!activities || activities.length < 3) {
     return { error: "Please select at least 3 activities." };
@@ -311,6 +314,9 @@ export async function addVoteAction(data, formData) {
       status: "open",
       end_time: endTime,
       link_token: linkToken,
+      isOrganizerAttending,
+      groomDetails,
+      includeGroom,
     },
   ]);
 
@@ -326,7 +332,7 @@ export async function addVoteAction(data, formData) {
     if (attendee.email) {
       await sendEmail({
         toEmail: attendee.email,
-        subject: "You're invited to vote for an activity 🎯",
+        subject: "Have your say – help choose the stag activities 🎉",
         message: `
               <div style="background-color:#0B0E1C; color:#E0B15E !important; padding:30px; font-family:sans-serif; text-align:center;">
                       <img src="${process.env.NEXT_PUBLIC_SITE_URL}/logo.png" alt="DXB Stag Parties Logo" style="width:120px; margin-bottom:20px;" />
@@ -336,17 +342,30 @@ export async function addVoteAction(data, formData) {
                           Your Ad Could Be Here — Promote Your Brand With DXB Stag Parties
                         </div>
 
-                      <h1 style="font-size:24px; margin-bottom:20px; color:#E0B15E !important;">Vote for Your Favorite Activity</h1>
+                      <h1 style="font-size:24px; margin-bottom:20px; color:#E0B15E !important; text-transform: capitalize;">Hi ${attendee.name},</h1>
+
                       <p style="font-size:16px; margin-bottom:24px; color:#fff;">
-                        You’ve been invited to vote for your preferred stag activity. Click the button below to cast your vote:
+                        You’re invited to the stag party of ${groomDetails?.name} 🎊. The organiser has picked out some epic Dubai activities, and now it’s your turn to decide which ones make the cut.
                       </p>
-                      <a href="${votingLink}" 
-                        style="display:inline-block; padding:12px 24px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; border-radius:50px; font-weight:bold;">
+
+                       <p style="font-size:16px; margin-bottom:24px; color:#fff;">
+                        👉 Cast your vote here: <a href="${votingLink}" 
+                        style="display:inline-block; padding:9px 18px; background-color:#E0B15E; color:#0B0E1C; text-decoration:none; border-radius:50px; font-weight:bold;">
                         Vote Now
-                      </a>
-                      <p style="margin-top:30px; font-size:14px; color:#aaa;">
-                        This link will expire in 24 hours. Please make sure to vote before the deadline.
+                        </a>
                       </p>
+
+                      <p style="margin-top:30px; font-size:16px; color:#fff;">
+                        You’ve got 24 hours to vote – after that, the favourite activity will be locked in. Don’t miss your chance to shape the weekend!.
+                      </p>
+
+                      <p style="margin-top:30px; font-size:16px; color:#fff;">
+                        Cheers,<br/>
+                        The DXB Stag Parties Team <br/>
+                        <a href="${process.env.NEXT_PUBLIC_SITE_URL}" style="color:#E0B15E; text-decoration:underline;">Visit our site</a>
+                      </p>
+
+
                       <!-- BOTTOM AD SLOT (placeholder / sellable space) -->
                         <div style="background:#E0B15E; color:#0B0E1C; padding:10px; font-size:14px; font-weight:bold; margin-top:20px; border-radius:6px;">
                           Partner With Us — Contact <a href="${process.env.NEXT_PUBLIC_SITE_URL}/contact" style="color:#0B0E1C; text-decoration:underline;">DXB Stag Parties</a>

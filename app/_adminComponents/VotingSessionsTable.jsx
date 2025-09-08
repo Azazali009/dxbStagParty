@@ -1,9 +1,15 @@
+"use client";
 import React from "react";
 import Table from "./Table";
 import VotingSessionsRow from "./VotingSessionsRow";
+import { useSupabaseSubscription } from "../_hooks/useSupabaseSubscription";
 
 export default function VotingSessionsTable({ sessions }) {
-  const headers = ["Title", "Status", "Created", "End Time", "action"];
+  useSupabaseSubscription({
+    table: "voting_sessions",
+    filterKey: "voting-list",
+  });
+  const headers = ["ID", "Title", "Status", "Created", "End Time", "action"];
   return (
     <Table
       headers={headers}

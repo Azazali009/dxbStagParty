@@ -1,31 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
+import { useSupabaseSubscription } from "../_hooks/useSupabaseSubscription";
 import Button from "./Button";
-import { useRouter } from "next/navigation";
-import { supabase } from "../_lib/supabase";
 
 export default function VotingListItems({ sessions, organiserId }) {
-  const router = useRouter();
-  useEffect(() => {
-    const channel = supabase
-      .channel(`voting_sessions:${organiserId}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "voting_sessions",
-        },
-        function (payload) {
-          router.refresh();
-        },
-      )
-      .subscribe();
+  // Supabase real time useEffect
+  useSupabaseSubscription({ table: "voting_sessions", filterKey: organiserId });
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [router, organiserId]);
   return (
     <div className="space-y-6">
       {sessions.map((session) => (

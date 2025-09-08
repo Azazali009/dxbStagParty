@@ -21,15 +21,13 @@ import ActivityMetaDataStep from "./ActivityMetaDataStep";
 import BookingAlert from "./BookingAlert";
 import DocumentsLegal from "./DocumentsLegal";
 import FormNavigationButton from "../_components/FormNavigationButton";
+import { useSupplier } from "../_context/SupplierProvider";
+import { omit } from "../_lib/helpers";
 
 export default function SupplierForm({ isForApply = false }) {
+  const { formData, selectedActivities, range } = useSupplier();
+  const { images, role, email, password } = formData;
   const [isPending, startTransition] = useTransition();
-  const [loading, setLoading] = useState(false);
-  const [activities, setActivities] = useState([]);
-  const [selectedActivities, setSelectedActivities] = useState([]);
-  const [images, setImages] = useState([undefined]);
-  const [bankDetails, setBankDetails] = useState({ bank: "", iban: "" });
-  const [step, setStep] = useState(1);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -141,33 +139,29 @@ export default function SupplierForm({ isForApply = false }) {
   //   });
   // }
 
-  async function handleSubmit(formData) {
+  async function handleSubmit() {
+    const safeFormData = omit(formData, ["images"]);
     startTransition(async () => {
-      const role = formData.get("role");
-      const email = formData.get("email");
-      const password = formData.get("password");
-      const res = await addAndApplySupplierAction(
-        {
-          selectedActivities,
-          urls: [], // Empty for now
-          validateOnly: true,
-          isForApply,
-        },
-        formData,
-      );
+      // 1) Validate only check
+      const res = await addAndApplySupplierAction({
+        urls: [], // Empty for now
+        validateOnly: true,
+        isForApply,
+        ...safeFormData,
+        selectedActivities,
+        range,
+      });
       if (res?.error) return toast.error(res?.error);
-      // Step 3: if no error, now upload images
+      // Step 2: if no error, now upload images
       const urls = await uploadImagesToSupabaseBucket();
-      // Step 4: now send final form with images
-      const finalRes = await addAndApplySupplierAction(
-        {
-          selectedActivities,
-          urls,
-          bankDetails,
-          isForApply,
-        },
-        formData,
-      );
+      // Step 3: now send final form with images
+      const finalRes = await addAndApplySupplierAction({
+        urls,
+        isForApply,
+        ...safeFormData,
+        selectedActivities,
+        range,
+      });
 
       if (finalRes?.error) return toast.error(finalRes?.error);
 
@@ -217,22 +211,6 @@ export default function SupplierForm({ isForApply = false }) {
   //   uploadedImageUrls,
   // });
 
-  // fetch all activities
-  useEffect(() => {
-    setLoading(true);
-    async function fetchActivities() {
-      const activities = await getActivities();
-      setActivities(
-        activities?.map((act) => ({
-          label: act.name,
-          value: act.id,
-        })),
-      );
-      setLoading(false);
-    }
-    fetchActivities();
-  }, []);
-
   return (
     <div className="mx-auto my-8 flex flex-col gap-14 rounded-2xl border border-neutral-700 px-8 py-14">
       <h1 className="text-center text-3xl font-semibold text-matalicGold">
@@ -240,53 +218,22 @@ export default function SupplierForm({ isForApply = false }) {
       </h1>
 
       <form
-        action={(formData) => handleSubmit(formData)}
+        action={handleSubmit}
         className="grid w-full grid-cols-1 gap-x-7 gap-y-8 sm:grid-cols-2"
       >
-        {activeStep === 1 && (
-          <AccountAccessStep
-            loading={loading}
-            activities={activities}
-            selectedActivities={selectedActivities}
-            setSelectedActivities={setSelectedActivities}
-          />
-        )}
+        {activeStep === 1 && <AccountAccessStep />}
 
-        {activeStep === 2 && (
-          <BusinessProfileStep images={images} setImages={setImages} />
-        )}
+        {activeStep === 2 && <BusinessProfileStep />}
 
         {activeStep === 3 && <AvailabilityOperationStep />}
 
-        {activeStep === 4 && (
-          <PricingCommissionStep
-            bankDetails={bankDetails}
-            setBankDetails={setBankDetails}
-          />
-        )}
+        {activeStep === 4 && <PricingCommissionStep />}
 
         {activeStep === 5 && <ActivityMetaDataStep />}
 
         {activeStep === 6 && <BookingAlert />}
 
         {activeStep === 7 && <DocumentsLegal />}
-
-        <div className="[grid-column:1/-1]">
-          <button
-            className="flex w-fit items-center justify-center gap-2 rounded border border-matalicGold bg-transparent px-6 py-2.5 text-center font-medium capitalize text-matalicGold duration-300 hover:opacity-80 active:scale-90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending ? (
-              <div className="flex items-center gap-2">
-                {" "}
-                <SpinnerMini /> <span>Processing...</span>
-              </div>
-            ) : (
-              <span>{isForApply ? "Submit Application" : "Add Supplier"}</span>
-            )}
-          </button>
-        </div>
 
         <div className="flex items-center justify-between [grid-column:1/-1]">
           <FormNavigationButton
@@ -295,12 +242,33 @@ export default function SupplierForm({ isForApply = false }) {
           >
             Prev
           </FormNavigationButton>
-          <FormNavigationButton
-            onClick={handleNext}
-            disabled={activeStep === 7}
-          >
-            Next
-          </FormNavigationButton>
+          {activeStep === 7 ? (
+            <div>
+              <button
+                className="flex w-fit items-center justify-center gap-2 rounded border border-matalicGold bg-transparent px-6 py-2.5 text-center font-medium capitalize text-matalicGold duration-300 hover:opacity-80 active:scale-90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+                type="submit"
+                disabled={isPending}
+              >
+                {isPending ? (
+                  <div className="flex items-center gap-2">
+                    {" "}
+                    <SpinnerMini /> <span>Processing...</span>
+                  </div>
+                ) : (
+                  <span>
+                    {isForApply ? "Submit Application" : "Add Supplier"}
+                  </span>
+                )}
+              </button>
+            </div>
+          ) : (
+            <FormNavigationButton
+              onClick={handleNext}
+              disabled={activeStep === 7}
+            >
+              Next
+            </FormNavigationButton>
+          )}
         </div>
       </form>
     </div>

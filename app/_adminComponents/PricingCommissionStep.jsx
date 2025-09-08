@@ -1,7 +1,11 @@
 import React from "react";
 import FormRow from "../_components/FormRow";
+import { useSupplier } from "../_context/SupplierProvider";
 
-export default function PricingCommissionStep({ bankDetails, setBankDetails }) {
+export default function PricingCommissionStep() {
+  const { formData, setFormData, handleChange } = useSupplier();
+
+  const { bankDetails } = formData;
   return (
     <>
       <FormRow label="base price">
@@ -10,6 +14,8 @@ export default function PricingCommissionStep({ bankDetails, setBankDetails }) {
           placeholder="200"
           name="base_price"
           autoComplete="on"
+          value={formData.base_price}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
@@ -19,6 +25,8 @@ export default function PricingCommissionStep({ bankDetails, setBankDetails }) {
           type="number"
           placeholder="150"
           name="discounted_price"
+          value={formData?.discounted_price}
+          onChange={handleChange}
           autoComplete="on"
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
@@ -36,13 +44,17 @@ export default function PricingCommissionStep({ bankDetails, setBankDetails }) {
 
       <FormRow label="deposit required">
         <select
-          className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           name="deposit_required"
-          id=""
+          defaultValue=""
+          value={formData?.deposit_required}
+          onChange={handleChange}
+          className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         >
-          <option value="">Is deposite required?</option>
-          <option value="false">False</option>
-          <option value="true">True</option>
+          <option value="" disabled>
+            Select option
+          </option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
         </select>
       </FormRow>
 
@@ -51,6 +63,8 @@ export default function PricingCommissionStep({ bankDetails, setBankDetails }) {
           type="text"
           placeholder="72 hours in advance"
           name="cancellation_terms"
+          value={formData.cancellation_terms}
+          onChange={handleChange}
           autoComplete="on"
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
@@ -61,6 +75,8 @@ export default function PricingCommissionStep({ bankDetails, setBankDetails }) {
           type="text"
           placeholder="10% per booking"
           name="commission_agreement"
+          value={formData.commission_agreement}
+          onChange={handleChange}
           autoComplete="on"
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
@@ -72,6 +88,8 @@ export default function PricingCommissionStep({ bankDetails, setBankDetails }) {
           placeholder="Bank Transfer"
           name="payment_preferences"
           autoComplete="on"
+          value={formData.payment_preferences}
+          onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
@@ -84,7 +102,13 @@ export default function PricingCommissionStep({ bankDetails, setBankDetails }) {
             value={bankDetails.bank}
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
             onChange={(e) =>
-              setBankDetails({ ...bankDetails, bank: e.target.value })
+              setFormData((prev) => ({
+                ...prev,
+                bankDetails: {
+                  ...prev.bankDetails,
+                  bank: e.target.value,
+                },
+              }))
             }
           />
         </label>
@@ -96,7 +120,13 @@ export default function PricingCommissionStep({ bankDetails, setBankDetails }) {
             value={bankDetails.iban}
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
             onChange={(e) =>
-              setBankDetails({ ...bankDetails, iban: e.target.value })
+              setFormData((prev) => ({
+                ...prev,
+                bankDetails: {
+                  ...prev.bankDetails,
+                  iban: e.target.value,
+                },
+              }))
             }
           />
         </label>

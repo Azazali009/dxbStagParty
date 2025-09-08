@@ -230,7 +230,9 @@ export default function CompleteBooking() {
           booking_notes,
           phone,
           whatsApp,
-          paymentSessionId: sessionId, // 🔒 duplicate-prevention ke liye unique constraint rakh lo
+          paymentSessionId: sessionId,
+          isOrganizerAttending,
+          groomDetails,
         };
 
         const { CurBooking, error } = await addBooking(sanitizedBooking);

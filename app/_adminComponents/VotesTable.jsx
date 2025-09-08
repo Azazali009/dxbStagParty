@@ -11,22 +11,15 @@ export default function VotesTable({ votes }) {
       headers={headers}
       data={votes}
       RowComponent={({ id, ...vote }) => (
-        <TableRow key={id}>
+        <TableRow key={id} className={"text-xs lg:text-sm"}>
           <p>{vote.session_id}</p>
-          <div className="flex flex-col gap-2 justify-self-start text-xs">
-            {vote.activity?.image && (
-              <Image
-                src={vote.activity.image}
-                alt={vote.activity.name}
-                width={500}
-                height={500}
-                className="aspect-video w-[100px] rounded border border-neutral-700 object-cover"
-              />
-            )}
-            <span>{vote.activity?.name || "Unknown Activity"}</span>
-          </div>
-          <p className="line-clamp-1 text-xs">{vote.voter}</p>
-          <p className="text-xs">{formatDateTime(vote.created_at)}</p>
+
+          <p className="text-center">
+            {vote.activity?.name || "Unknown Activity"}
+          </p>
+
+          <p className="line-clamp-1 text-center">{vote.voter}</p>
+          <p className="">{formatDateTime(vote.created_at)}</p>
         </TableRow>
       )}
     />

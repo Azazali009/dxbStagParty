@@ -1,11 +1,9 @@
-import React from "react";
-import SpinnerMini from "../_components/SpinnerMini";
-import DeleteSupplier from "../_adminComponents/DeleteSupplier";
-import TrashIcon from "../svgIcons/TrashIcon";
-import Link from "next/link";
-import PencilIcon from "../svgIcons/PencilIcon";
+"use client";
+import DeleteUser from "../_components/DeleteUser";
+import { useSupabaseSubscription } from "../_hooks/useSupabaseSubscription";
 
 export default function SupplierRow({ supplier }) {
+  useSupabaseSubscription({ table: "supplier", filterKey: supplier.id });
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-center justify-center justify-items-center border border-gray-800 bg-navyBlue px-4 py-3 text-sm font-light last:rounded-b-md">
       <p>#{supplier.id?.split("-")[0]}</p>
@@ -14,7 +12,7 @@ export default function SupplierRow({ supplier }) {
       {/* <p>{supplier.activities.name}</p> */}
       <p>{supplier.email}</p>
       <div className="flex items-center gap-2">
-        <DeleteSupplier supplierId={supplier.id} />
+        <DeleteUser email={supplier.email} userId={supplier.id} />
         {/* <Link
           href={`/dashboard/users/edit-user/${supplier.id}`}
           className="fill-blue-500 hover:opacity-80"

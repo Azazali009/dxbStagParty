@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import dynamic from "next/dynamic";
+import SupplierProvider from "./_context/SupplierProvider";
 
 const HeaderWrapper = dynamic(() => import("./_components/HeaderWrapper"), {
   ssr: false,
@@ -87,7 +88,9 @@ export default function RootLayout({ children }) {
             <PendingBookingDataNotification />
             <BookingProvider>
               <PartyBuilderProvider>
-                <main>{children}</main>
+                <SupplierProvider>
+                  <main>{children}</main>
+                </SupplierProvider>
               </PartyBuilderProvider>
             </BookingProvider>
             <FooterWrapper />

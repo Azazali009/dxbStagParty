@@ -1,6 +1,5 @@
-import React from "react";
 import Table from "./Table";
-import NonVerifiedUserRow from "./NonVerifiedUserRow";
+import UserRow from "./UserRow";
 
 export default function NonVerifiedUser({ headers, data }) {
   return (
@@ -13,7 +12,7 @@ export default function NonVerifiedUser({ headers, data }) {
           headers={headers}
           data={data}
           RowComponent={({ id, ...user }) => (
-            <NonVerifiedUserRow key={id} user={{ id, ...user }} />
+            <UserRow key={id} user={{ id, ...user }} />
           )}
         />
       </div>
