@@ -2,27 +2,10 @@
 
 import { useMemo, useState, useEffect } from "react";
 import { useSupplier } from "../_context/SupplierProvider";
-
-const DAYS = [
-  { key: "mon", label: "Mon" },
-  { key: "tue", label: "Tue" },
-  { key: "wed", label: "Wed" },
-  { key: "thu", label: "Thu" },
-  { key: "fri", label: "Fri" },
-  { key: "sat", label: "Sat" },
-  { key: "sun", label: "Sun" },
-];
+import { DAYS } from "../_lib/helpers";
 
 export default function HoursWeekly() {
-  const { formData, setFormData } = useSupplier();
-
-  const [hours, setHours] = useState(
-    formData.available_hours
-      ? JSON.parse(formData.available_hours)
-      : Object.fromEntries(
-          DAYS.map((d) => [d.key, { open: false, start: "", end: "" }]),
-        ),
-  );
+  const { formData, setFormData, hours, setHours } = useSupplier();
 
   useEffect(() => {
     setFormData((prev) => ({

@@ -36,7 +36,7 @@ export default function BlackoutRange({ range, setRange }) {
         onSelect={setRange}
         pagedNavigation
         numberOfMonths={2} // show two months side by side
-        disabled={{ before: new Date() }} // optional: disable past dates
+        // disabled={{ before: new Date() }} // optional: disable past dates
       />
       {/* hidden fields so formData still works */}
       <input type="hidden" name="blackout_start" value={start} />

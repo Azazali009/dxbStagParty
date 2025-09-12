@@ -23,7 +23,7 @@ import BookingAlert from "./BookingAlert";
 import DocumentsLegal from "./DocumentsLegal";
 import FormNavigationButton from "../_components/FormNavigationButton";
 import { useSupplier } from "../_context/SupplierProvider";
-import { omit } from "../_lib/helpers";
+import { omit, uploadSingleImageToBucket } from "../_lib/helpers";
 import { getSupplierBySUpplierId } from "../_lib/apiSupplier";
 
 export default function SupplierForm({ isForApply = false, editId = null }) {
@@ -34,6 +34,7 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
     setSelectedActivities,
     range,
     setRange,
+    avatar,
   } = useSupplier();
 
   const { images, role, email, password } = formData;
@@ -151,13 +152,38 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
   //   });
   // }
 
+  function getStoragePathFromUrl(url) {
+    if (!url) return null;
+    const parts = url.split("/user-avatar/");
+    return decodeURIComponent(parts[1]);
+  }
+
   async function handleSubmit() {
-    const safeFormData = omit(formData, ["images", "bankDetails"]);
+    const supabase = createClient();
+    const safeFormData = omit(formData, ["images"]);
     startTransition(async () => {
       // Agar update karna ho
       if (editId) {
-        let newUrls = [];
+        // 1) Agar new file hai to upload karo
+        if (avatar) {
+          // (a) Pehle old avatar delete karo
+          if (formData.avatar) {
+            const oldPath = getStoragePathFromUrl(formData.avatar);
 
+            const { error } = await supabase.storage
+              .from("user-avatar")
+              .remove([oldPath]);
+            if (error) return console.log("error", error);
+          }
+        }
+        let newUrls = [];
+        const bucketRes = await uploadSingleImageToBucket(
+          supabase,
+          avatar,
+          "user-avatar",
+        );
+        const { publicUrl } = bucketRes;
+        if (bucketRes.error) return toast.error(bucketRes.error);
         // Only upload if new images exist
         if (images && images.length > 0) {
           newUrls = await uploadImagesToSupabaseBucket();
@@ -170,6 +196,8 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
           ...safeFormData,
           selectedActivities,
           range,
+          userId: supplier?.user_id,
+          publicUrl,
         });
 
         if (finalRes?.error) return toast.error(finalRes?.error);
@@ -190,6 +218,7 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
       // Step 2: if no error, now upload images
       const urls = await uploadImagesToSupabaseBucket();
       // Step 3: now send final form with images
+
       const finalRes = await addAndApplySupplierAction({
         urls,
         isForApply,
@@ -270,6 +299,7 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
     fetchSupplier();
   }, [editId]);
 
+  // effect for pre-fetching some fields
   useEffect(() => {
     if (supplier && Object.keys(supplier).length > 0) {
       // Autofill all fields from supplier data
@@ -279,6 +309,14 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
         ...supplier, // merge supplier fields into formData
         oldImages: supplier.gallery || [],
       }));
+
+      // Pre-fill blackout range
+      if (supplier.blackout_start && supplier.blackout_end) {
+        setRange({
+          from: new Date(supplier.blackout_start),
+          to: new Date(supplier.blackout_end),
+        });
+      }
 
       // If supplier already has selectedActivities, set them
       if (supplier.selectedActivities) {
@@ -294,15 +332,19 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
 
   return (
     <div className="mx-auto my-8 flex flex-col gap-14 rounded-2xl border border-neutral-700 px-8 py-14">
-      <h1 className="text-center text-3xl font-semibold text-matalicGold">
-        {isForApply ? "Apply to become a supplier" : "Add supplier"}
-      </h1>
+      {!editId && (
+        <h1 className="text-center text-3xl font-semibold text-matalicGold">
+          {isForApply ? "Apply to become a supplier" : "Add supplier"}
+        </h1>
+      )}
 
       <form
         action={handleSubmit}
         className="grid w-full grid-cols-1 items-center gap-x-7 gap-y-8 sm:grid-cols-2"
       >
-        {activeStep === 1 && <AccountAccessStep supplier={supplier} />}
+        {activeStep === 1 && (
+          <AccountAccessStep isEdit={!!editId} supplier={supplier} />
+        )}
 
         {activeStep === 2 && (
           <BusinessProfileStep

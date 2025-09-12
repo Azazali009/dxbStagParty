@@ -4,10 +4,11 @@ import EyeIcon from "../svgIcons/EyeIcon";
 import { MultiSelect } from "react-multi-select-component";
 import { useSupplier } from "../_context/SupplierProvider";
 
-export default function AccountAccessStep({ supplier }) {
+export default function AccountAccessStep({ supplier, isEdit }) {
   const [passwordTye, setPasswordType] = useState("password");
   const {
     formData,
+    setAvatar,
     handleChange,
     activities,
     loading,
@@ -45,7 +46,8 @@ export default function AccountAccessStep({ supplier }) {
           autoComplete="email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+          disabled={isEdit}
+          className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2 disabled:cursor-not-allowed disabled:bg-neutral-700 disabled:opacity-70"
         />
       </FormRow>
       <FormRow label="Phone">
@@ -95,7 +97,7 @@ export default function AccountAccessStep({ supplier }) {
             type={passwordTye}
             placeholder="******"
             name="password"
-            value={formData.password}
+            value={formData?.password}
             onChange={handleChange}
             autoComplete="on"
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
@@ -112,6 +114,14 @@ export default function AccountAccessStep({ supplier }) {
             <EyeIcon />
           </button>
         </div>
+      </FormRow>
+      <FormRow label={"Photo"}>
+        <input
+          type="file"
+          name="avatar"
+          onChange={(e) => setAvatar(e.target.files[0])}
+          className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
+        />
       </FormRow>
     </>
   );

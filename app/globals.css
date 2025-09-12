@@ -32,6 +32,9 @@
 .rdp-day.rdp-today {
   color: #e0b15e !important;
 }
+.rdp-day.rdp-today:hover {
+  color: white !important;
+}
 .rdp-range_start,
 .rdp-range_end {
   background: #e0b15e !important;

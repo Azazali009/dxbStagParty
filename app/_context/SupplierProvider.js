@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { getActivities } from "../_lib/data-services";
+import { DAYS } from "../_lib/helpers";
 
 const SupplierContext = createContext();
 
@@ -12,7 +13,7 @@ export default function SupplierProvider({ children }) {
   //   const [bankDetails, setBankDetails] = useState({ bank: "", iban: "" });
   const [range, setRange] = useState();
   const [loading, setLoading] = useState(false);
-
+  const [avatar, setAvatar] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,19 +53,19 @@ export default function SupplierProvider({ children }) {
     contract_agreement: "",
     exclusivity_confirmed: null,
   });
+  const [hours, setHours] = useState(
+    formData.available_hours
+      ? JSON.parse(formData.available_hours)
+      : Object.fromEntries(
+          DAYS.map((d) => [d.key, { open: false, start: "", end: "" }]),
+        ),
+  );
 
-  // old before multiple select tag
-  // const handleChange = (e) => {
-  //   const { name, value, type, checked } = e.target;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: type === "checkbox" ? checked : value,
-  //   }));
-  // };
   const handleChange = (e) => {
     const { name, type, value, checked, multiple, options } = e.target;
 
     let newValue;
+
     if (multiple) {
       // agar multiple select hai → sab selected options array banao
       newValue = Array.from(options)
@@ -105,6 +106,16 @@ export default function SupplierProvider({ children }) {
     fetchActivities();
   }, []);
 
+  // Jab supplier ka data load ho, hours ko set karo
+  useEffect(() => {
+    if (formData?.available_hours) {
+      try {
+        setHours(JSON.parse(formData.available_hours));
+      } catch (e) {
+        console.error("Invalid available_hours JSON", e);
+      }
+    }
+  }, [formData?.available_hours]);
   return (
     <SupplierContext.Provider
       value={{
@@ -119,6 +130,10 @@ export default function SupplierProvider({ children }) {
         setLoading,
         range,
         setRange,
+        hours,
+        setHours,
+        avatar,
+        setAvatar,
       }}
     >
       {children}

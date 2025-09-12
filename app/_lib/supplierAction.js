@@ -5,8 +5,14 @@ import { createClient } from "../_utils/supabase/server";
 
 import { getCurrentUser } from "./getCurrentUser";
 import { revalidatePath } from "next/cache";
-import { extractAndValidateFormData, getStoragePathFromUrl } from "./helpers";
+import {
+  ALLOWED_TYPES,
+  extractAndValidateFormData,
+  getStoragePathFromUrl,
+  MAX_FILE_SIZE,
+} from "./helpers";
 import { supabaseAdmin } from "./adminSupabase";
+import { updateUser } from "./apiUser";
 
 // export async function addSupplierAction(formData) {
 //   const supabase = await createClient();
@@ -363,6 +369,10 @@ export async function updateSupplierAction(data) {
     password,
     oldImages,
     selectedActivities,
+    bankDetails,
+    range,
+    userId,
+    publicUrl,
     ...updateData
   } = data;
 
@@ -398,11 +408,58 @@ export async function updateSupplierAction(data) {
     .update({
       ...updateData,
       activityIds: selectedActivities?.map((act) => act.value),
+      blackout_start: range?.from,
+      blackout_end: range?.to,
+      bank_details: { bank: bankDetails?.bank, iban: bankDetails?.iban },
+      avatar: publicUrl,
       gallery: finalUrls,
     })
     .eq("id", id);
 
   if (error) return { error: error.message };
+
+  // 4 update user data in user auth
+
+  // upload image
+  // const imageName = `${Math.random()}-${avatar.name}`;
+  // const imagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/user-avatar/${imageName}`;
+
+  // image validation
+
+  // if (avatar && avatar.size > 0) {
+  //   if (!ALLOWED_TYPES.includes(avatar.type)) {
+  //     return {
+  //       error: "Please upload an image in JPEG, JPG, PNG, or WEBP format.",
+  //     };
+  //   }
+
+  //   const { error: storageError } = await supabase.storage
+  //     .from("user-avatar")
+  //     .upload(imageName, avatar);
+
+  //   if (storageError) {
+  //     console.log(storageError);
+  //     return {
+  //       error:
+  //         "We’re sorry, something went wrong while uploading your image. Please try again.”",
+  //     };
+  //   }
+  // }
+  // image size constraints
+  // if (avatar.size > MAX_FILE_SIZE) {
+  //   return { error: "Kindly ensure your image is under 1MB in size." };
+  // }
+
+  const stringPass = password?.toString();
+  const authRes = await updateUser({
+    full_name: updateData?.name,
+    password: stringPass,
+    userId,
+    avatar: publicUrl,
+  });
+  if (authRes?.error) {
+    return { error: authRes.error }; // ✅ server action me propagate
+  }
 
   revalidatePath("dashboard/me");
 }
