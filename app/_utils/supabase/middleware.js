@@ -62,8 +62,13 @@ export async function updateSession(request) {
     const isDashboardPath = pathname.startsWith("/dashboard");
 
     if (isDashboardPath) {
-      const allowedDashboardPath = "/dashboard/activities";
-      const isAllowed = pathname.startsWith(allowedDashboardPath);
+      // const allowedDashboardPath = "/dashboard/activities";
+      const allowedDashboardPaths = ["/dashboard/activities", "/dashboard/me"];
+      // const isAllowed = pathname.startsWith(allowedDashboardPath);
+      // check agar supplier ka current path allowed list me hai
+      const isAllowed = allowedDashboardPaths.some((path) =>
+        pathname.startsWith(path),
+      );
 
       if (!isAllowed) {
         return new Response(null, { status: 404 });

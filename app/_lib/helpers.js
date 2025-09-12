@@ -551,3 +551,8 @@ export function omit(obj, keys = []) {
   keys.forEach((key) => delete copy[key]);
   return copy;
 }
+
+export function getStoragePathFromUrl(url) {
+  const parts = url.split("/supplier-images/");
+  return decodeURIComponent(parts[1]);
+}

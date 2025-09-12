@@ -26,3 +26,15 @@ export async function getSupplierById(id) {
   }
   return supplier;
 }
+export async function getSupplierBySUpplierId(supplierId) {
+  let { data: supplier, error } = await supabase
+    .from("supplier")
+    .select("*")
+    .eq("user_id", supplierId)
+    .single();
+  if (error) {
+    console.log(error);
+    throw new Error("Opps! Supplier not fetched");
+  }
+  return supplier;
+}

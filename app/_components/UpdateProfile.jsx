@@ -6,6 +6,7 @@ import { useAuth } from "../_context/AuthProvider";
 import { updateUserProfileAction } from "../_lib/userProfileAction";
 import FormRow from "./FormRow";
 import SpinnerMini from "./SpinnerMini";
+import SupplierForm from "../_adminComponents/SupplierForm";
 
 export default function UpdateProfile({ user }) {
   const { refreshUser } = useAuth();
@@ -24,65 +25,69 @@ export default function UpdateProfile({ user }) {
         Let’s freshen up your profile ✨
       </h1>
 
-      <form
-        action={async (formData) => handleSubmit(formData)}
-        className="grid grid-cols-1 gap-6 md:grid-cols-2"
-      >
-        <FormRow label="Email">
+      {user?.user_metadata?.role !== "supplier" ? (
+        <form
+          action={async (formData) => handleSubmit(formData)}
+          className="grid grid-cols-1 gap-6 md:grid-cols-2"
+        >
+          <FormRow label="Email">
+            <input
+              disabled
+              className="h-10 rounded border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold disabled:bg-gray-700 disabled:opacity-50"
+              type="email"
+              defaultValue={user.email}
+              name="email"
+            />
+          </FormRow>
+          <FormRow label="FullName">
+            <input
+              className="h-10 rounded border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold"
+              type="text"
+              defaultValue={user?.user_metadata?.full_name}
+              name="fullName"
+            />
+          </FormRow>
+          <FormRow label="Avatar">
+            <input
+              className="h-10 rounded-md border border-gray-700 bg-transparent py-1.5 disabled:bg-gray-700 disabled:opacity-50"
+              type="file"
+              name="avatar"
+              accept="image/webp, image/png, image/jpeg, image/jpg"
+            />
+          </FormRow>
           <input
-            disabled
-            className="h-10 rounded border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold disabled:bg-gray-700 disabled:opacity-50"
-            type="email"
-            defaultValue={user.email}
-            name="email"
+            type="hidden"
+            name="existingAvatar"
+            value={user?.user_metadata?.avatar_url}
           />
-        </FormRow>
-        <FormRow label="FullName">
-          <input
-            className="h-10 rounded border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold"
-            type="text"
-            defaultValue={user?.user_metadata?.full_name}
-            name="fullName"
-          />
-        </FormRow>
-        <FormRow label="Avatar">
-          <input
-            className="h-10 rounded-md border border-gray-700 bg-transparent py-1.5 disabled:bg-gray-700 disabled:opacity-50"
-            type="file"
-            name="avatar"
-            accept="image/webp, image/png, image/jpeg, image/jpg"
-          />
-        </FormRow>
-        <input
-          type="hidden"
-          name="existingAvatar"
-          value={user?.user_metadata?.avatar_url}
-        />
-        <FormRow label="New Password">
-          <input
-            className="h-10 rounded border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold"
-            type="password"
-            name="password"
-            placeholder="******"
-          />
-        </FormRow>
-        <div>
-          <button
-            disabled={isPending}
-            className="mt-4 w-fit self-end rounded border border-matalicGold bg-transparent px-4 py-1.5 text-xs capitalize text-matalicGold duration-300 hover:bg-matalicGold hover:text-navyBlue disabled:cursor-not-allowed disabled:opacity-50 xs:px-6 xs:py-2 xs:text-base"
-          >
-            {isPending ? (
-              <div className="flex items-center justify-center gap-2">
-                <SpinnerMini />
+          <FormRow label="New Password">
+            <input
+              className="h-10 rounded border border-gray-700 bg-transparent p-2 outline-none focus:outline-matalicGold"
+              type="password"
+              name="password"
+              placeholder="******"
+            />
+          </FormRow>
+          <div>
+            <button
+              disabled={isPending}
+              className="mt-4 w-fit self-end rounded border border-matalicGold bg-transparent px-4 py-1.5 text-xs capitalize text-matalicGold duration-300 hover:bg-matalicGold hover:text-navyBlue disabled:cursor-not-allowed disabled:opacity-50 xs:px-6 xs:py-2 xs:text-base"
+            >
+              {isPending ? (
+                <div className="flex items-center justify-center gap-2">
+                  <SpinnerMini />
 
-                <span>Updating...</span>
-              </div>
-            ) : (
-              "update profile"
-            )}
-          </button>
-        </div>
-      </form>
+                  <span>Updating...</span>
+                </div>
+              ) : (
+                "update profile"
+              )}
+            </button>
+          </div>
+        </form>
+      ) : (
+        <SupplierForm editId={user.id} />
+      )}
     </div>
   );
 }

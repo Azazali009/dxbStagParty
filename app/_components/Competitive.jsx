@@ -15,7 +15,7 @@ export default function Competitive({ category }) {
 
   if (!filteredByCategoryArr || filteredByCategoryArr.length === 0) return null;
   return (
-    <section className="relative bg-red-100 py-10 text-navyBlue sm:py-20">
+    <section className="relative bg-red-100 py-10 text-navyBlue">
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent via-[#1F1000]/60 to-[#1F1000]" />
 

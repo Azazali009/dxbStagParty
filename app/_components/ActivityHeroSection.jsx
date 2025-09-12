@@ -10,7 +10,7 @@ export default async function ActivityHeroSection() {
       {/* overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent"></div>
       {/* content */}
-      <div className="relative z-10 space-y-3 sm:space-y-6">
+      <div className="relative z-10 flex flex-col items-start gap-3 sm:gap-6">
         <AnimatedHeading
           className={`text-balance pt-16 text-left text-xl !font-normal uppercase !leading-[1.1] text-softGold ${BebasNeue.className} text-3xl xs:text-4xl sm:text-wrap md:text-7xl`}
         >
@@ -18,13 +18,17 @@ export default async function ActivityHeroSection() {
           Dubai&apos;s most legendary <br /> stag party experiences
         </AnimatedHeading>
         <p className="">60+ curated activities. One unforgettable weekend.</p>
-        <div className="flex items-center gap-2">
+        <div className="flex w-full items-center gap-2">
           {user && (
-            <Button href="/account/create-vote" className={""} variation="gold">
+            <Button href="/account/create-vote" variation="gold">
               Start Activity Vote
             </Button>
           )}
-          <Button variation="gold" href={"/activities/all"} className={""}>
+          <Button
+            whenToShow={["/activities"]}
+            variation="gold"
+            href={"/activities/all"}
+          >
             Explore all activities
           </Button>
         </div>

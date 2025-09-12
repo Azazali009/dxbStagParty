@@ -7,15 +7,25 @@ export default function ActivityMetaDataStep() {
   return (
     <>
       <FormRow label="activity tags">
-        <input
-          type="text"
-          placeholder="Adventure, Family, ..."
+        <select
           name="activity_tags"
+          multiple
+          size={6}
           value={formData.activity_tags}
           onChange={handleChange}
-          autoComplete="on"
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
+        >
+          <option value="adventure">Adventure</option>
+          <option value="family_friendly">Family Friendly</option>
+          <option value="team_building">Team Building</option>
+          <option value="budget">Budget</option>
+          <option value="luxury">Luxury</option>
+          <option value="nightlife">Nightlife</option>
+          <option value="outdoor">Outdoor</option>
+          <option value="indoor">Indoor</option>
+          <option value="water_sports">Water Sports</option>
+          <option value="adrenaline">Adrenaline</option>
+        </select>
       </FormRow>
 
       <FormRow label="mobility requirements">

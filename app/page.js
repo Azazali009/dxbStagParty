@@ -8,6 +8,12 @@ import HowItWorks from "./_components/HowItWorks";
 import Testimonilas from "./_components/Testimonials";
 import WhyChooseUs from "./_components/WhyChooseUs";
 
+export const metadata = {
+  title: "DXB Stag party",
+  description:
+    "At DXB Stag Parties, we specialize in curating unforgettable stag experiences across Dubai and the UAE. What Sets Us Apart: experience. Tailored Experiences.",
+};
+
 export default function Home() {
   return (
     <div className="space-y-6">

@@ -1,15 +1,11 @@
 import React from "react";
 import FormRow from "../_components/FormRow";
 import { useSupplier } from "../_context/SupplierProvider";
+import Image from "next/image";
 
-export default function BusinessProfileStep() {
+export default function BusinessProfileStep({ setDeleteUrls, deleteUrls }) {
   const { formData, handleChange, setFormData } = useSupplier();
-  // handle gallery images
-  // const handleImageChange = (index, file) => {
-  //   const newImages = [...images];
-  //   newImages[index] = file;
-  //   setImages(newImages);
-  // };
+
   const handleImageChange = (index, file) => {
     setFormData((prev) => {
       const newImages = [...prev.images]; // copy
@@ -18,10 +14,6 @@ export default function BusinessProfileStep() {
     });
   };
 
-  // handle add image function
-  // const handleAddImage = () => {
-  //   setImages([...images, undefined]); // placeholder for next image
-  // };
   const handleAddImage = () => {
     setFormData((prev) => ({
       ...prev,
@@ -29,13 +21,6 @@ export default function BusinessProfileStep() {
     }));
   };
 
-  // handle remove image function
-
-  // const handleRemoveImage = (index) => {
-  //   const newImages = [...images];
-  //   newImages.splice(index, 1); // Remove the one at `index`
-  //   setImages(newImages);
-  // };
   const handleRemoveImage = (index) => {
     setFormData((prev) => {
       const newImages = [...prev.images];
@@ -147,6 +132,35 @@ export default function BusinessProfileStep() {
           Add Image
         </button>
       </FormRow>
+
+      {formData?.oldImages?.length > 0 && (
+        <div className="grid grid-cols-3 gap-4">
+          {formData?.oldImages.map((url) => (
+            <div key={url} className="relative">
+              <Image
+                width={100}
+                height={100}
+                src={url}
+                alt="Old Image"
+                className="aspect-video rounded border object-cover"
+              />
+              <button
+                type="button"
+                className="absolute right-1 top-1 rounded bg-red-600 px-2 py-1 text-xs text-white"
+                onClick={() => {
+                  setDeleteUrls((prev) =>
+                    prev.includes(url)
+                      ? prev.filter((u) => u !== url) // unselect if clicked again
+                      : [...prev, url],
+                  );
+                }}
+              >
+                {deleteUrls.includes(url) ? "Undo" : "Delete"}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 }

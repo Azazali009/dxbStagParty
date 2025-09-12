@@ -59,29 +59,46 @@ export default function SliderFilter() {
         {show && (
           <motion.div
             ref={ref}
-            className={`flex ${loading && "cursor-not-allowed !opacity-40"} h-8 items-center gap-2 rounded-md bg-navyBlue px-2 sm:h-12 sm:px-4`}
+            className={`relative flex ${
+              loading && "cursor-not-allowed !opacity-40"
+            } h-12 items-center gap-2 rounded-md bg-navyBlue px-2 sm:h-12 sm:px-4`}
             key="slider"
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 10, opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <span className={`text-nowrap text-[7px] font-normal sm:text-sm`}>
-              {minGroupSize} guest
+            <span className="text-nowrap text-[7px] font-normal sm:text-sm">
+              {minGroupSize}
             </span>
-            <input
-              type="range"
-              min={minGroupSize}
-              max={maxGroupSize}
-              value={value}
-              step={1}
-              disabled={loading}
-              onChange={(e) => setValue(e.target.value)}
-              className="h-2 w-full cursor-pointer appearance-none rounded-lg disabled:cursor-not-allowed disabled:opacity-30"
-              style={{
-                background: `linear-gradient(to right, #bf9b30 ${rangePercent}%, white ${rangePercent}%)`,
-              }}
-            />
+
+            <div className="relative w-full">
+              {/* Slider */}
+              <input
+                type="range"
+                min={minGroupSize}
+                max={maxGroupSize}
+                value={value}
+                step={1}
+                disabled={loading}
+                onChange={(e) => setValue(e.target.value)}
+                className="h-2 w-full cursor-pointer appearance-none rounded-lg disabled:cursor-not-allowed disabled:opacity-30"
+                style={{
+                  background: `linear-gradient(to right, #bf9b30 ${rangePercent}%, white ${rangePercent}%)`,
+                }}
+              />
+
+              {/* Floating value box above thumb */}
+              <div
+                className="absolute -top-6 -translate-x-1/2 transform rounded bg-[#bf9b30] px-2 py-1 text-[10px] font-bold text-navyBlue shadow"
+                style={{
+                  left: `${((value - minGroupSize) / (maxGroupSize - minGroupSize)) * 100}%`,
+                }}
+              >
+                {value}
+              </div>
+            </div>
+
             <span className="text-[7px] sm:text-sm">{maxGroupSize}</span>
           </motion.div>
         )}

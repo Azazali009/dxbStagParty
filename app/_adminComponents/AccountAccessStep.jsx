@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormRow from "../_components/FormRow";
 import EyeIcon from "../svgIcons/EyeIcon";
 import { MultiSelect } from "react-multi-select-component";
 import { useSupplier } from "../_context/SupplierProvider";
 
-export default function AccountAccessStep() {
+export default function AccountAccessStep({ supplier }) {
   const [passwordTye, setPasswordType] = useState("password");
   const {
     formData,
@@ -14,6 +14,15 @@ export default function AccountAccessStep() {
     setSelectedActivities,
     selectedActivities,
   } = useSupplier();
+
+  useEffect(() => {
+    if (supplier?.activityIds?.length > 0 && activities?.length > 0) {
+      const preselected = activities.filter((act) =>
+        supplier.activityIds.includes(act.value),
+      );
+      setSelectedActivities(preselected);
+    }
+  }, [supplier, activities, setSelectedActivities]);
 
   return (
     <>

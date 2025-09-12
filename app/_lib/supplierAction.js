@@ -5,7 +5,7 @@ import { createClient } from "../_utils/supabase/server";
 
 import { getCurrentUser } from "./getCurrentUser";
 import { revalidatePath } from "next/cache";
-import { extractAndValidateFormData } from "./helpers";
+import { extractAndValidateFormData, getStoragePathFromUrl } from "./helpers";
 import { supabaseAdmin } from "./adminSupabase";
 
 // export async function addSupplierAction(formData) {
@@ -232,7 +232,6 @@ export async function addAndApplySupplierAction(data) {
     languages,
     available_hours,
     add_ons,
-    activity_tags,
     safety_certifications,
     ...rest
   } = data;
@@ -313,7 +312,7 @@ export async function addAndApplySupplierAction(data) {
   const languagesArr = languages?.split(",") ?? [];
   const available_hoursArr = available_hours?.split(",") ?? [];
   const add_onsArr = add_ons?.split(",") ?? [];
-  const activity_tagsArr = activity_tags?.split(",") ?? [];
+  // const activity_tagsArr = activity_tags?.split(",") ?? [];
   const safety_certificationsArr = safety_certifications?.split(",") ?? [];
   const activityIds = selectedActivities?.map((act) => act?.value) ?? [];
 
@@ -330,7 +329,6 @@ export async function addAndApplySupplierAction(data) {
     available_hours: available_hoursArr,
     add_ons: add_onsArr,
     bank_details: bankDetails,
-    activity_tags: activity_tagsArr,
     safety_certifications: safety_certificationsArr,
     activityIds,
     user_id,
@@ -357,140 +355,192 @@ export async function addAndApplySupplierAction(data) {
   return { success: true };
 }
 
-export async function addSupplierAction(data, formData) {
-  const supabase = await createClient();
-  const user = await getCurrentUser();
-  const { urls, selectedActivities, bankDetails, validateOnly } = data;
-
-  const activityIds = selectedActivities?.map((activity) => activity?.value);
-
-  // Optional fields for validation
-  const optionalFields = [
-    "short_description",
-    "full_description",
-    "custom_booking_notes",
-  ];
-
-  // Validate form
-  const result = extractAndValidateFormData(formData, optionalFields);
-  if (!result?.valid) return { error: result?.error };
-
-  // 🛑 If only validating, exit here — don’t insert
-  if (validateOnly) return { success: true };
-
-  // Transform fields
-  const formDataObject = result?.data;
+export async function updateSupplierAction(data) {
   const {
-    locations,
-    languages,
-    available_hours,
-    blackout_dates,
-    add_ons,
-    activity_tags,
-    safety_certifications,
+    id,
+    newUrls = [],
+    deleteUrls = [],
     password,
-  } = formDataObject;
+    oldImages,
+    selectedActivities,
+    ...updateData
+  } = data;
 
-  const locationArr = locations?.split(",");
-  const languagesArr = languages?.split(",");
-  const available_hoursArr = available_hours?.split(",");
-  const blackout_datesArr = blackout_dates?.split(",");
-  const add_onsArr = add_ons?.split(",") ?? null;
-  const activity_tagsArr = activity_tags?.split(",");
-  const safety_certificationsArr = safety_certifications?.split(",");
-
-  // Final supplier data
-  const newSupplier = {
-    ...formDataObject,
-    activityIds,
-    locations: locationArr,
-    languages: languagesArr,
-    gallery: urls?.length > 0 ? urls : null,
-    available_hours: available_hoursArr,
-    blackout_dates: blackout_datesArr,
-    add_ons: add_onsArr,
-    bank_details: bankDetails,
-    activity_tags: activity_tagsArr,
-    safety_certifications: safety_certificationsArr,
-  };
-
-  // Insert into DB
-  const { error: insertError } = await supabase
-    .from("supplier")
-    .insert([newSupplier])
-    .select();
-
-  if (insertError) return { error: "Error while submitting application." };
-
-  return { success: true };
-}
-
-export async function applySupplierAction(data, formData) {
   const supabase = await createClient();
-  const user = await getCurrentUser();
-  const { urls, selectedActivities, bankDetails, validateOnly } = data;
 
-  const activityIds = selectedActivities?.map((activity) => activity?.value);
+  // Purane record fetch
+  const { data: oldData } = await supabase
+    .from("supplier")
+    .select("gallery")
+    .eq("id", id)
+    .single();
 
-  // Optional fields for validation
-  const optionalFields = [
-    "short_description",
-    "full_description",
-    "custom_booking_notes",
+  const oldUrls = oldData?.gallery || [];
+
+  // 1) Delete selected old images from bucket
+  if (deleteUrls.length > 0) {
+    const deletePaths = deleteUrls.map((url) => getStoragePathFromUrl(url));
+
+    const { error: deleteSTorageError } = await supabase.storage
+      .from("supplier-images")
+      .remove(deletePaths);
+    if (deleteSTorageError) return { error: "Image could not deleted." };
+  }
+  // 2) Merge images (purane jo delete nahi huye + naye)
+  const finalUrls = [
+    ...oldUrls.filter((url) => !deleteUrls.includes(url)),
+    ...newUrls,
   ];
 
-  // Validate form
-  const result = extractAndValidateFormData(formData, optionalFields);
-  if (!result?.valid) return { error: result?.error };
-
-  // 🛑 If only validating, exit here — don’t insert
-  if (validateOnly) return { success: true };
-
-  // Transform fields
-  const formDataObject = result?.data;
-  const {
-    locations,
-    languages,
-    available_hours,
-    blackout_dates,
-    add_ons,
-    activity_tags,
-    safety_certifications,
-  } = formDataObject;
-
-  const locationArr = locations?.split(",");
-  const languagesArr = languages?.split(",");
-  const available_hoursArr = available_hours?.split(",");
-  const blackout_datesArr = blackout_dates?.split(",");
-  const add_onsArr = add_ons?.split(",") ?? null;
-  const activity_tagsArr = activity_tags?.split(",");
-  const safety_certificationsArr = safety_certifications?.split(",");
-
-  // Final supplier data
-  const newSupplier = {
-    ...formDataObject,
-    activityIds,
-    locations: locationArr,
-    languages: languagesArr,
-    gallery: urls?.length > 0 ? urls : null,
-    available_hours: available_hoursArr,
-    blackout_dates: blackout_datesArr,
-    add_ons: add_onsArr,
-    bank_details: bankDetails,
-    activity_tags: activity_tagsArr,
-    safety_certifications: safety_certificationsArr,
-  };
-
-  // Insert into DB
-  const { error: insertError } = await supabase
+  // 3) Update record
+  const { error } = await supabase
     .from("supplier")
-    .insert([newSupplier])
-    .select();
+    .update({
+      ...updateData,
+      activityIds: selectedActivities?.map((act) => act.value),
+      gallery: finalUrls,
+    })
+    .eq("id", id);
 
-  if (insertError) return { error: "Error while submitting application." };
+  if (error) return { error: error.message };
 
-  return { success: true };
+  revalidatePath("dashboard/me");
 }
+
+// export async function addSupplierAction(data, formData) {
+//   const supabase = await createClient();
+//   const user = await getCurrentUser();
+//   const { urls, selectedActivities, bankDetails, validateOnly } = data;
+
+//   const activityIds = selectedActivities?.map((activity) => activity?.value);
+
+//   // Optional fields for validation
+//   const optionalFields = [
+//     "short_description",
+//     "full_description",
+//     "custom_booking_notes",
+//   ];
+
+//   // Validate form
+//   const result = extractAndValidateFormData(formData, optionalFields);
+//   if (!result?.valid) return { error: result?.error };
+
+//   // 🛑 If only validating, exit here — don’t insert
+//   if (validateOnly) return { success: true };
+
+//   // Transform fields
+//   const formDataObject = result?.data;
+//   const {
+//     locations,
+//     languages,
+//     available_hours,
+//     blackout_dates,
+//     add_ons,
+//     activity_tags,
+//     safety_certifications,
+//     password,
+//   } = formDataObject;
+
+//   const locationArr = locations?.split(",");
+//   const languagesArr = languages?.split(",");
+//   const available_hoursArr = available_hours?.split(",");
+//   const blackout_datesArr = blackout_dates?.split(",");
+//   const add_onsArr = add_ons?.split(",") ?? null;
+//   const activity_tagsArr = activity_tags?.split(",");
+//   const safety_certificationsArr = safety_certifications?.split(",");
+
+//   // Final supplier data
+//   const newSupplier = {
+//     ...formDataObject,
+//     activityIds,
+//     locations: locationArr,
+//     languages: languagesArr,
+//     gallery: urls?.length > 0 ? urls : null,
+//     available_hours: available_hoursArr,
+//     blackout_dates: blackout_datesArr,
+//     add_ons: add_onsArr,
+//     bank_details: bankDetails,
+//     activity_tags: activity_tagsArr,
+//     safety_certifications: safety_certificationsArr,
+//   };
+
+//   // Insert into DB
+//   const { error: insertError } = await supabase
+//     .from("supplier")
+//     .insert([newSupplier])
+//     .select();
+
+//   if (insertError) return { error: "Error while submitting application." };
+
+//   return { success: true };
+// }
+
+// export async function applySupplierAction(data, formData) {
+//   const supabase = await createClient();
+//   const user = await getCurrentUser();
+//   const { urls, selectedActivities, bankDetails, validateOnly } = data;
+
+//   const activityIds = selectedActivities?.map((activity) => activity?.value);
+
+//   // Optional fields for validation
+//   const optionalFields = [
+//     "short_description",
+//     "full_description",
+//     "custom_booking_notes",
+//   ];
+
+//   // Validate form
+//   const result = extractAndValidateFormData(formData, optionalFields);
+//   if (!result?.valid) return { error: result?.error };
+
+//   // 🛑 If only validating, exit here — don’t insert
+//   if (validateOnly) return { success: true };
+
+//   // Transform fields
+//   const formDataObject = result?.data;
+//   const {
+//     locations,
+//     languages,
+//     available_hours,
+//     blackout_dates,
+//     add_ons,
+//     activity_tags,
+//     safety_certifications,
+//   } = formDataObject;
+
+//   const locationArr = locations?.split(",");
+//   const languagesArr = languages?.split(",");
+//   const available_hoursArr = available_hours?.split(",");
+//   const blackout_datesArr = blackout_dates?.split(",");
+//   const add_onsArr = add_ons?.split(",") ?? null;
+//   const activity_tagsArr = activity_tags?.split(",");
+//   const safety_certificationsArr = safety_certifications?.split(",");
+
+//   // Final supplier data
+//   const newSupplier = {
+//     ...formDataObject,
+//     activityIds,
+//     locations: locationArr,
+//     languages: languagesArr,
+//     gallery: urls?.length > 0 ? urls : null,
+//     available_hours: available_hoursArr,
+//     blackout_dates: blackout_datesArr,
+//     add_ons: add_onsArr,
+//     bank_details: bankDetails,
+//     activity_tags: activity_tagsArr,
+//     safety_certifications: safety_certificationsArr,
+//   };
+
+//   // Insert into DB
+//   const { error: insertError } = await supabase
+//     .from("supplier")
+//     .insert([newSupplier])
+//     .select();
+
+//   if (insertError) return { error: "Error while submitting application." };
+
+//   return { success: true };
+// }
 
 export async function deleteSupplier(id) {
   const supabase = await createClient();

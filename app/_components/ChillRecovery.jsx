@@ -16,7 +16,7 @@ export default function ChillRecovery({ category }) {
 
   if (!filteredByCategoryArr || filteredByCategoryArr.length === 0) return null;
   return (
-    <section className="relative bg-navyBlue pb-10 text-matalicGold sm:py-20">
+    <section className="relative bg-navyBlue py-10 pb-10 text-matalicGold">
       {/* overlay */}
       <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent via-transparent to-primary" />
 

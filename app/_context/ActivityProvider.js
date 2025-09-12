@@ -18,25 +18,20 @@ export default function ActivityProvider({ children }) {
   const [dayTime, setDayTime] = useState("");
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [category, setCategory] = useState("");
+  const [budget, setBudget] = useState(0);
+  const [budgetOptions, setBudgetOptions] = useState([]);
 
-  const [visibleChunks, setVisibleChunks] = useState(1);
-
-  const loadMore = () => {
-    setVisibleChunks((prev) => prev + 1);
-  };
-  // Reset chunks on mount (important when navigating back)(for category page)
-  useEffect(() => {
-    setVisibleChunks(1);
-  }, []);
   // ✅ Sync with URL on mount
   useEffect(() => {
     const sizeFromUrl = Number(searchParams.get("groupSize")) || 0;
     const dayTimeFromUrl = searchParams.get("timing") || "";
     const categoryFromUrl = searchParams.get("category") || "";
+    const budgetFromUrl = Number(searchParams.get("budget") || 0);
 
     setGroupSize(sizeFromUrl);
     setDayTime(dayTimeFromUrl);
-    setCategory(categoryFromUrl); // ✅ NEW
+    setCategory(categoryFromUrl);
+    setBudget(budgetFromUrl);
   }, [searchParams]);
 
   // ✅ Sync to URL when value changes (from UI)
@@ -66,7 +61,14 @@ export default function ActivityProvider({ children }) {
         new Set(data.map((a) => a.category?.name).filter(Boolean)),
       );
       setCategoryOptions(uniqueCategories);
+
+      // ✅ Extract unique budgets
+      const uniqueBudgets = Array.from(
+        new Set(data.map((a) => a.price).filter(Boolean)),
+      );
+      setBudgetOptions(uniqueBudgets);
     }
+
     fetchData();
   }, []);
 
@@ -89,11 +91,14 @@ export default function ActivityProvider({ children }) {
           !category ||
           activity.category?.name?.toLowerCase() === category.toLowerCase();
 
-        return groupSizeMatch && dayTimeMatch && categoryMatch;
+        // ✅ Budget logic (example: exact match; adjust if you need ranges)
+        const budgetMatch = budget === 0 || Number(activity.price) <= budget;
+
+        return groupSizeMatch && dayTimeMatch && categoryMatch && budgetMatch;
       });
 
     setFilteredActivities(filtered);
-  }, [groupSize, dayTime, allActivities, category]);
+  }, [groupSize, dayTime, allActivities, category, budget]);
 
   // Min/max values
   const groupSizeValues =
@@ -132,8 +137,11 @@ export default function ActivityProvider({ children }) {
         categoryOptions,
         category,
         setCategory,
-        loadMore,
-        visibleChunks,
+        budget,
+        setBudget,
+        budgetOptions,
+        // loadMore,
+        // visibleChunks,
       }}
     >
       {children}

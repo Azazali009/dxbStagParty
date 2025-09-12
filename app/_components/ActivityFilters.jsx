@@ -2,6 +2,7 @@
 import ActivityType from "./ActivityType";
 import ClearFilterButton from "./ClearFilterButton";
 import DayTimeFilter from "./DayTimeFilter";
+import PriceRange from "./PriceRangeFilter";
 import SliderFilter from "./SliderFilter";
 
 export default function ActivityFilter() {
@@ -11,6 +12,7 @@ export default function ActivityFilter() {
         <SliderFilter />
         <DayTimeFilter />
         <ActivityType />
+        <PriceRange />
         <ClearFilterButton />
       </div>
     </div>

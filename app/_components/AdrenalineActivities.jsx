@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useActivity } from "../_context/ActivityProvider";
 import { cinzel } from "../layout";
 import LinkButton from "./LinkButton";
+
 export default function AdrenalineActivities({ category }) {
   const { filteredActivities } = useActivity();
-  console.log("AdrenalineActivities", filteredActivities);
+
   const filteredByCategoryArr =
     filteredActivities?.length > 0
       ? filteredActivities?.filter(
@@ -16,9 +17,9 @@ export default function AdrenalineActivities({ category }) {
 
   if (!filteredByCategoryArr || filteredByCategoryArr.length === 0) return null;
   return (
-    <section className="relative bg-[url('/images/adrenaline-bg.webp')] bg-cover bg-no-repeat py-10 sm:py-20">
+    <section className="relative bg-[url('/images/adrenaline-bg.webp')] bg-cover bg-no-repeat py-10">
       {/* overlay */}
-      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent via-black/20" />
+      <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent via-black/20 to-softGold" />
       <div className="relative z-20 space-y-10 px-4 sm:px-8">
         <div className="flex flex-col items-center justify-center gap-2 text-center sm:gap-4">
           <h2

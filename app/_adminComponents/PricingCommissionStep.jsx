@@ -99,7 +99,8 @@ export default function PricingCommissionStep() {
           Bank Name
           <input
             type="text"
-            value={bankDetails.bank}
+            value={bankDetails?.bank}
+            name="bank_details"
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
             onChange={(e) =>
               setFormData((prev) => ({
@@ -117,7 +118,7 @@ export default function PricingCommissionStep() {
           IBAN Number
           <input
             type="text"
-            value={bankDetails.iban}
+            value={bankDetails?.iban}
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
             onChange={(e) =>
               setFormData((prev) => ({
