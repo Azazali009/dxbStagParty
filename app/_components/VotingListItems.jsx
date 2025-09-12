@@ -1,10 +1,10 @@
 "use client";
-import { useSupabaseSubscription } from "../_hooks/useSupabaseSubscription";
+// import { useSupabaseSubscription } from "../_hooks/useSupabaseSubscription";
 import Button from "./Button";
 
 export default function VotingListItems({ sessions, organiserId }) {
   // Supabase real time useEffect
-  useSupabaseSubscription({ table: "voting_sessions", filterKey: organiserId });
+  // useSupabaseSubscription({ table: "voting_sessions", filterKey: organiserId });
 
   return (
     <div className="space-y-6">
