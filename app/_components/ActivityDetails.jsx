@@ -1,8 +1,5 @@
-import Image from "next/image";
-import { auth } from "../_lib/auth";
-import BookingWindowAndButton from "./BookingWindowAndButton";
-import ActivityBanner from "./ActivityBanner";
 import { getCurrentUser } from "../_lib/getCurrentUser";
+import ActivityBanner from "./ActivityBanner";
 import ActivityDetailSections from "./ActivityDetailSections";
 import ActivitySupportSections from "./ActivitySupportSections";
 import RelatedActivities from "./RelatedActivities";

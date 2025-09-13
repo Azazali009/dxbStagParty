@@ -10,7 +10,7 @@ export async function getCurrentUserPlanningData(userId) {
 
   if (error) {
     console.log(error);
-    return { error: "Unexpected Error. Please try again later/" };
+    return { error: "Unexpected Error. Please try again later" };
   }
   return data;
 }
