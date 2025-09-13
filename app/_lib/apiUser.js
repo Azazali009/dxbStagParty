@@ -6,7 +6,7 @@ export async function getUsers() {
 
   if (error) {
     console.error("Error fetching users:", error);
-    throw new Error(error.message);
+    return { error: error.message };
   }
 
   return data.users;
@@ -17,7 +17,7 @@ export async function deleteUser(userId) {
 
   if (error) {
     console.error("Error deleting user:", error);
-    throw new Error(error.message);
+    return { error: error.message };
   }
 
   return true;

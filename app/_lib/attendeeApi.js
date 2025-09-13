@@ -1,4 +1,7 @@
-import { supabase } from "./supabase";
+import { createClient } from "../_utils/supabase/client";
+
+const supabase = createClient();
+
 export async function addAttendees(attendeeData) {
   const { data: curAttendees, error } = await supabase
     .from("attendee")
@@ -6,7 +9,7 @@ export async function addAttendees(attendeeData) {
     .select();
   if (error) {
     console.log(error);
-    throw new Error("Error while adding attendees");
+    return { error: "Error while adding attendees" };
   }
   return { curAttendees, error };
 }
@@ -30,9 +33,10 @@ export async function getAttendees(id) {
     .single();
   if (userError) {
     console.log(userError);
-    throw new Error("Error while fetching user name");
+    return { error: "Error while fetching user name" };
   }
-  return { attendees, user };
+  const safeData = Array.isArray(attendees) ? attendees : [];
+  return { attendees: safeData, user };
 }
 
 // ✅ 3️⃣ Check if All Attendees are Paid & Update `bookings`
@@ -45,7 +49,7 @@ export async function checkAndUpdateBookingStatus(bookingID) {
 
   if (fetchError) {
     console.error("❌ Error fetching attendees:", fetchError);
-    throw new Error("Error while fetching attendees");
+    return { error: "Error while fetching attendees" };
   }
 
   // Check if all attendees are "paid"
@@ -179,9 +183,9 @@ export async function extendAttendeeExpiry(attendeeID) {
 
   // ✅ Ensure the current expiry has not passed
   if (currentExpiry < now) {
-    throw new Error(
-      "Payment link has already expired! Please try to sent fresh link.",
-    );
+    return {
+      error: "Payment link has already expired! Please try to sent fresh link.",
+    };
   }
 
   // ✅ Extend expiry by 24 hours
@@ -195,7 +199,7 @@ export async function extendAttendeeExpiry(attendeeID) {
 
   if (updateError) {
     console.error("Error:", updateError);
-    throw new Error("Failed to update expiry");
+    return { error: "Failed to update expiry" };
   }
 
   return newExpiry;

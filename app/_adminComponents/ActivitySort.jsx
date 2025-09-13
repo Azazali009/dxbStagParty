@@ -17,7 +17,7 @@ export default function ActivitySort({
           onChange={(e) => setSort(e.target.value)}
           className="h-10 rounded-md border border-gray-800 bg-navyBlue px-2 text-gray-300 outline-none focus:outline-matalicGold"
         >
-          <option selected value="">
+          <option defaultValue={"Sort by group size"} value="">
             Sort by group size
           </option>
           <option value="asc">Low to high(2-6,6-20)</option>
@@ -33,7 +33,7 @@ export default function ActivitySort({
           onChange={(e) => setDestinationSort(e.target.value)}
           className="h-10 rounded-md border border-gray-800 bg-navyBlue px-2 text-gray-300 outline-none focus:outline-matalicGold"
         >
-          <option selected value="">
+          <option defaultValue={"Sort by destination"} value="">
             Sort by destination
           </option>
           <option value="destination-asc">Ascending (A-Z)</option>

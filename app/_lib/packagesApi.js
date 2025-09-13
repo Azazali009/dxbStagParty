@@ -1,4 +1,6 @@
-import { supabase } from "./supabase";
+import { createClient } from "../_utils/supabase/client";
+
+const supabase = createClient();
 
 export async function getPackages() {
   let { data: Packages, error } = await supabase.from("Packages").select("*");

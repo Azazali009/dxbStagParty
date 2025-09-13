@@ -6,8 +6,10 @@ export async function getBlogs() {
   const { data, error } = await supabase
     .from("blog")
     .select(`*,blogCategories(name,slug),users(fullName,avatar)`);
+
   if (error) return { error: "Server error occurred while fetching blogs" };
-  return data;
+  const safeData = Array.isArray(data) ? data : [];
+  return safeData;
 }
 export async function getBlogById(id) {
   const { data, error } = await supabase
@@ -27,15 +29,18 @@ export async function getBlogCategories() {
     .from("blogCategories")
     .select("*");
 
-  return blogCategories;
+  const safeData = Array.isArray(blogCategories) ? blogCategories : [];
+  return safeData;
 }
 export async function getBlogsByCategoryId(categoryId) {
   const { data, error } = await supabase
     .from("blog")
     .select(`*,blogCategories(name,slug)`)
     .eq("category", categoryId);
+
   if (error) return { error: "Server error occurred while fetching blogs" };
-  return data;
+  const safeData = Array.isArray(data) ? data : [];
+  return safeData;
 }
 
 export default async function RecentBlogs() {
@@ -48,5 +53,6 @@ export default async function RecentBlogs() {
   if (error) {
     return { error: "Server error occurred while fetching recent blogs" };
   }
-  return data;
+  const safeData = Array.isArray(data) ? data : [];
+  return safeData;
 }

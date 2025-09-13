@@ -1,95 +1,9 @@
-import { notFound } from "next/navigation";
-import { supabase } from "./supabase";
 import { createClient } from "../_utils/supabase/client";
 import { getCategoryByName } from "./categoryApi";
 
-// export async function createActivity(newActivity) {
-//   const imageName = `card-image-${Math.random()}-${newActivity?.image?.name}`;
-//   const bannerImageName = `banner-image-${Math.random()}-${newActivity?.bannerImage?.name}`;
-
-//   const imagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${imageName}`;
-//   const bannerImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${bannerImageName}`;
-
-//   const { data, error } = await supabase
-//     .from("activities")
-//     .insert([
-//       {
-//         ...newActivity,
-//         image: imagePath,
-//         bannerImage: bannerImagePath,
-//       },
-//     ])
-//     .select()
-//     .single();
-
-//   if (error) {
-//     console.log(error);
-//     return { error: "Error while creating Activity.😒" };
-//   }
-
-//   const { error: imageUploadError } = await supabase.storage
-//     .from("activity-images")
-//     .upload(imageName, newActivity?.image);
-
-//   if (imageUploadError) {
-//     console.log(imageUploadError);
-//     await supabase.from("activities").delete().eq("id", data.id);
-//     return {
-//       error: "Activity image could not be uploaded. Activity was deleted.",
-//     };
-//   }
-
-//   const { error: bannerUploadError } = await supabase.storage
-//     .from("activity-images")
-//     .upload(bannerImageName, newActivity?.bannerImage);
-
-//   if (bannerUploadError) {
-//     console.log(bannerUploadError);
-//     await supabase.from("activities").delete().eq("id", data.id);
-//     return {
-//       error: "Banner image could not be uploaded. Activity was deleted.",
-//     };
-//   }
-
-//   return data;
-// }
-
-// export async function editActivity(editActivity, id) {
-//   const hasImagePath = editActivity?.image?.startsWith(
-//     process.env.NEXT_PUBLIC_SUPABASE_URL,
-//   );
-
-//   const imageName = `${Math.random()}-${editActivity?.image?.name}`;
-//   const imagePath = hasImagePath
-//     ? editActivity.image
-//     : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${imageName}`;
-
-//   const { data, error } = await supabase
-//     .from("activities")
-//     .update({ ...editActivity, image: imagePath })
-//     .eq("id", id)
-//     .single();
-
-//   if (error) {
-//     console.log(error);
-//     throw new Error("Error while updating Activity.😒");
-//   }
-//   if (hasImagePath) return data;
-//   const { error: storageError } = await supabase.storage
-//     .from("activity-images")
-//     .upload(imageName, editActivity?.image);
-
-//   if (storageError) {
-//     console.log(error);
-//     throw new Error(
-//       "Activity image could not updated due to some internal error. Please try again",
-//     );
-//   }
-//   return data;
-// }
+const supabase = createClient();
 
 export async function deleteBooking(bookingId) {
-  const supabase = createClient();
   const { error } = await supabase.from("booking").delete().eq("id", bookingId);
 
   if (error) return { error: "Booking could not deleted" };
@@ -105,7 +19,8 @@ export async function getActivities() {
     console.log(error);
     return { error: "Error while getting Activities.😒" };
   }
-  return data;
+  const safeData = Array.isArray(data) ? data : [];
+  return safeData;
 }
 export async function getActivitiesByCategory(categoryName) {
   const category = await getCategoryByName(categoryName);
@@ -119,7 +34,9 @@ export async function getActivitiesByCategory(categoryName) {
     console.log(error);
     return { error: "Error while getting Activities.😒" };
   }
-  return data;
+
+  const safeData = Array.isArray(data) ? data : [];
+  return safeData;
 }
 export async function getActivity(id) {
   let { data, error } = await supabase
@@ -130,7 +47,7 @@ export async function getActivity(id) {
 
   if (error) {
     console.log(error);
-    throw new Error("Error While Getting Activity.😒");
+    return { error: "Error While Getting Activity.😒" };
   }
   return data;
 }
@@ -144,14 +61,14 @@ export async function addBooking(booking) {
 
   if (error) {
     console.log(error);
-    throw new Error("Error while booking activity. Please try again.🤔");
+    return { error: "Error while booking activity. Please try again.🤔" };
   }
   return { CurBooking, error };
 }
 
 export async function getBookings() {
   const supabaseServer = createClient();
-  let { data: booking, error } = await supabaseServer.from("booking").select(`*
+  let { data: bookings, error } = await supabaseServer.from("booking").select(`*
       ,users (
       fullName,
       email
@@ -161,10 +78,11 @@ export async function getBookings() {
     console.log(error);
     return { error: "Error while getting bookings." };
   }
-  return booking;
+  const safeData = Array.isArray(bookings) ? bookings : [];
+  return safeData;
 }
 export async function getPendingBookings() {
-  let { data: booking, error } = await supabase
+  let { data: bookings, error } = await supabase
     .from("booking")
     .select("*")
     .eq("paymentStatus", "pending");
@@ -173,7 +91,8 @@ export async function getPendingBookings() {
     console.log(error);
     throw new Error("Error while getting pending bookings.");
   }
-  return booking;
+  const safeData = Array.isArray(bookings) ? bookings : [];
+  return safeData;
 }
 export async function getBooking(id) {
   let { data: booking, error } = await supabase
@@ -184,23 +103,27 @@ export async function getBooking(id) {
       email
     )`,
     )
-    .eq("id", id);
+    .eq("id", id)
+    .single();
   if (error) {
     console.log(error);
-    throw new Error("Error while getting booking.");
+    return { error: "Error while getting booking." };
   }
-  return booking[0];
+  return booking;
 }
 export async function getBookingByUserId(userId) {
   let { data: bookings, error } = await supabase
     .from("booking")
     .select("*")
     .eq("userId", userId);
+
   if (error) {
     console.log(error);
     return { error: "Error while getting your bookings." };
   }
-  return bookings;
+
+  const safeData = Array.isArray(bookings) ? bookings : [];
+  return safeData;
 }
 
 export async function getRecentBookings() {
@@ -216,10 +139,11 @@ export async function getRecentBookings() {
     .limit(10);
 
   if (error) {
-    throw new Error(error.message);
+    return { error: error.message };
   }
 
-  return data;
+  const safeData = Array.isArray(data) ? data : [];
+  return safeData;
 }
 
 export async function getRecentTopActivities() {
@@ -230,8 +154,9 @@ export async function getRecentTopActivities() {
     .limit(10);
 
   if (error) {
-    throw new Error(error.message);
+    return { error: error.message };
   }
 
-  return data;
+  const safeData = Array.isArray(data) ? data : [];
+  return safeData;
 }

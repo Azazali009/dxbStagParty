@@ -1,4 +1,6 @@
-import { supabase } from "./supabase";
+import { createClient } from "../_utils/supabase/client";
+
+const supabase = createClient();
 
 export async function createOrganizer(newOrganizer) {
   const { data, error } = await supabase
