@@ -87,7 +87,7 @@ export default function PlanningSUmmaryPanel({ selectedActivities }) {
           </div>
         </div>
       ) : (
-        <div className="flex h-fit w-full flex-col items-center justify-center gap-2 bg-red-700 px-2 py-12 text-center text-sm text-gray-400 sm:gap-4 sm:px-6">
+        <div className="flex h-fit w-full flex-col items-center justify-center gap-2 px-2 py-12 text-center text-sm text-gray-400 sm:gap-4 sm:px-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="size-5 text-gray-500 sm:size-10"
