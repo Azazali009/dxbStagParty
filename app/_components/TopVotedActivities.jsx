@@ -13,7 +13,7 @@ export default function TopVotedActivities({ activities }) {
         {activities.map((act) => (
           <li
             key={act.id}
-            className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-700 bg-gray-900"
+            className="flex items-center gap-4 rounded-lg border border-gray-700 bg-gray-900"
           >
             {act.image && (
               <Image

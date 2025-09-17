@@ -3,7 +3,7 @@ import {
   Playfair_Display,
   Poppins,
   Bebas_Neue,
-  Noto_Serif_Georgian,
+  // Noto_Serif_Georgian,
 } from "next/font/google";
 import "./globals.css";
 import dynamic from "next/dynamic";
@@ -61,11 +61,11 @@ export const BebasNeue = Bebas_Neue({
   display: "swap",
   weight: ["400"],
 });
-export const Georgia = Noto_Serif_Georgian({
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
+// export const Georgia = Noto_Serif_Georgian({
+//   subsets: ["latin"],
+//   display: "swap",
+//   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+// });
 // export const metadata = {
 //   title: {
 //     template: "%s | DXB Stag Party",

@@ -45,13 +45,13 @@ export default function PlanningFormActivitySelection({
   };
 
   return (
-    <div className="space-y-10">
-      <h2 className="text-3xl font-bold text-matalicGold">
+    <div className="space-y-4 sm:space-y-10">
+      <h2 className="text-base font-bold text-matalicGold sm:text-3xl">
         Activity Selection:
       </h2>
       {selectedActivityIds.length > 0 && (
         <div className="mt-4 space-y-2">
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-sm font-semibold sm:text-lg">
             Selected Activities Display:
           </h2>
           <ul className="flex flex-wrap gap-4">
@@ -59,7 +59,7 @@ export default function PlanningFormActivitySelection({
               const act = activities.find((a) => a.id === id);
               return (
                 <li
-                  className="group flex w-full max-w-[200px] gap-2 overflow-hidden rounded-lg bg-navyBlue text-xs shadow-2xl"
+                  className="group flex w-full max-w-[200px] items-center gap-2 overflow-hidden rounded-lg bg-navyBlue text-xs shadow-2xl"
                   key={id}
                 >
                   <div className="w-1/2 overflow-hidden">
@@ -75,7 +75,9 @@ export default function PlanningFormActivitySelection({
                     <span className="font-semibold text-neutral-500">
                       {act?.category.name}
                     </span>
-                    <span className="text-neutral-300">{act?.name}</span>
+                    <span className="text-[9px] leading-normal text-neutral-300 sm:text-base">
+                      {act?.name}
+                    </span>
                   </div>
                 </li>
               );
@@ -84,15 +86,17 @@ export default function PlanningFormActivitySelection({
         </div>
       )}
       <div className="space-y-6">
-        <h2 className="text-xl font-semibold">Select Activities ↓</h2>
-        <div className="mb-4 flex flex-wrap items-center gap-2">
+        <h2 className="text-sm font-semibold sm:text-xl">
+          Select Activities ↓
+        </h2>
+        <div className="mb-4 flex flex-wrap items-center gap-[2px] sm:gap-2">
           {categories &&
             categories.length > 0 &&
             allCategories?.map((category) => {
               return (
                 <button
                   type="button"
-                  className={`rounded-sm ${selectedCategory === category.slug ? "translate-y-1 bg-matalicGold text-navyBlue shadow-xl" : "translate-y-0 bg-navyBlue text-white shadow-none"} px-3 py-1 text-xs font-medium duration-300 hover:translate-y-1 hover:shadow-xl active:scale-75`}
+                  className={`rounded-sm ${selectedCategory === category.slug ? "translate-y-1 bg-matalicGold text-navyBlue shadow-xl" : "translate-y-0 bg-navyBlue text-white shadow-none"} px-3 py-1 text-[8px] font-medium duration-300 hover:translate-y-1 hover:shadow-xl active:scale-75 sm:text-xs`}
                   onClick={() => setSelectedCategory(category.slug)}
                   key={category.slug}
                 >
@@ -135,9 +139,9 @@ export default function PlanningFormActivitySelection({
                   alt={activity.name}
                   width={50}
                   height={50}
-                  className="aspect-square rounded border border-neutral-700"
+                  className="aspect-video rounded border border-neutral-700 object-cover sm:aspect-square"
                 />
-                <span>{activity.name}</span>
+                <span className="text-[9px] sm:text-base">{activity.name}</span>
               </label>
             ))}
           </div>

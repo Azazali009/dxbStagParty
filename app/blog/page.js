@@ -11,7 +11,7 @@ export const metadata = {
 export default function Page() {
   return (
     <div className="space-y-10 px-2 py-6 xs:px-8">
-      <div className="flex flex-col items-center justify-center gap-1 text-center">
+      {/* <div className="flex flex-col items-center justify-center gap-1 text-center">
         <h1
           className={`${cinzel.className} text-2xl font-semibold text-matalicGold xs:text-5xl`}
         >
@@ -20,7 +20,7 @@ export default function Page() {
         <p className="text-xs xs:text-base">
           Everything you need for a legendary dubai stag.
         </p>
-      </div>
+      </div> */}
       <BlogHero />
       <Blogs />
     </div>

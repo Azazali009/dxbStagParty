@@ -6,7 +6,8 @@ export async function getCategories() {
   let { data, error } = await supabase.from("category").select("*");
   if (error) return { error: "Unable to load categories" };
 
-  return data;
+  const safeData = Array.isArray(data) ? data : [];
+  return safeData;
 }
 
 export async function getCategoryByName(name) {

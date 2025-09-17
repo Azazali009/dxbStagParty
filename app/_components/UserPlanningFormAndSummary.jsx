@@ -1,6 +1,5 @@
 "use client";
-import dynamic from "next/dynamic";
-import { Suspense, useTransition } from "react";
+import { useTransition } from "react";
 
 import { addPlanning } from "../_lib/actions";
 import PlanningFormBookingInfoStep from "./PlanningFormBookingInfoStep";
@@ -8,21 +7,13 @@ import PlanningFormCTA from "./PlanningFormCTA";
 import PlanningFormHeading from "./PlanningFormHeading";
 import PlanningFormTimeline from "./PlanningFormTimeline";
 import PlanningFormTransport from "./PlanningFormTransport";
-import Spinner from "./Spinner";
-const PlanningFormActivitySelection = dynamic(
-  () => import("./PlanningFormActivitySelection"),
-  {
-    loading: () => <Spinner />,
-    ssr: false, // if it's client only
-  },
-);
 
 import toast from "react-hot-toast";
 import { useAuth } from "../_context/AuthProvider";
 import { usePartyBuilder } from "../_context/PartyBuilderProvider";
-import { addBooking } from "../_lib/data-services";
 import { autoBuildTimeline } from "../_lib/helpers";
 import LoggedInMeesage from "./LoggedInMeesage";
+import PlanningFormActivitySelection from "./PlanningFormActivitySelection";
 import PlanningSUmmaryPanel from "./PlanningSUmmaryPanel";
 
 export default function UserPlanningFormAndSummary({
@@ -132,9 +123,6 @@ export default function UserPlanningFormAndSummary({
       const res = await addPlanningWithData(formData);
       if (res?.error) return toast.error(res?.error);
       handleBooking();
-      // toast.success(
-      //   "🎉 Your plan’s been saved! We’ll use it to make booking easier feel free to update it anytime from your profile.",
-      // );
     });
   }
 
@@ -169,8 +157,8 @@ export default function UserPlanningFormAndSummary({
     );
   }
   return (
-    <div className="grid min-h-screen grid-cols-[1fr_0.5fr] gap-10 divide-x divide-neutral-700">
-      <div className="mx-auto w-full space-y-10 rounded-xl border border-gray-800 p-6 sm:p-10">
+    <div className="grid min-h-screen grid-cols-[1fr_0.7fr] gap-2 divide-x divide-neutral-700 sm:grid-cols-[1fr_0.5fr] sm:gap-10">
+      <div className="mx-auto w-full space-y-10 rounded-xl border border-gray-800 p-3 sm:p-10">
         <PlanningFormHeading />
 
         <form
@@ -182,12 +170,10 @@ export default function UserPlanningFormAndSummary({
 
           {/* step 2 (Activity Selection) */}
           {planningStep === 2 && (
-            <Suspense fallback={<Spinner />}>
-              <PlanningFormActivitySelection
-                activities={activities}
-                categories={categories}
-              />
-            </Suspense>
+            <PlanningFormActivitySelection
+              activities={activities}
+              categories={categories}
+            />
           )}
 
           {/* step 3 (Time logic) */}

@@ -10,11 +10,11 @@ export default function PlanningFormTransport({ timeline }) {
   } = usePartyBuilder();
   return (
     <div className="space-y-4 rounded-md border border-gray-700 bg-navyBlue p-6 text-white">
-      <h2 className="text-2xl font-bold text-matalicGold">
+      <h2 className="text-lg font-bold text-matalicGold sm:text-2xl">
         Transport Options 🚐
       </h2>
 
-      <label className="flex items-center gap-2 text-sm">
+      <label className="flex items-center gap-2 text-xs sm:text-sm">
         <input
           type="checkbox"
           checked={includeTransport}

@@ -1,9 +1,7 @@
-import React from "react";
 import UserPlanningFormAndSummary from "../_components/UserPlanningFormAndSummary";
-import { getCurrentUser } from "../_lib/getCurrentUser";
-import LoggedInMeesage from "../_components/LoggedInMeesage";
-import { getActivities } from "../_lib/data-services";
 import { getCategories } from "../_lib/categoryApi";
+import { getActivities } from "../_lib/data-services";
+import { getCurrentUser } from "../_lib/getCurrentUser";
 
 export default async function Page({ searchParams }) {
   const planningStep = Number(searchParams?.planningStep ?? 1);
@@ -12,7 +10,7 @@ export default async function Page({ searchParams }) {
   const categories = await getCategories();
 
   return (
-    <div className="p-4 sm:p-10">
+    <div className="mt-8 p-0 sm:mt-0 sm:p-10">
       <UserPlanningFormAndSummary
         categories={categories}
         planningStep={planningStep}

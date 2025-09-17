@@ -1,18 +1,15 @@
 import Image from "next/image";
 import { cinzel, playfairDisplay } from "../layout";
-import keyIcon from "../svgIcons/key.png";
-import HomeIcon from "../svgIcons/home.png";
-import shirtIcon from "../svgIcons/shirt.png";
 import filterIcon from "../svgIcons/filter.png";
+import folderPlayIcon from "../svgIcons/folderPlay.png";
+import HomeIcon from "../svgIcons/home.png";
+import keyIcon from "../svgIcons/key.png";
 import messageIcon from "../svgIcons/message.png";
 import moonIcon from "../svgIcons/moon.png";
-import folderPlayIcon from "../svgIcons/folderPlay.png";
+import shirtIcon from "../svgIcons/shirt.png";
 import videoIcon from "../svgIcons/video.png";
-import pdfIcon from "../svgIcons/pdf.png";
-import InterestImageBox from "./InterestImageBox";
-import Link from "next/link";
-import LinkButton from "./LinkButton";
 import Button from "./Button";
+import InterestImageBox from "./InterestImageBox";
 export default function HomeBlogSection() {
   return (
     <div className="mx-auto max-w-6xl space-y-12 py-14 xl:max-w-full">

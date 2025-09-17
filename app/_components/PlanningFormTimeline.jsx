@@ -13,7 +13,9 @@ export default function PlanningFormTimeline({ timeline }) {
   };
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold text-matalicGold">Timeline:</h2>
+      <h2 className="text-lg font-bold text-matalicGold sm:text-3xl">
+        Timeline:
+      </h2>
 
       {timeline.length === 0 ? (
         <p className="text-gray-400">
@@ -32,14 +34,16 @@ export default function PlanningFormTimeline({ timeline }) {
                   {item.warning}
                 </p>
               )}
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col justify-between sm:flex-row sm:items-center">
                 <div>
-                  <span className="font-semibold">{item.name}</span>
-                  <p className="text-xs text-gray-400">
+                  <span className="text-[9px] font-semibold leading-[0.2] sm:text-base">
+                    {item.name}
+                  </span>
+                  <p className="text-[10px] text-gray-400 sm:text-xs">
                     {item.category?.name || "Activity"}
                   </p>
                 </div>
-                <div className="text-right">
+                <div className="text-right text-xs sm:text-base">
                   <span>
                     {item.startTime.toLocaleTimeString([], {
                       hour: "2-digit",
@@ -51,7 +55,7 @@ export default function PlanningFormTimeline({ timeline }) {
                       minute: "2-digit",
                     })}
                   </span>
-                  <div className="mt-1 flex items-center gap-2">
+                  <div className="mt-1 flex items-center gap-2 text-xs sm:text-base">
                     <label className="text-xs">Buffer:</label>
                     <input
                       type="number"
@@ -70,7 +74,7 @@ export default function PlanningFormTimeline({ timeline }) {
               {/* 🗺️ Map marker */}
               {item.destinations && (
                 <>
-                  <p className="text-sm text-gray-300">
+                  <p className="mt-4 text-[9px] text-gray-300 sm:text-sm">
                     📍 {item.destinations}
                   </p>
                   <iframe
