@@ -11,6 +11,7 @@ export default function EditActivityForm({ activity }) {
   const {
     id,
     name,
+    slug,
     minAge,
     duration,
     price,
@@ -35,8 +36,11 @@ export default function EditActivityForm({ activity }) {
   const [suppliers, setSuppliers] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isPending, startTransition] = useTransition();
+  const [activityName, setActivityName] = useState(name);
+  const [activitySlug, setActivitySlug] = useState(slug);
 
   const editFormRef = useRef();
+
   const handleSubmit = (formData) => {
     startTransition(async () => {
       const res = await editActivityAction(formData);
@@ -45,6 +49,18 @@ export default function EditActivityForm({ activity }) {
       editFormRef.current?.reset();
     });
   };
+
+  function generateSlug() {
+    if (!activityName) return;
+    const slug = activityName
+      .toLowerCase() // lowercase
+      .trim() // remove extra spaces
+      .replace(/&/g, "and") // & ko 'and' bana do
+      .replace(/[^a-z0-9\s-]/g, "") // special chars remove (except space/dash)
+      .replace(/\s+/g, "-") // spaces → dash
+      .replace(/-+/g, "-");
+    setActivitySlug(slug);
+  }
 
   // Effect to fetch activities
   useEffect(() => {
@@ -83,8 +99,42 @@ export default function EditActivityForm({ activity }) {
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="text"
           name="name"
+          value={activityName}
+          onChange={(e) => setActivityName(e.target.value)}
           defaultValue={name}
         />
+      </FormRow>
+      <FormRow label={"Activity Slug"}>
+        <div className="relative w-full">
+          <input
+            className="h-10 w-full rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+            type="text"
+            name="slug"
+            value={activitySlug}
+            onChange={(e) => setActivitySlug(e.target.value)}
+            placeholder="desert-dune-buggy"
+          />
+          <button
+            type="button"
+            onClick={generateSlug}
+            className="absolute right-2 top-1/2 inline-block -translate-y-1/2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-4 text-matalicGold"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+              />
+            </svg>
+          </button>
+        </div>
       </FormRow>
       <FormRow label={"Activity Price"}>
         <input
@@ -167,17 +217,11 @@ export default function EditActivityForm({ activity }) {
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 capitalize text-softGold"
           >
             {supplier && supplier.id ? (
-              <option
-                selected
-                value={supplier.id}
-                defaultValue={supplier.fullName}
-              >
+              <option value={supplier.id} defaultValue={supplier.fullName}>
                 {supplier.fullName}
               </option>
             ) : (
-              <option selected value="">
-                Link supplier
-              </option>
+              <option value="">Link supplier</option>
             )}
             {suppliers
               ?.filter((curSupplier) => supplier?.id !== curSupplier.value)
@@ -217,9 +261,7 @@ export default function EditActivityForm({ activity }) {
           defaultValue={photoVideoIncluded}
           required
         >
-          <option selected value="">
-            Select Photo Video Inclusion?
-          </option>
+          <option value="">Select Photo Video Inclusion?</option>
           <option value="yes">Yes</option>
           <option value="No, available as add-on">
             No, available as add-on
@@ -268,16 +310,7 @@ export default function EditActivityForm({ activity }) {
           <option value="no">No</option>
         </select>
       </FormRow>
-      {/* <FormRow label={"category"}>
-        <input
-          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
-          type="text"
-          name="category"
-          autoComplete="on"
-          defaultValue={"test"}
-          placeholder="Vip / Adrenalin / Competitive etc..."
-        />
-      </FormRow> */}
+
       {loading ? (
         <div className="my-4 flex flex-col gap-4">
           <div className="h-4 w-[50%] animate-pulse rounded-xl bg-navyBlue"></div>
@@ -320,7 +353,7 @@ export default function EditActivityForm({ activity }) {
       <input type="hidden" name="activityId" value={id} />
       <div className="[grid-column:1/-1]">
         <button
-          className="flex h-10 items-center gap-2 rounded bg-sky-700 px-6 capitalize tracking-wide duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+          className="flex h-10 items-center gap-2 rounded border border-matalicGold bg-transparent px-6 capitalize tracking-wide text-matalicGold duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           type="submit"
           disabled={isPending}
         >

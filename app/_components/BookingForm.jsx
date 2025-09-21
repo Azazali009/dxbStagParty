@@ -39,7 +39,7 @@ export default function BookingForm({
     groomDetails,
   } = useBooking();
   const [totalPrice, setTotalPrice] = useState(price);
-  console.log(selectedActivities);
+
   const [minGroup, maxGroup] = groupSize && groupSize?.split("-")?.map(Number);
 
   const searchParams = useSearchParams();
@@ -182,7 +182,7 @@ export default function BookingForm({
       });
 
       const organizerPaymentData = await organizerPaymentRes.json();
-      console.log(organizerPaymentData);
+
       if (!organizerPaymentData.success) {
         toast.error("Error generating organizer payment link.", {
           id: toastId,

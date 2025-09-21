@@ -12,6 +12,9 @@ export default function AdminActivityForm() {
   const [suppliers, setSuppliers] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isPending, startTransition] = useTransition();
+  const [activityName, setActivityName] = useState("");
+  const [slug, setSlug] = useState("");
+
   const ref = useRef();
 
   const handleSubmit = (formData) => {
@@ -22,6 +25,18 @@ export default function AdminActivityForm() {
       ref.current?.reset();
     });
   };
+
+  function generateSlug() {
+    if (!activityName) return;
+    const slug = activityName
+      .toLowerCase() // lowercase
+      .trim() // remove extra spaces
+      .replace(/&/g, "and") // & ko 'and' bana do
+      .replace(/[^a-z0-9\s-]/g, "") // special chars remove (except space/dash)
+      .replace(/\s+/g, "-") // spaces → dash
+      .replace(/-+/g, "-");
+    setSlug(slug);
+  }
 
   // Effect to fetch activities,suppliers
   useEffect(() => {
@@ -46,6 +61,7 @@ export default function AdminActivityForm() {
     }
     fetchSuppliers();
   }, []);
+
   return (
     <form
       action={(formData) => handleSubmit(formData)}
@@ -57,8 +73,42 @@ export default function AdminActivityForm() {
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
           type="text"
           name="name"
+          value={activityName}
+          onChange={(e) => setActivityName(e.target.value)}
           placeholder="desert dune buggy..."
         />
+      </FormRow>
+      <FormRow label={"Activity Slug"}>
+        <div className="relative w-full">
+          <input
+            className="h-10 w-full rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
+            type="text"
+            name="slug"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
+            placeholder="desert-dune-buggy"
+          />
+          <button
+            type="button"
+            onClick={generateSlug}
+            className="absolute right-2 top-1/2 inline-block -translate-y-1/2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-4 text-matalicGold"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+              />
+            </svg>
+          </button>
+        </div>
       </FormRow>
       <FormRow label={"Activity Price"}>
         <input
@@ -222,15 +272,7 @@ export default function AdminActivityForm() {
           <option value="no">No</option>
         </select>
       </FormRow>
-      {/* <FormRow label={"category"}>
-        <input
-          className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
-          type="text"
-          name="category"
-          autoComplete="on"
-          placeholder="Vip / Adrenalin / Competitive etc..."
-        />
-      </FormRow> */}
+
       {loading ? (
         <div className="my-4 flex flex-col gap-4">
           <div className="h-4 w-[50%] animate-pulse rounded-xl bg-navyBlue"></div>

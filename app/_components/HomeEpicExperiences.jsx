@@ -7,9 +7,9 @@ export default async function HomeEpicExperiences() {
   // const skyDiving = await getActivity(80)
   // const privateChef = await getActivity(34)
   const [desertBuggy, skyDiving, privateChef] = await Promise.all([
-    getActivity(26),
-    getActivity(80),
-    getActivity(34),
+    getActivity("desert-dune-buggy-adventure"),
+    getActivity("sky-diving-over-the-palm"),
+    getActivity("private-chef-dinner"),
   ]);
 
   return (

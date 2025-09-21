@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createClient } from "../../_utils/supabase/client";
 import Image from "next/image";
-import Empty from "../../_components/Empty";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import EndVoteSession from "../../_components/EndVoteSession";
-import Link from "next/link";
 import Button from "../../_components/Button";
+import Empty from "../../_components/Empty";
+import EndVoteSession from "../../_components/EndVoteSession";
+import { createClient } from "../../_utils/supabase/client";
 
 export default function VotingPage({ params }) {
   const supabase = createClient();
@@ -175,7 +174,7 @@ export default function VotingPage({ params }) {
                   "rounded !py-2 font-semibold hover:bg-matalicGold hover:text-navyBlue"
                 }
                 variation="gold"
-                href={`/activities/${act.id}`}
+                href={`/activities/${act.slug}`}
               >
                 View more
               </Button>

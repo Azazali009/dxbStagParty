@@ -24,7 +24,10 @@ export async function getActivities() {
 }
 export async function getActivitiesByCategory(categoryName) {
   const category = await getCategoryByName(categoryName);
-
+  // agar category load hi nahi hua
+  if (!category || category?.error) {
+    return [];
+  }
   let { data, error } = await supabase
     .from("activities")
     .select(`*,category(image,name)`)
@@ -38,11 +41,11 @@ export async function getActivitiesByCategory(categoryName) {
   const safeData = Array.isArray(data) ? data : [];
   return safeData;
 }
-export async function getActivity(id) {
+export async function getActivity(slug) {
   let { data, error } = await supabase
     .from("activities")
     .select(`*,supplier(id,fullName),category(id,name)`)
-    .eq("id", id)
+    .eq("slug", slug)
     .single();
 
   if (error) {

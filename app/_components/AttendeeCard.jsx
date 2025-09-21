@@ -16,17 +16,8 @@ export default function AttendeeCard({
   return (
     <div
       key={attendee.id}
-      className={`space-y-4 ${bookingPaymentStatus === "cancelled" && "grayscale"} bg-neutral-800 shadow-lg ${unpaid && "text-softGold"} ${paid && "text-green-500"} rounded-lg px-6 py-10 shadow-2xl ${partiallyPaid && "text-yellow-500"}`}
+      className={`space-y-4 ${bookingPaymentStatus === "cancelled" && "grayscale"} bg-neutral-800 shadow-lg ${unpaid && "text-softGold"} ${paid && "text-green-500"} rounded-lg px-6 py-10 shadow-2xl ${partiallyPaid && "text-softGold"}`}
     >
-      <p className="capitalize">
-        Hey,{" "}
-        <span className="font-semibold text-matalicGold">{attendee?.name}</span>{" "}
-        <span className="inline-block animate-wave sm:text-xl">👋</span>
-      </p>
-      <ResendReminder
-        status={attendee.status}
-        attempts={attendee.resendIncrement}
-      />
       {(attendee.status === "unpaid" || attendee.status === "partially-paid") &&
         attendee.expires_at && (
           <PaymentTimer
@@ -34,6 +25,15 @@ export default function AttendeeCard({
             bookingPaymentStatus={bookingPaymentStatus}
           />
         )}
+      <p className="capitalize">
+        Hey, <span className="font-semibold">{attendee?.name}</span>{" "}
+        <span className="inline-block animate-wave sm:text-xl">👋</span>
+      </p>
+      <ResendReminder
+        status={attendee.status}
+        attempts={attendee.resendIncrement}
+      />
+
       <h1
         className={`flex items-center gap-2 text-xs font-bold xs:text-base md:text-xl`}
       >

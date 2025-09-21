@@ -30,13 +30,12 @@ export default function ActivityCarousel({ Activities }) {
       responsive={responsive}
       ssr={true}
       infinite={true}
-      //   autoPlay={true}
       autoPlaySpeed={3000}
       keyBoardControl={true}
       customTransition="transform 700ms ease-in-out"
       transitionDuration={700}
       containerClass="carousel-container"
-      removeArrowOnDeviceType={["tablet", "mobile"]}
+      // removeArrowOnDeviceType={["tablet", "mobile"]}
       dotListClass="custom-dot-list-style"
       itemClass="px-3" // ✅ horizontal gap between items
       className="[grid-column:1/-1]"

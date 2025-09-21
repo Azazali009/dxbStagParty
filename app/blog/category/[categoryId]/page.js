@@ -13,7 +13,7 @@ export default async function Page({ params }) {
           <div key={blog.id} className="space-y-4">
             <Image
               src={blog.image}
-              className="aspect-square rounded-md object-cover"
+              className="aspect-square rounded-md bg-navyBlue object-cover"
               width={500}
               height={500}
               alt={blog.name}

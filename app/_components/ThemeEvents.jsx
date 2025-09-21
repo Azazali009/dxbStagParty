@@ -39,7 +39,7 @@ export default function ThemeEvents({ category }) {
               return (
                 <div key={act.id} className="flex flex-col gap-4 md:gap-3">
                   <Link
-                    href={`/activities/${act.id}`}
+                    href={`/activities/${act.slug}`}
                     className={`relative flex !h-[190px] items-end overflow-hidden rounded-xl border-2 border-secondary pb-3 duration-300 hover:scale-95 hover:animate-pulse md:!h-[130px] 2xl:!h-[230px]`}
                   >
                     <Image
@@ -76,7 +76,7 @@ export default function ThemeEvents({ category }) {
             // All other cards (index 0–5)
             return (
               <Link
-                href={`/activities/${act.id}`}
+                href={`/activities/${act.slug}`}
                 key={act.id}
                 className={`relative flex items-end overflow-hidden rounded-xl border-2 border-secondary pb-3 duration-300 hover:scale-95 hover:animate-pulse ${index < 2 ? "h-[500px] 2xl:h-[600px]" : ""} ${index === 4 ? "!h-[300px] md:col-span-2 lg:-translate-y-[35%] 2xl:!h-[400px] 2xl:-translate-y-[25%]" : ""} ${index > 4 ? "!h-[190px] 2xl:!h-[290px]" : ""} ${index >= 2 && index <= 3 ? "h-[600px] 2xl:h-[700px]" : ""} `}
               >

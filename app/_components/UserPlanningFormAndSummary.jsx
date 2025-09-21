@@ -15,6 +15,7 @@ import { autoBuildTimeline } from "../_lib/helpers";
 import LoggedInMeesage from "./LoggedInMeesage";
 import PlanningFormActivitySelection from "./PlanningFormActivitySelection";
 import PlanningSUmmaryPanel from "./PlanningSUmmaryPanel";
+import { useBooking } from "../_context/bookingProvider";
 
 export default function UserPlanningFormAndSummary({
   planningStep,
@@ -31,7 +32,8 @@ export default function UserPlanningFormAndSummary({
     includeTransport,
     transportHours,
   } = usePartyBuilder();
-
+  const { isOrganizerAttending, includeGroom, groomDetails, setLoading } =
+    useBooking();
   const { user: clientUser, loading: loadingUser } = useAuth();
 
   const [isPending, startTransition] = useTransition();
@@ -55,9 +57,47 @@ export default function UserPlanningFormAndSummary({
 
       const totalPrice = prices * (attendees?.length || 1);
 
+      const validAttendees = attendees.filter(
+        (a) => a?.email?.trim() || a?.name?.trim(),
+      );
+
+      if (!validAttendees.length) {
+        toast.error("Please add attendee details.", { id: toastId });
+        setLoading(false);
+        return;
+      }
+
+      if (
+        includeGroom &&
+        !groomDetails?.name?.trim() &&
+        !groomDetails?.email?.trim()
+      ) {
+        return toast.error("Please provide groom details.", { id: toastId });
+      }
+      const allEmails = [...attendees.map((a) => a.email)];
+      // Organizer include karo agar attending hai
+      if (isOrganizerAttending && user?.email) {
+        allEmails.push(user.email);
+      }
+
+      // Groom include karo agar toggle on hai
+      if (includeGroom) {
+        allEmails.push(groomDetails.email); // placeholder groom email
+      }
+
+      // ✅ Check for Duplicate Emails
+      const uniqueEmails = new Set(allEmails);
+      if (uniqueEmails.size !== allEmails.length) {
+        toast.error(
+          "Duplicate attendees are not allowed. Please enter a unique email.",
+          { id: toastId },
+        );
+        setLoading(false);
+        return;
+      }
+
       // Calculate Organizer's 15% Payment
       const organizerAmount = Math.round(totalPrice * 0.15);
-
       // Save booking data to localStorage for use after redirect
       localStorage.setItem(
         "bookingData",
@@ -76,15 +116,15 @@ export default function UserPlanningFormAndSummary({
               email: a.email,
               name: a.name,
             })),
-            {
-              email: user?.email,
-              name: user?.user_metadata?.full_name,
-            },
           ],
           organizerEmail: user.email,
+          organizerName: user?.user_metadata?.full_name || "organiser",
           bookingDate: startDate,
           end_date: endDate,
           paidAmount: organizerAmount,
+          isOrganizerAttending,
+          includeGroom,
+          groomDetails: includeGroom ? groomDetails : null,
         }),
       );
 
@@ -132,6 +172,8 @@ export default function UserPlanningFormAndSummary({
     endDate,
     selectedActivityIds,
     includeTransport,
+    isOrganizerAttending,
+    groomDetails,
   });
 
   // timeline logic

@@ -2,13 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import LoadMoreButton from "./LoadMoreButton";
-import { useActivity } from "../_context/ActivityProvider";
 import { cinzel } from "../layout";
 
 export default function CategoryChunkLayout({ activities }) {
-  const { visibleChunks } = useActivity();
-
   const chunks = [];
   for (let i = 0; i < activities.length; i += 5) {
     chunks.push(activities.slice(i, i + 5));
@@ -20,7 +16,7 @@ export default function CategoryChunkLayout({ activities }) {
         {activities.map((act, index) => {
           return (
             <Link
-              href={`/activities/${act.id}`}
+              href={`/activities/${act.slug}`}
               key={act.id}
               className={`relative flex items-end overflow-hidden rounded-xl pb-8 duration-300 hover:scale-95 hover:animate-pulse ${index < 2 ? "h-[500px] 2xl:h-[600px]" : "h-[600px] 2xl:h-[700px]"} ${index === 4 && "!h-[300px] md:col-span-2 lg:-translate-y-[35%] 2xl:!h-[400px] 2xl:-translate-y-[25%]"} ${index > 4 && "!h-[190px] 2xl:!h-[290px]"} `}
             >

@@ -11,7 +11,7 @@ import WhyChooseUs from "./_components/WhyChooseUs";
 export const metadata = {
   title: "DXB Stag party",
   description:
-    "At DXB Stag Parties, we specialize in curating unforgettable stag experiences across Dubai and the UAE. What Sets Us Apart: experience. Tailored Experiences.",
+    "At DXB Stag Parties, we specialize in curating unforgettable stag experiences across Dubai and the UAE. What Sets Us Apart, experience. Tailored Experiences.",
 };
 
 export default function Home() {

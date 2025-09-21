@@ -26,6 +26,7 @@ export async function addActivityAction(formData) {
   const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
   const name = formData.get("name").slice(0, 100);
+  const slug = formData.get("slug").slice(0, 100);
   const price = Number(formData.get("price"));
   const duration = formData.get("duration").slice(0, 100);
   const minAge = formData.get("minAge");
@@ -65,7 +66,8 @@ export async function addActivityAction(formData) {
     !optionalAddOns ||
     !coreInclusions ||
     !depositRequired ||
-    !categoryId
+    !categoryId ||
+    !slug
   )
     return { error: "Please fill required fields" };
 
@@ -88,6 +90,7 @@ export async function addActivityAction(formData) {
   const newActivity = {
     userId: user.id,
     name,
+    slug,
     price,
     duration,
     minAge,
@@ -176,6 +179,7 @@ export async function editActivityAction(formData) {
 
   // Get form data
   const name = formData.get("name")?.slice(0, 100);
+  const slug = formData.get("slug")?.slice(0, 100);
   const price = Number(formData.get("price"));
   const duration = formData.get("duration")?.slice(0, 100);
   const minAge = Number(formData.get("minAge"));
@@ -204,7 +208,7 @@ export async function editActivityAction(formData) {
 
   const finalImage = isValidImage ? image : existingImage;
   const finalBannerImage = isValidBanner ? bannerImage : existingBannerImage;
-  console.log(supplier);
+
   if (
     !duration ||
     !description ||
@@ -224,7 +228,8 @@ export async function editActivityAction(formData) {
     !optionalAddOns ||
     !coreInclusions ||
     !depositRequired ||
-    !categoryId
+    !categoryId ||
+    !slug
   )
     return { error: "Please fill required fields" };
 
@@ -256,6 +261,7 @@ export async function editActivityAction(formData) {
 
   const updateActivity = {
     name,
+    slug,
     price,
     duration,
     minAge,
@@ -283,7 +289,11 @@ export async function editActivityAction(formData) {
     .single();
 
   if (error) {
-    console.log(error);
+    if (
+      error.message ===
+      'duplicate key value violates unique constraint "activities_slug_key"'
+    )
+      return { error: "The slug is already exist. Make it different" };
     return { error: "Error while updating Activity." };
   }
 
@@ -723,6 +733,8 @@ export async function addPlanning(data, formData) {
   const attendees = data.attendees;
   const selectedActivityIds = data.selectedActivityIds;
   const includeTransport = data.includeTransport;
+  const isOrganizerAttending = data?.isOrganizerAttending;
+  const groomDetails = data?.groomDetails;
 
   if (attendees.length <= 0 || !startDate || !endDate)
     return { error: "Please fill all required fields!" };
@@ -734,6 +746,8 @@ export async function addPlanning(data, formData) {
     attendees,
     activityIds: selectedActivityIds,
     hasTransport: includeTransport,
+    isOrganizerAttending,
+    groomDetails,
   };
 
   // Check if planning already exists for this user

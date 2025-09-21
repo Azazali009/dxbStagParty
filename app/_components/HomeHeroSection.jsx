@@ -1,10 +1,10 @@
+import Image from "next/image";
+import bgImage from "../../public/images/home-hero-bg.webp";
+import { getCurrentUser } from "../_lib/getCurrentUser";
 import { cinzel } from "../layout";
 import AnimatedHeading from "./AnimatedHeading";
-import bgImage from "../../public/images/home-hero-bg.webp";
-import Image from "next/image";
-import Link from "next/link";
 import Button from "./Button";
-import { getCurrentUser } from "../_lib/getCurrentUser";
+
 export default async function HomeHeroSection() {
   const user = await getCurrentUser();
   return (

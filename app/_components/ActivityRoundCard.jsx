@@ -10,10 +10,10 @@ export default function ActivityRoundCard({
   border = "null",
 }) {
   if (!activity) return null;
-  const { image, name, id } = activity;
+  const { image, name, slug } = activity;
   return (
     <Link
-      href={`/activities/${id}`}
+      href={`/activities/${slug}`}
       className={cn(
         `relative flex items-end ${border !== "null" && border} overflow-hidden rounded-xl object-cover pb-3 duration-300 hover:scale-95 hover:animate-pulse`,
         className,

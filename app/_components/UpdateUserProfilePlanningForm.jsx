@@ -156,6 +156,7 @@ export default function UpdateUserProfilePlanningForm({ data }) {
             hasSelectAll={false}
           />
         </FormRow>
+
         <div className="space-y-8">
           <AttendeeEmailInputFields
             attendees={attendees}

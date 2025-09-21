@@ -12,24 +12,28 @@ export default function ExperienceHorizantalCard({
   const cardsData = [
     {
       id: desertBuggy.id,
+      slug: desertBuggy.slug,
       name: desertBuggy.name,
       description: desertBuggy.description,
       bannerImage: desertBuggy.bannerImage,
     },
     {
       id: skyDiving.id,
+      slug: skyDiving.slug,
       name: skyDiving.name,
       description: skyDiving.description,
       bannerImage: skyDiving.bannerImage,
     },
     {
       id: privateChef.id,
+      slug: privateChef.slug,
       name: privateChef.name,
       description: privateChef.description,
       bannerImage: privateChef.bannerImage,
     },
     {
       id: 1001,
+      slug: "yacht-cruising",
       name: "yacht cruising",
       description:
         "Champagne, beats, and panoramic views — the ultimate pre-party at sea.",
@@ -37,6 +41,7 @@ export default function ExperienceHorizantalCard({
     },
     {
       id: 1002,
+      slug: "pool-party",
       name: "pool party",
       description: "Get ready for some serious belly laughs.",
       bannerImage: "/images/Experiences/poolparty.jpg",
@@ -71,9 +76,9 @@ export default function ExperienceHorizantalCard({
               <span className="block capitalize">Editor&apos;s pick</span>
             </div> */}
             <div
-              className={`relative z-10 space-y-3 text-center md:max-w-[60%] md:space-y-6 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}
+              className={`relative z-10 space-y-1 text-center md:max-w-[60%] md:space-y-6 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}
             >
-              <h3 className="text-lg font-bold capitalize !leading-[1.3] text-matalicGold xs:text-2xl sm:text-3xl md:text-3xl lg:text-5xl">
+              <h3 className="text-lg font-bold capitalize !leading-[1.2] text-matalicGold xs:text-2xl sm:text-3xl md:text-3xl lg:text-5xl">
                 {card.name}
               </h3>
               <p className="text-xs leading-[1.5] xs:text-sm md:text-lg">
@@ -81,7 +86,7 @@ export default function ExperienceHorizantalCard({
               </p>
               <Link
                 className="inline-block rounded-md bg-[#E0B15E] px-6 py-2 text-sm font-medium capitalize text-navyBlue sm:text-base"
-                href={`/activities/${card.id}`}
+                href={`/activities/${card.slug}`}
               >
                 book now
               </Link>

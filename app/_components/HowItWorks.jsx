@@ -18,12 +18,12 @@ export default function HowItWorks() {
           <HowItWorkIconBox
             image="/images/packageIcon.png"
             title="Choose Package"
-            desc="Pick from our cinematic packages — or build your own."
+            desc="Pick from our cinematic packages - or build your own."
           />
           <HowItWorkIconBox
             image="/images/Customize.png"
             title="Customize"
-            desc="Tailor it all — dinner, DJs, dune buggies, and a few wildcards."
+            desc="Tailor it all - dinner, DJs, dune buggies, and a few wildcards."
           />
           <HowItWorkIconBox
             image="/images/Split-Payment.png"
@@ -33,7 +33,7 @@ export default function HowItWorks() {
           <HowItWorkIconBox
             image="/images/party.png"
             title="party"
-            desc="Show up, turn up, and party like there's no tomorrow."
+            desc="Show up, turn out, and party like there's no tomorrow."
           />
         </div>
       </div>

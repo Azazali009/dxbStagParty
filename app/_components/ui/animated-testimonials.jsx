@@ -26,7 +26,7 @@ export const AnimatedTestimonials = ({
     return Math.floor(Math.random() * 21) - 10;
   };
   return (
-    <section className="mx-auto w-[90%] p-8 py-10 font-sans antialiased sm:p-3 sm:py-20">
+    <section className="mx-auto w-[95%] p-8 py-10 font-sans antialiased sm:p-3 sm:py-20">
       <h3
         className={`mb-10 text-xl capitalize xs:text-2xl ${cinzel.className} font-bold text-matalicGold sm:text-4xl`}
       >

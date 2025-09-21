@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }) {
-  const activity = await getActivity(params.activityId);
+  const activity = await getActivity(params.activitySlug);
 
   if (!activity) return <Empty name={"Activity"} />;
 

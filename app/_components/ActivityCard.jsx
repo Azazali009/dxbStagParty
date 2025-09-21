@@ -3,8 +3,7 @@ import Link from "next/link";
 import { cinzel } from "../layout";
 
 export default function ActivityCard({ activity }) {
-  const { image, name, id, description, duration, price, group_size } =
-    activity;
+  const { image, name, description, slug } = activity;
 
   return (
     // card v5
@@ -20,7 +19,7 @@ export default function ActivityCard({ activity }) {
         </h2>
         <p className="">{description}...</p>
         <Link
-          href={`/activities/${id}`}
+          href={`/activities/${slug}`}
           prefetch={true}
           className="block w-fit rounded-sm border-2 border-matalicGold bg-transparent px-4 py-2 text-sm uppercase tracking-wider backdrop-blur duration-300 hover:bg-matalicGold hover:text-navyBlue"
         >

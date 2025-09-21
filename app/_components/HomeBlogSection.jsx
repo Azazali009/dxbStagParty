@@ -56,10 +56,26 @@ export default function HomeBlogSection() {
             browse topics by interest
           </h3>
           <div className="grid grid-cols-3 gap-x-4 gap-y-8">
-            <InterestImageBox icon={keyIcon} text={"VIP Access"} />
-            <InterestImageBox icon={HomeIcon} text={"Villas & Accom"} />
-            <InterestImageBox icon={shirtIcon} text={"Style & Etiquette"} />
-            <InterestImageBox icon={filterIcon} text={"party hacks"} />
+            <InterestImageBox
+              icon={keyIcon}
+              url="/blog/category/6"
+              text={"VIP Access"}
+            />
+            <InterestImageBox
+              url="/blog/category/7"
+              icon={HomeIcon}
+              text={"Villas & Accom"}
+            />
+            <InterestImageBox
+              url="/blog/category/8"
+              icon={shirtIcon}
+              text={"Style & Etiquette"}
+            />
+            <InterestImageBox
+              url="/blog/category/9"
+              icon={filterIcon}
+              text={"party hacks"}
+            />
             <InterestImageBox icon={messageIcon} text={"real stories"} />
             <InterestImageBox icon={moonIcon} text={"Day/Night planning"} />
             <InterestImageBox url="/blog" icon={folderPlayIcon} text={"Blog"} />

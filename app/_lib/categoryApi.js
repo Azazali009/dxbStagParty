@@ -16,7 +16,11 @@ export async function getCategoryByName(name) {
     .select("*")
     .ilike("name", name)
     .single();
-  if (error) return { error: "Unable to load categories" };
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
 
   return data;
 }
