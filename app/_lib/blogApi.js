@@ -27,7 +27,8 @@ export async function getBlogById(id) {
 export async function getBlogCategories() {
   let { data: blogCategories } = await supabase
     .from("blogCategories")
-    .select("*");
+    .select("*")
+    .order("created_at", { ascending: true });
 
   const safeData = Array.isArray(blogCategories) ? blogCategories : [];
   return safeData;
@@ -55,4 +56,16 @@ export default async function RecentBlogs() {
   }
   const safeData = Array.isArray(data) ? data : [];
   return safeData;
+}
+
+export async function getCatgeoryById(categoryId) {
+  let { data, error } = await supabase
+    .from("blogCategories")
+    .select("*")
+    .eq("id", Number(categoryId))
+    .single();
+
+  if (error) return { error: error?.message };
+
+  return data;
 }

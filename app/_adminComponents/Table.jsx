@@ -2,7 +2,7 @@ export default function Table({ headers, data, RowComponent, width = "100%" }) {
   return (
     <>
       {/* Table Header */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-center justify-items-center rounded-t-md border border-b-0 border-gray-800 bg-navyBlue px-4 py-3 font-semibold">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-center rounded-t-md border border-b-0 border-gray-800 bg-navyBlue px-4 py-3 font-semibold">
         {headers.map((header, index) => (
           <p className="capitalize" key={index}>
             {header}

@@ -53,7 +53,7 @@ export default function HomeBlogSection() {
           <h3
             className={` ${cinzel.className} text-center text-xl font-semibold xs:text-2xl`}
           >
-            browse topics by interest
+            Browse topics by interest
           </h3>
           <div className="grid grid-cols-3 gap-x-4 gap-y-8">
             <InterestImageBox
@@ -76,8 +76,16 @@ export default function HomeBlogSection() {
               icon={filterIcon}
               text={"party hacks"}
             />
-            <InterestImageBox icon={messageIcon} text={"real stories"} />
-            <InterestImageBox icon={moonIcon} text={"Day/Night planning"} />
+            <InterestImageBox
+              url="/blog/category/10"
+              icon={messageIcon}
+              text={"real stories"}
+            />
+            <InterestImageBox
+              url="/blog/category/11"
+              icon={moonIcon}
+              text={"Day/Night planning"}
+            />
             <InterestImageBox url="/blog" icon={folderPlayIcon} text={"Blog"} />
             <InterestImageBox icon={videoIcon} text={"Video"} />
           </div>

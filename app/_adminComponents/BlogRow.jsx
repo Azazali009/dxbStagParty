@@ -8,9 +8,9 @@ import TrashIcon from "../svgIcons/TrashIcon";
 
 export default function BlogRow({ blog }) {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-center justify-center justify-items-center border border-gray-800 bg-navyBlue px-4 py-3 text-sm font-light last:rounded-b-md">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-center justify-center gap-4 border border-gray-800 bg-navyBlue px-4 py-3 text-sm font-light last:rounded-b-md">
       <Image
-        className="rounded-md"
+        className="aspect-video rounded-md object-cover"
         src={blog.image || "/default-activity-image.jpg"}
         alt={blog.name}
         width={60}
@@ -18,7 +18,11 @@ export default function BlogRow({ blog }) {
       />
       <p>#{blog.id}</p>
       <p>{blog.name} </p>
-      <p>{blog.blogCategories.name}</p>
+      <p
+        className={`${!blog?.blogCategories?.name && "font-medium text-red-600"}`}
+      >
+        {blog?.blogCategories?.name ?? "NA"}
+      </p>
       <div className="flex items-center gap-2">
         <DeleteBlog id={blog.id} />
         <Link

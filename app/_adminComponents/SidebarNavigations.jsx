@@ -13,6 +13,7 @@ import { useBooking } from "../_context/bookingProvider";
 import BlogIcon from "../svgIcons/BlogIcon";
 import { useAuth } from "../_context/AuthProvider";
 import VoteIcon from "../svgIcons/VoteIcon";
+import SettingSvg from "../svgIcons/Settings";
 
 export default function SidebarNavigations({ isSupplier }) {
   const [show, setShow] = useState(false);
@@ -158,6 +159,14 @@ export default function SidebarNavigations({ isSupplier }) {
               </ul>
             )}
           </div>
+
+          <Link
+            className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 ${pathname === "/dashboard/settings" && "bg-indigo-600"} capitalize transition-all duration-300 hover:bg-indigo-600`}
+            href={"/dashboard/settings"}
+          >
+            <SettingSvg />
+            <span> settings</span>
+          </Link>
           <Link
             className={`flex min-h-[3rem] cursor-pointer items-center gap-2 rounded-md px-6 capitalize transition-all duration-300 hover:bg-indigo-600`}
             href={"/"}
