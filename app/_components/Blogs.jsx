@@ -8,7 +8,10 @@ export default function Blogs() {
     <div className="mx-auto block w-[95%] items-start gap-10 space-y-6 py-14 md:grid md:grid-cols-[1.5fr_2fr] md:space-y-0 lg:grid-cols-[1.5fr_2fr_1fr]">
       {/* blog 1 */}
       <div className="space-y-3 md:space-y-6">
-        <Link href={`/blog/11`} className="relative block h-[320px] rounded-lg">
+        <Link
+          href={`/blog/top-villas-for-large-groups`}
+          className="relative block h-[320px] rounded-lg"
+        >
           <Image
             src={"/images/blog1.webp"}
             fill
@@ -17,7 +20,7 @@ export default function Blogs() {
           />
         </Link>
         <p>BLOG</p>
-        <Link href={`/blog/11`} className="block">
+        <Link href={`/blog/top-villas-for-large-groups`} className="block">
           <h2
             className={`${playfairDisplay.className} text-2xl font-semibold capitalize leading-[1.3] lg:text-3xl xl:text-4xl`}
           >
@@ -27,7 +30,7 @@ export default function Blogs() {
         <p className="text-matalicGold">Spacious,stylish and ready to party</p>
         {/* blog 2 */}
         <Link
-          href={`/blog/13`}
+          href={`/blog/6-real-life-stag-party-fails`}
           className="!mt-14 flex flex-col justify-center gap-6 rounded-xl bg-navyBlue p-8"
         >
           <p className={`${cinzel.className}`}>TIP</p>
@@ -42,7 +45,7 @@ export default function Blogs() {
       <div className="space-y-6">
         {/* blog 3 */}
         <Link
-          href={`/blog/10`}
+          href={`/blog/beach-party-hacks`}
           className="flex h-[320px] flex-col justify-center gap-6 rounded-xl bg-[#694621] p-6"
         >
           <p>BLOG</p>
@@ -58,7 +61,7 @@ export default function Blogs() {
         <div className="grid grid-cols-2 gap-4 md:gap-8">
           {/* blog 4 */}
           <Link
-            href={"/blog/12"}
+            href={"/blog/dress-codes-decoded"}
             className="block space-y-5 rounded-xl bg-navyBlue p-7"
           >
             <p className={`${playfairDisplay.className} uppercase`}>TIP</p>
@@ -70,7 +73,7 @@ export default function Blogs() {
           </Link>
           {/* blog 5 */}
           <Link
-            href={"/blog/13"}
+            href={"/blog/6-real-life-stag-party-fails"}
             className="block space-y-5 rounded-xl bg-navyBlue p-7"
           >
             <p className={`${playfairDisplay.className} uppercase`}>Read</p>
@@ -83,7 +86,7 @@ export default function Blogs() {
         </div>
         {/* blog 6 */}
         <Link
-          href={"/blog/14"}
+          href={"/blog/vip-club-cheat-sheet"}
           className="block space-y-5 rounded-xl bg-navyBlue p-3 xs:p-8"
         >
           <p className={`${playfairDisplay.className} uppercase`}>PDF</p>

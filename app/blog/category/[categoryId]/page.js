@@ -1,6 +1,16 @@
 import Image from "next/image";
 import Button from "../../../_components/Button";
 import { getBlogsByCategoryId } from "../../../_lib/blogApi";
+import { getCategories } from "@/app/_lib/categoryApi";
+
+export async function generateStaticParams() {
+  const categories = await getCategories();
+  const ids = categories.map((cat) => ({
+    categoryId: String(cat.id),
+  }));
+
+  return ids;
+}
 
 export default async function Page({ params }) {
   const { categoryId } = params;

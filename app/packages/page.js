@@ -1,12 +1,16 @@
-import ClearFilterButton from "../_components/ClearFilterButton";
-import DayTimeFilter from "../_components/DayTimeFilter";
 import DisplayPackages from "../_components/DisplayPackages";
 import PackagesHeroSection from "../_components/PackagesHeroSection";
-import SliderFilter from "../_components/SliderFilter";
 import Testimonilas from "../_components/Testimonials";
 import { getPackages } from "../_lib/packagesApi";
 
 export const revalidate = 0;
+
+// meta data
+export const metadata = {
+  title: "DXB Stag Party - Packages",
+  description:
+    "Explore DXB Stag Party packages with customizable options to create the perfect Dubai celebration for you and your friends.",
+};
 
 export default async function Page({ searchParams }) {
   const packages = await getPackages();

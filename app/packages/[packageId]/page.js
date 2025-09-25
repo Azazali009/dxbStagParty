@@ -1,17 +1,18 @@
-import AnimatedHeading from "../../_components/AnimatedHeading";
-import PackageAddons from "../../_components/PackageAddons";
-import RelatedPackages from "../../_components/RelatedPackages";
-import Divider from "../../_components/Divider";
-import { getPackages } from "../../_lib/packagesApi";
-import { getPackageById } from "../../_lib/packagesApi";
-import Image from "next/image";
-import PackageHero from "../../_components/PackageHero";
-import PackageDetailSection from "../../_components/PackageDetailSection";
-import PackageSupport from "../../_components/PackageSupport";
 import PackageCTA from "../../_components/PackageCTA";
+import PackageDetailSection from "../../_components/PackageDetailSection";
+import PackageHero from "../../_components/PackageHero";
+import PackageSupport from "../../_components/PackageSupport";
 import { getCurrentUser } from "../../_lib/getCurrentUser";
+import { getPackageById, getPackages } from "../../_lib/packagesApi";
 
 export const revalidate = 0;
+
+export async function generateMetadata({ params }) {
+  const Package = await getPackageById(params.packageId);
+
+  return { title: `Package - ${Package.name}` };
+}
+
 export async function generateStaticParams() {
   const packages = await getPackages();
   const ids = packages.map((pack) => ({

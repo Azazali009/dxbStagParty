@@ -8,6 +8,13 @@ import RecentTopActivities from "../_components/RecentTopActivities";
 import Spinner from "../_components/Spinner";
 import { getBookings } from "../_lib/data-services";
 
+// meta data
+export const metadata = {
+  title: "DXB Stag Party - Dashboard",
+  description:
+    "Access your DXB Stag Party dashboard to manage bookings, view activities, and customize your Dubai celebration.",
+};
+
 export default async function page() {
   let bookings = [];
   let errorOccurred = false;

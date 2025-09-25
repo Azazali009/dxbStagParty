@@ -1,53 +1,14 @@
 import Link from "next/link";
 import React from "react";
 
+// meta data
+export const metadata = {
+  title: "DXB Stag Party - Privacy Policy",
+  description:
+    "Read the DXB Stag Party privacy policy to learn how we collect, use, and protect your personal information.",
+};
+
 export default function Page() {
-  const data = [
-    {
-      section: "1. Introduction",
-      purpose: "Who you are and what this policy covers",
-    },
-    {
-      section: "2. Information Collected",
-      purpose:
-        "What personal data you collect (basic stuff like names, emails, booking details)",
-    },
-    {
-      section: "3. How Information Is Used",
-      purpose:
-        "Why you collect the info (booking management, communication, marketing if opted in)",
-    },
-    {
-      section: "4. Sharing with Suppliers and Partners",
-      purpose: "That you share only necessary info with suppliers/partners",
-    },
-    {
-      section: "5. Marketing Communications",
-      purpose:
-        "Only if they opt-in (protects you legally for future newsletters, offers, etc.)",
-    },
-    {
-      section: "6. Data Protection and Security",
-      purpose: "Confirm you store data safely and aren’t irresponsible",
-    },
-    {
-      section: "7. Data Retention",
-      purpose: "How long you keep their info",
-    },
-    {
-      section: "8. Customer Rights",
-      purpose:
-        "They can ask for their data or ask for deletion (light version)",
-    },
-    {
-      section: "9. Changes to Policy",
-      purpose: "You can update this anytime",
-    },
-    {
-      section: "10. Contact Information",
-      purpose: "How they can contact you about privacy matters",
-    },
-  ];
   return (
     <div className="space-y-10 px-8 py-14">
       <h1 className="text-5xl font-semibold">

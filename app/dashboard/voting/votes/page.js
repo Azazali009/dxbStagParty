@@ -2,6 +2,13 @@ import Image from "next/image";
 import { getVotesLog } from "../../../_lib/apiVotingSession";
 import VotesTable from "../../../_adminComponents/VotesTable";
 
+// meta data
+export const metadata = {
+  title: "Dashboard - Voting - Logs",
+  description:
+    "Manage and monitor DXB Stag Party voting logs in your dashboard to let guests choose activities and customize their Dubai experience.",
+};
+
 export default async function Page() {
   const votes = await getVotesLog();
 

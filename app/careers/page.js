@@ -1,4 +1,10 @@
-import Link from "next/link";
+// meta data
+export const metadata = {
+  title: "DXB Stag Party - Career",
+  description:
+    "Join the DXB Stag Party team and build unforgettable experiences in Dubai’s event industry.",
+};
+
 import ViewRoles from "../_components/ViewRoles";
 export default function Page() {
   return (

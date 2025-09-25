@@ -21,6 +21,7 @@ export async function addBlog(bolgBody, formData) {
 
   // get form data
   const name = formData.get("name")?.slice(0, 100);
+  const slug = formData.get("slug")?.slice(0, 100);
   const category = formData.get("category")?.slice(0, 100);
   const description = formData.get("description")?.slice(0, 100);
   const image = formData.get("image");
@@ -28,7 +29,7 @@ export async function addBlog(bolgBody, formData) {
   const blogCategoryId = Number(bolgBody.selectedCategory);
 
   //   check for empty fields
-  if (!name || !category || !image || !description)
+  if (!name || !category || !image || !description || !slug)
     return { error: "Please fill required fields" };
 
   //   check image type and size
@@ -55,6 +56,7 @@ export async function addBlog(bolgBody, formData) {
   const { error: insertError } = await supabase.from("blog").insert([
     {
       name,
+      slug,
       category,
       blogContent,
       image: imagePath,
@@ -83,6 +85,7 @@ export async function editBlog(blogBody, formData) {
     return { error: "You are not allowed to perform this action" };
 
   const name = formData.get("name")?.slice(0, 100);
+  const slug = formData.get("slug")?.slice(0, 100);
   const category = formData.get("category");
   const description = formData.get("description")?.slice(0, 1000);
   const image = formData.get("image");
@@ -90,7 +93,7 @@ export async function editBlog(blogBody, formData) {
   const blogContent = blogBody.value;
   const blogId = blogBody.blogId;
 
-  if (!name || !category || !blogContent || !description)
+  if (!name || !category || !blogContent || !description || !slug)
     return { error: "Please fill required fields" };
 
   //   check image type and size
@@ -123,6 +126,7 @@ export async function editBlog(blogBody, formData) {
     .from("blog")
     .update({
       name,
+      slug,
       category,
       blogContent,
       description,

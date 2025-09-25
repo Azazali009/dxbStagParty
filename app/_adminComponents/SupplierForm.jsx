@@ -362,7 +362,7 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
         {activeStep === 6 && <BookingAlert />}
 
         {activeStep === 7 && <DocumentsLegal />}
-        <button
+        {/* <button
           className="flex w-fit items-center justify-center gap-2 rounded border border-matalicGold bg-transparent px-6 py-2.5 text-center font-medium capitalize text-matalicGold duration-300 hover:opacity-80 active:scale-90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           type="submit"
           disabled={isPending}
@@ -381,7 +381,7 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
                   : "Add Supplier"}
             </span>
           )}
-        </button>
+        </button> */}
         <div className="flex items-center justify-between [grid-column:1/-1]">
           <FormNavigationButton
             onClick={handlePrev}

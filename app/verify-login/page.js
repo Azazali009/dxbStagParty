@@ -2,6 +2,13 @@ import { redirect } from "next/navigation";
 import Spinner from "../_components/Spinner";
 import { getCurrentUser } from "../_lib/getCurrentUser";
 
+// meta data
+export const metadata = {
+  title: "DXB Stag Party - Verify Login",
+  description:
+    "Verify your login to securely access your DXB Stag Party account and manage your bookings with ease.",
+};
+
 export default async function Page({ searchParams }) {
   const user = await getCurrentUser();
   const redirectTo = searchParams?.redirectTo;

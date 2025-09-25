@@ -3,6 +3,14 @@ import Table from "../../_adminComponents/Table";
 import SupplierRow from "../../_adminComponents/SupplierRow";
 import { getSuppliers, getSupplierUsers } from "../../_lib/apiSupplier";
 import CreateSupplierAndSearch from "../../_adminComponents/CreateSupplierAndSearch";
+
+// meta data
+export const metadata = {
+  title: "Dashboard - Suppliers",
+  description:
+    "Manage and organize DXB Stag Party suppliers in your dashboard to ensure seamless coordination and top-quality event services.",
+};
+
 export default async function Page() {
   const suppliers = await getSupplierUsers();
 

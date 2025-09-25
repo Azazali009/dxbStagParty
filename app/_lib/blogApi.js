@@ -23,6 +23,18 @@ export async function getBlogById(id) {
 
   return data;
 }
+export async function getBlogBySlug(slug) {
+  const { data, error } = await supabase
+    .from("blog")
+    .select(`*,users(fullName,avatar),blogCategories(id,name,slug)`)
+    .eq("slug", slug)
+    .single();
+  if (error) {
+    return { error: "Server error occurred while fetching blog data" };
+  }
+
+  return data;
+}
 
 export async function getBlogCategories() {
   let { data: blogCategories } = await supabase

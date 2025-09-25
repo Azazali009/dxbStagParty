@@ -1,30 +1,41 @@
-import React from "react";
-import { getBlogById, getBlogCategories, getBlogs } from "../../_lib/blogApi";
 import Image from "next/image";
-import { cinzel } from "../../layout";
-import { formatDateTime, sanitizeHtml } from "../../_lib/helpers";
 import BlogSidebar from "../../_components/BlogSidebar";
 import SocialShare from "../../_components/SocialShare";
-import { getVotingReports } from "../../_lib/apiVotingSession";
+import { getBlogBySlug, getBlogCategories, getBlogs } from "../../_lib/blogApi";
+import { formatDateTime, sanitizeHtml } from "../../_lib/helpers";
+import { cinzel } from "../../layout";
 
+// revalidation
 export const revalidate = 0;
+
+// meta data
+// export const metadata = {
+//   title: "DXB Stag Party - Home",
+// };
+
+export async function generateMetadata({ params }) {
+  const { blogSlug } = params;
+  const { name } = await getBlogBySlug(blogSlug);
+
+  return { title: `Blog - ${name}` };
+}
+
+// generate static params
 export async function generateStaticParams() {
   const blogs = await getBlogs();
-  const ids = blogs.map((curBlog) => ({
-    blogId: String(curBlog.id),
+  const slugs = blogs.map((curBlog) => ({
+    blogSlug: String(curBlog.slug),
   }));
 
-  return ids;
+  return slugs;
 }
 
 export default async function Page({ params }) {
-  const { blogId } = params;
-  const blog = await getBlogById(blogId);
+  const { blogSlug } = params;
+  const blog = await getBlogBySlug(blogSlug);
   const { name, blogCategories, image, blogContent, users } = blog;
   const categories = await getBlogCategories();
   const safeHtml = sanitizeHtml(blogContent);
-
-  // sidebar data
 
   return (
     <div className=" ">
@@ -33,7 +44,7 @@ export default async function Page({ params }) {
         <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-transparent via-black/50 to-primary"></div>
         <Image src={image} fill alt={name} className="object-cover" />
         <h1
-          className={`relative ${cinzel.className} z-10 text-center text-3xl font-black capitalize text-matalicGold xs:text-4xl sm:text-7xl`}
+          className={`relative ${cinzel.className} z-10 text-center text-3xl font-bold capitalize text-matalicGold xs:text-4xl sm:text-7xl`}
         >
           {name}
         </h1>
@@ -49,7 +60,7 @@ export default async function Page({ params }) {
         </div>
         <SocialShare
           title={name}
-          url={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${blogId}`}
+          url={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${blogSlug}`}
         />
       </div>
 

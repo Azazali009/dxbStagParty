@@ -1,11 +1,11 @@
 import React from "react";
 import { playfairDisplay } from "../layout";
 import Link from "next/link";
-import { getBlogById } from "../_lib/blogApi";
+import { getBlogById, getBlogBySlug } from "../_lib/blogApi";
 import Image from "next/image";
 
 export default async function BlogHero() {
-  const blog = await getBlogById(15);
+  const blog = await getBlogBySlug("ultimate-vip-guide");
 
   return (
     <div className="relative flex h-[230px] items-end overflow-hidden rounded-xl xs:h-[400px] md:h-[600px] lg:h-[700px]">
@@ -24,7 +24,7 @@ export default async function BlogHero() {
         <p className="text-xs xs:text-xl">{blog.description}</p>
         <div>
           <Link
-            href={`/blog/${blog.id}`}
+            href={`/blog/${blog.slug}`}
             className="inline-block rounded-lg border-2 border-[#70592f] bg-[#70592f] px-3 py-1 text-xs capitalize duration-300 hover:bg-reddish xs:px-6 xs:py-2 xs:text-lg"
           >
             Read more

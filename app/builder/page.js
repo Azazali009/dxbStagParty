@@ -3,6 +3,13 @@ import { getCategories } from "../_lib/categoryApi";
 import { getActivities } from "../_lib/data-services";
 import { getCurrentUser } from "../_lib/getCurrentUser";
 
+// meta data
+export const metadata = {
+  title: "DXB Stag Party - Builder",
+  description:
+    "Plan and customize your stag party in Dubai with our easy-to-use builder.",
+};
+
 export default async function Page({ searchParams }) {
   const planningStep = Number(searchParams?.planningStep ?? 1);
   const user = await getCurrentUser();

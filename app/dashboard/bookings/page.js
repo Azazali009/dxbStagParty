@@ -6,6 +6,14 @@ import AdminBookingCalendar from "../../_adminComponents/AdminBookingCalendar";
 import CalenderViewButton from "../../_adminComponents/CalenderViewButton";
 
 export const revalidate = 0;
+
+// meta data
+export const metadata = {
+  title: "Dashboard - Bookings",
+  description:
+    "Manage, edit, and organize DXB Stag Party bookings directly from your dashboard for a seamless planning experience.",
+};
+
 export default async function Page({ searchParams }) {
   const bookings = await getBookings();
 

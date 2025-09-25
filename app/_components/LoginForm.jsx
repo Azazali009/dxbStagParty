@@ -1,70 +1,106 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { supabase } from "../_lib/supabase";
-import Button from "./Button";
+
+import Link from "next/link";
+import { useEffect, useState, useTransition } from "react";
+import toast from "react-hot-toast";
+import SpinnerMini from "./SpinnerMini";
+import { useAuth } from "../_context/AuthProvider";
+import { login } from "../_lib/userProfileAction";
+import EyeIcon from "../svgIcons/EyeIcon";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginForm() {
-  const router = useRouter();
-  const [email, setEmail] = useState(""); // Hardcoded for testing
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
+  const [passwordTye, setPasswordType] = useState("password");
+  const { refreshUser } = useAuth();
+  const [isPending, startTransition] = useTransition();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+  const handleSubmit = (formData) => {
+    formData.append("redirectTo", redirectTo);
+    startTransition(async () => {
+      const res = await login(formData);
+      refreshUser();
+      if (res?.custom) return toast(res?.error, { icon: "⏳" });
+      if (res?.error) return toast.error(res?.error);
     });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      router.push("/verify-login");
-    }
-
-    setLoading(false);
   };
 
-  return (
-    <div className="flex items-center justify-center">
-      <div className="mx-auto max-w-md rounded-md border border-gray-300 bg-white p-6">
-        <h2 className="mb-4 text-center text-2xl font-semibold">Login</h2>
-        {error && <p className="mb-3 text-red-500">{error}</p>}
+  useEffect(() => {
+    const type = searchParams.get("type");
+    if (type === "signup") {
+      toast("Your email has been verified. Awaiting admin approval...", {
+        icon: "⏳",
+      });
+    }
+  }, [searchParams]);
 
-        <form onSubmit={handleLogin} className="space-y-4">
+  return (
+    <div className="mx-auto flex max-w-2xl flex-col items-center justify-center gap-6 px-4 py-14">
+      <h1 className="text-3xl font-semibold">Login to access your area</h1>
+
+      <form
+        action={(formData) => handleSubmit(formData)}
+        className="w-full space-y-8 rounded-xl border border-gray-800 p-10"
+      >
+        <input
+          type="email"
+          placeholder="Email"
+          name="email"
+          autoComplete="email"
+          className="w-full rounded-md border border-gray-800 bg-primary px-4 py-2 outline-none focus:outline-matalicGold"
+          required
+        />
+        <div className="relative">
           <input
-            type="email"
-            placeholder="Email"
-            className="h-10 w-full rounded border border-gray-300 bg-gray-100 px-2 text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            name="email"
-          />
-          <input
-            type="password"
+            type={passwordTye}
             placeholder="Password"
-            className="h-10 w-full rounded border border-gray-300 bg-gray-100 px-2 text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
             name="password"
+            className="w-full rounded-md border border-gray-800 bg-transparent px-4 py-2 outline-none focus:outline-matalicGold"
+            required
           />
-          <div className="w-full">
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full py-2 text-base font-medium"
-            >
-              {loading ? "Logging in..." : "Login"}
-            </Button>
-          </div>
-        </form>
+          <button
+            type="button"
+            onClick={() =>
+              setPasswordType((cur) =>
+                cur === "password" ? "text" : "password",
+              )
+            }
+            className="absolute right-4 top-1/2 block -translate-y-1/2 fill-sky-600"
+          >
+            <EyeIcon />
+          </button>
+        </div>
+
+        <button
+          className="flex items-center justify-center gap-2 rounded border border-matalicGold px-4 py-1.5 text-center font-medium capitalize text-matalicGold duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+          type="submit"
+          disabled={isPending}
+        >
+          {isPending ? (
+            <div className="flex items-center gap-2">
+              {" "}
+              <SpinnerMini /> <span>Logging In...</span>
+            </div>
+          ) : (
+            "Login"
+          )}
+        </button>
+      </form>
+
+      <div className="flex w-full items-center justify-between text-sm">
+        <Link
+          className="text-sky-600 underline hover:text-white"
+          href={"/signup"}
+        >
+          Create account?
+        </Link>{" "}
+        <Link
+          className="text-sky-600 underline hover:text-white"
+          href={"/forgot-password"}
+        >
+          Forgot password?
+        </Link>
       </div>
     </div>
   );

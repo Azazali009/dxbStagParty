@@ -1,83 +1,13 @@
 import React from "react";
 
+// meta data
+export const metadata = {
+  title: "DXB Stag Party - Term and Conditions",
+  description:
+    "Review the DXB Stag Party terms and conditions to understand our booking policies, usage rules, and guest responsibilities.",
+};
+
 export default function Page() {
-  const tableData = [
-    {
-      topic:
-        "Bookings and Payments (deposits, final balance, pricing errors, service fees)",
-      status: "Fully Covered",
-      notes:
-        "Clean, protects you if price changes, guest numbers change, or mistakes occur.",
-    },
-    {
-      topic: "Group Size / Extra Participants",
-      status: "Fully Covered",
-      notes: "Locked — no “bring extra guys for free” loophole.",
-    },
-    {
-      topic: "Suppliers and Partners",
-      status: "Fully Covered",
-      notes: "No bypassing, supplier responsibility clear.",
-    },
-    {
-      topic: "Cancellations / Refunds (guest and by you)",
-      status: "Fully Covered",
-      notes:
-        "Refunds limited, supplier payments deducted, zero liability beyond money held.",
-    },
-    {
-      topic: "Force Majeure / Weather",
-      status: "Fully Covered",
-      notes: "Weather clearly separated and Dubai hydration advice added.",
-    },
-    {
-      topic: "Behaviour, Alcohol, Conduct",
-      status: "Fully Covered",
-      notes: "Emphasized enough but still guest-friendly tone.",
-    },
-    {
-      topic: "Insurance and Waivers",
-      status: "Fully Covered",
-      notes: "Puts full responsibility on the guest.",
-    },
-    {
-      topic: "Data Sharing and Privacy",
-      status: "Covered, Minimal",
-      notes:
-        "High-level clause here — full Privacy Policy will back this up (good next step).",
-    },
-    {
-      topic: "Website Errors",
-      status: "Fully Covered",
-      notes: "You are not liable for inaccuracies.",
-    },
-    {
-      topic: "Complaints Handling",
-      status: "Fully Covered",
-      notes: "Process clear; social media complaints discouraged.",
-    },
-    {
-      topic: "ID, Visa, Entry Requirements",
-      status: "Fully Covered",
-      notes: "Clarified very cleanly.",
-    },
-    {
-      topic: "Terms Updates (Right to Modify)",
-      status: "Fully Covered",
-      notes: "You can update T&Cs any time without individual notice.",
-    },
-    {
-      topic: "Pre-Authorizations for Cards",
-      status: "Fully Covered",
-      notes: "In case you start doing yacht deposits or villa security holds.",
-    },
-    {
-      topic: "Extras and Upsells",
-      status: "Fully Covered",
-      notes:
-        "Not promoted, but your liability is zero if guests buy stuff themselves.",
-    },
-  ];
   return (
     <div className="mx-auto w-full max-w-5xl p-6 text-gray-400">
       <h1 className="mb-8 text-center text-3xl font-bold">
