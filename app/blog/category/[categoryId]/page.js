@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Button from "../../../_components/Button";
 import { getBlogsByCategoryId } from "../../../_lib/blogApi";
-import { getCategories } from "@/app/_lib/categoryApi";
+import { getCategories } from "../../../_lib/categoryApi";
 
 export async function generateStaticParams() {
   const categories = await getCategories();
