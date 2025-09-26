@@ -12,7 +12,7 @@ export default function FooterContact() {
           </Link>
         </li>
         <li>
-          <Link href={"tel:+971000000000"} className="flex items-center gap-1">
+          <Link href={"tel:+971568347487"} className="flex items-center gap-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -28,7 +28,7 @@ export default function FooterContact() {
               />
             </svg>
 
-            <span>+971 00 000 0000</span>
+            <span>+971 56 834 7487</span>
           </Link>
         </li>
         <li className="flex items-center gap-1">

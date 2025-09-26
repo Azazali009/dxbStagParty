@@ -8,7 +8,7 @@ export async function getSupplierUsers() {
     .eq("role", "supplier");
   if (error) {
     console.log(error);
-    throw new Error("Unable to get suppliers.");
+    return { error: "Unable to get suppliers." };
   }
 
   return suppliers;
@@ -22,7 +22,7 @@ export async function getSupplierById(id) {
     .single();
   if (error) {
     console.log(error);
-    throw new Error("Opps! Supplier not fetched");
+    return { error: "Opps! Supplier not fetched" };
   }
   return supplier;
 }
@@ -34,7 +34,7 @@ export async function getSupplierBySUpplierId(supplierId) {
     .single();
   if (error) {
     console.log(error);
-    throw new Error("Opps! Supplier not fetched");
+    return { error: "Opps! Supplier not fetched" };
   }
   return supplier;
 }
