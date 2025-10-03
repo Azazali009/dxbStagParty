@@ -8,7 +8,7 @@ import ActivitySort from "./ActivitySort";
 import { motion, AnimatePresence } from "framer-motion";
 import Fuse from "fuse.js";
 
-export default function ActivitiesTableAndFilters({ Activities }) {
+export default function ActivitiesTableAndFilters({ Activities, isAdmin }) {
   const [sort, setSort] = useState("");
   const [destinationSort, setDestinationSort] = useState("");
   const [grid, setGrid] = useState(false);
@@ -95,46 +95,51 @@ export default function ActivitiesTableAndFilters({ Activities }) {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-      <div className="flex items-center justify-between p-4">
-        <ActivitySort
-          sort={sort}
-          setSort={setSort}
-          destinationSort={destinationSort}
-          setDestinationSort={setDestinationSort}
-        />
-        <GridList
-          handleGrid={handleGrid}
-          handleList={handleList}
-          list={list}
-          grid={grid}
-        />
-      </div>
-      <AnimatePresence mode="wait">
-        {list && (
-          <motion.div
-            key="list"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="p-4"
-          >
-            <ActivityList Activities={destinatioSortedActivities} />
-          </motion.div>
-        )}
 
-        {grid && (
-          <motion.div
-            key="grid"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-          >
-            <ActivityGrid Activities={groupSizeSortedActivities} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isAdmin && (
+        <>
+          <div className="flex items-center justify-between p-4">
+            <ActivitySort
+              sort={sort}
+              setSort={setSort}
+              destinationSort={destinationSort}
+              setDestinationSort={setDestinationSort}
+            />
+            <GridList
+              handleGrid={handleGrid}
+              handleList={handleList}
+              list={list}
+              grid={grid}
+            />
+          </div>
+          <AnimatePresence mode="wait">
+            {list && (
+              <motion.div
+                key="list"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="p-4"
+              >
+                <ActivityList Activities={destinatioSortedActivities} />
+              </motion.div>
+            )}
+
+            {grid && (
+              <motion.div
+                key="grid"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <ActivityGrid Activities={groupSizeSortedActivities} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      )}
     </div>
   );
 }
