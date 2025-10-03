@@ -239,6 +239,8 @@ export async function addAndApplySupplierAction(data) {
     available_hours,
     add_ons,
     safety_certifications,
+    error,
+    oldImages,
     ...rest
   } = data;
 
