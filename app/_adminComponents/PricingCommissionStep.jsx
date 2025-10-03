@@ -32,16 +32,6 @@ export default function PricingCommissionStep() {
         />
       </FormRow>
 
-      {/* <FormRow label="add ons">
-                  <input
-                    type="text"
-                    placeholder="200"
-                    name="add_ons"
-                    autoComplete="on"
-                    className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-                  />
-                </FormRow> */}
-
       <FormRow label="deposit required">
         <select
           name="deposit_required"
@@ -94,7 +84,7 @@ export default function PricingCommissionStep() {
         />
       </FormRow>
 
-      <FormRow label="bank details" className={"space-y-2 ![grid-column:1/-1]"}>
+      {/* <FormRow label="bank details" className={"space-y-2 ![grid-column:1/-1]"}>
         <label>
           Bank Name
           <input
@@ -131,7 +121,7 @@ export default function PricingCommissionStep() {
             }
           />
         </label>
-      </FormRow>
+      </FormRow> */}
     </>
   );
 }

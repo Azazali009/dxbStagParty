@@ -19,7 +19,7 @@ export default function SupplierProvider({ children }) {
     email: "",
     password: "",
     phone: "",
-    bankDetails: { bank: "", iban: "" },
+    // bankDetails: { bank: "", iban: "" },
     images: [undefined],
     short_description: "",
     business_type: "",
