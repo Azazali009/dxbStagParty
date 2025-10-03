@@ -87,17 +87,17 @@ export async function login(formData) {
   const password = formData.get("password");
   const redirectToFromClient = formData.get("redirectTo");
 
-  const { data: user, error: verifiedUserError } = await supabase
-    .from("users")
-    .select("isVerified")
-    .eq("email", email)
-    .single();
-  if (user && !user?.isVerified)
-    return {
-      custom: true,
-      error:
-        "Your account is under review. You will receive an email once your account is approved by the admin.",
-    };
+  // const { data: user, error: verifiedUserError } = await supabase
+  //   .from("users")
+  //   .select("isVerified")
+  //   .eq("email", email)
+  //   .single();
+  // if (user && !user?.isVerified)
+  //   return {
+  //     custom: true,
+  //     error:
+  //       "Your account is under review. You will receive an email once your account is approved by the admin.",
+  //   };
 
   const data = {
     email,
