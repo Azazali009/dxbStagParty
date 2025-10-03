@@ -229,11 +229,11 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
 
       if (finalRes?.error) return toast.error(finalRes?.error);
 
-      toast.success(
-        !isForApply
-          ? "New Supplier added successfully"
-          : "Your form has been submitted. Please wait for admin approval.",
-      );
+      // toast.success(
+      //   !isForApply
+      //     ? "New Supplier added successfully"
+      //     : "Your form has been submitted. Please wait for admin approval.",
+      // );
       // send invite mail to user
       const emailApiUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/send-email`;
       await fetch(emailApiUrl, {
