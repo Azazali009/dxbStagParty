@@ -6,10 +6,6 @@ export async function getSupplierUsers() {
     .from("users")
     .select("*")
     .eq("role", "supplier");
-  if (error) {
-    console.log(error);
-    return { error: "Unable to get suppliers." };
-  }
 
   return suppliers;
 }

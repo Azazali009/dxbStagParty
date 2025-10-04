@@ -116,6 +116,7 @@ export default function SupplierProvider({ children }) {
       }
     }
   }, [formData?.available_hours]);
+
   return (
     <SupplierContext.Provider
       value={{

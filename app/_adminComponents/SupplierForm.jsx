@@ -1,30 +1,24 @@
 "use client";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
-import FormRow from "../_components/FormRow";
+import FormNavigationButton from "../_components/FormNavigationButton";
 import SpinnerMini from "../_components/SpinnerMini";
+import { useSupplier } from "../_context/SupplierProvider";
+import { getSupplierBySUpplierId } from "../_lib/apiSupplier";
+import { omit, uploadSingleImageToBucket } from "../_lib/helpers";
 import {
   addAndApplySupplierAction,
-  addSupplierAction,
-  applySupplierAction,
   updateSupplierAction,
 } from "../_lib/supplierAction";
-import { getActivities } from "../_lib/data-services";
-import { MultiSelect } from "react-multi-select-component";
 import { createClient } from "../_utils/supabase/client";
-import EyeIcon from "../svgIcons/EyeIcon";
 import AccountAccessStep from "./AccountAccessStep";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import BusinessProfileStep from "./BusinessProfileStep";
-import AvailabilityOperationStep from "./AvailabilityOperationStep";
-import PricingCommissionStep from "./PricingCommissionStep";
 import ActivityMetaDataStep from "./ActivityMetaDataStep";
+import AvailabilityOperationStep from "./AvailabilityOperationStep";
 import BookingAlert from "./BookingAlert";
+import BusinessProfileStep from "./BusinessProfileStep";
 import DocumentsLegal from "./DocumentsLegal";
-import FormNavigationButton from "../_components/FormNavigationButton";
-import { useSupplier } from "../_context/SupplierProvider";
-import { omit, uploadSingleImageToBucket } from "../_lib/helpers";
-import { getSupplierBySUpplierId } from "../_lib/apiSupplier";
+import PricingCommissionStep from "./PricingCommissionStep";
 
 export default function SupplierForm({ isForApply = false, editId = null }) {
   const {
@@ -88,70 +82,6 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
     return urls; // ✅ Return array from function
   }
 
-  // handle submit
-  // async function handleSubmit(formData) {
-  //   startTransition(async () => {
-  //     if (!isForApply) {
-  //       const res = await addSupplierAction(
-  //         {
-  //           selectedActivities,
-  //           urls: [], // Empty for now
-  //           validateOnly: true,
-  //         },
-  //         formData,
-  //       );
-  //       if (res?.error) return toast.error(res?.error);
-  //       // Step 3: if no error, now upload images
-  //       const urls = await uploadImagesToSupabaseBucket();
-  //       // Step 4: now send final form with images
-  //       const finalRes = await addSupplierAction(
-  //         {
-  //           selectedActivities,
-  //           urls,
-  //           bankDetails,
-  //         },
-  //         formData,
-  //       );
-
-  //       if (finalRes?.error) return toast.error(finalRes?.error);
-  //       toast.success("New Supplier added successfully");
-  //     } else {
-  //       // Step 1: validate form data locally
-  //       const res = await applySupplierAction(
-  //         {
-  //           selectedActivities,
-  //           urls: [], // Empty for now
-  //           validateOnly: true,
-  //         },
-  //         formData,
-  //       );
-
-  //       // Step 2: check for validation error (from server)
-  //       if (res?.error) {
-  //         return toast.error(res?.error);
-  //       }
-
-  //       // Step 3: if no error, now upload images
-  //       const urls = await uploadImagesToSupabaseBucket();
-
-  //       // Step 4: now send final form with images
-  //       const finalRes = await applySupplierAction(
-  //         {
-  //           selectedActivities,
-  //           urls,
-  //           bankDetails,
-  //         },
-  //         formData,
-  //       );
-
-  //       if (finalRes?.error) return toast.error(finalRes?.error);
-  //       toast.success(
-  //         "Your form has been submitted. Please wait for admin approval.",
-  //       );
-  //     }
-  //   });
-  // }
-
   function getStoragePathFromUrl(url) {
     if (!url) return null;
     const parts = url.split("/user-avatar/");
@@ -182,8 +112,8 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
           avatar,
           "user-avatar",
         );
-        const { publicUrl } = bucketRes;
-        if (bucketRes.error) return toast.error(bucketRes.error);
+        const publicUrl = bucketRes?.publicUrl;
+        if (bucketRes?.error) return toast.error(bucketRes.error);
         // Only upload if new images exist
         if (images && images.length > 0) {
           newUrls = await uploadImagesToSupabaseBucket();
@@ -229,11 +159,6 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
 
       if (finalRes?.error) return toast.error(finalRes?.error);
 
-      // toast.success(
-      //   !isForApply
-      //     ? "New Supplier added successfully"
-      //     : "Your form has been submitted. Please wait for admin approval.",
-      // );
       // send invite mail to user
       const emailApiUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/send-email`;
       await fetch(emailApiUrl, {

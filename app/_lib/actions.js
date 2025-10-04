@@ -4,7 +4,11 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { supabaseAdmin } from "./adminSupabase";
 
-import { getActivity, getBookingByUserId } from "./data-services";
+import {
+  getActivity,
+  getActivityById,
+  getBookingByUserId,
+} from "./data-services";
 
 import { extractImagePath } from "./helpers";
 import { getCurrentUser } from "./getCurrentUser";
@@ -131,7 +135,17 @@ export async function addActivityAction(formData) {
 
   if (error) {
     console.log(error);
-    return { error: "Error while creating Activity.😒" };
+
+    if (
+      error.message?.toLowerCase().includes("duplicate key value") &&
+      error.message?.includes('"activities_slug_key"')
+    ) {
+      return {
+        error: "The slug already exists. Please choose a different one.",
+      };
+    }
+
+    return { error: "Error while creating activity. 😒" };
   }
 
   // upload images
@@ -260,6 +274,7 @@ export async function editActivityAction(formData) {
     : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity-images/${bannerImageName}`;
 
   const updateActivity = {
+    userId: supplier,
     name,
     slug,
     price,
@@ -322,39 +337,39 @@ export async function editActivityAction(formData) {
   return redirect("/dashboard/activities");
 }
 
-export async function deleteActivityAction(activityId) {
-  const supabase = await createClient();
-  const user = await getCurrentUser();
-  const activity = await getActivity(activityId);
-  const imageUrl = activity?.image;
-  const bannerImageUrl = activity?.bannerImage;
+// export async function deleteActivityAction(activityId) {
+//   const supabase = await createClient();
+//   const user = await getCurrentUser();
+//   const activity = await getActivity(activityId);
+//   const imageUrl = activity?.image;
+//   const bannerImageUrl = activity?.bannerImage;
 
-  // function to extract image path
+//   // function to extract image path
 
-  const imagePath = extractImagePath(imageUrl)?.replace(/^\/+/, "");
-  const bannerImagePath = extractImagePath(bannerImageUrl)?.replace(/^\/+/, "");
+//   const imagePath = extractImagePath(imageUrl)?.replace(/^\/+/, "");
+//   const bannerImagePath = extractImagePath(bannerImageUrl)?.replace(/^\/+/, "");
 
-  if (!user || user?.user_metadata?.role !== "admin")
-    return { error: "You are not allowed to perform this action" };
+//   if (!user || user?.user_metadata?.role !== "admin")
+//     return { error: "You are not allowed to perform this action" };
 
-  // 1. Delete image from bucket
-  const { error: imageError } = await supabase.storage
-    .from("activity-images")
-    .remove([imagePath, bannerImagePath]);
+//   // 1. Delete image from bucket
+//   const { error: imageError } = await supabase.storage
+//     .from("activity-images")
+//     .remove([imagePath, bannerImagePath]);
 
-  if (imageError)
-    return { error: "Some internal error occurs while deleteing an activity" };
+//   if (imageError)
+//     return { error: "Some internal error occurs while deleteing an activity" };
 
-  // 2 delete activity
-  const { error } = await supabase
-    .from("activities")
-    .delete()
-    .eq("id", activityId);
+//   // 2 delete activity
+//   const { error } = await supabase
+//     .from("activities")
+//     .delete()
+//     .eq("id", activityId);
 
-  if (error) return { error: "Unable to delete activity. Please try again!" };
+//   if (error) return { error: "Unable to delete activity. Please try again!" };
 
-  revalidatePath("/dashboard/activities");
-}
+//   revalidatePath("/dashboard/activities");
+// }
 
 // export async function deleteUserAction(userId) {
 //   // check if user is login and user is admin
@@ -428,6 +443,59 @@ export async function deleteActivityAction(activityId) {
 //   revalidatePath("/dashboard/users");
 //   revalidatePath("/dashboard/supplier");
 // }
+
+export async function deleteActivityAction(activityId) {
+  const supabase = await createClient();
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return { error: "You are not allowed to perform this action" };
+  }
+
+  // 1️⃣ Get activity details
+  const activity = await getActivityById(activityId);
+
+  if (!activity) return { error: "Activity not found" };
+
+  // 2️⃣ Extract image file names from public URLs
+  const extractFileName = (url) => {
+    if (!url) return null;
+    const prefix = "activity-images/";
+    const index = url.indexOf(prefix);
+    if (index === -1) return null;
+    return url.substring(index + prefix.length);
+  };
+
+  const imagePath = extractFileName(activity.image);
+  const bannerPath = extractFileName(activity.bannerImage);
+
+  // 3️⃣ Delete images safely
+  const pathsToRemove = [imagePath, bannerPath].filter(Boolean);
+  if (pathsToRemove.length > 0) {
+    const { error: storageError } = await supabase.storage
+      .from("activity-images")
+      .remove(pathsToRemove);
+
+    if (storageError) {
+      console.error("Storage delete error:", storageError);
+      return { error: "Failed to delete activity images" };
+    }
+  }
+
+  // 4️⃣ Delete activity record
+  const { error } = await supabase
+    .from("activities")
+    .delete()
+    .eq("id", activityId);
+
+  if (error) {
+    console.error("Activity delete error:", error);
+    return { error: "Unable to delete activity. Please try again!" };
+  }
+
+  revalidatePath("/dashboard/activities");
+  return { success: true };
+}
 
 export async function deleteUserAction(userId) {
   const user = await getCurrentUser();

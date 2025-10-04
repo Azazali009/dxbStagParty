@@ -54,6 +54,19 @@ export async function getActivity(slug) {
   }
   return data;
 }
+export async function getActivityById(activityId) {
+  let { data, error } = await supabase
+    .from("activities")
+    .select(`*,supplier(id,fullName),category(id,name)`)
+    .eq("id", activityId)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return { error: "Error While Getting Activity.😒" };
+  }
+  return data;
+}
 
 export async function addBooking(booking) {
   const { data: CurBooking, error } = await supabase

@@ -12,7 +12,7 @@ export function formatToAED(amount) {
 
 export const extractImagePath = (publicUrl) => {
   const prefix = "/storage/v1/object/public/activity-images/";
-  const pathIndex = publicUrl.indexOf(prefix);
+  const pathIndex = publicUrl?.indexOf(prefix);
   if (pathIndex === -1) return null;
   return publicUrl.substring(pathIndex + prefix.length);
 };
@@ -124,7 +124,8 @@ export async function deleteImagesFromBucket(
 }
 
 export async function uploadSingleImageToBucket(supabase, file, bucketName) {
-  if (!file) return { error: "No file provided" };
+  // if (!file) return { error: "No file provided" };
+  if (!file) return;
 
   const uniqueFileName = `${Math.random()}-${file.name}`;
 

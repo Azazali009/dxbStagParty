@@ -18,6 +18,10 @@ export default async function Page() {
   const userRole = user?.user_metadata?.role;
   const isAdmin = userRole === "admin";
   return (
-    <ActivitiesTableAndFilters isAdmin={isAdmin} Activities={Activities} />
+    <ActivitiesTableAndFilters
+      supplierId={user.id}
+      isAdmin={isAdmin}
+      Activities={Activities}
+    />
   );
 }

@@ -15,24 +15,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-      // delete
-      {
-        protocol: "https",
-        hostname: "assets.aceternity.com",
-      },
-      {
-        protocol: "https",
-        hostname: "vbmotorworld.com",
-      },
-      {
-        protocol: "https",
-        hostname: "www.stag-adventures.com",
-      },
-      {
-        protocol: "https",
-        hostname: "furplecs.com",
+        hostname: "api.dxbstagparties.com",
       },
     ],
   },

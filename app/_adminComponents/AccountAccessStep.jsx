@@ -3,8 +3,12 @@ import FormRow from "../_components/FormRow";
 import EyeIcon from "../svgIcons/EyeIcon";
 import { MultiSelect } from "react-multi-select-component";
 import { useSupplier } from "../_context/SupplierProvider";
+import { createClient } from "../_utils/supabase/client";
+import toast from "react-hot-toast";
 
 export default function AccountAccessStep({ supplier, isEdit }) {
+  const [activityLoading, setActivityLoading] = useState(false);
+  const supabase = createClient();
   const [passwordTye, setPasswordType] = useState("password");
   const {
     formData,
@@ -16,15 +20,60 @@ export default function AccountAccessStep({ supplier, isEdit }) {
     selectedActivities,
   } = useSupplier();
 
+  // 🔹 Fetch supplier's currently assigned activities
   useEffect(() => {
-    if (supplier?.activityIds?.length > 0 && activities?.length > 0) {
-      const preselected = activities.filter((act) =>
-        supplier.activityIds.includes(act.value),
-      );
-      setSelectedActivities(preselected);
-    }
-  }, [supplier, activities, setSelectedActivities]);
+    const fetchAssignedActivities = async () => {
+      if (!supplier?.user_id || activities.length === 0) return;
 
+      const { data, error } = await supabase
+        .from("activities")
+        .select("id")
+        .eq("userId", supplier.user_id);
+
+      if (error) {
+        console.error("Error fetching supplier activities:", error);
+        return;
+      }
+
+      // mark those as selected in dropdown
+      const assigned = activities.filter((act) =>
+        data.some((a) => a.id === act.value),
+      );
+      setSelectedActivities(assigned);
+    };
+
+    fetchAssignedActivities();
+  }, [supplier?.user_id, activities, setSelectedActivities, supabase]);
+
+  // 🔹 Handle dropdown changes
+  const handleActivityChange = async (selected) => {
+    setActivityLoading(true);
+    setSelectedActivities(selected);
+
+    const selectedIds = selected.map((s) => s.value);
+
+    try {
+      // 1️⃣ Unassign all activities currently owned by this supplier
+      await supabase
+        .from("activities")
+        .update({ userId: null })
+        .eq("userId", supplier.user_id);
+
+      // 2️⃣ Assign selected activities to this supplier
+      if (selectedIds.length > 0) {
+        await supabase
+          .from("activities")
+          .update({ userId: supplier.user_id, supplier: supplier.user_id })
+          .in("id", selectedIds);
+      }
+
+      toast.success("Supplier activities updated successfully");
+    } catch (error) {
+      toast.error("Error updating supplier activities:");
+    } finally {
+      setActivityLoading(false);
+    }
+  };
   return (
     <>
       <FormRow label="Supplier Name">
@@ -61,29 +110,18 @@ export default function AccountAccessStep({ supplier, isEdit }) {
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
-      {loading ? (
+      {loading || activityLoading ? (
         <div className="my-4 flex flex-col gap-4">
           <div className="h-4 w-[50%] animate-pulse rounded-xl bg-navyBlue"></div>
           <div className="h-4 w-full animate-pulse rounded-xl bg-navyBlue"></div>
         </div>
       ) : (
         <FormRow label={"Add Activities"}>
-          {/* <MultiSelect
-            options={activities}
-            value={selectedActivities} // Keep it controlled
-            onChange={(selected) => {
-              setSelectedActivities([...selected]); // Ensure state update happens outside of render
-            }}
-            labelledBy="Add Activities"
-            className="custom-multi-select"
-            hasSelectAll={false}
-          /> */}
           <MultiSelect
+            key={JSON.stringify(selectedActivities)}
             options={activities}
             value={selectedActivities} // Controlled input
-            onChange={(selected) => {
-              setSelectedActivities([...selected]); // Ensure state update happens outside of render
-            }}
+            onChange={handleActivityChange}
             labelledBy="Add Activities"
             className="custom-multi-select"
             hasSelectAll={false}

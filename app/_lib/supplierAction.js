@@ -211,7 +211,10 @@ export async function updateSupplierAction(data) {
     })
     .eq("id", id);
 
-  if (error) return { error: error.message };
+  if (error) {
+    console.log(error);
+    return { error: error.message };
+  }
 
   // 4 update user data in user auth
 
@@ -257,6 +260,9 @@ export async function updateSupplierAction(data) {
   }
 
   revalidatePath("dashboard/me");
+  revalidatePath("dashboard/activities");
+
+  redirect("/dashboard/activities");
 }
 
 // export async function addSupplierAction(data, formData) {

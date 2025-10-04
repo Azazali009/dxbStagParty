@@ -11,6 +11,7 @@ export default function DeleteActivity({ activityId }) {
     if (confirm("Are you sure you want to delete this activity?"))
       startTransition(async () => {
         const res = await deleteActivityAction(activityId);
+
         if (res?.error) return toast.error(res?.error);
       });
   }

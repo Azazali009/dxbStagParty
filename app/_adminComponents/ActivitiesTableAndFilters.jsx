@@ -8,12 +8,27 @@ import ActivitySort from "./ActivitySort";
 import { motion, AnimatePresence } from "framer-motion";
 import Fuse from "fuse.js";
 
-export default function ActivitiesTableAndFilters({ Activities, isAdmin }) {
+export default function ActivitiesTableAndFilters({
+  Activities,
+  isAdmin,
+  supplierId,
+}) {
   const [sort, setSort] = useState("");
   const [destinationSort, setDestinationSort] = useState("");
   const [grid, setGrid] = useState(false);
   const [list, setList] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // 🔍 Filter activities based on role
+  let visibleActivities = [];
+
+  if (isAdmin) {
+    visibleActivities = Activities; // Admin => all activities
+  } else if (supplierId) {
+    visibleActivities = Activities?.filter(
+      (activity) => String(activity.userId) === String(supplierId),
+    );
+  }
 
   // 🔍 Optional Synonym Mapping
   const synonymMap = {
@@ -29,7 +44,7 @@ export default function ActivitiesTableAndFilters({ Activities, isAdmin }) {
     : "";
 
   // 🔍 Fuzzy search setup
-  const fuse = new Fuse(Activities, {
+  const fuse = new Fuse(visibleActivities, {
     keys: ["name", "tags", "description"],
     threshold: 0.3,
   });
@@ -37,7 +52,7 @@ export default function ActivitiesTableAndFilters({ Activities, isAdmin }) {
   // 🔍 Run fuzzy search or return all
   const searchedActivities =
     !normalizedQuery || normalizedQuery === ""
-      ? Activities
+      ? visibleActivities
       : fuse.search(normalizedQuery).map((res) => res.item);
 
   // Sort by group size
@@ -96,50 +111,48 @@ export default function ActivitiesTableAndFilters({ Activities, isAdmin }) {
         setSearchQuery={setSearchQuery}
       />
 
-      {isAdmin && (
-        <>
-          <div className="flex items-center justify-between p-4">
-            <ActivitySort
-              sort={sort}
-              setSort={setSort}
-              destinationSort={destinationSort}
-              setDestinationSort={setDestinationSort}
-            />
-            <GridList
-              handleGrid={handleGrid}
-              handleList={handleList}
-              list={list}
-              grid={grid}
-            />
-          </div>
-          <AnimatePresence mode="wait">
-            {list && (
-              <motion.div
-                key="list"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="p-4"
-              >
-                <ActivityList Activities={destinatioSortedActivities} />
-              </motion.div>
-            )}
+      <>
+        <div className="flex items-center justify-between p-4">
+          <ActivitySort
+            sort={sort}
+            setSort={setSort}
+            destinationSort={destinationSort}
+            setDestinationSort={setDestinationSort}
+          />
+          <GridList
+            handleGrid={handleGrid}
+            handleList={handleList}
+            list={list}
+            grid={grid}
+          />
+        </div>
+        <AnimatePresence mode="wait">
+          {list && (
+            <motion.div
+              key="list"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="p-4"
+            >
+              <ActivityList Activities={destinatioSortedActivities} />
+            </motion.div>
+          )}
 
-            {grid && (
-              <motion.div
-                key="grid"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                <ActivityGrid Activities={groupSizeSortedActivities} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </>
-      )}
+          {grid && (
+            <motion.div
+              key="grid"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <ActivityGrid Activities={destinatioSortedActivities} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </>
     </div>
   );
 }
