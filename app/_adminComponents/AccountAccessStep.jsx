@@ -49,31 +49,39 @@ export default function AccountAccessStep({ supplier, isEdit }) {
   const handleActivityChange = async (selected) => {
     setActivityLoading(true);
     setSelectedActivities(selected);
-
     const selectedIds = selected.map((s) => s.value);
 
     try {
-      // 1️⃣ Unassign all activities currently owned by this supplier
-      await supabase
+      // 1️⃣ Unassign
+      const { error: unassignError } = await supabase
         .from("activities")
         .update({ userId: null })
         .eq("userId", supplier.user_id);
+      if (unassignError) throw unassignError;
 
-      // 2️⃣ Assign selected activities to this supplier
+      // Wait for commit
+      await new Promise((res) => setTimeout(res, 200));
+
+      // 2️⃣ Assign
       if (selectedIds.length > 0) {
-        await supabase
+        const { error: assignError, count } = await supabase
           .from("activities")
           .update({ userId: supplier.user_id, supplier: supplier.user_id })
-          .in("id", selectedIds);
+          .in("id", selectedIds)
+          .select("*", { count: "exact" });
+        if (assignError) throw assignError;
+        if (count === 0) throw new Error("No rows updated.");
       }
 
-      toast.success("Supplier activities updated successfully");
+      toast.success("Supplier activities updated successfully ✅");
     } catch (error) {
-      toast.error("Error updating supplier activities:");
+      console.error("❌ Error updating supplier activities:", error);
+      toast.error("Error updating supplier activities");
     } finally {
       setActivityLoading(false);
     }
   };
+
   return (
     <>
       <FormRow label="Supplier Name">
