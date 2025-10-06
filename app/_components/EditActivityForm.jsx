@@ -6,6 +6,7 @@ import FormRow from "./FormRow";
 import SpinnerMini from "./SpinnerMini";
 import { getSupplierUsers } from "../_lib/apiSupplier";
 import { getCategories } from "../_lib/categoryApi";
+import { MAX_FILE_SIZE } from "../_lib/helpers";
 
 export default function EditActivityForm({ activity }) {
   const {
@@ -40,6 +41,16 @@ export default function EditActivityForm({ activity }) {
   const [activitySlug, setActivitySlug] = useState(slug);
 
   const editFormRef = useRef();
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("Image must be less than 1 MB");
+      e.target.value = ""; // clear field
+    }
+  };
 
   const handleSubmit = (formData) => {
     startTransition(async () => {
@@ -194,6 +205,8 @@ export default function EditActivityForm({ activity }) {
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="file"
           name="image"
+          accept="image/png,image/jpeg,image/webp"
+          onChange={handleImageChange}
         />
       </FormRow>
       <FormRow label={"Banner Image"}>
@@ -201,6 +214,8 @@ export default function EditActivityForm({ activity }) {
           className="h-10 rounded bg-navyBlue p-2 outline-none focus:outline-matalicGold"
           type="file"
           name="bannerImage"
+          accept="image/png,image/jpeg,image/webp"
+          onChange={handleImageChange}
         />
       </FormRow>
       <input type="hidden" name="existingImage" value={image} />

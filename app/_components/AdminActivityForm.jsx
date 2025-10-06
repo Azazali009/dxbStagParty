@@ -6,6 +6,7 @@ import FormRow from "./FormRow";
 import SubmitButton from "./SubmitButton";
 import { getSupplierUsers } from "../_lib/apiSupplier";
 import { getCategories } from "../_lib/categoryApi";
+import { MAX_FILE_SIZE } from "../_lib/helpers";
 
 export default function AdminActivityForm() {
   const [loading, setLoading] = useState(false);
@@ -16,8 +17,6 @@ export default function AdminActivityForm() {
   const [slug, setSlug] = useState("");
 
   const ref = useRef();
-
-  const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
