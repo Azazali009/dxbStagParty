@@ -18,12 +18,7 @@ export async function addActivityAction(formData) {
   const supabase = await createClient();
   // check if user is login and user is admin
   const user = await getCurrentUser();
-  if (
-    !user ||
-    (user?.user_metadata.role !== "admin" &&
-      user?.user_metadata.role !== "supplier")
-  )
-    return { error: "You are not allowed to perform this action" };
+  if (!user) return { error: "You are not allowed to perform this action" };
 
   // General vars
   const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
