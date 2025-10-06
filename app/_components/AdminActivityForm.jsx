@@ -17,6 +17,18 @@ export default function AdminActivityForm() {
 
   const ref = useRef();
 
+  const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("Image must be less than 1 MB");
+      e.target.value = ""; // clear field
+    }
+  };
+
   const handleSubmit = (formData) => {
     startTransition(async () => {
       const res = await addActivityAction(formData);
@@ -167,13 +179,17 @@ export default function AdminActivityForm() {
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
           type="file"
           name="image"
+          accept="image/png,image/jpeg,image/webp"
+          onChange={handleImageChange}
         />
       </FormRow>
       <FormRow label={"Banner Image"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
           type="file"
+          accept="image/png,image/jpeg,image/webp"
           name="bannerImage"
+          onChange={handleImageChange}
         />
       </FormRow>
       {loading ? (

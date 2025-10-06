@@ -10,7 +10,6 @@ import {
   getBookingByUserId,
 } from "./data-services";
 
-import { extractImagePath } from "./helpers";
 import { getCurrentUser } from "./getCurrentUser";
 import { createClient } from "../_utils/supabase/server";
 
@@ -332,113 +331,6 @@ export async function editActivityAction(formData) {
   return redirect("/dashboard/activities");
 }
 
-// export async function deleteActivityAction(activityId) {
-//   const supabase = await createClient();
-//   const user = await getCurrentUser();
-//   const activity = await getActivity(activityId);
-//   const imageUrl = activity?.image;
-//   const bannerImageUrl = activity?.bannerImage;
-
-//   // function to extract image path
-
-//   const imagePath = extractImagePath(imageUrl)?.replace(/^\/+/, "");
-//   const bannerImagePath = extractImagePath(bannerImageUrl)?.replace(/^\/+/, "");
-
-//   if (!user || user?.user_metadata?.role !== "admin")
-//     return { error: "You are not allowed to perform this action" };
-
-//   // 1. Delete image from bucket
-//   const { error: imageError } = await supabase.storage
-//     .from("activity-images")
-//     .remove([imagePath, bannerImagePath]);
-
-//   if (imageError)
-//     return { error: "Some internal error occurs while deleteing an activity" };
-
-//   // 2 delete activity
-//   const { error } = await supabase
-//     .from("activities")
-//     .delete()
-//     .eq("id", activityId);
-
-//   if (error) return { error: "Unable to delete activity. Please try again!" };
-
-//   revalidatePath("/dashboard/activities");
-// }
-
-// export async function deleteUserAction(userId) {
-//   // check if user is login and user is admin
-//   const user = await getCurrentUser();
-//   const supabase = await createClient();
-//   if (!user || user?.user_metadata?.role !== "admin")
-//     return { error: "You are not allowed to perform this action" };
-
-//   // supplier case (make activity id null before deleting supplier)
-//   // Step 1: Unlink supplier from activities
-//   const { error: supplierError } = await supabase
-//     .from("activities")
-//     .update({ supplier: null })
-//     .eq("supplier", userId);
-
-//   if (supplierError) {
-//     return { error: "Failed to delete supplier." };
-//   }
-
-//   // // Get all bookings of the user
-//   const bookings = await getBookingByUserId(userId);
-//   // Get all booking Ids
-//   const bookingIds = bookings && bookings?.map((b) => b.id);
-
-//   if (bookingIds && bookingIds?.length > 0) {
-//     // 2. Delete attendees linked to these bookings
-//     const { error: attendeeDeleteError } = await supabase
-//       .from("attendee")
-//       .delete()
-//       .in("bookingID", bookingIds);
-
-//     if (attendeeDeleteError) {
-//       return { error: "Failed to delete attendee data." };
-//     }
-
-//     // 3. Delete bookings
-//     const { error: bookingDeleteError } = await supabase
-//       .from("booking")
-//       .delete()
-//       .in("id", bookingIds);
-
-//     if (bookingDeleteError) {
-//       return { error: "Failed to delete booking data." };
-//     }
-//   }
-//   // delete normal user from custom user table
-//   const { error: customUserError } = await supabaseAdmin
-//     .from("users")
-//     .delete()
-//     .eq("id", userId);
-//   if (customUserError) {
-//     return { error: "Unexpected Error has occurred." };
-//   }
-
-//   // delete user from supplier table
-//   const { error: supplierTableError } = await supabaseAdmin
-//     .from("supplier")
-//     .delete()
-//     .eq("user_id", userId);
-
-//   if (supplierTableError)
-//     return { error: "Supplier not deleted from supplier table" };
-//   // Delete built in user table user
-
-//   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
-
-//   if (error) {
-//     console.log(error.message);
-//     return { error: "Unexpected Error has occurred." };
-//   }
-//   revalidatePath("/dashboard/users");
-//   revalidatePath("/dashboard/supplier");
-// }
-
 export async function deleteActivityAction(activityId) {
   const supabase = await createClient();
   const user = await getCurrentUser();
@@ -616,25 +508,6 @@ export async function deleteUserAction(userId) {
   return { success: true };
 }
 
-// export async function deleteUserAction(userId) {
-//   const user = await getCurrentUser();
-//   if (!user || user?.user_metadata?.role !== "admin") {
-//     return { error: "You are not allowed to perform this action" };
-//   }
-
-//   // Just delete auth user; DB cascades do the rest.
-//   const { error: authDeleteError } =
-//     await supabaseAdmin.auth.admin.deleteUser(userId);
-//   if (authDeleteError) {
-//     console.error(authDeleteError);
-//     return { error: "Failed to delete auth user." };
-//   }
-
-//   revalidatePath("/dashboard/users");
-//   revalidatePath("/dashboard/supplier");
-//   return { success: true };
-// }
-
 export async function createUserByAdmin(formData) {
   // const session = await auth();
   const supabase = await createClient();
@@ -740,52 +613,6 @@ export async function updateBookingPaymentStatus(updateBookingData, formData) {
   revalidatePath(`/dashboard/bookings/${bookingId}`);
 }
 
-// export async function addPlanning(data, formData) {
-//   const supabase = await createClient();
-//   // Check if user is logged in and is an admin
-//   const user = await getCurrentUser();
-//   if (!user) return { error: "You are not allowed to perform this action" };
-
-//   const startDate = data.startDate;
-//   const endDate = data.endDate;
-//   const attendees = data.attendees;
-//   const selectedActivityIds = data.selectedActivityIds;
-//   const includeTransport = data.includeTransport;
-
-//   if (attendees.length < 0 || !startDate || !endDate)
-//     return { error: "Please fill all required fields!" };
-
-//   const newPlanning = {
-//     user_id: user && user.id,
-//     start_date: startDate,
-//     end_date: endDate,
-//     attendees,
-//     activityIds: selectedActivityIds,
-//     hasTransport: includeTransport,
-//   };
-
-//   const { error } = await supabase
-//     .from("planning_sessions")
-//     .insert([newPlanning])
-//     .select();
-
-//   if (error) {
-//     if (
-//       error.message.includes("duplicate key value") &&
-//       error.message.includes("planning_sessions_user_id_key")
-//     ) {
-//       return {
-//         error:
-//           "Looks like you've already started a plan! You can update it or continue planning from your profile whenever you're ready.",
-//       };
-//     }
-
-//     // Generic fallback
-//     return { error: "Something went wrong. Please try again later." };
-//   }
-
-//   redirect("/activities");
-// }
 export async function addPlanning(data, formData) {
   const supabase = await createClient();
   const user = await getCurrentUser();
