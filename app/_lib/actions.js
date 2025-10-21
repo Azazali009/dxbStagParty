@@ -44,6 +44,24 @@ export async function addActivityAction(formData) {
   const depositRequired = formData.get("depositRequired");
   const categoryId = formData.get("categoryId");
 
+  // Parse time slots from FormData
+  const timeSlotsRaw = formData.getAll("time_slots");
+  let timeSlots = [];
+
+  // Manually collect from fields
+  for (let [key, value] of formData.entries()) {
+    if (key.startsWith("time_slots[")) {
+      // pattern: time_slots[0][label], etc.
+      const match = key.match(/time_slots\[(\d+)\]\[(\w+)\]/);
+      if (match) {
+        const index = parseInt(match[1]);
+        const field = match[2];
+        if (!timeSlots[index]) timeSlots[index] = {};
+        timeSlots[index][field] = value;
+      }
+    }
+  }
+
   // empty fields
   if (
     !duration ||
@@ -107,6 +125,17 @@ export async function addActivityAction(formData) {
     coreInclusions,
     depositRequired,
     categoryId,
+    time_slots: timeSlots.map((t) => ({
+      label: t.label,
+      duration_minutes: Number(t.duration) || 0,
+      price_per_person: Number(t.price) || 0,
+      start_times: t.startTimes
+        ? t.startTimes.split(",").map((s) => s.trim())
+        : [],
+      days_available: t.daysAvailable
+        ? t.daysAvailable.split(",").map((d) => d.trim())
+        : [],
+    })),
   };
   // await createActivity(newActivity);
   const imageName = `card-image-${Math.random()}-${image?.name}`;
@@ -209,6 +238,19 @@ export async function editActivityAction(formData) {
   const coreInclusions = formData.get("coreInclusions")?.split(",");
   const depositRequired = formData.get("depositRequired");
   const categoryId = formData.get("categoryId");
+
+  // Collect time slot fields
+  let timeSlots = [];
+  for (let [key, value] of formData.entries()) {
+    const match = key.match(/time_slots\[(\d+)\]\[(\w+)\]/);
+    if (match) {
+      const index = parseInt(match[1]);
+      const field = match[2];
+      if (!timeSlots[index]) timeSlots[index] = {};
+      timeSlots[index][field] = value;
+    }
+  }
+
   // Check validity
   const isValidImage = image && image.size > 0 && image.name !== "undefined";
   const isValidBanner =
@@ -289,6 +331,17 @@ export async function editActivityAction(formData) {
     coreInclusions,
     depositRequired,
     categoryId,
+    time_slots: timeSlots.map((t) => ({
+      label: t.label,
+      duration_minutes: Number(t.duration) || 0,
+      price_per_person: Number(t.price) || 0,
+      start_times: t.startTimes
+        ? t.startTimes.split(",").map((s) => s.trim())
+        : [],
+      days_available: t.daysAvailable
+        ? t.daysAvailable.split(",").map((d) => d.trim())
+        : [],
+    })),
   };
 
   const { error } = await supabase

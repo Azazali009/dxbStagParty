@@ -7,6 +7,7 @@ import SpinnerMini from "./SpinnerMini";
 import { getSupplierUsers } from "../_lib/apiSupplier";
 import { getCategories } from "../_lib/categoryApi";
 import { MAX_FILE_SIZE } from "../_lib/helpers";
+import TimeSlotsEditor from "../_adminComponents/TimeSlotsEditor";
 
 export default function EditActivityForm({ activity }) {
   const {
@@ -366,6 +367,11 @@ export default function EditActivityForm({ activity }) {
         />
       </FormRow>
       <input type="hidden" name="activityId" value={id} />
+
+      <FormRow label="Activity Time Slots" className="[grid-column:1/-1]">
+        <TimeSlotsEditor initialSlots={activity.time_slots || []} />
+      </FormRow>
+
       <div className="[grid-column:1/-1]">
         <button
           className="flex h-10 items-center gap-2 rounded border border-matalicGold bg-transparent px-6 capitalize tracking-wide text-matalicGold duration-300 hover:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"

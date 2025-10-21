@@ -7,6 +7,7 @@ import SubmitButton from "./SubmitButton";
 import { getSupplierUsers } from "../_lib/apiSupplier";
 import { getCategories } from "../_lib/categoryApi";
 import { MAX_FILE_SIZE } from "../_lib/helpers";
+import TimeSlotsField from "../_adminComponents/TimeSlotField";
 
 export default function AdminActivityForm() {
   const [loading, setLoading] = useState(false);
@@ -321,6 +322,12 @@ export default function AdminActivityForm() {
           placeholder="description"
         />
       </FormRow>
+
+      {/* 🕒 Time Slots Section */}
+      <FormRow label="Activity Time Slots" className="[grid-column:1/-1]">
+        <TimeSlotsField />
+      </FormRow>
+
       <div className="[grid-column:1/-1]">
         <SubmitButton>
           <span className="text-lg">+</span>

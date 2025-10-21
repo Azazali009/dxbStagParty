@@ -115,7 +115,7 @@ export async function addAndApplySupplierAction(data) {
   const available_hoursArr = available_hours?.split(",") ?? [];
   const add_onsArr = add_ons?.split(",") ?? [];
   const safety_certificationsArr = safety_certifications?.split(",") ?? [];
-  const activityIds = selectedActivities?.map((act) => act?.value) ?? [];
+  // const activityIds = selectedActivities?.map((act) => act?.value) ?? [];
 
   // ✅ Prepare supplier object
   const newSupplier = {
@@ -131,7 +131,7 @@ export async function addAndApplySupplierAction(data) {
     add_ons: add_onsArr,
     bank_details: bankDetails,
     safety_certifications: safety_certificationsArr,
-    activityIds,
+    // activityIds,
     user_id,
     blackout_start: range?.from ?? null,
     blackout_end: range?.to ?? null,

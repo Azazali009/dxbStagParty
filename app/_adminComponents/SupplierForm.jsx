@@ -90,7 +90,7 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
 
   async function handleSubmit() {
     const supabase = createClient();
-    const safeFormData = omit(formData, ["images"]);
+    const safeFormData = omit(formData, ["images", "selectedActivities"]);
     startTransition(async () => {
       // Agar update karna ho
       if (editId) {

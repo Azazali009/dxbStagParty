@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import FormRow from "../_components/FormRow";
-import EyeIcon from "../svgIcons/EyeIcon";
-import { MultiSelect } from "react-multi-select-component";
 import { useSupplier } from "../_context/SupplierProvider";
 import { createClient } from "../_utils/supabase/client";
-import toast from "react-hot-toast";
+import EyeIcon from "../svgIcons/EyeIcon";
 
 export default function AccountAccessStep({ supplier, isEdit }) {
   const [activityLoading, setActivityLoading] = useState(false);
@@ -118,7 +117,7 @@ export default function AccountAccessStep({ supplier, isEdit }) {
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
       </FormRow>
-      {loading || activityLoading ? (
+      {/* {loading || activityLoading ? (
         <div className="my-4 flex flex-col gap-4">
           <div className="h-4 w-[50%] animate-pulse rounded-xl bg-navyBlue"></div>
           <div className="h-4 w-full animate-pulse rounded-xl bg-navyBlue"></div>
@@ -135,7 +134,7 @@ export default function AccountAccessStep({ supplier, isEdit }) {
             hasSelectAll={false}
           />
         </FormRow>
-      )}
+      )} */}
 
       <FormRow label="Password">
         <div className="relative">
