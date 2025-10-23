@@ -90,7 +90,11 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
 
   async function handleSubmit() {
     const supabase = createClient();
-    const safeFormData = omit(formData, ["images", "selectedActivities"]);
+    const safeFormData = omit(formData, [
+      "images",
+      "selectedActivities",
+      "error",
+    ]);
     startTransition(async () => {
       // Agar update karna ho
       if (editId) {
@@ -256,7 +260,7 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
   }, [supplier, setFormData, setSelectedActivities, setRange]);
 
   return (
-    <div className="mx-auto my-8 flex flex-col gap-14 rounded-2xl border border-neutral-700 px-8 py-14">
+    <div className="my-8 flex flex-col gap-14 rounded-2xl border border-neutral-700 px-8 py-14">
       {!editId && (
         <h1 className="text-center text-3xl font-semibold text-matalicGold">
           {isForApply ? "Apply to become a supplier" : "Add supplier"}

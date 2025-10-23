@@ -14,7 +14,7 @@ export async function getSupplierById(id) {
   let { data: supplier, error } = await supabase
     .from("supplier")
     .select("*")
-    .eq("id", id)
+    .eq("user_id", id)
     .single();
   if (error) {
     console.log(error);

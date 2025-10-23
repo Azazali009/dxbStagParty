@@ -6,7 +6,7 @@ export default async function UserTable() {
   const users = await getVerifiedUsers();
   const nonVerifiedUsers = await getNonVerifiedUsers();
 
-  const headers = ["", "User ID", "Username", "email", "Role", "Actions"];
+  const headers = ["", "User ID", "Username", "email", "", "Role", "Actions"];
   return (
     <div className="space-y-12 p-4">
       {nonVerifiedUsers.length > 0 && (

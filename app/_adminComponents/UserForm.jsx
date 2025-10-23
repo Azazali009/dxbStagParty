@@ -1,13 +1,13 @@
 "use client";
 import { useRef, useState, useTransition } from "react";
 import SpinnerMini from "../_components/SpinnerMini";
-import { createUserByAdmin } from "../_lib/actions";
+import { createUserByAdmin, updateUserByAdmin } from "../_lib/actions";
 import FormRow from "../_components/FormRow";
 import toast from "react-hot-toast";
 import EyeIcon from "../svgIcons/EyeIcon";
 import { sendEmail } from "../_lib/sendEmail";
 
-export default function AddUserForm() {
+export default function UserForm({ userId = null, user = null }) {
   const [passwordType, setPasswordType] = useState("password");
   const ref = useRef();
 
@@ -22,16 +22,22 @@ export default function AddUserForm() {
     const password = formData.get("password");
 
     startTransition(async () => {
-      const res = await createUserByAdmin(formData);
-      if (res?.error) return toast.error(res?.error);
+      if (userId) {
+        const res = await updateUserByAdmin(formData);
 
-      toast.success("User created successfully!");
+        if (res?.error) return toast.error(res?.error);
+        toast.success("User updated.");
+      } else {
+        const res = await createUserByAdmin(formData);
+        if (res?.error) return toast.error(res?.error);
 
-      // Send Confirmation Email to user
-      await sendEmail({
-        toEmail: email,
-        subject: `You're invited to DXB Stag Party as ${role}`,
-        message: `
+        toast.success("User created successfully!");
+
+        // Send Confirmation Email to user
+        await sendEmail({
+          toEmail: email,
+          subject: `You're invited to DXB Stag Party as ${role}`,
+          message: `
     <div style="background-color:#0B0E1C; color:#E0B15E; padding:30px; font-family:sans-serif; text-align:center;">
       <img src="${process.env.NEXT_PUBLIC_SITE_URL}/logo.png" alt="DXB Stag Parties Logo" style="width:120px; margin-bottom:20px;" />
       <h1 style="font-size:24px; margin-bottom:20px;">Welcome to DXB Stag Parties!</h1>
@@ -54,7 +60,8 @@ export default function AddUserForm() {
       </p>
     </div>
   `,
-      });
+        });
+      }
     });
   }
 
@@ -71,12 +78,14 @@ export default function AddUserForm() {
         action={(formData) => handleSubmit(formData)}
         className="grid w-full grid-cols-1 items-center gap-x-7 gap-y-4 sm:grid-cols-2"
       >
+        {userId && <input type="hidden" name="userId" value={userId} />}
         <FormRow label="Name">
           <input
             type="text"
             placeholder="Name"
             name="name"
             autoComplete="name"
+            defaultValue={user.fullName}
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2"
             required
           />
@@ -85,6 +94,7 @@ export default function AddUserForm() {
           <input
             type="email"
             placeholder="Email"
+            defaultValue={user.email}
             name="email"
             autoComplete="email"
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2"
@@ -96,6 +106,7 @@ export default function AddUserForm() {
             type="tel"
             placeholder="+92 xxxxxxxxx"
             name="phone"
+            defaultValue={user?.phone}
             autoComplete="phone"
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2"
             required
@@ -124,6 +135,7 @@ export default function AddUserForm() {
           <select
             name="role"
             id="role"
+            defaultValue={user.role}
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 capitalize"
           >
             <option value="organiser">organiser</option>
@@ -138,11 +150,11 @@ export default function AddUserForm() {
           >
             {isPending ? (
               <div className="flex items-center gap-2">
-                {" "}
-                <SpinnerMini /> <span>Creating...</span>
+                <SpinnerMini />
+                <span>{userId ? "Updating..." : "Creating..."}</span>
               </div>
             ) : (
-              "Create user"
+              <span>{userId ? "Update User" : "Create User"}</span>
             )}
           </button>
         </div>

@@ -620,6 +620,69 @@ export async function createUserByAdmin(formData) {
   redirect("/dashboard/users");
 }
 
+export async function updateUserByAdmin(formData) {
+  const supabase = await createClient();
+  const user = await getCurrentUser();
+
+  // 🔒 Only admin can perform this action
+  if (!user || user?.user_metadata?.role !== "admin") {
+    return { error: "You are not allowed to perform this action" };
+  }
+
+  // 📦 Extract fields from form
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const phone = formData.get("phone");
+  const password = formData.get("password");
+  const role = formData.get("role");
+  const editUserId = formData.get("userId");
+
+  // ⚙️ Step 1: Update user in Supabase Auth
+  const updatePayload = {
+    email,
+    user_metadata: {
+      full_name: name,
+      phone,
+      role,
+    },
+  };
+
+  // Include password only if provided
+  if (password && password.trim() !== "") {
+    updatePayload.password = password;
+  }
+
+  const { data: authData, error: authError } =
+    await supabaseAdmin.auth.admin.updateUserById(editUserId, updatePayload);
+
+  if (authError) {
+    console.error("Auth update error:", authError.message);
+    return {
+      error: "There was an issue while updating user authentication info.",
+    };
+  }
+
+  // ⚙️ Step 2: Update user profile in `users` table
+  const { error: userError } = await supabase
+    .from("users")
+    .update({
+      fullName: name,
+      email,
+      phone,
+      role,
+    })
+    .eq("id", editUserId);
+
+  if (userError) {
+    console.error("Error updating profile:", userError.message);
+    return { error: "There was an issue while updating user profile." };
+  }
+
+  // ✅ Success — Revalidate and Redirect
+  revalidatePath("/dashboard/users");
+  redirect("/dashboard/users");
+}
+
 export async function updateBookingPaymentStatus(updateBookingData, formData) {
   const supabase = await createClient();
   // Check if user is logged in and is an admin

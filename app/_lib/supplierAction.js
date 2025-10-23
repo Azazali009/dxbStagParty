@@ -162,6 +162,8 @@ export async function addAndApplySupplierAction(data) {
 }
 
 export async function updateSupplierAction(data) {
+  const user = await getCurrentUser();
+
   const {
     id,
     newUrls = [],
@@ -266,8 +268,11 @@ export async function updateSupplierAction(data) {
 
   revalidatePath("dashboard/me");
   revalidatePath("dashboard/activities");
+  revalidatePath("/dashboard/supplier");
 
-  redirect("/dashboard/activities");
+  user?.user_metadata?.role === "admin"
+    ? redirect("/dashboard/supplier")
+    : redirect("/dashboard/activities");
 }
 
 // export async function addSupplierAction(data, formData) {

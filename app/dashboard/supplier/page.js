@@ -14,7 +14,7 @@ export const metadata = {
 export default async function Page() {
   const suppliers = await getSupplierUsers();
 
-  const headers = ["Supplier ID", "Name", "Phone", "Email", "Action"];
+  const headers = ["Supplier ID", "Name", "Phone", "Email", "", "Action"];
   return (
     <div className="space-y-4">
       <CreateSupplierAndSearch />

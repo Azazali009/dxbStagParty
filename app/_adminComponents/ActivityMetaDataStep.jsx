@@ -65,8 +65,8 @@ export default function ActivityMetaDataStep() {
           id=""
         >
           <option value="">alcohol included?</option>
-          <option value="true">True</option>
-          <option value="false">False</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
         </select>
       </FormRow>
 

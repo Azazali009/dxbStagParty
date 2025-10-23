@@ -36,7 +36,8 @@ export async function getVerifiedUsers() {
   const { data, error } = await supabaseAdmin
     .from("users")
     .select("*")
-    .eq("isVerified", true);
+    .eq("isVerified", true)
+    .neq("role", "supplier");
 
   if (error) return { error: "Unable to load users" };
   return data;
@@ -71,4 +72,17 @@ export async function updateUser(updateData) {
   if (customUserError) {
     return { error: customUserError?.message };
   }
+}
+
+export async function getUserById(userId) {
+  const supabase = await createClient();
+
+  let { data: user, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", userId)
+    .single();
+
+  if (error) return { error: "No user found or incorrect user id" };
+  return user;
 }

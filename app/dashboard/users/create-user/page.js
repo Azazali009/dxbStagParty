@@ -1,5 +1,5 @@
 import React from "react";
-import AddUserForm from "../../../_adminComponents/AddUserForm";
+import UserForm from "../../../_adminComponents/UserForm";
 export default function page() {
-  return <AddUserForm />;
+  return <UserForm />;
 }
