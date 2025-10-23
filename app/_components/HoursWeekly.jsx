@@ -14,15 +14,15 @@ export default function HoursWeekly() {
     }));
   }, [hours, setFormData]);
 
-  const copyToAll = (fromKey) => {
-    const src = hours[fromKey];
-    if (!src) return;
-    const next = { ...hours };
-    DAYS.forEach((d) => {
-      next[d.key] = { open: src.open, start: src.start, end: src.end };
-    });
-    setHours(next);
-  };
+  // const copyToAll = (fromKey) => {
+  //   const src = hours[fromKey];
+  //   if (!src) return;
+  //   const next = { ...hours };
+  //   DAYS.forEach((d) => {
+  //     next[d.key] = { open: src.open, start: src.start, end: src.end };
+  //   });
+  //   setHours(next);
+  // };
 
   return (
     <div className="space-y-3 rounded-md border border-neutral-700 bg-primary p-3">
@@ -75,14 +75,14 @@ export default function HoursWeekly() {
                 }
                 className="w-full rounded-md border border-neutral-700 bg-primary px-3 py-2 disabled:opacity-50"
               />
-              <button
+              {/* <button
                 type="button"
                 onClick={() => copyToAll(key)}
                 className="rounded border border-neutral-600 px-2 py-1 text-xs hover:bg-neutral-800"
                 title="Copy this day's hours to all days"
               >
                 Copy to all
-              </button>
+              </button> */}
             </div>
           </div>
         );

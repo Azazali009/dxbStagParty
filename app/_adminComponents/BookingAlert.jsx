@@ -33,7 +33,7 @@ export default function BookingAlert() {
         />
       </FormRow>
 
-      <FormRow label="auto reminder triggers">
+      <FormRow label="auto reminder triggers ℹ️">
         <input
           type="text"
           placeholder="24"

@@ -14,14 +14,8 @@ export default function SupplierRow({ supplier }) {
       <p>{supplier.email}</p>
       <p></p>
       <div className="flex items-center gap-2">
-        <DeleteUser email={supplier.email} userId={supplier.id} />
-        <EditSupplier supplierId={supplier.id} />
-        {/* <Link
-          href={`/dashboard/users/edit-user/${supplier.id}`}
-          className="fill-blue-500 hover:opacity-80"
-        >
-          <PencilIcon />
-        </Link> */}
+        <DeleteUser email={supplier.email} userId={supplier.user_id} />
+        <EditSupplier supplierId={supplier.user_id} />
       </div>
     </div>
   );

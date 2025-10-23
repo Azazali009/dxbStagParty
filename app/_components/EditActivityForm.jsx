@@ -73,8 +73,8 @@ export default function EditActivityForm({ activity }) {
       .replace(/-+/g, "-");
     setActivitySlug(slug);
   }
-
-  // Effect to fetch activities
+  console.log(suppliers);
+  // Effect to fetch data
   useEffect(() => {
     async function fetchSuppliers() {
       setLoading(true);
@@ -82,8 +82,8 @@ export default function EditActivityForm({ activity }) {
 
       setSuppliers(
         fetchedSuppliers.map((sup) => ({
-          name: sup.fullName,
-          value: sup.id,
+          name: sup.name,
+          value: sup.user_id,
         })),
       );
 
@@ -227,14 +227,14 @@ export default function EditActivityForm({ activity }) {
           <div className="h-4 w-full animate-pulse rounded-xl bg-navyBlue"></div>
         </div>
       ) : (
-        <FormRow label={"Link Supplier"}>
+        <FormRow label={"Link Supplier ℹ️"}>
           <select
             name="supplier"
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 capitalize text-softGold"
           >
             {supplier && supplier.id ? (
-              <option value={supplier.id} defaultValue={supplier.fullName}>
-                {supplier.fullName}
+              <option value={supplier.id} defaultValue={supplier.name}>
+                {supplier.name}
               </option>
             ) : (
               <option value="">Link supplier</option>
@@ -260,14 +260,15 @@ export default function EditActivityForm({ activity }) {
         />
       </FormRow>
       <FormRow label={"alcohol Permitted"}>
-        <input
+        <select
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
-          type="text"
           name="alcoholPermitted"
-          autoComplete="on"
           defaultValue={alcoholPermitted}
-          placeholder="Yes (venue dependent)"
-        />
+        >
+          <option value="">Choose the one</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
       </FormRow>
       <FormRow label={"Photo Video Included"}>
         <select

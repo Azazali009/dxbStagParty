@@ -57,8 +57,8 @@ export default function AdminActivityForm() {
       const fetchedSuppliers = await getSupplierUsers();
       setSuppliers(
         fetchedSuppliers.map((sup) => ({
-          name: sup.fullName,
-          value: sup.id,
+          name: sup.name,
+          value: sup.user_id,
         })),
       );
       const fetchedCategories = await getCategories();
@@ -198,14 +198,12 @@ export default function AdminActivityForm() {
           <div className="h-4 w-full animate-pulse rounded-xl bg-navyBlue"></div>
         </div>
       ) : (
-        <FormRow label={"Link Supplier"}>
+        <FormRow label={"Link Supplier ℹ️"}>
           <select
             name="supplier"
             className="h-10 w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 text-softGold"
           >
-            <option selected value="">
-              Select supplier
-            </option>
+            <option value="">Select supplier</option>
             {suppliers?.map((supplier) => {
               return (
                 <option key={supplier.value} value={supplier.value}>
@@ -217,22 +215,27 @@ export default function AdminActivityForm() {
         </FormRow>
       )}
       <FormRow label={"Day time"}>
-        <input
+        <select
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
-          type="text"
           name="dayTime"
-          autoComplete="on"
-          placeholder="Evening/Night"
-        />
+        >
+          <option value="">Select day time</option>
+          <option value="day">Day</option>
+          <option value="evening">Evening</option>
+          <option value="night">Night</option>
+          <option value="sunset">Sunset</option>
+          <option value="sunrise">Sunrise</option>
+        </select>
       </FormRow>
       <FormRow label={"alcohol Permitted"}>
-        <input
+        <select
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
-          type="text"
           name="alcoholPermitted"
-          autoComplete="on"
-          placeholder="Yes (venue dependent)"
-        />
+        >
+          <option value="">Choose the one</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
       </FormRow>
       <FormRow label={"Photo Video Included"}>
         <select
@@ -267,7 +270,7 @@ export default function AdminActivityForm() {
           placeholder="Lighting rig, MC host, smoke machine"
         />
       </FormRow>
-      <FormRow label={"core Inclusions"}>
+      <FormRow label={"core Inclusions ℹ️"}>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
           type="text"

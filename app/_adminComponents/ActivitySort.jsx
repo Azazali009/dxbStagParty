@@ -20,8 +20,8 @@ export default function ActivitySort({
           <option defaultValue={"Sort by group size"} value="">
             Sort by group size
           </option>
-          <option value="asc">Low to high(2-6,6-20)</option>
-          <option value="desc">High to low(6-20,2-6)</option>
+          <option value="asc">Low to high (ascending)</option>
+          <option value="desc">High to low (descending)</option>
         </select>
       </div>
       <div className="flex flex-col gap-2 text-sm">

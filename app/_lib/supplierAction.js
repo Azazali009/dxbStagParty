@@ -116,10 +116,9 @@ export async function addAndApplySupplierAction(data) {
 
   // ✅ Transform fields
   const locationArr = locations?.split(",") ?? [];
-  const languagesArr = languages?.split(",") ?? [];
   const available_hoursArr = available_hours?.split(",") ?? [];
   const add_onsArr = add_ons?.split(",") ?? [];
-  const safety_certificationsArr = safety_certifications?.split(",") ?? [];
+
   // const activityIds = selectedActivities?.map((act) => act?.value) ?? [];
 
   // ✅ Prepare supplier object
@@ -130,12 +129,12 @@ export async function addAndApplySupplierAction(data) {
     email,
     role: "supplier",
     locations: locationArr,
-    languages: languagesArr,
+    languages,
     gallery: urls?.length > 0 ? urls : null,
     available_hours: available_hoursArr,
     add_ons: add_onsArr,
     bank_details: bankDetails,
-    safety_certifications: safety_certificationsArr,
+    safety_certifications,
     // activityIds,
     user_id,
     blackout_start: range?.from ?? null,

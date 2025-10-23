@@ -90,15 +90,20 @@ export default function BusinessProfileStep({ setDeleteUrls, deleteUrls }) {
         />
       </FormRow>
       <FormRow label="languages">
-        <input
-          type="text"
-          placeholder="English, Arabic, ..."
+        <select
           name="languages"
+          defaultValue={""}
           value={formData.languages}
           onChange={handleChange}
           autoComplete="on"
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
+        >
+          <option value="">Choose language</option>
+          <option value="english">English</option>
+          <option value="arabic">Arabic</option>
+          <option value="italian">Italian</option>
+          <option value="german">German</option>
+        </select>
       </FormRow>
 
       <FormRow label={"Gallery"}>

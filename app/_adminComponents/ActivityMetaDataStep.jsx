@@ -1,6 +1,7 @@
 import React from "react";
 import FormRow from "../_components/FormRow";
 import { useSupplier } from "../_context/SupplierProvider";
+import SafetyCertifications from "./SafetyCertification";
 
 export default function ActivityMetaDataStep() {
   const { formData, handleChange } = useSupplier();
@@ -84,17 +85,7 @@ export default function ActivityMetaDataStep() {
         </select>
       </FormRow>
 
-      <FormRow label="safety certifications">
-        <input
-          type="text"
-          placeholder="ISO 9001, Local Tourism Cert, ..."
-          name="safety_certifications"
-          autoComplete="on"
-          value={formData.safety_certifications}
-          onChange={handleChange}
-          className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
-      </FormRow>
+      <SafetyCertifications />
 
       <FormRow label="insurance provided">
         <select
