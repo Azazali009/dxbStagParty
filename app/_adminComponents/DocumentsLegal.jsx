@@ -128,9 +128,10 @@ export default function DocumentsLegal() {
       })}
 
       <FormRow label="Exclusivity Confirmed">
-        <select
+        <input
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           name="exclusivity_confirmed"
+          placeholder="Confirm your exclusivity"
           value={formData.exclusivity_confirmed || ""}
           onChange={(e) =>
             setFormData((prev) => ({
@@ -138,11 +139,7 @@ export default function DocumentsLegal() {
               exclusivity_confirmed: e.target.value,
             }))
           }
-        >
-          <option value="">Is exclusivity confirmed?</option>
-          <option value="true">Yes</option>
-          <option value="false">No</option>
-        </select>
+        />
       </FormRow>
     </>
   );
