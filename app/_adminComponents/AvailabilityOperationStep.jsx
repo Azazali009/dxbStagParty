@@ -59,18 +59,6 @@ export default function AvailabilityOperationStep() {
         />
       </FormRow>
 
-      <FormRow label="booking method">
-        <input
-          type="text"
-          placeholder="Manual / Online"
-          name="booking_method"
-          autoComplete="on"
-          value={formData.booking_method}
-          onChange={handleChange}
-          className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
-      </FormRow>
-
       <FormRow label="location type">
         <select
           name="location_type"

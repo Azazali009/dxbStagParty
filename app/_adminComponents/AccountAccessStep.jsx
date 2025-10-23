@@ -144,7 +144,9 @@ export default function AccountAccessStep({ supplier, isEdit }) {
             name="password"
             value={formData?.password}
             onChange={handleChange}
-            autoComplete="on"
+            autoComplete="new-password"
+            autoCorrect="false"
+            spellCheck="false"
             className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           />
           <button

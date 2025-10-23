@@ -4,6 +4,7 @@ import SupplierRow from "../../_adminComponents/SupplierRow";
 import { getSuppliers, getSupplierUsers } from "../../_lib/apiSupplier";
 import CreateSupplierAndSearch from "../../_adminComponents/CreateSupplierAndSearch";
 
+export const revalidate = 0;
 // meta data
 export const metadata = {
   title: "Dashboard - Suppliers",

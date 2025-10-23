@@ -60,28 +60,18 @@ export default function PricingCommissionStep() {
         />
       </FormRow>
 
-      <FormRow label="commission agreement">
-        <input
-          type="text"
-          placeholder="10% per booking"
-          name="commission_agreement"
-          value={formData.commission_agreement}
-          onChange={handleChange}
-          autoComplete="on"
-          className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
-      </FormRow>
-
       <FormRow label="payment preferences">
-        <input
-          type="text"
-          placeholder="Bank Transfer"
+        <select
           name="payment_preferences"
-          autoComplete="on"
           value={formData.payment_preferences}
           onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
+        >
+          <option value="">Choose payment method</option>
+          <option value="payoneer">Payoneer</option>
+          <option value="wise">Wise</option>
+          <option value="bank">Bank</option>
+        </select>
       </FormRow>
 
       {/* <FormRow label="bank details" className={"space-y-2 ![grid-column:1/-1]"}>

@@ -85,7 +85,7 @@ export default function UserForm({ userId = null, user = null }) {
             placeholder="Name"
             name="name"
             autoComplete="name"
-            defaultValue={user.fullName}
+            defaultValue={user?.fullName}
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2"
             required
           />
@@ -94,7 +94,7 @@ export default function UserForm({ userId = null, user = null }) {
           <input
             type="email"
             placeholder="Email"
-            defaultValue={user.email}
+            defaultValue={user?.email}
             name="email"
             autoComplete="email"
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2"
@@ -135,7 +135,7 @@ export default function UserForm({ userId = null, user = null }) {
           <select
             name="role"
             id="role"
-            defaultValue={user.role}
+            defaultValue={user?.role}
             className="w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 capitalize"
           >
             <option value="organiser">organiser</option>

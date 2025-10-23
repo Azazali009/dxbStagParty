@@ -28,7 +28,7 @@ export default function UserRow({ user, isVerified = false }) {
           <VerifyUserButton email={user.email} userId={user.id} />
         )}
         <DeleteUser email={user.email} userId={user.id} />
-        <EditUser userId={user.id} />
+        {isVerified && <EditUser userId={user.id} />}
       </div>
     </div>
   );

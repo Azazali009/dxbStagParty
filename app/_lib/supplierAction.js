@@ -224,44 +224,16 @@ export async function updateSupplierAction(data) {
     return { error: error.message };
   }
 
-  // 4 update user data in user auth
+  // 4 update user data in user table
 
-  // upload image
-  // const imageName = `${Math.random()}-${avatar.name}`;
-  // const imagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/user-avatar/${imageName}`;
-
-  // image validation
-
-  // if (avatar && avatar.size > 0) {
-  //   if (!ALLOWED_TYPES.includes(avatar.type)) {
-  //     return {
-  //       error: "Please upload an image in JPEG, JPG, PNG, or WEBP format.",
-  //     };
-  //   }
-
-  //   const { error: storageError } = await supabase.storage
-  //     .from("user-avatar")
-  //     .upload(imageName, avatar);
-
-  //   if (storageError) {
-  //     console.log(storageError);
-  //     return {
-  //       error:
-  //         "We’re sorry, something went wrong while uploading your image. Please try again.”",
-  //     };
-  //   }
-  // }
-  // image size constraints
-  // if (avatar.size > MAX_FILE_SIZE) {
-  //   return { error: "Kindly ensure your image is under 1MB in size." };
-  // }
-
-  const stringPass = password?.toString();
+  // const stringPass = password?.toString();
+  const shouldUpdatePassword = password && password.trim() !== "";
   const authRes = await updateUser({
     full_name: updateData?.name,
-    password: stringPass,
+    // password: stringPass,
     userId,
     avatar: publicUrl,
+    ...(shouldUpdatePassword && { password: password.toString() }),
   });
   if (authRes?.error) {
     return { error: authRes.error }; // ✅ server action me propagate

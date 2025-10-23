@@ -2,10 +2,7 @@ import { createClient } from "../_utils/supabase/client";
 
 const supabase = createClient();
 export async function getSupplierUsers() {
-  let { data: suppliers, error } = await supabase
-    .from("users")
-    .select("*")
-    .eq("role", "supplier");
+  let { data: suppliers, error } = await supabase.from("supplier").select("*");
 
   return suppliers;
 }
