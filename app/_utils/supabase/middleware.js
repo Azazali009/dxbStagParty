@@ -36,9 +36,12 @@ export async function updateSession(request) {
   const pathname = request.nextUrl.pathname;
 
   const isProtectedRoute =
-    pathname.startsWith("/account") || pathname.startsWith("/dashboard");
+    pathname.startsWith("/account") ||
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("become_a_supplier/apply");
 
   const isLoginPage = pathname.startsWith("/login");
+  const isBecomeSupplier = pathname.startsWith("/become_a_supplier");
 
   //ORGANISER RESTRICTION: Organiser should not access '/dashboard' and there nested router page
   if (
@@ -48,15 +51,7 @@ export async function updateSession(request) {
     return new Response(null, { status: 404 });
   }
 
-  //ADMIN RESTRICTION: Admin should not access /account page
-  // if (
-  //   user?.user_metadata?.role === "admin" &&
-  //   pathname.startsWith("/account")
-  // ) {
-  //   return new Response(null, { status: 404 });
-  // }
-
-  // SUPPLIER RESTRICTION: Supplier shoudl only access these routes
+  // SUPPLIER RESTRICTION: Supplier should only access these routes
   if (user?.user_metadata?.role === "supplier") {
     // Check only for dashboard access
     const isDashboardPath = pathname.startsWith("/dashboard");
@@ -96,6 +91,19 @@ export async function updateSession(request) {
           ? "/dashboard"
           : "/account";
 
+    return NextResponse.redirect(url);
+  }
+
+  // 🚫 Prevent logged-in users from accessing /become_a_supplier/apply
+  if (user && isBecomeSupplier) {
+    const role = user?.user_metadata?.role;
+    const url = request.nextUrl.clone();
+    url.pathname =
+      role === "supplier"
+        ? "/dashboard/activities"
+        : role === "admin"
+          ? "/dashboard"
+          : "/account";
     return NextResponse.redirect(url);
   }
 

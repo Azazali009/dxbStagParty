@@ -35,6 +35,7 @@ export async function addAndApplySupplierAction(data) {
     safety_certifications,
     error,
     oldImages,
+
     ...rest
   } = data;
 
@@ -51,6 +52,10 @@ export async function addAndApplySupplierAction(data) {
     "full_description",
     "custom_booking_notes",
     "role",
+    "id_verification",
+    "insurance_certificate",
+    "trade_license",
+    "contract_agreement",
   ];
   const validation = extractAndValidateFormData(data, optionalFields);
   if (!validation.valid) return { error: validation.error };
