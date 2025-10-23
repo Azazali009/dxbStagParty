@@ -157,8 +157,9 @@ export async function addAndApplySupplierAction(data) {
   if (isForApply) {
     redirect("/login");
   }
+  revalidatePath("/dashboard/supplier");
 
-  return { success: true };
+  redirect("/dashboard/supplier");
 }
 
 export async function updateSupplierAction(data) {

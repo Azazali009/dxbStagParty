@@ -136,8 +136,7 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
 
         if (finalRes?.error) return toast.error(finalRes?.error);
 
-        toast.success("Supplier updated successfully");
-        return;
+        return toast.success("Supplier updated successfully");
       }
       // 1) Validate only check
       const res = await addAndApplySupplierAction({
@@ -162,7 +161,7 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
       });
 
       if (finalRes?.error) return toast.error(finalRes?.error);
-
+      toast.success("Supplier added successfully.");
       // send invite mail to user
       const emailApiUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/send-email`;
       await fetch(emailApiUrl, {
