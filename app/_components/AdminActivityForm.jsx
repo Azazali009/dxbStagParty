@@ -198,7 +198,16 @@ export default function AdminActivityForm() {
           <div className="h-4 w-full animate-pulse rounded-xl bg-navyBlue"></div>
         </div>
       ) : (
-        <FormRow label={"Link Supplier ℹ️"}>
+        <div className="flex flex-col gap-2 text-xs xs:text-sm">
+          <div className="flex items-center gap-2">
+            <label
+              htmlFor=""
+              className="text-[9px] font-medium capitalize xs:text-sm"
+            >
+              Link Supplier
+            </label>
+            <span title="Link Specific supplier here.">ℹ️</span>
+          </div>
           <select
             name="supplier"
             className="h-10 w-full rounded-md border border-neutral-700 bg-navyBlue px-4 py-2 text-softGold"
@@ -212,7 +221,7 @@ export default function AdminActivityForm() {
               );
             })}
           </select>
-        </FormRow>
+        </div>
       )}
       <FormRow label={"Day time"}>
         <select
@@ -270,7 +279,18 @@ export default function AdminActivityForm() {
           placeholder="Lighting rig, MC host, smoke machine"
         />
       </FormRow>
-      <FormRow label={"core Inclusions ℹ️"}>
+      <div className="flex flex-col gap-2 text-xs xs:text-sm">
+        <div className="flex items-center gap-2">
+          <label
+            htmlFor=""
+            className="text-[9px] font-medium capitalize xs:text-sm"
+          >
+            Core Inclusions
+          </label>
+          <span title="Add multiple core inclusions separated by commas (,)">
+            ℹ️
+          </span>
+        </div>
         <input
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"
           type="text"
@@ -278,7 +298,7 @@ export default function AdminActivityForm() {
           title="split by commas"
           placeholder="Professional DJ for 2–3 hrs, full deck setup, curated playlist, sound system..."
         />
-      </FormRow>
+      </div>
       <FormRow label={"deposit Required"}>
         <select
           className="h-10 rounded bg-navyBlue p-2 outline-none placeholder:text-sm placeholder:text-softGold/20 focus:outline-matalicGold"

@@ -19,7 +19,7 @@ export default function DeleteUser({ email, userId }) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             toEmail: email,
-            subject: `You are no longer the part of DXB Stag party`,
+            subject: `You are no longer the part of DXB Stag parties`,
             message: ` <div style="background-color:#0B0E1C; color:#E0B15E; padding:30px; font-family:sans-serif; text-align:center;">
     <img src="${process.env.NEXT_PUBLIC_SITE_URL}/logo.png" alt="DXB Stag Parties Logo" style="width:120px; margin-bottom:20px;" />
     

@@ -27,17 +27,17 @@ export default function SupplierProvider({ children }) {
     languages: "",
     available_hours: "",
     lead_time_required: "",
-    min_group_size: 0,
-    max_group_size: 0,
+    min_group_size: null,
+    max_group_size: null,
     location_type: "",
-    base_price: 0,
-    discounted_price: 0,
+    base_price: null,
+    discounted_price: null,
     deposit_required: null,
     cancellation_terms: "",
     payment_preferences: "",
     activity_tags: "",
     mobility_requirements: "",
-    minimum_age: 0,
+    minimum_age: null,
     alcohol_included: null,
     media_friendly: null,
     insurance_provided: null,
@@ -51,6 +51,7 @@ export default function SupplierProvider({ children }) {
     contract_agreement: "",
     exclusivity_confirmed: null,
   });
+
   const [hours, setHours] = useState(
     formData.available_hours
       ? JSON.parse(formData.available_hours)

@@ -31,3 +31,12 @@ export async function getSupplierBySUpplierId(supplierId) {
   }
   return supplier;
 }
+export async function getSupplierByEmail(email) {
+  let { data: supplier } = await supabase
+    .from("supplier")
+    .select("*")
+    .eq("email", email)
+    .single();
+
+  return supplier;
+}

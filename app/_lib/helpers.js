@@ -448,29 +448,6 @@ export function formatDateTime(datetimeStr) {
   });
 }
 
-// Function to extract data and validate
-// export function extractAndValidateFormData(formData, optionalFields = []) {
-//   const formDataObject = {};
-
-//   // Extract all data from FormData
-//   formData.forEach((value, key) => {
-//     formDataObject[key] = value;
-//   });
-
-//   // Validation: Check if any field is empty except optional fields
-//   for (const [key, value] of Object.entries(formDataObject)) {
-//     // If the field is not in the optionalFields array and it's empty, return error
-//     if (!optionalFields.includes(key) && !value.trim()) {
-//       return {
-//         valid: false,
-//         error: `${key?.replaceAll("_", " ")} cannot be empty`, // Return error if field is empty
-//       };
-//     }
-//   }
-
-//   // If all fields are valid, return valid status
-//   return { valid: true, data: formDataObject };
-// }
 export function extractAndValidateFormData(formData, optionalFields = []) {
   // Validation: Check if any field is empty except optional fields
   for (const [key, value] of Object.entries(formData)) {
@@ -566,3 +543,68 @@ export const DAYS = [
   { key: "sat", label: "Sat" },
   { key: "sun", label: "Sun" },
 ];
+
+// supplier form fields
+const fieldsPerStep = {
+  1: ["name", "email", "phone", "password"],
+  2: [
+    "short_description",
+    "full_description",
+    "business_type",
+    "locations",
+    "languages",
+  ],
+  3: [
+    "available_hours",
+    "lead_time_required",
+    "min_group_size",
+    "max_group_size",
+    "location_type",
+  ],
+  4: [
+    "base_price",
+    "discounted_price",
+    "deposit_required",
+    "cancellation_terms",
+    "payment_preferences",
+  ],
+  5: [
+    "activity_tags",
+    "mobility_requirements",
+    "minimum_age",
+    "alcohol_included",
+    "media_friendly",
+    "insurance_provided",
+  ],
+  6: [
+    "preferred_communication_channel",
+    "response_time_expectation",
+    "auto_reminder_triggers",
+    "custom_booking_notes",
+  ],
+  7: ["exclusivity_confirmed"],
+};
+
+// supplier form optional fields
+const optionalPerStep = {
+  1: [],
+  2: ["short_description", "full_description"],
+  3: [],
+  4: [],
+  5: ["insurance_provided"],
+  6: ["custom_booking_notes"],
+  7: [],
+};
+// multistep form validator
+export function validateStepData(step, formData) {
+  const stepFields = fieldsPerStep[step] || [];
+  const optionalFields = optionalPerStep[step] || [];
+
+  // ✅ Take only fields for this step
+  const filteredData = Object.fromEntries(
+    Object.entries(formData).filter(([key]) => stepFields.includes(key)),
+  );
+
+  // Pass only current step’s data to the main validator
+  return extractAndValidateFormData(filteredData, optionalFields);
+}

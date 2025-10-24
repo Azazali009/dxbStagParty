@@ -35,7 +35,7 @@ export default async function HomeFeaturedPackage() {
           </p>
 
           <p className="text-sm font-extralight leading-[1.8] xs:text-base">
-            No shoes. No rules. just pure superyacht swagger. A 3-hour private
+            No shoes. No rules. Just pure superyacht swagger. A 3-hour private
             takeover of Dubai&apos;s sleekest vessel - because this isn&apos;t
             just a party, it&apos;s a statement. Set sail from Dubai Harbour
             with your personal DJ, your butler, and your cocktail assassin. All

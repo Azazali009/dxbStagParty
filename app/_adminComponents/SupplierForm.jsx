@@ -5,8 +5,15 @@ import toast from "react-hot-toast";
 import FormNavigationButton from "../_components/FormNavigationButton";
 import SpinnerMini from "../_components/SpinnerMini";
 import { useSupplier } from "../_context/SupplierProvider";
-import { getSupplierBySUpplierId } from "../_lib/apiSupplier";
-import { omit, uploadSingleImageToBucket } from "../_lib/helpers";
+import {
+  getSupplierByEmail,
+  getSupplierBySUpplierId,
+} from "../_lib/apiSupplier";
+import {
+  omit,
+  uploadSingleImageToBucket,
+  validateStepData,
+} from "../_lib/helpers";
 import {
   addAndApplySupplierAction,
   updateSupplierAction,
@@ -41,7 +48,31 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
   const pathname = usePathname();
   const activeStep = Number(searchParams.get("step") ?? 1);
 
-  function handleNext() {
+  async function handleNext() {
+    if (!editId) {
+      // check if email already exist
+      const email = formData?.email ?? "";
+      const password = formData?.password ?? "";
+      const existingUser = await getSupplierByEmail(email);
+
+      if (existingUser || existingUser !== null)
+        return toast.error("User already exist with this email");
+
+      // check password should be 6 character
+      if (!password || password?.length < 6)
+        return toast.error("Password should be 6 character long.");
+
+      // validate each step for empty fields
+      const validation = validateStepData(activeStep, formData);
+
+      if (!validation.valid) {
+        toast.error(validation.error);
+        return; // ⛔ Stop here — don’t move forward
+      }
+      return;
+    }
+
+    // Go to next step after no error
     const params = new URLSearchParams(searchParams);
     params.set("step", activeStep + 1);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });

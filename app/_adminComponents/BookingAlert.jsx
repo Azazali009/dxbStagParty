@@ -33,7 +33,16 @@ export default function BookingAlert() {
         />
       </FormRow>
 
-      <FormRow label="auto reminder triggers ℹ️">
+      <div className="flex flex-col gap-2 text-xs xs:text-sm">
+        <div className="flex items-center gap-2">
+          <label
+            htmlFor=""
+            className="text-[9px] font-medium capitalize xs:text-sm"
+          >
+            auto reminder triggers
+          </label>
+          <span title="Add auto reminder triggers.">ℹ️</span>
+        </div>
         <input
           type="text"
           placeholder="24"
@@ -43,7 +52,7 @@ export default function BookingAlert() {
           autoComplete="on"
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
         />
-      </FormRow>
+      </div>
 
       <FormRow label="custom booking notes">
         <textarea

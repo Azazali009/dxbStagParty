@@ -2,6 +2,7 @@ import React from "react";
 import FormRow from "../_components/FormRow";
 import { useSupplier } from "../_context/SupplierProvider";
 import SafetyCertifications from "./SafetyCertification";
+import Insurance from "./Insurance";
 
 export default function ActivityMetaDataStep() {
   const { formData, handleChange } = useSupplier();
@@ -46,15 +47,26 @@ export default function ActivityMetaDataStep() {
       </FormRow>
 
       <FormRow label="minimum age">
-        <input
-          type="number"
-          placeholder="18"
+        <select
           name="minimum_age"
-          autoComplete="on"
           value={formData.minimum_age}
           onChange={handleChange}
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
-        />
+        >
+          <option value="">Choose Minimum age</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+        </select>
       </FormRow>
 
       <FormRow label="alcohol included">
@@ -87,7 +99,8 @@ export default function ActivityMetaDataStep() {
 
       <SafetyCertifications />
 
-      <FormRow label="insurance provided">
+      <Insurance />
+      {/* <FormRow label="insurance provided">
         <select
           className="w-full rounded-md border border-neutral-700 bg-primary px-4 py-2"
           name="insurance_provided"
@@ -99,7 +112,7 @@ export default function ActivityMetaDataStep() {
           <option value="true">Yes</option>
           <option value="false">NO</option>
         </select>
-      </FormRow>
+      </FormRow> */}
     </>
   );
 }

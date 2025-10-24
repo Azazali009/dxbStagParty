@@ -67,6 +67,7 @@ export default function BusinessProfileStep({ setDeleteUrls, deleteUrls }) {
           <option value="" disabled>
             Select business type
           </option>
+          <option value="Watersports">Watersports</option>
           <option value="tour_operator">Tour Operator</option>
           <option value="venue">Venue</option>
           <option value="restaurant_catering">Restaurant / Catering</option>
