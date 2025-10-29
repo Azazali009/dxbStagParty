@@ -14,9 +14,7 @@ export default function ActivityDetailSections({ activity, user }) {
           Not your average desert ride.
         </h2>
         <p className="w-full text-xs leading-[1.7] xs:text-base sm:w-[60%]">
-          You’re in control of a beast. Kick up sand, fly over dunes, and turn
-          the desert into your personal racetrack. This is full-throttle fun,
-          DXB style.
+          {activity?.description}
         </p>
       </div>
       <div className="grid grid-cols-2 gap-6 text-[9px] xs:text-xs sm:grid-cols-4 sm:text-sm md:text-base">
