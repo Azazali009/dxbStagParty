@@ -69,7 +69,6 @@ export default function SupplierForm({ isForApply = false, editId = null }) {
         toast.error(validation.error);
         return; // ⛔ Stop here — don’t move forward
       }
-      return;
     }
 
     // Go to next step after no error
